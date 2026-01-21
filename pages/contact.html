@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto e Inscripción - EVEM 2025</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="logo">
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../index.html#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="../index.html#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
+                <li><a href="../index.html#comite" class="nav-link">Comité</a></li>
+                <li><a href="courses.html" class="nav-link">Cursos</a></li>
+                <li><a href="tribute.html" class="nav-link">Homenaje</a></li>
+                <li><a href="contact.html" class="nav-link active">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Inscripción EVEM 2025</h1>
+            <p class="page-subtitle">Reserva tu cupo para la XXVII Edición</p>
+        </div>
+    </section>
+
+    <!-- Contact Info Section -->
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Ubicación</h3>
+                    <p>Universidad Nacional Experimental del Táchira</p>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:evem.tachira@gmail.com">evem.tachira@gmail.com</a></p>
+                    <p><a href="mailto:info@unet.edu.ve">info@unet.edu.ve</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Teléfono</h3>
+                    <p><a href="tel:+582763530422">+58 (276) 353-0422</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">📅</div>
+                    <h3>Fechas</h3>
+                    <p>Del 08 al 11 de Septiembre 2025</p>
+                    <p>Horario: 8:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Formulario de Inscripción</h2>
+                    <p>Completa todos los campos para reservar tu cupo en EVEM 2025</p>
+                </div>
+
+                <form id="registrationForm" class="registration-form">
+                    <!-- Información Personal -->
+                    <fieldset class="form-fieldset">
+                        <legend>Información Personal</legend>
+                        
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">Nombre Completo *</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cedula" class="form-label">Cédula de Identidad *</label>
+                                <input type="text" id="cedula" name="cedula" class="form-input" placeholder="V-12345678" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birthDate" class="form-label">Fecha de Nacimiento *</label>
+                                <input type="date" id="birthDate" name="birthDate" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Correo Electrónico *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Teléfono *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58 424 123 4567" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Información Profesional -->
+                    <fieldset class="form-fieldset">
+                        <legend>Información Profesional</legend>
+                        
+                        <div class="form-group">
+                            <label for="institution" class="form-label">Institución Educativa *</label>
+                            <input type="text" id="institution" name="institution" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="state" class="form-label">Estado *</label>
+                                <select id="state" name="state" class="form-select" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Táchira">Táchira</option>
+                                    <option value="Mérida">Mérida</option>
+                                    <option value="Trujillo">Trujillo</option>
+                                    <option value="Barinas">Barinas</option>
+                                    <option value="Zulia">Zulia</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city" class="form-label">Ciudad *</label>
+                                <input type="text" id="city" name="city" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="position" class="form-label">Cargo o Función *</label>
+                            <select id="position" name="position" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Docente de Matemáticas">Docente de Matemáticas</option>
+                                <option value="Coordinador Académico">Coordinador Académico</option>
+                                <option value="Director">Director</option>
+                                <option value="Estudiante Universitario">Estudiante Universitario</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience" class="form-label">Años de Experiencia Docente *</label>
+                            <select id="experience" name="experience" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="0-2">0 - 2 años</option>
+                                <option value="3-5">3 - 5 años</option>
+                                <option value="6-10">6 - 10 años</option>
+                                <option value="11-15">11 - 15 años</option>
+                                <option value="16+">Más de 15 años</option>
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <!-- Selección de Curso -->
+                    <fieldset class="form-fieldset">
+                        <legend>Selección de Curso</legend>
+                        
+                        <div class="form-group">
+                            <label for="course" class="form-label">Curso de Preferencia *</label>
+                            <select id="course" name="course" class="form-select" required>
+                                <option value="">Seleccione un curso...</option>
+                                <option value="Fracciones">Fracciones - Prof. Pedro Infante (LUZ)</option>
+                                <option value="Geometría">Geometría - Prof. Luis Astorga (ULA)</option>
+                                <option value="Operaciones Básicas">Operaciones Básicas - Prof. Arístides Arellán (ULA)</option>
+                                <option value="Matemática con IA">Matemática con Inteligencia Artificial - Prof. Pedro Méndez (LUZ)</option>
+                                <option value="Derivadas">Derivadas - Prof. Elías Velázco (UPTMa)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expectations" class="form-label">¿Qué esperas de EVEM 2025?</label>
+                            <textarea id="expectations" name="expectations" class="form-textarea" rows="4" placeholder="Cuéntanos tus expectativas y motivaciones para participar..."></textarea>
+                        </div>
+                    </fieldset>
+
+                    <!-- Información Adicional -->
+                    <fieldset class="form-fieldset">
+                        <legend>Información Adicional</legend>
+                        
+                        <div class="form-group">
+                            <label class="form-label">¿Has participado en ediciones anteriores de EVEM? *</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="previousParticipation" value="Si" required>
+                                    Sí
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="previousParticipation" value="No" required>
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" name="newsletter" value="yes">
+                                Deseo recibir información sobre futuros eventos de EVEM
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" name="terms" value="yes" required>
+                                Acepto los términos y condiciones *
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-large">Enviar Inscripción</button>
+                        <button type="reset" class="btn btn-outline">Limpiar Formulario</button>
+                    </div>
+
+                    <p class="form-note">* Campos obligatorios</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title centered">¿Cómo llegar?</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <p>📍 Campus Universitario Paramillo - UNET</p>
+                    <p>Av. Universidad, San Cristóbal, Estado Táchira</p>
+                    <p class="text-muted">Mapa interactivo disponible próximamente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Universidad Nacional Experimental del Táchira</h4>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                    <p>Venezuela</p>
+                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
+                    <p class="footer-email">✉️ info@unet.edu.ve</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="tribute.html">Homenaje</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Aula Virtual</a></li>
+                        <li><a href="#">Biblioteca Digital</a></li>
+                        <li><a href="#">Sistema de Gestión</a></li>
+                        <li><a href="#">Correo Institucional</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contacto EVEM</h4>
+                    <p>Email: evem.tachira@gmail.com</p>
+                    <p>Organiza: Universidad de Los Andes (ULA)</p>
+                    <p>Sede 2025: UNET</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/animations.js"></script>
+    <script src="../js/main.js"></script>
+
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: var(--color-text-light);
+            padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: var(--font-size-5xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
+
+        .page-subtitle {
+            font-size: var(--font-size-xl);
+            opacity: 0.9;
+        }
+
+        .contact-info-section {
+            padding: var(--spacing-4xl) 0;
+            background-color: var(--color-bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .contact-card {
+            background-color: var(--color-bg-primary);
+            padding: var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: transform var(--transition-base);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-card h3 {
+            font-size: var(--font-size-xl);
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-card p {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .contact-card a {
+            color: var(--color-primary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .form-section {
+            padding: var(--spacing-4xl) 0;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--color-bg-primary);
+            padding: var(--spacing-3xl);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .form-header h2 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-fieldset {
+            border: 2px solid var(--color-bg-secondary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .form-fieldset legend {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            padding: 0 var(--spacing-md);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: var(--spacing-xl);
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            margin-top: var(--spacing-lg);
+        }
+
+        .map-section {
+            padding: var(--spacing-4xl) 0;
+            background-color: var(--color-bg-secondary);
+        }
+
+        .map-container {
+            margin-top: var(--spacing-2xl);
+        }
+
+        .map-placeholder {
+            background-color: var(--color-bg-primary);
+            padding: var(--spacing-4xl);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .map-placeholder p {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: var(--spacing-xl);
+            }
+
+            .form-fieldset {
+                padding: var(--spacing-lg);
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+</html>
