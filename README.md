@@ -231,7 +231,7 @@ Este proyecto es para uso de EVEM 2025. Todos los derechos reservados a la Unive
 ## 👥 Créditos
 
 - **Diseño**: Basado en el diseño original de Figma
-- **Desarrollo**: [Tu nombre]
+- **Desarrollo**: Juan Diego Paredes Gámez
 - **Coordinación EVEM**: Universidad de Los Andes
 - **Sede 2025**: UNET
 
