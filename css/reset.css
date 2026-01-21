@@ -1,214 +1,52 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXVII Escuela Venezolana para la Enseñanza de la Matemática - EVEM 2025</title>
-    <meta name="description" content="Evento educativo para docentes de matemáticas. San Cristóbal, Táchira - UNET">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/responsive.css">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="assets/images/evem-logo.png" alt="EVEM Logo" class="logo">
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-                <li><a href="#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
-                <li><a href="#comite" class="nav-link">Comité</a></li>
-                <li><a href="pages/courses.html" class="nav-link">Cursos</a></li>
-                <li><a href="pages/tribute.html" class="nav-link">Homenaje</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                <li><a href="#inscribete" class="btn btn-primary">Inscríbete</a></li>
-            </ul>
-        </div>
-    </nav>
+/* Reset CSS - Normalización básica */
 
-    <!-- Hero Section -->
-    <section class="hero" id="inicio">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">XXVII</h1>
-            <h2 class="hero-subtitle">Escuela Venezolana para la<br>Enseñanza de la Matemática</h2>
-            <p class="hero-edition">EVEM 2025</p>
-            <p class="hero-location">San Cristóbal, Estado Táchira</p>
-            <a href="#inscribete" class="btn btn-hero">Inscríbete Ahora</a>
-        </div>
-        <div class="scroll-indicator">
-            <span></span>
-        </div>
-    </section>
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <!-- About Section -->
-    <section class="about-section" id="sobre-nosotros">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Venite pa' Táchira</h2>
-                <p class="section-subtitle">— EVEM 2025 —</p>
-            </div>
-            <div class="about-content">
-                <p>La Escuela Venezolana para la Enseñanza de la Matemática es un evento educativo anual que reúne docentes de matemáticas de la educación media. Durante cuatro días intensivos, ofrecemos cursos especializados y conferencias magistrales para enriquecer la formación y capacitación de los docentes en esta área fundamental.</p>
-                
-                <p>Nuestro objetivo es fomentar el intercambio de conocimientos, estrategias pedagógicas y experiencias entre los profesionales de la enseñanza de las matemáticas.</p>
-                
-                <p>En esta oportunidad, la Escuela se realizará en la Universidad Nacional Experimental del Táchira (UNET), en la hermosa ciudad de San Cristóbal, capital del Estado Táchira.</p>
-                
-                <p>Se ofrecerán cursos impartidos por profesores universitarios con amplia experiencia. La EVEM, organizada desde la Universidad de Los Andes (ULA), es un evento para educadores de educación media apasionados por las matemáticas. Durante cuatro días intensivos, nos sumergimos en un ambiente de aprendizaje colaborativo y actualización profesional.</p>
-            </div>
-        </div>
-    </section>
+html {
+    scroll-behavior: smooth;
+}
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3 class="stat-number">Talento Nacional</h3>
-                    <p class="stat-label">PROFESORES EXCEPCIONALES</p>
-                </div>
-                <div class="stat-card">
-                    <h3 class="stat-number">Desde 1996</h3>
-                    <p class="stat-label">CRECIENDO JUNTOS</p>
-                </div>
-                <div class="stat-card">
-                    <h3 class="stat-number">Educación Media</h3>
-                    <p class="stat-label">COMPROMISO CON LA ENSEÑANZA</p>
-                </div>
-            </div>
-        </div>
-    </section>
+body {
+    min-height: 100vh;
+    line-height: 1.6;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-    <!-- Cards Section -->
-    <section class="cards-section">
-        <div class="container">
-            <h2 class="section-title centered">Quienes Somos</h2>
-            <div class="cards-grid">
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/images/unet-campus.jpg" alt="Campus UNET">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Sede 2025</span>
-                        <h3 class="card-title">Universidad Nacional Experimental del Táchira</h3>
-                        <p class="card-text">La UNET nos abre sus puertas en esta nueva generación del evento, ofreciendo espacios modernos y una atmósfera académica excepcional en el corazón de Los Andes venezolanos.</p>
-                        <a href="#" class="card-link">Leer más →</a>
-                    </div>
-                </article>
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/images/cursos.jpg" alt="Cursos">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Formación</span>
-                        <h3 class="card-title">Cursos Especializados</h3>
-                        <p class="card-text">Cursos de alta calidad impartidos por profesores universitarios con amplia trayectoria, cubriendo desde fundamentos hasta metodologías innovadoras con tecnología.</p>
-                        <a href="pages/courses.html" class="card-link">Leer más →</a>
-                    </div>
-                </article>
+input, button, textarea, select {
+    font: inherit;
+}
 
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/images/graduacion.jpg" alt="Graduación">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Certificación</span>
-                        <h3 class="card-title">Ceremonia de Graduación 2025</h3>
-                        <p class="card-text">La UNET celebrará el egreso de una nueva generación de docentes actualizados, comprometidos con el desarrollo de prácticas pedagógicas innovadoras en la enseñanza de las matemáticas.</p>
-                        <a href="#" class="card-link">Leer más →</a>
-                    </div>
-                </article>
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
 
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/images/colaboracion.jpg" alt="Colaboración">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Red Nacional</span>
-                        <h3 class="card-title">Alianzas Internacionales</h3>
-                        <p class="card-text">La comunidad académica nacional establece nuevas conexiones internacionales, desarrollando espacios de colaboración para programas de intercambio y actualización estudiantil.</p>
-                        <a href="#" class="card-link">Leer más →</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
+ul, ol {
+    list-style: none;
+}
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="inscribete">
-        <div class="container">
-            <h2 class="cta-title">¿Listo para formar parte de EVEM 2025?</h2>
-            <p class="cta-text">Únete a cientos de docentes comprometidos con la excelencia en la enseñanza de las matemáticas</p>
-            <a href="pages/contact.html" class="btn btn-large">Inscríbete Ahora</a>
-        </div>
-    </section>
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Universidad Nacional Experimental del Táchira</h4>
-                    <p>Av. Universidad, Paramillo</p>
-                    <p>San Cristóbal, Estado Táchira</p>
-                    <p>Venezuela</p>
-                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
-                    <p class="footer-email">✉️ info@unet.edu.ve</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="pages/courses.html">Cursos</a></li>
-                        <li><a href="pages/tribute.html">Homenaje</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Servicios</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Aula Virtual</a></li>
-                        <li><a href="#">Biblioteca Digital</a></li>
-                        <li><a href="#">Sistema de Gestión</a></li>
-                        <li><a href="#">Correo Institucional</a></li>
-                        <li><a href="#">Soporte Técnico</a></li>
-                    </ul>
-                </div>
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
 
-                <div class="footer-col">
-                    <h4>Contacto EVEM</h4>
-                    <p>Email: evem.tachira@gmail.com</p>
-                    <p>Organiza: Universidad de Los Andes (ULA)</p>
-                    <p>Sede 2025: UNET</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/data.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
+#root, #__next {
+    isolation: isolate;
+}
