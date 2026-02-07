@@ -1,148 +1,313 @@
-// Navigation - Lógica de navegación y menú
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - EVEM 2025</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="logo">
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../index.html#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="../index.html#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
+                <li><a href="../index.html#comite" class="nav-link">Comité</a></li>
+                <li><a href="courses.html" class="nav-link active">Cursos</a></li>
+                <li><a href="tribute.html" class="nav-link">Homenaje</a></li>
+                <li><a href="contact.html" class="nav-link">Contacto</a></li>
+                <li><a href="contact.html" class="btn btn-primary">Inscríbete</a></li>
+            </ul>
+        </div>
+    </nav>
 
-class Navigation {
-    constructor() {
-        this.navToggle = document.querySelector('.nav-toggle');
-        this.navMenu = document.querySelector('.nav-menu');
-        this.navLinks = document.querySelectorAll('.nav-link');
-        this.navbar = document.querySelector('.navbar');
-        
-        this.init();
-    }
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Nuestros Cursos</h1>
+            <p class="page-subtitle">EVEM 2025 - Cuatro días de formación intensiva</p>
+        </div>
+    </section>
 
-    init() {
-        this.setupMobileMenu();
-        this.setupSmoothScroll();
-        this.setupActiveLinks();
-        this.setupStickyNavbar();
-    }
+    <!-- Courses Section -->
+    <section class="courses-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">CONOCE NUESTROS CURSOS</h2>
+                <p class="lead" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    Cada curso está diseñado para enriquecer tu práctica docente con metodologías innovadoras y contenidos actualizados. Todos los cursos tienen una duración de 4 días intensivos.
+                </p>
+            </div>
 
-    // Menú móvil
-    setupMobileMenu() {
-        if (!this.navToggle) return;
+            <div class="courses-list">
+                <!-- Curso 1: Fracciones -->
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3 class="course-title">Fracciones</h3>
+                            <p class="course-professor">Prof. Pedro Infante</p>
+                            <p class="course-institution">Universidad del Zulia (LUZ)</p>
+                        </div>
+                        <div class="course-icon">📊</div>
+                    </div>
+                    <p class="course-description">
+                        Estrategias innovadoras para la enseñanza de fracciones en educación media. Este curso ofrece un abordaje conceptual y metodológico profundo para superar las dificultades más comunes en el aprendizaje de operaciones con fracciones. Se exploran representaciones visuales, manipulativas y contextualizadas que facilitan la comprensión de este contenido fundamental.
+                    </p>
+                    <div class="course-meta">
+                        <span class="badge">4 días</span>
+                        <span class="badge">Intermedio</span>
+                    </div>
+                </article>
 
-        this.navToggle.addEventListener('click', () => {
-            this.toggleMenu();
-        });
+                <!-- Curso 2: Geometría -->
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3 class="course-title">Geometría</h3>
+                            <p class="course-professor">Prof. Luis Astorga</p>
+                            <p class="course-institution">Universidad de Los Andes (ULA)</p>
+                        </div>
+                        <div class="course-icon">📐</div>
+                    </div>
+                    <p class="course-description">
+                        Exploración profunda de conceptos geométricos y su enseñanza efectiva en el aula. El curso cubre geometría plana y espacial, incluyendo el uso de herramientas tradicionales como regla y compás, así como software de geometría dinámica. Se enfatiza el desarrollo del razonamiento espacial y la demostración matemática.
+                    </p>
+                    <div class="course-meta">
+                        <span class="badge">4 días</span>
+                        <span class="badge">Todos los niveles</span>
+                    </div>
+                </article>
 
-        // Cerrar menú al hacer click en un enlace
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    this.closeMenu();
-                }
-            });
-        });
+                <!-- Curso 3: Operaciones Básicas -->
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3 class="course-title">Operaciones Básicas</h3>
+                            <p class="course-professor">Prof. Arístides Arellán</p>
+                            <p class="course-institution">Universidad de Los Andes (ULA)</p>
+                        </div>
+                        <div class="course-icon">➗</div>
+                    </div>
+                    <p class="course-description">
+                        Fundamentos de las operaciones aritméticas y su enseñanza significativa. Este curso revisa las bases conceptuales de suma, resta, multiplicación y división, proporcionando estrategias pedagógicas para desarrollar el sentido numérico y el razonamiento matemático desde los fundamentos. Ideal para fortalecer las bases de estudiantes con dificultades.
+                    </p>
+                    <div class="course-meta">
+                        <span class="badge">4 días</span>
+                        <span class="badge">Básico</span>
+                    </div>
+                </article>
 
-        // Cerrar menú al hacer click fuera
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768 && 
-                this.navMenu.classList.contains('active') &&
-                !this.navMenu.contains(e.target) &&
-                !this.navToggle.contains(e.target)) {
-                this.closeMenu();
-            }
-        });
-    }
+                <!-- Curso 4: Matemática con IA -->
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3 class="course-title">Matemática con Inteligencia Artificial</h3>
+                            <p class="course-professor">Prof. Pedro Méndez</p>
+                            <p class="course-institution">Universidad del Zulia (LUZ)</p>
+                        </div>
+                        <div class="course-icon">🤖</div>
+                    </div>
+                    <p class="course-description">
+                        Integración de herramientas de Inteligencia Artificial en la enseñanza de matemáticas. Aprende a utilizar ChatGPT, Wolfram Alpha, GeoGebra y otras plataformas emergentes para crear experiencias de aprendizaje innovadoras y personalizadas. Incluye estrategias para promover el pensamiento crítico en la era de la IA.
+                    </p>
+                    <div class="course-meta">
+                        <span class="badge">4 días</span>
+                        <span class="badge">Avanzado</span>
+                    </div>
+                </article>
 
-    toggleMenu() {
-        this.navMenu.classList.toggle('active');
-        this.navToggle.classList.toggle('active');
-        
-        // Prevenir scroll cuando el menú está abierto
-        if (this.navMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
+                <!-- Curso 5: Derivadas -->
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3 class="course-title">Derivadas</h3>
+                            <p class="course-professor">Prof. Elías Velázco</p>
+                            <p class="course-institution">Universidad Politécnica Territorial de Mérida Andes (UPTMa)</p>
+                        </div>
+                        <div class="course-icon">📈</div>
+                    </div>
+                    <p class="course-description">
+                        Introducción al cálculo diferencial para docentes de educación media. El curso aborda los conceptos fundamentales de límites y derivadas, sus interpretaciones geométricas y aplicaciones prácticas. Incluye estrategias didácticas para hacer accesible este contenido avanzado a estudiantes de últimos años de bachillerato.
+                    </p>
+                    <div class="course-meta">
+                        <span class="badge">4 días</span>
+                        <span class="badge">Avanzado</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-box">
+                    <h3>📅 Fechas</h3>
+                    <p>Del 08 al 11 de Septiembre 2025</p>
+                </div>
+                <div class="info-box">
+                    <h3>📍 Lugar</h3>
+                    <p>Universidad Nacional Experimental del Táchira<br>San Cristóbal, Estado Táchira</p>
+                </div>
+                <div class="info-box">
+                    <h3>🎓 Certificación</h3>
+                    <p>Certificado avalado por la ULA y UNET</p>
+                </div>
+                <div class="info-box">
+                    <h3>👥 Modalidad</h3>
+                    <p>Presencial con componente práctico</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">¿Listo para inscribirte?</h2>
+            <p class="cta-text">Reserva tu cupo para EVEM 2025 y forma parte de esta experiencia transformadora</p>
+            <a href="contact.html" class="btn btn-large">Inscríbete Ahora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Universidad Nacional Experimental del Táchira</h4>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                    <p>Venezuela</p>
+                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
+                    <p class="footer-email">✉️ info@unet.edu.ve</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="tribute.html">Homenaje</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Aula Virtual</a></li>
+                        <li><a href="#">Biblioteca Digital</a></li>
+                        <li><a href="#">Sistema de Gestión</a></li>
+                        <li><a href="#">Correo Institucional</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contacto EVEM</h4>
+                    <p>Email: evem.tachira@gmail.com</p>
+                    <p>Organiza: Universidad de Los Andes (ULA)</p>
+                    <p>Sede 2025: UNET</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/animations.js"></script>
+    <script src="../js/main.js"></script>
+
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: var(--color-text-light);
+            padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+            text-align: center;
         }
-    }
 
-    closeMenu() {
-        this.navMenu.classList.remove('active');
-        this.navToggle.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+        .page-title {
+            font-size: var(--font-size-5xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
 
-    // Scroll suave
-    setupSmoothScroll() {
-        this.navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            
-            // Solo aplicar a anchors internos
-            if (href && href.startsWith('#')) {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        const navbarHeight = this.navbar.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - navbarHeight;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            }
-        });
-    }
+        .page-subtitle {
+            font-size: var(--font-size-xl);
+            opacity: 0.9;
+        }
 
-    // Enlaces activos según scroll
-    setupActiveLinks() {
-        const sections = document.querySelectorAll('section[id]');
-        
-        const observerOptions = {
-            rootMargin: '-100px 0px -66%',
-            threshold: 0
-        };
+        .courses-section {
+            padding: var(--spacing-4xl) 0;
+        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    this.setActiveLink(id);
-                }
-            });
-        }, observerOptions);
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-3xl);
+        }
 
-        sections.forEach(section => observer.observe(section));
-    }
+        .course-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
 
-    setActiveLink(id) {
-        this.navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${id}`) {
-                link.classList.add('active');
-            }
-        });
-    }
+        .info-section {
+            background-color: var(--color-bg-secondary);
+            padding: var(--spacing-4xl) 0;
+        }
 
-    // Navbar con sombra al hacer scroll
-    setupStickyNavbar() {
-        let lastScroll = 0;
-        
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            // Agregar/quitar sombra
-            if (currentScroll > 10) {
-                this.navbar.style.boxShadow = 'var(--shadow-lg)';
-            } else {
-                this.navbar.style.boxShadow = 'var(--shadow-md)';
-            }
-            
-            lastScroll = currentScroll;
-        });
-    }
-}
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+        }
 
-// Inicializar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new Navigation();
-    });
-} else {
-    new Navigation();
-}
+        .info-box {
+            background-color: var(--color-bg-primary);
+            padding: var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-box h3 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+
+        .info-box p {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+    </style>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 class EVEMApp {
     constructor() {
-        this.data = EVEM_DATA;
+        this.data = EVEM_DATA; // Mantenemos data estática para textos
         this.init();
     }
 
@@ -11,70 +11,141 @@ class EVEMApp {
         this.updateDynamicContent();
         this.setupFormHandlers();
         this.setupEventListeners();
+        
+        // NUEVO: Cargar cursos desde la base de datos si estamos en la página de contacto
+        this.loadDatabaseCourses(); 
+        
         console.log('✅ Aplicación inicializada correctamente');
     }
 
-    // Actualizar contenido dinámico
+    // --- NUEVA FUNCIÓN: Cargar cursos desde MySQL ---
+    async loadDatabaseCourses() {
+        const courseSelect = document.getElementById('course');
+        // Si no existe el select, no estamos en la página de contacto, salimos.
+        if (!courseSelect) return;
+
+        try {
+            // Usamos la API que creamos
+            const courses = await api.getCourses();
+            
+            // Limpiamos las opciones hardcodeadas del HTML
+            courseSelect.innerHTML = '<option value="">Seleccione un curso...</option>';
+
+            courses.forEach(course => {
+                const isFull = course.current_enrollment >= course.max_capacity;
+                const option = document.createElement('option');
+                // Usamos el título tal cual viene de la DB
+                option.value = course.title; 
+                option.textContent = `${course.title} - ${course.professor_name} ${isFull ? '(AGOTADO)' : ''}`;
+                
+                if (isFull) option.disabled = true;
+                
+                courseSelect.appendChild(option);
+            });
+            console.log('📡 Cursos cargados desde Base de Datos');
+        } catch (error) {
+            console.error('Error cargando cursos:', error);
+            this.showNotification('Error conectando con el servidor de cursos', 'error');
+        }
+    }
+
+    // Actualizar contenido dinámico (Textos estáticos)
     updateDynamicContent() {
         this.updateEventInfo();
         this.updateContactInfo();
     }
 
     updateEventInfo() {
-        // Actualizar fechas dinámicamente
         const dateElements = document.querySelectorAll('[data-event-dates]');
-        dateElements.forEach(el => {
-            el.textContent = this.data.event.dates.display;
-        });
+        dateElements.forEach(el => el.textContent = this.data.event.dates.display);
 
-        // Actualizar ubicación
         const locationElements = document.querySelectorAll('[data-event-location]');
-        locationElements.forEach(el => {
-            el.textContent = `${this.data.event.location.city}, Estado ${this.data.event.location.state}`;
-        });
+        locationElements.forEach(el => el.textContent = `${this.data.event.location.city}, Estado ${this.data.event.location.state}`);
     }
 
     updateContactInfo() {
-        // Actualizar email
         const emailElements = document.querySelectorAll('[data-contact-email]');
         emailElements.forEach(el => {
             el.textContent = this.data.event.contact.email;
-            if (el.tagName === 'A') {
-                el.href = `mailto:${this.data.event.contact.email}`;
-            }
+            if (el.tagName === 'A') el.href = `mailto:${this.data.event.contact.email}`;
         });
 
-        // Actualizar teléfono
         const phoneElements = document.querySelectorAll('[data-contact-phone]');
         phoneElements.forEach(el => {
             el.textContent = this.data.event.contact.phone;
-            if (el.tagName === 'A') {
-                el.href = `tel:${this.data.event.contact.phone.replace(/\s/g, '')}`;
-            }
+            if (el.tagName === 'A') el.href = `tel:${this.data.event.contact.phone.replace(/\s/g, '')}`;
         });
     }
 
-    // Manejadores de formularios
     setupFormHandlers() {
         const forms = document.querySelectorAll('form');
         forms.forEach(form => {
-            form.addEventListener('submit', (e) => this.handleFormSubmit(e));
+            // Usamos una función async para poder esperar la respuesta del servidor
+            form.addEventListener('submit', async (e) => await this.handleFormSubmit(e));
         });
     }
 
-    handleFormSubmit(event) {
+    // --- FUNCIÓN MODIFICADA: Enviar a MySQL ---
+    async handleFormSubmit(event) {
         event.preventDefault();
         const form = event.target;
-        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
         
-        console.log('📝 Formulario enviado:', Object.fromEntries(formData));
-        
-        // Aquí se integraría con un backend real
-        this.showNotification('¡Formulario enviado correctamente!', 'success');
-        form.reset();
+        // Feedback visual de carga
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Enviando...";
+
+        try {
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            // ADAPTACIÓN: El backend espera 'coursePreference', el HTML tiene 'course'
+            // Mapeamos los datos para que coincidan con la base de datos
+            const backendData = {
+                cedula: data.cedula,
+                fullName: data.fullName,
+                birthDate: data.birthDate,
+                email: data.email,
+                phone: data.phone,
+                institution: data.institution,
+                state: data.state,
+                city: data.city,
+                position: data.position,
+                experienceYears: data.experience, // El HTML dice 'experience', backend espera 'experienceYears'
+                coursePreference: data.course,    // El HTML dice 'course', backend espera 'coursePreference'
+                expectations: data.expectations,
+                previousParticipation: data.previousParticipation,
+                wantsNewsletter: data.newsletter === 'yes',
+                acceptedTerms: data.terms === 'yes'
+            };
+
+            // Enviamos al Backend
+            console.log('📤 Enviando datos al servidor:', backendData);
+            const response = await api.registerParticipant(backendData);
+            
+            // Éxito
+           this.showNotification(`¡Inscripción Exitosa! ID: ${response.id}`, 'success');
+            form.reset();
+            
+            // Recargar cursos por si se llenó alguno
+            this.loadDatabaseCourses();
+
+        } catch (error) {
+            console.error('Error en registro:', error);
+            // Mostrar mensaje de error del backend (ej: "Ya existe esa cédula")
+            let errorMsg = error.message;
+            if(errorMsg === 'Failed to fetch') errorMsg = "No hay conexión con el servidor";
+            
+            this.showNotification(errorMsg, 'error');
+        } finally {
+            // Restaurar botón
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     }
 
-    // Mostrar notificaciones
+    // Mostrar notificaciones (Mantenemos tu diseño original)
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
@@ -86,7 +157,6 @@ class EVEMApp {
             <button class="notification-close" aria-label="Cerrar">×</button>
         `;
 
-        // Estilos de notificación
         notification.style.cssText = `
             position: fixed;
             top: 20px;
@@ -101,18 +171,17 @@ class EVEMApp {
             gap: 1rem;
             animation: slideIn 0.3s ease;
             max-width: 400px;
+            border-left: 4px solid ${this.getColorByType(type)};
         `;
 
         document.body.appendChild(notification);
 
-        // Cerrar al hacer click
         const closeBtn = notification.querySelector('.notification-close');
         closeBtn.addEventListener('click', () => {
             notification.style.animation = 'slideOut 0.3s ease';
             setTimeout(() => notification.remove(), 300);
         });
 
-        // Auto cerrar después de 5 segundos
         setTimeout(() => {
             if (notification.parentElement) {
                 notification.style.animation = 'slideOut 0.3s ease';
@@ -122,178 +191,40 @@ class EVEMApp {
     }
 
     getNotificationIcon(type) {
-        const icons = {
-            success: '✓',
-            error: '✗',
-            warning: '⚠',
-            info: 'ℹ'
-        };
+        const icons = { success: '✓', error: '✗', warning: '⚠', info: 'ℹ' };
         return icons[type] || icons.info;
     }
 
-    // Event listeners globales
+    getColorByType(type) {
+        const colors = { success: '#27AE60', error: '#E74C3C', warning: '#F39C12', info: '#3498DB' };
+        return colors[type] || '#333';
+    }
+
     setupEventListeners() {
-        // Prevenir comportamiento por defecto de enlaces vacíos
         document.querySelectorAll('a[href="#"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-            });
+            link.addEventListener('click', (e) => e.preventDefault());
         });
-
-        // Debug mode con Ctrl+Shift+D
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-                this.toggleDebugMode();
-            }
-        });
-
-        // Detectar modo offline
-        window.addEventListener('offline', () => {
-            this.showNotification('Sin conexión a Internet', 'warning');
-        });
-
-        window.addEventListener('online', () => {
-            this.showNotification('Conexión restaurada', 'success');
-        });
-    }
-
-    // Modo debug
-    toggleDebugMode() {
-        document.body.classList.toggle('debug-mode');
-        const isDebug = document.body.classList.contains('debug-mode');
-        
-        if (isDebug) {
-            console.log('🐛 Modo debug activado');
-            console.log('📊 Datos de la aplicación:', this.data);
-        } else {
-            console.log('🐛 Modo debug desactivado');
-        }
-    }
-
-    // Utilidades
-    static formatDate(dateString) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString('es-ES', options);
-    }
-
-    static validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    static debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
     }
 }
 
-// Agregar estilos de animación para notificaciones
+// Estilos de notificación
 const notificationStyles = document.createElement('style');
 notificationStyles.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-
-    .notification-content {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        flex: 1;
-    }
-
-    .notification-icon {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .notification-success .notification-icon {
-        color: var(--color-success, #27AE60);
-    }
-
-    .notification-error .notification-icon {
-        color: var(--color-error, #E74C3C);
-    }
-
-    .notification-warning .notification-icon {
-        color: var(--color-warning, #F39C12);
-    }
-
-    .notification-info .notification-icon {
-        color: var(--color-info, #3498DB);
-    }
-
-    .notification-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #999;
-        padding: 0;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .notification-close:hover {
-        color: #333;
-    }
-
-    /* Debug mode styles */
-    .debug-mode * {
-        outline: 1px solid rgba(255, 0, 0, 0.3);
-    }
-
-    .debug-mode *:hover {
-        outline: 2px solid rgba(255, 0, 0, 0.6);
-    }
-
-    @media (max-width: 768px) {
-        .notification {
-            left: 10px !important;
-            right: 10px !important;
-            max-width: calc(100% - 20px) !important;
-        }
-    }
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
+    .notification-content { display: flex; align-items: center; gap: 0.5rem; flex: 1; }
+    .notification-icon { font-size: 1.5rem; font-weight: bold; }
+    .notification-success .notification-icon { color: #27AE60; }
+    .notification-error .notification-icon { color: #E74C3C; }
+    .notification-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
 `;
 document.head.appendChild(notificationStyles);
 
-// Inicializar aplicación cuando el DOM esté listo
+// Inicializar
 let app;
-
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        app = new EVEMApp();
-    });
+    document.addEventListener('DOMContentLoaded', () => { app = new EVEMApp(); });
 } else {
     app = new EVEMApp();
 }
-
-// Exportar para uso global
 window.EVEMApp = EVEMApp;

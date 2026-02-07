@@ -15,41 +15,40 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="assets/images/evem-logo.png" alt="EVEM Logo" class="logo">
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="pages/contact.html">👤 Inscríbete</a></li>
+                <li><a href="#about">❓ ¿Quiénes Somos?</a></li>
+                <li><a href="pages/contact.html">💬 Contacto</a></li>
+            </ul>
+
+            <div class="central-logo-container">
+                <img src="assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
             </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-                <li><a href="#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
-                <li><a href="#comite" class="nav-link">Comité</a></li>
-                <li><a href="pages/courses.html" class="nav-link">Cursos</a></li>
-                <li><a href="pages/tribute.html" class="nav-link">Homenaje</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                <li><a href="#inscribete" class="btn btn-primary">Inscríbete</a></li>
+
+            <ul class="nav-links">
+                <li><a href="#committee">🏠 Comité</a></li>
+                <li><a href="#speakers">👥 Conferencista</a></li>
+                <li><a href="pages/courses.html">💠 Cursos</a></li>
             </ul>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="inicio">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">XXVII</h1>
-            <h2 class="hero-subtitle">Escuela Venezolana para la<br>Enseñanza de la Matemática</h2>
-            <p class="hero-edition">EVEM 2025</p>
-            <p class="hero-location">San Cristóbal, Estado Táchira</p>
-            <a href="#inscribete" class="btn btn-hero">Inscríbete Ahora</a>
-        </div>
-        <div class="scroll-indicator">
-            <span></span>
+    <section class="hero-2026">
+        <div class="hero-overlay-blue"></div>
+        <div class="hero-content-2026">
+            <h2 class="hero-edition">XXVIII</h2>
+            <h1 class="hero-title-main">Escuela Venezolana para la<br>Enseñanza de la Matemática</h1>
+            
+            <div class="hero-subtitle-blue">EVEM 2026</div>
+
+            <div class="logos-container">
+                <img src="assets/images/unet-logo.png" alt="UNET" class="partner-logo">
+                <img src="assets/images/ula-logo.png" alt="ULA" class="partner-logo">
+                <img src="assets/images/evem-icon.png" alt="EVEM" class="partner-logo">
+                <img src="assets/images/encomat-logo.png" alt="ENCOMAT" class="partner-logo">
+            </div>
         </div>
     </section>
 
@@ -87,6 +86,84 @@
                 <div class="stat-card">
                     <h3 class="stat-number">Educación Media</h3>
                     <p class="stat-label">COMPROMISO CON LA ENSEÑANZA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Committee Section -->
+    <section class="committee-section" id="comite">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comité Organizador</h2>
+                <p class="section-subtitle">El equipo detrás de EVEM 2025</p>
+            </div>
+
+            <div class="committee-grid">
+                <!-- Coordinador General -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Dr. José Ramírez</h3>
+                    <p class="committee-role">Coordinador General</p>
+                    <p class="committee-institution">Universidad de Los Andes (ULA)</p>
+                    <a href="mailto:jose.ramirez@ula.ve" class="committee-email">✉️ jose.ramirez@ula.ve</a>
+                </div>
+
+                <!-- Coordinadora Académica -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Prof. María González</h3>
+                    <p class="committee-role">Coordinadora Académica</p>
+                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
+                    <a href="mailto:maria.gonzalez@unet.edu.ve" class="committee-email">✉️ maria.gonzalez@unet.edu.ve</a>
+                </div>
+
+                <!-- Coordinador de Logística -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Prof. Carlos Pérez</h3>
+                    <p class="committee-role">Coordinador de Logística</p>
+                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
+                    <a href="mailto:carlos.perez@unet.edu.ve" class="committee-email">✉️ carlos.perez@unet.edu.ve</a>
+                </div>
+
+                <!-- Coordinadora de Comunicaciones -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Prof. Ana Rodríguez</h3>
+                    <p class="committee-role">Coordinadora de Comunicaciones</p>
+                    <p class="committee-institution">Universidad de Los Andes (ULA)</p>
+                    <a href="mailto:ana.rodriguez@ula.ve" class="committee-email">✉️ ana.rodriguez@ula.ve</a>
+                </div>
+
+                <!-- Coordinador de Tecnología -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Ing. Luis Martínez</h3>
+                    <p class="committee-role">Coordinador de Tecnología</p>
+                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
+                    <a href="mailto:luis.martinez@unet.edu.ve" class="committee-email">✉️ luis.martinez@unet.edu.ve</a>
+                </div>
+
+                <!-- Coordinadora de Inscripciones -->
+                <div class="committee-card">
+                    <div class="committee-photo">
+                        <div class="photo-placeholder">👤</div>
+                    </div>
+                    <h3 class="committee-name">Prof. Elena Jiménez</h3>
+                    <p class="committee-role">Coordinadora de Inscripciones</p>
+                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
+                    <a href="mailto:elena.jimenez@unet.edu.ve" class="committee-email">✉️ elena.jimenez@unet.edu.ve</a>
                 </div>
             </div>
         </div>
@@ -153,7 +230,11 @@
         <div class="container">
             <h2 class="cta-title">¿Listo para formar parte de EVEM 2025?</h2>
             <p class="cta-text">Únete a cientos de docentes comprometidos con la excelencia en la enseñanza de las matemáticas</p>
-            <a href="pages/contact.html" class="btn btn-large">Inscríbete Ahora</a>
+            
+            <div style="display: flex; justify-content: center; margin-top: 30px;">
+                <a href="pages/contact.html" class="button btn-animate btn-type1" aria-label="Inscribirse en EVEM"></a>
+            </div>
+            
         </div>
     </section>
 
@@ -209,6 +290,10 @@
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/animations.js"></script>
+
+    <script src="js/api.js"></script>
     <script src="js/main.js"></script>
+
+
 </body>
 </html>
