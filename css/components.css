@@ -300,3 +300,155 @@
     background-color: var(--color-primary-dark);
     transform: translateY(-5px);
 }
+
+/* Committee Cards */
+.committee-section {
+    padding: var(--spacing-4xl) 0;
+    background-color: var(--color-bg-secondary);
+}
+
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-2xl);
+    margin-top: var(--spacing-3xl);
+}
+
+.committee-card {
+    background-color: var(--color-bg-primary);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.committee-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.committee-photo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--spacing-lg);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--color-primary);
+}
+
+.committee-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    color: var(--color-text-light);
+    font-size: 3rem;
+}
+
+.committee-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.committee-role {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.committee-institution {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.4;
+}
+
+.committee-email {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.committee-email:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+
+/* --- BOTÓN ANIMADO TIPO UIVERSE (Adaptado) --- */
+.btn-animate {
+  height: 55px;
+  width: 200px; /* Un poco más ancho para que quepa el texto */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  /* Para centrarlo si está en un div flex */
+  display: inline-block; 
+}
+
+.btn-animate:hover {
+  box-shadow: 0 4px 25px rgba(52, 152, 219, 0.6); /* Resplandor azul al hover */
+}
+
+.btn-type1::after {
+  content: "¡INSCRÍBETE!"; /* Texto al pasar el mouse */
+  height: 55px;
+  width: 100%; /* Ocupa todo el ancho del botón */
+  background-color: #2c3e50; /* Azul Oscuro de fondo */
+  color: #fff; /* Texto blanco */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(55px); /* Escondido abajo */
+  font-size: 1.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+  letter-spacing: 1px;
+}
+
+.btn-type1::before {
+  content: "EVEM 2026"; /* Texto normal */
+  height: 55px;
+  width: 100%;
+  background-color: #fff; /* Fondo blanco */
+  color: #2c3e50; /* Texto Azul Oscuro */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(0px) scale(1.1);
+  font-size: 1.3rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-type1:hover::after {
+  transform: translateY(0) scale(1.1); /* Sube y aparece */
+}
+
+.btn-type1:hover::before {
+  transform: translateY(-55px) scale(0) rotate(10deg); /* Se va girando hacia arriba */
+}

@@ -11,22 +11,85 @@
 /* Navigation */
 .navbar {
     background-color: var(--color-primary);
-    padding: var(--spacing-md) 0;
+    padding: 0;
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
     box-shadow: var(--shadow-md);
 }
 
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
+.nav-wrapper {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    position: relative;
+    padding: 0 var(--container-padding);
 }
 
-.nav-brand .logo {
-    height: 50px;
-    width: auto;
+.nav-left,
+.nav-right {
+    display: flex;
+    gap: 0;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+    border-bottom: 3px solid transparent;
+}
+
+.nav-button:hover {
+    background-color: var(--color-primary-dark);
+    border-bottom-color: var(--color-secondary);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+}
+
+.nav-text {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-sm) 0;
+    position: relative;
+    z-index: 10;
+}
+
+.logo-circle {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    top: -20px;
+}
+
+.main-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
 }
 
 .nav-toggle {
@@ -34,6 +97,11 @@
     flex-direction: column;
     gap: 4px;
     padding: var(--spacing-sm);
+    position: absolute;
+    right: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
 }
 
 .nav-toggle span {
@@ -44,22 +112,19 @@
     transition: var(--transition-base);
 }
 
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xl);
+.nav-mobile-menu {
+    display: none;
 }
 
-.nav-link {
+.nav-mobile-link {
+    padding: var(--spacing-md) var(--spacing-lg);
     color: var(--color-text-light);
+    text-decoration: none;
     font-weight: var(--font-weight-medium);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    transition: background-color var(--transition-fast);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-mobile-link:hover {
     background-color: var(--color-primary-dark);
 }
 
@@ -281,4 +346,178 @@ section {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: var(--font-size-sm);
     opacity: 0.7;
+}
+
+/* --- HEADER TIPO INSTITUCIONAL --- */
+.top-bar {
+    background-color: #f1f1f1;
+    /* Quitamos el border-bottom azul oscuro para que se vea más limpio si prefieres */
+    /* border-bottom: 4px solid #2c3e50; */
+    border-bottom: 1px solid #ddd; /* O dejamos uno muy sutil gris */
+    padding: 0;
+    position: sticky; /* Hacemos que se pegue al bajar */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px; /* Un poco más alto para que respire */
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links a:hover {
+    color: var(--color-primary);
+}
+
+/* --- LOGO CENTRAL (Versión Estirada) --- */
+.central-logo-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+
+    /* Aumentamos la altura para que baje más */
+    width: 140px;
+    height: 135px; /* Antes era 80px */
+
+    /* Mantenemos la curva suave abajo */
+    border-radius: 0 0 50% 50%;
+
+    background: white;
+    /* Sombra un poco más pronunciada para dar profundidad */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alineamos arriba... */
+    padding-top: 15px; /* ...y empujamos el logo hacia abajo con padding */
+
+    z-index: 1001;
+    border-top: none;
+}
+
+.central-logo {
+    width: 90px; /* Un pelín más grande */
+    height: auto;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+
+/* Efecto opcional: que el logo crezca un poco al pasar el mouse */
+.central-logo-container:hover .central-logo {
+    transform: scale(1.05);
+}
+
+/* --- SOLUCIÓN PARA QUE NO TAPE EL CONTENIDO AL HACER CLIC --- */
+html {
+    scroll-behavior: smooth;
+    /* Esto crea un "colchón" invisible arriba cuando haces clic en un enlace */
+    scroll-padding-top: 120px; 
+}
+
+/* --- ESPACIADO PARA PÁGINAS INTERNAS (CONTACTO) --- */
+/* Agrega esta clase al body o al main de contact.html si se ve muy pegado */
+.internal-page-padding {
+    padding-top: 40px; 
+}
+
+/* --- NUEVO HERO --- */
+.hero-2026 {
+    background: url('../assets/images/hero-tachira.jpg') no-repeat center center/cover;
+    /* Usa un gradiente azul superpuesto como en la imagen */
+    position: relative;
+    padding: 160px 0 60px; /* Espacio arriba para el logo */
+    text-align: center;
+    color: white;
+}
+
+.hero-overlay-blue {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(44, 62, 80, 0.6), rgba(52, 152, 219, 0.8));
+    z-index: 1;
+}
+
+.hero-content-2026 {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-edition {
+    font-size: 4rem;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+.hero-title-main {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.hero-subtitle-blue {
+    font-size: 5rem; /* EVEM 2026 gigante */
+    font-weight: 900;
+    color: #aaddff; /* Un azul clarito brillante */
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+    margin: 20px 0;
+    letter-spacing: 2px;
+    background: linear-gradient(to bottom, #fff, #8ecae6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Logos Grid */
+.logos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 40px;
+    background: rgba(255,255,255,0.1); /* Fondo sutil */
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.partner-logo {
+    height: 80px; /* Ajusta según tus logos */
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: scale(1.1);
 }

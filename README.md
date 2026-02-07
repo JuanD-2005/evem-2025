@@ -1,241 +1,130 @@
-# EVEM 2025 - Portal Web
+# EVEM 2025 - Portal Web & Sistema de Inscripción
 
-Portal oficial de la XXVII Escuela Venezolana para la Enseñanza de la Matemática, organizada por la Universidad de Los Andes (ULA) y hospedada en la Universidad Nacional Experimental del Táchira (UNET).
+Portal oficial y sistema de gestión para la **XXVIII Escuela Venezolana para la Enseñanza de la Matemática**, organizado por la Universidad de Los Andes (ULA) y hospedado en la Universidad Nacional Experimental del Táchira (UNET).
 
-## 🚀 Características
+> **Estado:** 🟢 Desarrollo Activo / Full Stack Funcional
+> **Versión:** 2.0.0 (Integración Backend & Base de Datos)
 
-- **Diseño Responsive**: Adaptado para desktop, tablet y móvil
-- **Arquitectura Modular**: Código organizado y mantenible
-- **Sin dependencias externas**: Solo HTML, CSS y JavaScript vanilla
-- **Optimizado para rendimiento**: Lazy loading, animaciones suaves
-- **Accesible**: Semántica HTML5, navegación por teclado
-- **SEO-friendly**: Meta tags, estructura semántica
+## 🚀 Tecnologías Utilizadas
 
-## 📁 Estructura del Proyecto
+El proyecto ha evolucionado de un sitio estático a una aplicación web dinámica **Full Stack**.
 
-```
-evem-2025/
-├── index.html                 # Página principal
-├── css/
-│   ├── reset.css             # Normalización de estilos
-│   ├── variables.css         # Variables CSS (colores, espaciados)
-│   ├── typography.css        # Estilos tipográficos
-│   ├── layout.css            # Layouts y estructura
-│   ├── components.css        # Componentes reutilizables
-│   └── responsive.css        # Media queries
-├── js/
-│   ├── main.js               # Inicialización principal
-│   ├── navigation.js         # Navegación y menú
-│   ├── animations.js         # Animaciones
-│   └── data.js               # Datos del evento
-├── pages/
-│   ├── courses.html          # Página de cursos
-│   ├── tribute.html          # Homenaje a Darío Durán
-│   └── contact.html          # Contacto e inscripción
-└── assets/
-    └── images/               # Imágenes del sitio
-```
+### Frontend (Cliente)
+- **HTML5 Semántico**: Estructura optimizada y accesible.
+- **CSS3 Moderno**: Diseño responsivo, variables CSS, animaciones y diseño institucional.
+- **JavaScript (Vanilla ES6+)**: Lógica del cliente, manejo del DOM y comunicación asíncrona (Fetch API).
 
-## 🎨 Paleta de Colores
-
-- **Primary**: #4267B2 (Azul EVEM)
-- **Primary Dark**: #2D4A8C
-- **Secondary**: #F4A261 (Naranja)
-- **Accent**: #E76F51
-- **Backgrounds**: #FFFFFF, #F8F9FA, #2C3E50
-
-## 📋 Páginas Incluidas
-
-### 1. index.html - Página Principal
-- Hero section con imagen de fondo
-- Sección "Sobre Nosotros"
-- Estadísticas del evento
-- Cards informativas
-- Call to Action
-- Footer completo
-
-### 2. pages/courses.html - Cursos
-- Listado detallado de los 5 cursos
-- Información de profesores
-- Niveles y duración
-- Sección de información práctica
-
-### 3. pages/tribute.html - Homenaje
-- Historia de Darío Durán
-- Mensaje de Arístides
-- Legado de EVEM
-- Diseño emotivo y respetuoso
-
-### 4. pages/contact.html - Contacto
-- Formulario de inscripción completo
-- Información de contacto
-- Ubicación
-- Validación de formularios
-
-## 🛠️ Funcionalidades JavaScript
-
-### main.js
-- Inicialización de la app
-- Sistema de notificaciones
-- Manejo de formularios
-- Modo debug (Ctrl+Shift+D)
-- Detección de conexión
-
-### navigation.js
-- Menú móvil responsive
-- Scroll suave
-- Enlaces activos según scroll
-- Navbar sticky con sombra
-
-### animations.js
-- Animaciones al scroll (Intersection Observer)
-- Botón "Volver arriba"
-- Efectos hover en cards
-- Contadores animados
-- Lazy loading de imágenes
-
-### data.js
-- Datos centralizados del evento
-- Cursos y profesores
-- Información de contacto
-- Fácil actualización
-
-## 🚀 Instalación y Uso
-
-### Opción 1: Servidor Local Simple
-```bash
-# Con Python 3
-python -m http.server 8000
-
-# Con Node.js y http-server
-npx http-server -p 8000
-```
-
-### Opción 2: Live Server (VS Code)
-1. Instala la extensión "Live Server"
-2. Click derecho en index.html
-3. Selecciona "Open with Live Server"
-
-### Opción 3: Abrir directamente
-Simplemente abre `index.html` en tu navegador
-
-## 📝 Personalización
-
-### Colores
-Edita `css/variables.css` para cambiar la paleta de colores:
-```css
-:root {
-    --color-primary: #4267B2;
-    --color-secondary: #F4A261;
-    /* ... más variables */
-}
-```
-
-### Contenido
-Edita `js/data.js` para actualizar información del evento:
-```javascript
-const EVEM_DATA = {
-    event: {
-        name: "...",
-        year: 2025,
-        dates: { ... },
-        location: { ... }
-    },
-    courses: [ ... ]
-};
-```
-
-### Imágenes
-Reemplaza las imágenes en `assets/images/` manteniendo los nombres:
-- `hero-tachira.jpg` - Imagen principal del hero
-- `evem-logo.png` - Logo de EVEM
-- `unet-logo.png` - Logo UNET
-- `unet-campus.jpg`, `cursos.jpg`, etc.
-
-## 🔧 Características Técnicas
-
-### CSS
-- Variables CSS para fácil personalización
-- Flexbox y CSS Grid para layouts
-- Transitions y animations suaves
-- Mobile-first approach
-- Print styles incluidos
-
-### JavaScript
-- ES6+ features
-- Clases y módulos
-- Async/await
-- Intersection Observer API
-- Event delegation
-- LocalStorage (si se necesita persistencia)
-
-### Accesibilidad
-- Semántica HTML5
-- ARIA labels
-- Navegación por teclado
-- Contraste de colores WCAG AA
-- Focus visible
-
-## 📱 Responsive Breakpoints
-
-- **Desktop**: > 1024px
-- **Tablet**: 768px - 1024px
-- **Mobile**: < 768px
-- **Small Mobile**: < 480px
-
-## 🐛 Debug Mode
-
-Activa el modo debug presionando `Ctrl+Shift+D`:
-- Muestra outlines en todos los elementos
-- Log de datos en consola
-- Útil para desarrollo
-
-## 📞 Soporte y Contacto
-
-Para dudas o modificaciones:
-- Email: evem.tachira@gmail.com
-- Tel: +58 (276) 353-0422
-
-## 📄 Licencia
-
-Este proyecto es para uso de EVEM 2025. Todos los derechos reservados a la Universidad de Los Andes (ULA) y Universidad Nacional Experimental del Táchira (UNET).
-
-## 🚀 Próximas Mejoras Sugeridas
-
-1. **Backend Integration**
-   - Conectar formulario a base de datos
-   - Sistema de autenticación
-   - Panel de administración
-
-2. **Funcionalidades Avanzadas**
-   - Galería de fotos de eventos anteriores
-   - Sistema de pagos online
-   - Chat en vivo
-   - Calendario interactivo
-
-3. **Optimizaciones**
-   - Service Workers para PWA
-   - Compresión de imágenes
-   - Minificación de CSS/JS
-   - CDN para assets estáticos
-
-4. **Integración de Mapas**
-   - Google Maps embebido
-   - Indicaciones de cómo llegar
-   - Puntos de interés cercanos
-
-5. **Multiidioma**
-   - Soporte para inglés
-   - Sistema i18n
-
-## 👥 Créditos
-
-- **Diseño**: Basado en el diseño original de Figma
-- **Desarrollo**: Juan Diego Paredes Gámez
-- **Coordinación EVEM**: Universidad de Los Andes
-- **Sede 2025**: UNET
+### Backend (Servidor)
+- **Node.js**: Entorno de ejecución de JavaScript.
+- **Express.js**: Framework de servidor para manejo de rutas RESTful.
+- **MySQL**: Base de datos relacional (gestionada vía XAMPP).
+- **Seguridad**:
+  - `cors`: Manejo de orígenes cruzados.
+  - `helmet`: Protección de cabeceras HTTP.
+  - `express-validator`: Sanitización y validación de datos de entrada.
 
 ---
 
-**Última actualización**: Enero 2025
-**Versión**: 1.0.0
+## 📁 Estructura del Proyecto
+
+```text
+evem-2025/
+├── index.html                  # Página de Inicio (Hero, Logos, CTA)
+├── assets/
+│   └── images/                 # Logos institucionales (UNET, ULA, EVEM)
+├── css/
+│   ├── layout.css              # Estilos estructurales (Header Institucional)
+│   ├── components.css          # Botones animados y tarjetas
+│   └── ...                     # Otros estilos base
+├── js/
+│   ├── api.js                  # Cliente API (Puente Frontend-Backend)
+│   ├── main.js                 # Lógica de formularios y notificaciones
+│   └── ...                     # Scripts de navegación y animación
+├── pages/
+│   ├── contact.html            # Formulario de Inscripción (Participante/Poster)
+│   └── courses.html            # Catálogo dinámico de cursos
+├── backend/                    # SERVIDOR API
+│   ├── server.js               # Lógica del servidor y conexión a DB
+│   ├── .env                    # Credenciales (No subir a repo público)
+│   └── package.json            # Dependencias del proyecto
+└── database/
+   └── schema.sql              # Estructura de tablas SQL
+```
+
+## ⚙️ Instalación y Configuración
+
+Para desplegar el proyecto en un entorno local o servidor de la UNET:
+
+### 1. Base de Datos (MySQL)
+- Iniciar Apache y MySQL en XAMPP.
+- Crear una base de datos llamada `evem_2025`.
+- Importar la estructura de tablas (Tabla `participants` actualizada con campos de Poster y courses).
+
+### 2. Backend (Servidor Node)
+- Abrir terminal en la carpeta `backend/`.
+- Instalar dependencias:
+
+```bash
+npm install
+```
+
+- Configurar archivo `.env`:
+
+```env
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=evem_2025
+```
+
+- Iniciar el servidor:
+
+```bash
+# Para desarrollo
+node server.js
+
+# Para producción (Servidor UNET)
+pm2 start server.js --name "evem-api"
+```
+
+### 3. Frontend
+No requiere compilación. Abrir `index.html` en cualquier navegador moderno o servir con Apache/Nginx.
+
+## 🔌 API Endpoints
+
+El backend expone las siguientes rutas para el consumo del frontend:
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | /api/courses | Obtiene la lista de cursos activos y cupos disponibles. |
+| POST | /api/register | Registra un nuevo usuario (valida cédula duplicada). |
+| GET | /api/admin/participants | (Admin) Lista todos los inscritos. |
+
+## ✨ Nuevas Funcionalidades (v2.0)
+
+### 1. Modalidad de Inscripción Híbrida
+El formulario ahora permite dos tipos de registro:
+- **Participante Asistente**: Inscripción tradicional a cursos formativos.
+- **Ponente (Poster)**: Habilita campos especiales para registrar el "Título del Trabajo" y "Resumen (Abstract)", manteniendo la opción de inscribirse en cursos.
+
+### 2. Diseño Institucional (Header & Hero)
+- Implementación de la barra de navegación oficial con logos de la UNET, ULA, EVEM y ENCOMAT.
+- Diseño de "Pestaña Central" para el logo del evento.
+- Hero Section rediseñada con identidad visual de la edición XXVIII.
+
+### 3. Interacciones Modernas
+- Botones con animación CSS avanzada ("Hover Reveal").
+- Notificaciones flotantes (Toasts) para feedback de éxito/error en el registro.
+- Validación en tiempo real de campos requeridos.
+
+## 👥 Créditos y Autoría
+
+- **Desarrollo y Programación**: Juan Diego Paredes Gámez
+- **Diseño UI/UX**: Basado en requerimientos del Comité Organizador
+- **Organización**: Universidad de Los Andes (ULA)
+- **Sede Anfitriona**: Universidad Nacional Experimental del Táchira (UNET)
+
+---
+
+**Nota Técnica**: Este proyecto está optimizado para ejecutarse en servidores Linux/Windows con soporte para Node.js v16+ y MySQL 8.0.

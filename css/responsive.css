@@ -43,32 +43,50 @@
     }
 
     /* Navigation mobile */
+    .nav-wrapper {
+        grid-template-columns: 1fr;
+        padding-bottom: var(--spacing-md);
+    }
+
+    .nav-left,
+    .nav-right {
+        display: none;
+    }
+
+    .nav-center {
+        justify-content: flex-start;
+        padding-left: var(--spacing-lg);
+    }
+
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+        top: -10px;
+    }
+
+    .main-logo {
+        width: 50px;
+        height: 50px;
+    }
+
     .nav-toggle {
         display: flex;
     }
 
-    .nav-menu {
-        position: fixed;
-        top: 70px;
+    .nav-mobile-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--color-primary);
+        position: absolute;
+        top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--color-primary);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: var(--spacing-lg);
-        transform: translateX(-100%);
-        transition: transform var(--transition-base);
         box-shadow: var(--shadow-lg);
     }
 
-    .nav-menu.active {
-        transform: translateX(0);
-    }
-
-    .nav-link {
-        padding: var(--spacing-md);
-        border-radius: var(--border-radius-md);
+    .nav-mobile-menu.active {
+        display: flex;
     }
 
     .nav-toggle.active span:nth-child(1) {

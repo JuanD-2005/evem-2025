@@ -14,29 +14,27 @@
     <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="../index.html#about">❓ ¿Quiénes Somos?</a></li>
+            </ul>
+
+            <div class="central-logo-container">
                 <a href="../index.html">
-                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="logo">
+                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
                 </a>
             </div>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="../index.html#inicio" class="nav-link">Inicio</a></li>
-                <li><a href="../index.html#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
-                <li><a href="../index.html#comite" class="nav-link">Comité</a></li>
-                <li><a href="courses.html" class="nav-link">Cursos</a></li>
-                <li><a href="tribute.html" class="nav-link">Homenaje</a></li>
-                <li><a href="contact.html" class="nav-link active">Contacto</a></li>
+
+            <ul class="nav-links">
+                <li><a href="courses.html">💠 Cursos</a></li>
+                <li><a href="contact.html" style="color: var(--color-primary); font-weight: bold;">💬 Contacto</a></li>
             </ul>
         </div>
-    </nav>
+    </header>
+
+    <div style="height: 40px;"></div>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -91,9 +89,8 @@
                 </div>
 
                 <form id="registrationForm" class="registration-form">
-                    <!-- Información Personal -->
                     <fieldset class="form-fieldset">
-                        <legend>Información Personal</legend>
+                        <legend>Datos del Participante</legend>
                         
                         <div class="form-group">
                             <label for="fullName" class="form-label">Nombre Completo *</label>
@@ -105,32 +102,52 @@
                                 <label for="cedula" class="form-label">Cédula de Identidad *</label>
                                 <input type="text" id="cedula" name="cedula" class="form-input" placeholder="V-12345678" required>
                             </div>
-
                             <div class="form-group">
-                                <label for="birthDate" class="form-label">Fecha de Nacimiento *</label>
-                                <input type="date" id="birthDate" name="birthDate" class="form-input" required>
+                                <label for="phone" class="form-label">Teléfono *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58..." required>
                             </div>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email" class="form-label">Correo Electrónico *</label>
-                                <input type="email" id="email" name="email" class="form-input" required>
-                            </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Correo Electrónico *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                    </fieldset>
 
+                    <fieldset class="form-fieldset" style="background-color: #f8f9fa;">
+                        <legend>Modalidad de Participación</legend>
+                        
+                        <div class="form-group">
+                            <label class="form-label">¿Cómo deseas participar?</label>
+                            <div class="radio-group" style="margin-bottom: 20px;">
+                                <label class="radio-label box-radio">
+                                    <input type="radio" name="participationType" value="participante" checked onchange="togglePosterFields(false)">
+                                    <span class="radio-text">🧑‍🏫 Asistente (Solo Cursos)</span>
+                                </label>
+                                <label class="radio-label box-radio">
+                                    <input type="radio" name="participationType" value="poster" onchange="togglePosterFields(true)">
+                                    <span class="radio-text">📊 Ponente (Presentar Poster)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="posterFields" style="display: none; border-left: 3px solid var(--color-primary); padding-left: 15px;">
                             <div class="form-group">
-                                <label for="phone" class="form-label">Teléfono *</label>
-                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58 424 123 4567" required>
+                                <label for="posterTitle" class="form-label">Título del Poster *</label>
+                                <input type="text" id="posterTitle" name="posterTitle" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="posterAbstract" class="form-label">Resumen del Trabajo *</label>
+                                <textarea id="posterAbstract" name="posterAbstract" class="form-textarea" rows="4" placeholder="Breve descripción de su presentación..."></textarea>
                             </div>
                         </div>
                     </fieldset>
 
-                    <!-- Información Profesional -->
                     <fieldset class="form-fieldset">
-                        <legend>Información Profesional</legend>
+                        <legend>Información Académica</legend>
                         
                         <div class="form-group">
-                            <label for="institution" class="form-label">Institución Educativa *</label>
+                            <label for="institution" class="form-label">Institución *</label>
                             <input type="text" id="institution" name="institution" class="form-input" required>
                         </div>
 
@@ -141,105 +158,66 @@
                                     <option value="">Seleccione...</option>
                                     <option value="Táchira">Táchira</option>
                                     <option value="Mérida">Mérida</option>
-                                    <option value="Trujillo">Trujillo</option>
-                                    <option value="Barinas">Barinas</option>
-                                    <option value="Zulia">Zulia</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
+                                    </select>
                             </div>
-
                             <div class="form-group">
                                 <label for="city" class="form-label">Ciudad *</label>
                                 <input type="text" id="city" name="city" class="form-input" required>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="position" class="form-label">Cargo o Función *</label>
-                            <select id="position" name="position" class="form-select" required>
-                                <option value="">Seleccione...</option>
-                                <option value="Docente de Matemáticas">Docente de Matemáticas</option>
-                                <option value="Coordinador Académico">Coordinador Académico</option>
-                                <option value="Director">Director</option>
-                                <option value="Estudiante Universitario">Estudiante Universitario</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="experience" class="form-label">Años de Experiencia Docente *</label>
-                            <select id="experience" name="experience" class="form-select" required>
-                                <option value="">Seleccione...</option>
-                                <option value="0-2">0 - 2 años</option>
-                                <option value="3-5">3 - 5 años</option>
-                                <option value="6-10">6 - 10 años</option>
-                                <option value="11-15">11 - 15 años</option>
-                                <option value="16+">Más de 15 años</option>
-                            </select>
-                        </div>
-                    </fieldset>
-
-                    <!-- Selección de Curso -->
-                    <fieldset class="form-fieldset">
-                        <legend>Selección de Curso</legend>
-                        
-                        <div class="form-group">
-                            <label for="course" class="form-label">Curso de Preferencia *</label>
-                            <select id="course" name="course" class="form-select" required>
-                                <option value="">Seleccione un curso...</option>
-                                <option value="Fracciones">Fracciones - Prof. Pedro Infante (LUZ)</option>
-                                <option value="Geometría">Geometría - Prof. Luis Astorga (ULA)</option>
-                                <option value="Operaciones Básicas">Operaciones Básicas - Prof. Arístides Arellán (ULA)</option>
-                                <option value="Matemática con IA">Matemática con Inteligencia Artificial - Prof. Pedro Méndez (LUZ)</option>
-                                <option value="Derivadas">Derivadas - Prof. Elías Velázco (UPTMa)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="expectations" class="form-label">¿Qué esperas de EVEM 2025?</label>
-                            <textarea id="expectations" name="expectations" class="form-textarea" rows="4" placeholder="Cuéntanos tus expectativas y motivaciones para participar..."></textarea>
-                        </div>
-                    </fieldset>
-
-                    <!-- Información Adicional -->
-                    <fieldset class="form-fieldset">
-                        <legend>Información Adicional</legend>
-                        
-                        <div class="form-group">
-                            <label class="form-label">¿Has participado en ediciones anteriores de EVEM? *</label>
-                            <div class="radio-group">
-                                <label class="radio-label">
-                                    <input type="radio" name="previousParticipation" value="Si" required>
-                                    Sí
-                                </label>
-                                <label class="radio-label">
-                                    <input type="radio" name="previousParticipation" value="No" required>
-                                    No
-                                </label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="position" class="form-label">Cargo *</label>
+                                <select id="position" name="position" class="form-select" required>
+                                    <option value="Docente">Docente</option>
+                                    <option value="Estudiante">Estudiante</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="experience" class="form-label">Experiencia *</label>
+                                <select id="experience" name="experience" class="form-select" required>
+                                    <option value="0-2">0-2 años</option>
+                                    <option value="3-5">3-5 años</option>
+                                    <option value="6+">Más de 5</option>
+                                </select>
                             </div>
                         </div>
+                    </fieldset>
 
+                    <fieldset class="form-fieldset">
+                        <legend>Inscripción a Curso</legend>
+                        <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
+                            Aunque presentes poster, puedes inscribirte en un curso formativo.
+                        </p>
                         <div class="form-group">
-                            <label class="form-label">
-                                <input type="checkbox" name="newsletter" value="yes">
-                                Deseo recibir información sobre futuros eventos de EVEM
-                            </label>
+                            <label for="course" class="form-label">Seleccione el Curso *</label>
+                            <select id="course" name="course" class="form-select" required>
+                                <option value="">Cargando cursos...</option>
+                            </select>
                         </div>
+                    </fieldset>
 
+                    <fieldset class="form-fieldset">
+                        <div class="form-group">
+                            <label class="form-label">¿Participaste antes?</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="previousParticipation" value="Si"> Sí</label>
+                                <label><input type="radio" name="previousParticipation" value="No" checked> No</label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="form-label">
                                 <input type="checkbox" name="terms" value="yes" required>
-                                Acepto los términos y condiciones *
+                                Acepto los términos y condiciones
                             </label>
                         </div>
                     </fieldset>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary btn-large">Enviar Inscripción</button>
-                        <button type="reset" class="btn btn-outline">Limpiar Formulario</button>
                     </div>
-
-                    <p class="form-note">* Campos obligatorios</p>
                 </form>
             </div>
         </div>
@@ -310,7 +288,29 @@
     <script src="../js/data.js"></script>
     <script src="../js/navigation.js"></script>
     <script src="../js/animations.js"></script>
+
+    <script src="../js/api.js"></script>
     <script src="../js/main.js"></script>
+
+    <script>
+        function togglePosterFields(show) {
+            const fields = document.getElementById('posterFields');
+            const titleInput = document.getElementById('posterTitle');
+            const abstractInput = document.getElementById('posterAbstract');
+            
+            if (show) {
+                fields.style.display = 'block';
+                titleInput.required = true;
+                abstractInput.required = true;
+            } else {
+                fields.style.display = 'none';
+                titleInput.required = false;
+                abstractInput.required = false;
+                titleInput.value = '';
+                abstractInput.value = '';
+            }
+        }
+    </script>
 
     <style>
         .page-header {
