@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXVII Escuela Venezolana para la Enseñanza de la Matemática - EVEM 2025</title>
+    <title>XXVIII Escuela Venezolana para la Enseñanza de la Matemática - EVEM 2026</title>
     <meta name="description" content="Evento educativo para docentes de matemáticas. San Cristóbal, Táchira - UNET">
     
-    <!-- CSS -->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/typography.css">
@@ -19,8 +18,8 @@
         <div class="nav-container">
             <ul class="nav-links">
                 <li><a href="pages/contact.html">👤 Inscríbete</a></li>
-                <li><a href="#about">❓ ¿Quiénes Somos?</a></li>
-                <li><a href="pages/contact.html">💬 Contacto</a></li>
+                <li><a href="#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
+                <li><a href="pages/alojamiento.html">🏨 Alojamiento</a></li>
             </ul>
 
             <div class="central-logo-container">
@@ -28,15 +27,26 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="#committee">🏠 Comité</a></li>
-                <li><a href="#speakers">👥 Conferencista</a></li>
+                <li><a href="#comite">🏠 Comité</a></li>
+                <li><a href="#speakers">👥 Conferencias</a></li>
                 <li><a href="pages/courses.html">💠 Cursos</a></li>
             </ul>
         </div>
     </header>
 
     <section class="hero-2026">
+        <!-- Carrusel de fondos -->
+        <div class="hero-carousel">
+            <div class="hero-slide active" style="background-image: url('assets/images/hero-tachira.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('assets/images/hero-2.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('assets/images/hero-3.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('assets/images/hero-4.jpg');"></div>
+        </div>
+
+        <!-- Overlay azul (permanece igual) -->
         <div class="hero-overlay-blue"></div>
+
+        <!-- Contenido (permanece igual) -->
         <div class="hero-content-2026">
             <h2 class="hero-edition">XXVIII</h2>
             <h1 class="hero-title-main">Escuela Venezolana para la<br>Enseñanza de la Matemática</h1>
@@ -50,14 +60,29 @@
                 <img src="assets/images/encomat-logo.png" alt="ENCOMAT" class="partner-logo">
             </div>
         </div>
+
+        <!-- Controles del carrusel -->
+        <button class="carousel-control prev" aria-label="Anterior">
+            <span>‹</span>
+        </button>
+        <button class="carousel-control next" aria-label="Siguiente">
+            <span>›</span>
+        </button>
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+            <button class="indicator active" data-slide="0" aria-label="Ir a imagen 1"></button>
+            <button class="indicator" data-slide="1" aria-label="Ir a imagen 2"></button>
+            <button class="indicator" data-slide="2" aria-label="Ir a imagen 3"></button>
+            <button class="indicator" data-slide="3" aria-label="Ir a imagen 4"></button>
+        </div>
     </section>
 
-    <!-- About Section -->
     <section class="about-section" id="sobre-nosotros">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Venite pa' Táchira</h2>
-                <p class="section-subtitle">— EVEM 2025 —</p>
+                <h2 class="section-title">San Cristóbal, la Ciudad de la Cordialidad</h2>
+                <p class="section-subtitle">— EVEM 2026 —</p>
             </div>
             <div class="about-content">
                 <p>La Escuela Venezolana para la Enseñanza de la Matemática es un evento educativo anual que reúne docentes de matemáticas de la educación media. Durante cuatro días intensivos, ofrecemos cursos especializados y conferencias magistrales para enriquecer la formación y capacitación de los docentes en esta área fundamental.</p>
@@ -71,7 +96,6 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
     <section class="stats-section">
         <div class="container">
             <div class="stats-grid">
@@ -91,85 +115,46 @@
         </div>
     </section>
 
-    <!-- Committee Section -->
     <section class="committee-section" id="comite">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Comité Organizador</h2>
-                <p class="section-subtitle">El equipo detrás de EVEM 2025</p>
+                <p class="section-subtitle">El equipo EVEM 2026</p>
             </div>
 
             <div class="committee-grid">
-                <!-- Coordinador General -->
                 <div class="committee-card">
                     <div class="committee-photo">
                         <div class="photo-placeholder">👤</div>
                     </div>
-                    <h3 class="committee-name">Dr. José Ramírez</h3>
+                    <h3 class="committee-name">Dr. Arstides Arellán</h3>
                     <p class="committee-role">Coordinador General</p>
                     <p class="committee-institution">Universidad de Los Andes (ULA)</p>
-                    <a href="mailto:jose.ramirez@ula.ve" class="committee-email">✉️ jose.ramirez@ula.ve</a>
+                    <a href="mailto:aristide.arellan@gmail.com" class="committee-email">✉️ aristide.arellan@gmail.com</a>
                 </div>
 
-                <!-- Coordinadora Académica -->
                 <div class="committee-card">
                     <div class="committee-photo">
                         <div class="photo-placeholder">👤</div>
                     </div>
-                    <h3 class="committee-name">Prof. María González</h3>
-                    <p class="committee-role">Coordinadora Académica</p>
+                    <h3 class="committee-name">Dr. Gilberto Paredes</h3>
+                    <p class="committee-role">Coordinador UNET</p>
                     <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
-                    <a href="mailto:maria.gonzalez@unet.edu.ve" class="committee-email">✉️ maria.gonzalez@unet.edu.ve</a>
+                    <a href="mailto:gilbpar@unet.edu.ve" class="committee-email">✉️ gilbpar@unet.edu.ve</a>
                 </div>
 
-                <!-- Coordinador de Logística -->
                 <div class="committee-card">
                     <div class="committee-photo">
                         <div class="photo-placeholder">👤</div>
                     </div>
-                    <h3 class="committee-name">Prof. Carlos Pérez</h3>
-                    <p class="committee-role">Coordinador de Logística</p>
-                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
-                    <a href="mailto:carlos.perez@unet.edu.ve" class="committee-email">✉️ carlos.perez@unet.edu.ve</a>
+                    <h3 class="committee-name">Prof. Álvaro Mendoza</h3>
+                    <p class="committee-role">Coordinador ULA</p>
+                    <p class="committee-institution">Núcleo Universitario Dr. Pedro Rincón Gutiérrez Universidad de Los Andes</p>
+                    <a href="mailto:aljomees@ula.ve" class="committee-email">✉️ aljomees@ula.ve</a>
                 </div>
-
-                <!-- Coordinadora de Comunicaciones -->
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <div class="photo-placeholder">👤</div>
-                    </div>
-                    <h3 class="committee-name">Prof. Ana Rodríguez</h3>
-                    <p class="committee-role">Coordinadora de Comunicaciones</p>
-                    <p class="committee-institution">Universidad de Los Andes (ULA)</p>
-                    <a href="mailto:ana.rodriguez@ula.ve" class="committee-email">✉️ ana.rodriguez@ula.ve</a>
-                </div>
-
-                <!-- Coordinador de Tecnología -->
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <div class="photo-placeholder">👤</div>
-                    </div>
-                    <h3 class="committee-name">Ing. Luis Martínez</h3>
-                    <p class="committee-role">Coordinador de Tecnología</p>
-                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
-                    <a href="mailto:luis.martinez@unet.edu.ve" class="committee-email">✉️ luis.martinez@unet.edu.ve</a>
-                </div>
-
-                <!-- Coordinadora de Inscripciones -->
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <div class="photo-placeholder">👤</div>
-                    </div>
-                    <h3 class="committee-name">Prof. Elena Jiménez</h3>
-                    <p class="committee-role">Coordinadora de Inscripciones</p>
-                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
-                    <a href="mailto:elena.jimenez@unet.edu.ve" class="committee-email">✉️ elena.jimenez@unet.edu.ve</a>
-                </div>
-            </div>
-        </div>
+            </div> </div>
     </section>
 
-    <!-- Cards Section -->
     <section class="cards-section">
         <div class="container">
             <h2 class="section-title centered">Quienes Somos</h2>
@@ -179,7 +164,7 @@
                         <img src="assets/images/unet-campus.jpg" alt="Campus UNET">
                     </div>
                     <div class="card-content">
-                        <span class="card-date">Sede 2025</span>
+                        <span class="card-date">Sede 2026</span>
                         <h3 class="card-title">Universidad Nacional Experimental del Táchira</h3>
                         <p class="card-text">La UNET nos abre sus puertas en esta nueva generación del evento, ofreciendo espacios modernos y una atmósfera académica excepcional en el corazón de Los Andes venezolanos.</p>
                         <a href="#" class="card-link">Leer más →</a>
@@ -200,12 +185,12 @@
 
                 <article class="info-card">
                     <div class="card-image">
-                        <img src="assets/images/graduacion.jpg" alt="Graduación">
+                        <img src="assets/images/logo52aniv.png" alt="Aniversario">
                     </div>
                     <div class="card-content">
-                        <span class="card-date">Certificación</span>
-                        <h3 class="card-title">Ceremonia de Graduación 2025</h3>
-                        <p class="card-text">La UNET celebrará el egreso de una nueva generación de docentes actualizados, comprometidos con el desarrollo de prácticas pedagógicas innovadoras en la enseñanza de las matemáticas.</p>
+                        <span class="card-date">Celebración</span>
+                        <h3 class="card-title">La UNET celebra el 52 aniversario</h3>
+                        <p class="card-text">Con la llegada de un nuevo aniversario para la Universidad Nacional Experimental del Táchira este próximo jueves 27 de febrero, específicamente el cumpleaños número 52, las Autoridades de esta casa de estudios superiores; Decanos; personal docente, administrativo, y obrero; así como el alumnado y egresados, invitan a las actividades programadas para esta ocasión.</p>
                         <a href="#" class="card-link">Leer más →</a>
                     </div>
                 </article>
@@ -225,10 +210,9 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section" id="inscribete">
         <div class="container">
-            <h2 class="cta-title">¿Listo para formar parte de EVEM 2025?</h2>
+            <h2 class="cta-title">¿Listo para formar parte de EVEM 2026?</h2>
             <p class="cta-text">Únete a cientos de docentes comprometidos con la excelencia en la enseñanza de las matemáticas</p>
             
             <div style="display: flex; justify-content: center; margin-top: 30px;">
@@ -238,7 +222,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -254,10 +237,10 @@
                 <div class="footer-col">
                     <h4>Enlaces Rápidos</h4>
                     <ul class="footer-links">
-                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#">Inicio</a></li>
                         <li><a href="pages/courses.html">Cursos</a></li>
                         <li><a href="pages/tribute.html">Homenaje</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="pages/contact.html">Inscripción</a></li>
                     </ul>
                 </div>
                 
@@ -276,24 +259,22 @@
                     <h4>Contacto EVEM</h4>
                     <p>Email: evem.tachira@gmail.com</p>
                     <p>Organiza: Universidad de Los Andes (ULA)</p>
-                    <p>Sede 2025: UNET</p>
+                    <p>Sede 2026: UNET</p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
+                <p>&copy; 2026 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/animations.js"></script>
-
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
-
+    <script src="js/carousel.js"></script>
 
 </body>
 </html>

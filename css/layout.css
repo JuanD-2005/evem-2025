@@ -223,12 +223,12 @@
 
 /* Section spacing */
 section {
-    padding: var(--spacing-4xl) 0;
+    padding: var(--spacing-3xl) 0; /* Usamos 3xl en vez de 4xl para reducir el hueco vertical */
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: var(--spacing-3xl);
+    margin-bottom: var(--spacing-2xl); /* Reducimos la separación entre el título y el contenido */
 }
 
 /* About Section */
@@ -446,12 +446,11 @@ html {
 
 /* --- NUEVO HERO --- */
 .hero-2026 {
-    background: url('../assets/images/hero-tachira.jpg') no-repeat center center/cover;
-    /* Usa un gradiente azul superpuesto como en la imagen */
     position: relative;
     padding: 160px 0 60px; /* Espacio arriba para el logo */
     text-align: center;
     color: white;
+    overflow: hidden; /* IMPORTANTE: oculta slides extras */
 }
 
 .hero-overlay-blue {
@@ -520,4 +519,168 @@ html {
 
 .partner-logo:hover {
     transform: scale(1.1);
+}
+
+/* Contenedor del carrusel de fondos */
+.hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Cada slide de fondo */
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+/* ==========================================
+   CONTROLES DEL CARRUSEL (Flechas)
+   ========================================== */
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-control:hover {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-control span {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.carousel-control.prev {
+    left: 30px;
+}
+
+.carousel-control.next {
+    right: 30px;
+}
+
+/* ==========================================
+   INDICADORES (Puntos abajo)
+   ========================================== */
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 12px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.indicator:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.indicator.active {
+    background-color: white;
+    border-color: var(--color-secondary, #F4A261);
+    transform: scale(1.3);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+    .carousel-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-control span {
+        font-size: 1.5rem;
+    }
+
+    .carousel-control.prev {
+        left: 15px;
+    }
+
+    .carousel-control.next {
+        right: 15px;
+    }
+
+    .carousel-indicators {
+        bottom: 20px;
+        gap: 10px;
+    }
+
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-control {
+        width: 35px;
+        height: 35px;
+    }
+
+    .carousel-control span {
+        font-size: 1.3rem;
+    }
+
+    .carousel-control.prev {
+        left: 10px;
+    }
+
+    .carousel-control.next {
+        right: 10px;
+    }
+
+    .indicator {
+        width: 8px;
+        height: 8px;
+    }
 }
