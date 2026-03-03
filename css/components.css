@@ -310,8 +310,8 @@
 .committee-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-2xl);
-    margin-top: var(--spacing-3xl);
+    gap: var(--spacing-xl); /* Antes era 2xl */
+    margin-top: var(--spacing-xl); /* Antes era 3xl */
 }
 
 .committee-card {
