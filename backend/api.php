@@ -1,10 +1,14 @@
 <?php
-// api.php - Backend Oficial EVEM 2026 (PHP Nativo)
+// api.php - Backend Oficial EVEM & DIM 2026 (PHP Nativo)
 
 // 1. Configuración de Cabeceras (Permitir conexiones)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
+
+// ¡NUEVO!: Apagar la salida de advertencias HTML para no romper el JSON del frontend
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 
 // Manejo de petición preliminar (CORS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -14,10 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" cuando lo subas a la UNET
+$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" en la UNET
 $username = "root";     // Ojo: Cámbialo al usuario de la UNET
-$password = "";
-
+$password = "";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password);
@@ -31,6 +34,10 @@ try {
 // 3. Lógica de Rutas
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
+// ==========================================
+// RUTAS DE EVEM (Cursos y Registro General)
+// ==========================================
+
 // --- RUTA: OBTENER CURSOS ---
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'courses') {
     try {
@@ -43,36 +50,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'courses') {
     }
 }
 
-// --- RUTA: REGISTRARSE (EVEM GENERAL) ---
+// --- RUTA: REGISTRARSE (EVEM) ---
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
     $data = json_decode(file_get_contents("php://input"));
 
     if (empty($data->cedula) || empty($data->email)) {
         http_response_code(400);
-        echo json_encode(["error" => "Datos incompletos"]);
+        echo json_encode(["error" => "Faltan datos obligatorios (Cédula o Email)"]);
         exit();
     }
 
     try {
-        // Verificar cédula duplicada
+        // 1. Verificar cédula duplicada
         $check = $conn->prepare("SELECT id FROM participants WHERE cedula = ?");
         $check->execute([$data->cedula]);
         if ($check->rowCount() > 0) {
             http_response_code(409); // Conflicto
-            echo json_encode(["error" => "Esta cédula ya está inscrita."]);
+            echo json_encode(["error" => "Esta cédula ya está inscrita en EVEM."]);
             exit();
         }
 
-        // Verificar Cupos
-        $courseCheck = $conn->prepare("SELECT max_capacity, current_enrollment FROM courses WHERE title = ?");
-        $courseCheck->execute([$data->coursePreference]);
+        // 2. Capturar el curso (Aceptamos que el JS lo llame coursePreference o course)
+        $curso_recibido = $data->coursePreference ?? $data->course ?? '';
+
+        // 3. Buscar el curso inteligentemente (Por Nombre O por ID)
+        $courseCheck = $conn->prepare("SELECT title, max_capacity, current_enrollment FROM courses WHERE title = ? OR id = ?");
+        $courseCheck->execute([$curso_recibido, $curso_recibido]);
         $course = $courseCheck->fetch(PDO::FETCH_ASSOC);
 
         if (!$course) {
-            throw new Exception("Curso no encontrado");
+            http_response_code(404);
+            // Si falla, ahora te dirá EXACTAMENTE qué dato extraño está mandando el formulario
+            echo json_encode(["error" => "Curso no encontrado. El sistema recibió el dato: '" . $curso_recibido . "'"]);
+            exit();
         }
 
-        // Insertar Participante
+        // Si lo encontró, guardamos el nombre real y perfecto de la base de datos
+        $titulo_curso_real = $course['title'];
+
+        // 4. Insertar Participante con datos blindados
         $sql = "INSERT INTO participants (
                     cedula, full_name, email, phone, institution, 
                     state, city, position, experience_years, 
@@ -82,122 +98,36 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([
-            $data->cedula,
-            $data->fullName,
-            $data->email,
-            $data->phone,
-            $data->institution,
-            $data->state,
-            $data->city,
-            $data->position,
-            $data->experienceYears,
-            $data->coursePreference,
-            $data->participationType,
-            $data->posterTitle ?? null,    // Si no existe, pone NULL
-            $data->posterAbstract ?? null, // Si no existe, pone NULL
-            $data->previousParticipation === 'Si' ? 1 : 0,
-            $data->wantsNewsletter ? 1 : 0,
-            $data->acceptedTerms ? 1 : 0
+            $data->cedula ?? '',
+            $data->fullName ?? '',
+            $data->email ?? '',
+            $data->phone ?? '',
+            $data->institution ?? '',
+            $data->state ?? '',
+            $data->city ?? '',
+            $data->position ?? '',
+            $data->experienceYears ?? '',
+            $titulo_curso_real, // Usamos el nombre real
+            $data->participationType ?? 'Asistente',
+            $data->posterTitle ?? null,
+            $data->posterAbstract ?? null,
+            (isset($data->previousParticipation) && $data->previousParticipation === 'Si') ? 1 : 0,
+            !empty($data->wantsNewsletter) ? 1 : 0,
+            !empty($data->acceptedTerms) ? 1 : 0
         ]);
 
         $newId = $conn->lastInsertId();
 
-        // Actualizar Cupos
+        // 5. Actualizar Cupos (Usando el nombre real)
         $update = $conn->prepare("UPDATE courses SET current_enrollment = current_enrollment + 1 WHERE title = ?");
-        $update->execute([$data->coursePreference]);
+        $update->execute([$titulo_curso_real]);
 
         http_response_code(201);
-        echo json_encode(["message" => "Inscrito exitosamente", "id" => $newId]);
+        echo json_encode(["message" => "Inscripción exitosa. ¡Te esperamos en la EVEM!"]);
 
     } catch(Exception $e) {
         http_response_code(500);
         echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
-    }
-}
-
-// --- NUEVA RUTA: REGISTRARSE AL EVENTO DIM ---
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim') {
-    $data = json_decode(file_get_contents("php://input"));
-
-    if (empty($data->cedula) || empty($data->fullName) || empty($data->email)) {
-        http_response_code(400);
-        echo json_encode(["error" => "Faltan datos obligatorios"]);
-        exit();
-    }
-
-    try {
-        // Verificar si la cédula ya se anotó en el DIM
-        $check = $conn->prepare("SELECT id FROM dim_participants WHERE cedula = ?");
-        $check->execute([$data->cedula]);
-        if ($check->rowCount() > 0) {
-            http_response_code(409); // Conflicto
-            echo json_encode(["error" => "Esta cédula ya está registrada en el evento DIM."]);
-            exit();
-        }
-
-        // Insertar Participante en la tabla del DIM (has_paid queda en FALSE por defecto de la BD)
-        $sql = "INSERT INTO dim_participants (cedula, full_name, email, phone, institution, state, city) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            $data->cedula, 
-            $data->fullName, 
-            $data->email, 
-            $data->phone, 
-            $data->institution, 
-            $data->state, 
-            $data->city
-        ]);
-
-        http_response_code(201);
-        echo json_encode(["message" => "Pre-inscripción al DIM exitosa"]);
-
-    } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(["error" => "Error interno en el servidor: " . $e->getMessage()]);
-    }
-}
-
-// --- NUEVA RUTA: VERIFICAR Y GENERAR CERTIFICADO DIM ---
-elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_certificate') {
-    $cedula = isset($_GET['cedula']) ? $_GET['cedula'] : '';
-
-    if (empty($cedula)) {
-        http_response_code(400);
-        echo json_encode(["error" => "Debes ingresar una cédula."]);
-        exit();
-    }
-
-    try {
-        // Buscamos a la persona
-        $stmt = $conn->prepare("SELECT full_name, has_paid FROM dim_participants WHERE cedula = ?");
-        $stmt->execute([$cedula]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$user) {
-            http_response_code(404);
-            echo json_encode(["error" => "No se encontró esta cédula en los registros del DIM."]);
-            exit();
-        }
-
-        // Verificamos si ya pagó (has_paid = 1)
-        if ($user['has_paid'] == 0) {
-            http_response_code(403);
-            echo json_encode(["error" => "Inscripción registrada, pero el pago aún no ha sido verificado en el sistema. Contacta a administración."]);
-            exit();
-        }
-
-        // Si existe y pagó, le devolvemos su nombre para pintar el diploma
-        http_response_code(200);
-        echo json_encode([
-            "success" => true,
-            "fullName" => $user['full_name']
-        ]);
-
-    } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(["error" => "Error interno en el servidor: " . $e->getMessage()]);
     }
 }
 
@@ -212,7 +142,6 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_evem_certific
     }
 
     try {
-        // Buscamos a la persona y el curso que eligió
         $stmt = $conn->prepare("SELECT full_name, course_preference, has_paid FROM participants WHERE cedula = ?");
         $stmt->execute([$cedula]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -223,14 +152,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_evem_certific
             exit();
         }
 
-        // Verificamos si ya pagó (has_paid = 1)
         if (!isset($user['has_paid']) || $user['has_paid'] == 0) {
             http_response_code(403);
             echo json_encode(["error" => "El pago de inscripción a EVEM no ha sido verificado. Contacta a administración."]);
             exit();
         }
 
-        // Si existe y pagó, devolvemos el nombre y el curso
         http_response_code(200);
         echo json_encode([
             "success" => true,
@@ -240,11 +167,123 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_evem_certific
 
     } catch(Exception $e) {
         http_response_code(500);
-        echo json_encode(["error" => "Error interno en el servidor: " . $e->getMessage()]);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
     }
 }
 
-// --- RUTA (ADMIN): OBTENER LISTA DEL DIM ---
+// ==========================================
+// RUTAS DEL EVENTO DIM (Registro y Certificados)
+// ==========================================
+
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim') {
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (empty($data->cedula) || empty($data->fullName) || empty($data->email)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Faltan datos obligatorios"]);
+        exit();
+    }
+
+    try {
+        $check = $conn->prepare("SELECT id FROM dim_participants WHERE cedula = ?");
+        $check->execute([$data->cedula]);
+        if ($check->rowCount() > 0) {
+            http_response_code(409);
+            echo json_encode(["error" => "Esta cédula ya está registrada en el evento DIM."]);
+            exit();
+        }
+
+        $sql = "INSERT INTO dim_participants (cedula, full_name, email, phone, institution, state, city) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            $data->cedula ?? '', 
+            $data->fullName ?? '', 
+            $data->email ?? '', 
+            $data->phone ?? '', 
+            $data->institution ?? '', 
+            $data->state ?? '', 
+            $data->city ?? ''
+        ]);
+
+        http_response_code(201);
+        echo json_encode(["message" => "Pre-inscripción al DIM exitosa"]);
+
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+}
+
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_certificate') {
+    $cedula = isset($_GET['cedula']) ? $_GET['cedula'] : '';
+
+    if (empty($cedula)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Debes ingresar una cédula."]);
+        exit();
+    }
+
+    try {
+        $stmt = $conn->prepare("SELECT full_name, has_paid FROM dim_participants WHERE cedula = ?");
+        $stmt->execute([$cedula]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            http_response_code(404);
+            echo json_encode(["error" => "No se encontró esta cédula en los registros del DIM."]);
+            exit();
+        }
+
+        if ($user['has_paid'] == 0) {
+            http_response_code(403);
+            echo json_encode(["error" => "Pago no verificado en el sistema."]);
+            exit();
+        }
+
+        http_response_code(200);
+        echo json_encode([
+            "success" => true,
+            "fullName" => $user['full_name']
+        ]);
+
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+}
+
+// ==========================================
+// RUTAS DE ADMINISTRACIÓN SECRETA
+// ==========================================
+
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_evem_participants') {
+    try {
+        $stmt = $conn->query("SELECT id, cedula, full_name, institution, course_preference, has_paid FROM participants ORDER BY id DESC");
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al obtener lista de EVEM"]);
+    }
+}
+
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_evem_payment') {
+    $data = json_decode(file_get_contents("php://input"));
+    if (!isset($data->id) || !isset($data->has_paid)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Faltan datos"]);
+        exit();
+    }
+    try {
+        $stmt = $conn->prepare("UPDATE participants SET has_paid = ? WHERE id = ?");
+        $stmt->execute([$data->has_paid, $data->id]);
+        echo json_encode(["success" => true]);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al actualizar pago"]);
+    }
+}
+
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_participants') {
     try {
         $stmt = $conn->query("SELECT id, cedula, full_name, email, institution, has_paid, DATE_FORMAT(registration_date, '%d/%m/%Y') as fecha FROM dim_participants ORDER BY registration_date DESC");
@@ -255,16 +294,13 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_participant
     }
 }
 
-// --- RUTA (ADMIN): CAMBIAR ESTADO DE PAGO DIM ---
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_payment') {
     $data = json_decode(file_get_contents("php://input"));
-
     if (!isset($data->id) || !isset($data->has_paid)) {
         http_response_code(400);
         echo json_encode(["error" => "Faltan datos"]);
         exit();
     }
-
     try {
         $stmt = $conn->prepare("UPDATE dim_participants SET has_paid = ? WHERE id = ?");
         $stmt->execute([$data->has_paid, $data->id]);
@@ -275,45 +311,8 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_payment') {
     }
 }
 
-// ==========================================
-// RUTAS DE ADMINISTRACIÓN SECRETA (Admin EVEM)
-// ==========================================
-
-// --- RUTA (ADMIN): OBTENER LISTA DE EVEM ---
-elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_evem_participants') {
-    try {
-        // Obtenemos a todos ordenados por el último registrado
-        $stmt = $conn->query("SELECT id, cedula, full_name, institution, course_preference, has_paid FROM participants ORDER BY id DESC");
-        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-    } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(["error" => "Error al obtener lista de EVEM"]);
-    }
-}
-
-// --- RUTA (ADMIN): CAMBIAR ESTADO DE PAGO EVEM ---
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_evem_payment') {
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if (!isset($data->id) || !isset($data->has_paid)) {
-        http_response_code(400);
-        echo json_encode(["error" => "Faltan datos"]);
-        exit();
-    }
-
-    try {
-        // Actualizamos el estado (1 o 0) en la tabla principal de EVEM
-        $stmt = $conn->prepare("UPDATE participants SET has_paid = ? WHERE id = ?");
-        $stmt->execute([$data->has_paid, $data->id]);
-        echo json_encode(["success" => true]);
-    } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(["error" => "Error al actualizar pago en EVEM"]);
-    }
-}
-
-// --- RESPUESTA POR DEFECTO (Si no envían action) ---
+// --- RESPUESTA POR DEFECTO ---
 else {
-    echo json_encode(["status" => "API PHP Activa"]);
+    echo json_encode(["status" => "API PHP de EVEM y DIM Activa y Operativa"]);
 }
 ?>
