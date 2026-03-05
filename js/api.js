@@ -112,6 +112,12 @@ async function loadCourses() {
                             <div class="progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
                         </div>
                     </div>
+
+                    <div style="margin-top: 20px; text-align: center;">
+                        <a href="evem-certificado.html" style="display: block; padding: 10px; background: var(--color-bg-secondary); color: var(--color-primary); border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid var(--color-border); transition: 0.2s;">
+                            🎓 Portal de Certificados
+                        </a>
+                    </div>
                 </article>
             `;
 
