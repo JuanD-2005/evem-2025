@@ -275,6 +275,43 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_payment') {
     }
 }
 
+// ==========================================
+// RUTAS DE ADMINISTRACIÓN SECRETA (Admin EVEM)
+// ==========================================
+
+// --- RUTA (ADMIN): OBTENER LISTA DE EVEM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_evem_participants') {
+    try {
+        // Obtenemos a todos ordenados por el último registrado
+        $stmt = $conn->query("SELECT id, cedula, full_name, institution, course_preference, has_paid FROM participants ORDER BY id DESC");
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al obtener lista de EVEM"]);
+    }
+}
+
+// --- RUTA (ADMIN): CAMBIAR ESTADO DE PAGO EVEM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_evem_payment') {
+    $data = json_decode(file_get_contents("php://input"));
+    
+    if (!isset($data->id) || !isset($data->has_paid)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Faltan datos"]);
+        exit();
+    }
+
+    try {
+        // Actualizamos el estado (1 o 0) en la tabla principal de EVEM
+        $stmt = $conn->prepare("UPDATE participants SET has_paid = ? WHERE id = ?");
+        $stmt->execute([$data->has_paid, $data->id]);
+        echo json_encode(["success" => true]);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al actualizar pago en EVEM"]);
+    }
+}
+
 // --- RESPUESTA POR DEFECTO (Si no envían action) ---
 else {
     echo json_encode(["status" => "API PHP Activa"]);
