@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro DIM - EVEM 2026</title>
+    
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background-color: #f8fafc;">
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="dim.html" style="color: #9333ea; font-weight: bold;">🟣 Portal DIM</a></li>
+            </ul>
+
+            <div class="central-logo-container">
+                <a href="dim.html">
+                    <img src="../assets/images/logo52aniv.png" alt="DIM Logo" class="central-logo" style="border-radius: 50%;">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="courses.html">💠 Cursos</a></li>
+                <li><a href="contact.html">💬 Inscripción EVEM</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div style="height: 40px;"></div>
+
+    <div class="dim-hero-bg"></div>
+
+    <section class="registration-split-section">
+        <div class="container">
+            <div class="split-layout">
+                
+                <div class="info-panel">
+                    <div class="info-panel-card">
+                        <div class="badge-dim">EVENTO OFICIAL</div>
+                        <h1 class="info-title">Sé parte de la celebración mundial</h1>
+                        <p class="info-subtitle">El Día Internacional de las Matemáticas nos une. Regístrate para acceder a todas las actividades especiales en la UNET.</p>
+                        
+                        <div class="benefits-vertical-grid">
+                            <div class="benefit-row">
+                                <div class="b-icon">🎙️</div>
+                                <div class="b-text">
+                                    <h4>Charlas Exclusivas</h4>
+                                    <p>Conferencias sobre la magia de los números</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row">
+                                <div class="b-icon">🤝</div>
+                                <div class="b-text">
+                                    <h4>Networking</h4>
+                                    <p>Conoce a otros apasionados por las ciencias</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row">
+                                <div class="b-icon">🎓</div>
+                                <div class="b-text">
+                                    <h4>Certificación Digital</h4>
+                                    <p>Descargable a partir del 27 de marzo (Requiere pago)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-panel">
+                    <div class="form-card-premium">
+                        <h2 class="form-heading">Completa tu Registro</h2>
+                        
+                        <form id="dimRegistrationForm">
+                            
+                            <div class="form-section-title">
+                                <span class="step-number">1</span> Datos Personales
+                            </div>
+                            
+                            <div class="input-grid">
+                                <div class="input-wrapper">
+                                    <label>Cédula de Identidad</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🪪</span>
+                                        <input type="text" id="cedula" placeholder="Ej: V-12345678" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Nombre Completo</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">👤</span>
+                                        <input type="text" id="fullName" placeholder="Nombres y Apellidos" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Correo Electrónico</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">✉️</span>
+                                        <input type="email" id="email" placeholder="tu@correo.com" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Teléfono / WhatsApp</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">📱</span>
+                                        <input type="tel" id="phone" placeholder="0414-1234567" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section-title" style="margin-top: 30px;">
+                                <span class="step-number">2</span> Procedencia
+                            </div>
+
+                            <div class="input-wrapper" style="margin-bottom: 15px;">
+                                <label>Institución a la que representas</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">🏫</span>
+                                    <input type="text" id="institution" placeholder="Liceo, Universidad, etc." required>
+                                </div>
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="input-wrapper">
+                                    <label>Estado</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🗺️</span>
+                                        <input type="text" id="state" placeholder="Ej: Táchira" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Ciudad</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🏙️</span>
+                                        <input type="text" id="city" placeholder="Ej: San Cristóbal" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-notice">
+                                💡 <strong>Importante:</strong> Verifica que tu nombre esté escrito correctamente, ya que así se generará tu certificado digital.
+                            </div>
+
+                            <button type="submit" class="btn-submit-premium" id="submitBtn">
+                                <span class="btn-text">Confirmar Asistencia al DIM →</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Universidad Nacional Experimental del Táchira</h4>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="conferencias.html">Conferencias</a></li>
+                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="contact.html">Inscripción EVEM</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contacto Institucional</h4>
+                    <p>Email: evem.tachira@gmail.com</p>
+                    <p>Organiza: Universidad de Los Andes (ULA)</p>
+                    <p>Sede 2026: UNET</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Universidad Nacional Experimental del Táchira - EVEM & DIM. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('dimRegistrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const btnText = btn.querySelector('.btn-text');
+            btn.disabled = true;
+            btnText.textContent = 'Procesando registro... ⏳';
+
+            const formData = {
+                cedula: document.getElementById('cedula').value,
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                institution: document.getElementById('institution').value,
+                state: document.getElementById('state').value,
+                city: document.getElementById('city').value
+            };
+
+            try {
+                const response = await fetch('../backend/api.php?action=register_dim', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: '¡Inscripción Exitosa!',
+                        text: 'Tus datos están registrados. Para descargar el certificado recuerda formalizar tu pago. Estará disponible el 27 de Marzo.',
+                        icon: 'success',
+                        confirmButtonColor: '#9333ea'
+                    }).then(() => {
+                        window.location.href = 'dim.html'; 
+                    });
+                } else {
+                    throw new Error(result.error || 'Error al registrarse');
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Atención',
+                    text: error.message,
+                    icon: 'warning',
+                    confirmButtonColor: '#9333ea'
+                });
+                btn.disabled = false;
+                btnText.textContent = 'Confirmar Asistencia al DIM →';
+            }
+        });
+    </script>
+
+    <style>
+        /* FONDO HERO */
+        .dim-hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 60vh;
+            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
+            z-index: 1;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .registration-split-section {
+            position: relative; z-index: 2;
+            padding: 60px 0 100px;
+        }
+
+        .split-layout {
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px;
+            align-items: flex-start;
+        }
+
+        /* LADO IZQUIERDO: NUEVA TARJETA DE CRISTAL */
+        .info-panel { padding-top: 10px; }
+        
+        .info-panel-card {
+            background: rgba(30, 10, 60, 0.4); /* Fondo oscuro traslúcido */
+            backdrop-filter: blur(15px); /* Efecto vidrio esmerilado */
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .badge-dim {
+            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            background: rgba(255,255,255,0.15); font-weight: 800; font-size: 0.8rem;
+            letter-spacing: 1px; margin-bottom: 20px; color: white;
+        }
+
+        /* ¡Forzamos el color blanco para sobreescribir typography.css! */
+        .info-title { 
+            font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; 
+            line-height: 1.2; color: #ffffff !important; 
+        }
+        
+        .info-subtitle { 
+            font-size: 1.1rem; color: #e9d5ff !important; 
+            margin-bottom: 40px; line-height: 1.6; 
+        }
+
+        .benefits-vertical-grid { display: flex; flex-direction: column; gap: 20px; }
+        
+        .benefit-row {
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(255,255,255,0.08); padding: 15px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-row:hover { transform: translateX(10px); background: rgba(255,255,255,0.12); }
+        
+        .b-icon {
+            font-size: 1.8rem; background: white; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center; border-radius: 12px;
+            flex-shrink: 0;
+        }
+        
+        .b-text h4 { margin: 0 0 5px 0; font-size: 1.05rem; color: white !important; font-weight: 700; }
+        .b-text p { margin: 0; font-size: 0.9rem; color: #cbd5e1 !important; }
+
+        /* LADO DERECHO (EL FORMULARIO) */
+        .form-card-premium {
+            background: white; border-radius: 24px; padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .form-heading {
+            font-size: 2rem; color: #1e293b; margin-bottom: 30px; font-weight: 800;
+        }
+
+        .form-section-title {
+            font-size: 1.1rem; font-weight: 700; color: #475569;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+            padding-bottom: 10px; border-bottom: 2px solid #f1f5f9;
+        }
+
+        .step-number {
+            background: #e9d5ff; color: #7e22ce; width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-size: 0.9rem;
+        }
+
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .input-wrapper label {
+            display: block; font-size: 0.85rem; font-weight: 700; color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .input-with-icon {
+            position: relative; display: flex; align-items: center;
+        }
+
+        .input-icon {
+            position: absolute; left: 15px; font-size: 1.2rem;
+        }
+
+        .input-with-icon input {
+            width: 100%; padding: 14px 15px 14px 45px;
+            border: 2px solid #e2e8f0; border-radius: 12px;
+            font-size: 1rem; color: #1e293b; transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-with-icon input:focus {
+            outline: none; border-color: #a855f7; background: white;
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
+        }
+
+        .form-notice {
+            background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+            padding: 15px; border-radius: 10px; font-size: 0.9rem; margin: 25px 0;
+            line-height: 1.5;
+        }
+
+        .btn-submit-premium {
+            background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+            color: white; border: none; padding: 18px 30px; border-radius: 14px;
+            font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%;
+            transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
+        }
+
+        .btn-submit-premium:hover {
+            transform: translateY(-3px); box-shadow: 0 15px 30px rgba(147, 51, 234, 0.4);
+        }
+
+        .btn-submit-premium:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .split-layout { grid-template-columns: 1fr; gap: 40px; }
+            .dim-hero-bg { height: 60vh; }
+            .info-panel { text-align: center; }
+            .benefits-vertical-grid { text-align: left; }
+        }
+        
+        @media (max-width: 768px) {
+            .input-grid { grid-template-columns: 1fr; gap: 15px; }
+            .form-card-premium { padding: 25px; }
+            .info-title { font-size: 2.2rem; }
+        }
+    </style>
+</body>
+</html>
