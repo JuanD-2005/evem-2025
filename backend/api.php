@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem";          // Nombre en la UNET
-$username = "evem";         // Usuario en la UNET
-$password = "BD.Evem*2026"; // Clave en la UNET
+$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" cuando lo subas a la UNET
+$username = "root";     // Ojo: Cámbialo al usuario de la UNET
+$password = "";
 
 
 try {
