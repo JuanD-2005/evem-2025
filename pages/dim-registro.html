@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificados DIM - EVEM 2026</title>
+    <title>Registro DIM - EVEM 2026</title>
     
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/variables.css">
@@ -11,11 +11,7 @@
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body style="background-color: #f8fafc;">
     
@@ -32,103 +28,138 @@
             </div>
             <ul class="nav-links">
                 <li><a href="dim.html">🟣 Inicio DIM</a></li>
-                <li><a href="dim-registro.html">📝 Pre-Inscripción</a></li>
-                <li><a href="dim-certificado.html" style="color: #9333ea; font-weight: bold;">🎓 Certificados</a></li>
+                <li><a href="dim-registro.html" style="color: #9333ea; font-weight: bold;">📝 Pre-Inscripción</a></li>
+                <li><a href="dim-certificado.html">🎓 Certificados</a></li>
             </ul>
         </div>
     </header>
 
     <div style="height: 40px;"></div>
 
-    <section class="cert-search-section">
-        <div class="container" style="max-width: 600px;">
-            <div class="search-card">
-                <div class="cert-icon-top">🎓</div>
-                <h1>Portal de Emisión</h1>
-                <p>Ingresa tu número de cédula para generar tu certificado académico oficial del Día Internacional de las Matemáticas.</p>
-                
-                <form id="certForm" class="cert-form">
-                    <input type="text" id="searchCedula" placeholder="Ej: V-12345678" required autocomplete="off">
-                    <button type="submit" id="btnBuscar">
-                        <span id="btnText">Validar y Generar PDF</span>
-                    </button>
-                </form>
+    <div class="dim-hero-bg"></div>
 
-                <div class="date-warning">
-                    📅 <strong>Nota:</strong> Los certificados estarán habilitados para descarga a partir del <strong>27 de Marzo de 2026</strong>.
+    <section class="registration-split-section">
+        <div class="container">
+            <div class="split-layout">
+                
+                <div class="info-panel">
+                    <div class="info-panel-card">
+                        <div class="badge-dim">EVENTO OFICIAL</div>
+                        <h1 class="info-title">Sé parte de la celebración mundial</h1>
+                        <p class="info-subtitle">El Día Internacional de las Matemáticas nos une. Regístrate para acceder a todas las actividades especiales en la UNET.</p>
+                        
+                        <div class="benefits-vertical-grid">
+                            <div class="benefit-row">
+                                <div class="b-icon">🎙️</div>
+                                <div class="b-text">
+                                    <h4>Charlas Exclusivas</h4>
+                                    <p>Conferencias sobre la magia de los números</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row">
+                                <div class="b-icon">🤝</div>
+                                <div class="b-text">
+                                    <h4>Networking</h4>
+                                    <p>Conoce a otros apasionados por las ciencias</p>
+                                </div>
+                            </div>
+                            <div class="benefit-row">
+                                <div class="b-icon">🎓</div>
+                                <div class="b-text">
+                                    <h4>Certificación Digital</h4>
+                                    <p>Descargable a partir del 27 de marzo (Requiere pago)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="form-panel">
+                    <div class="form-card-premium">
+                        <h2 class="form-heading">Completa tu Registro</h2>
+                        
+                        <form id="dimRegistrationForm">
+                            
+                            <div class="form-section-title">
+                                <span class="step-number">1</span> Datos Personales
+                            </div>
+                            
+                            <div class="input-grid">
+                                <div class="input-wrapper">
+                                    <label>Cédula de Identidad</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🪪</span>
+                                        <input type="text" id="cedula" placeholder="Ej: V-12345678" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Nombre Completo</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">👤</span>
+                                        <input type="text" id="fullName" placeholder="Nombres y Apellidos" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Correo Electrónico</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">✉️</span>
+                                        <input type="email" id="email" placeholder="tu@correo.com" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Teléfono / WhatsApp</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">📱</span>
+                                        <input type="tel" id="phone" placeholder="0414-1234567" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section-title" style="margin-top: 30px;">
+                                <span class="step-number">2</span> Procedencia
+                            </div>
+
+                            <div class="input-wrapper" style="margin-bottom: 15px;">
+                                <label>Institución a la que representas</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">🏫</span>
+                                    <input type="text" id="institution" placeholder="Liceo, Universidad, etc." required>
+                                </div>
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="input-wrapper">
+                                    <label>Estado</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🗺️</span>
+                                        <input type="text" id="state" placeholder="Ej: Táchira" required>
+                                    </div>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label>Ciudad</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">🏙️</span>
+                                        <input type="text" id="city" placeholder="Ej: San Cristóbal" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-notice">
+                                💡 <strong>Importante:</strong> Verifica que tu nombre esté escrito correctamente, ya que así se generará tu certificado digital.
+                            </div>
+
+                            <button type="submit" class="btn-submit-premium" id="submitBtn">
+                                <span class="btn-text">Confirmar Asistencia al DIM →</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <div style="overflow: hidden; height: 0; width: 0;">
-        <div id="diploma-template" class="diploma-container">
-            <div class="diploma-watermark">DIM</div>
-            
-            <div class="diploma-border-outer">
-                <div class="diploma-border-inner">
-                    
-                    <div class="diploma-header-logos">
-                        <div class="logo-box">
-                            <img src="../assets/images/logo52aniv.png" alt="Logo Izquierdo" style="filter: grayscale(100%);">
-                        </div>
-                        <div class="header-text-center">
-                            <h4>REPÚBLICA BOLIVARIANA DE VENEZUELA</h4>
-                            <h2>UNIVERSIDAD NACIONAL EXPERIMENTAL DEL TÁCHIRA</h2>
-                            <h3>UNIVERSIDAD DE LOS ANDES</h3>
-                        </div>
-                        <div class="logo-box">
-                            <img src="../assets/images/evem-logo.png" alt="Logo Derecho" style="filter: grayscale(100%);">
-                        </div>
-                    </div>
-
-                    <div class="diploma-body">
-                        <p class="diploma-grant">Hacen constar que el(la) ciudadano(a):</p>
-                        
-                        <h1 class="diploma-name" id="diplomaName">[NOMBRE DEL PARTICIPANTE]</h1>
-                        
-                        <div class="diploma-reason">
-                            <p>Ha participado y aprobado exitosamente las actividades académicas y conferencias magistrales impartidas durante la celebración oficial del <strong>Día Internacional de las Matemáticas (DIM)</strong> y la XXVIII Escuela Venezolana para la Enseñanza de la Matemática, cumpliendo con la carga horaria estipulada.</p>
-                        </div>
-                        
-                        <p class="diploma-date">Expedido en San Cristóbal, Estado Táchira, a los 27 días del mes de marzo de 2026.</p>
-                    </div>
-
-                    <div class="diploma-signatures">
-                        <div class="sig-block">
-                            <div class="sig-line"></div>
-                            <p class="sig-name">Dr. Raúl Casanova Ostos</p>
-                            <p class="sig-title">Rector UNET</p>
-                        </div>
-                        <div class="sig-block">
-                            <div class="sig-line"></div>
-                            <p class="sig-name">Dr. Mario Bonucci</p>
-                            <p class="sig-title">Rector ULA</p>
-                        </div>
-                        <div class="sig-block">
-                            <div class="sig-line"></div>
-                            <p class="sig-name">Comité Organizador</p>
-                            <p class="sig-title">EVEM / DIM</p>
-                        </div>
-                    </div>
-
-                    <div class="diploma-footer-validation">
-                        <div class="qr-container">
-                            <div id="qrCode"></div>
-                        </div>
-                        <div class="validation-text">
-                            <p><strong>DOCUMENTO OFICIAL VERIFICADO</strong></p>
-                            <p>Registro: <span id="diplomaCedula">[CEDULA]</span> - DIM-2026</p>
-                            <p>Escanee el código QR para validar la autenticidad de este certificado.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer" style="margin-top: 60px;">
+    <footer class="footer" style="margin-top: 0;">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -152,237 +183,216 @@
                     <p>Sede 2026: UNET</p>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
+            <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <p>&copy; 2026 Universidad Nacional Experimental del Táchira - EVEM & DIM. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        document.getElementById('certForm').addEventListener('submit', async (e) => {
+        document.getElementById('dimRegistrationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const cedula = document.getElementById('searchCedula').value.trim();
-            const btn = document.getElementById('btnBuscar');
-            const btnText = document.getElementById('btnText');
-            
-            const unlockDate = new Date('2026-03-27T00:00:00');
-            const currentDate = new Date();
-
-            // ⚠️ MODO DESARROLLADOR (Cambia a false en producción)
-            const FORZAR_DESCARGA_PARA_PRUEBAS = true; 
-
-            if (currentDate < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
-                Swal.fire({
-                    title: 'Aún no disponible',
-                    text: 'Los certificados se habilitarán automáticamente el 27 de Marzo una vez concluido el evento.',
-                    icon: 'info',
-                    confirmButtonColor: '#1e3a8a'
-                });
-                return;
-            }
-
+            const btn = document.getElementById('submitBtn');
+            const btnText = btn.querySelector('.btn-text');
             btn.disabled = true;
-            btnText.textContent = 'Verificando y Firmando... ⏳';
+            btnText.textContent = 'Procesando registro... ⏳';
+
+            const formData = {
+                cedula: document.getElementById('cedula').value,
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                institution: document.getElementById('institution').value,
+                state: document.getElementById('state').value,
+                city: document.getElementById('city').value
+            };
 
             try {
-                const response = await fetch(`../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
+                const response = await fetch('../backend/api.php?action=register_dim', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
                 const result = await response.json();
 
                 if (response.ok) {
-                    btnText.textContent = 'Generando Documento... 🖨️';
-                    await generarPDF(result.fullName, cedula);
-                    
                     Swal.fire({
-                        title: '¡Certificado Generado!',
-                        text: 'Tu documento oficial ha sido descargado con éxito.',
+                        title: '¡Inscripción Exitosa!',
+                        text: 'Tus datos están registrados. Para descargar el certificado recuerda formalizar tu pago. Estará disponible el 27 de Marzo.',
                         icon: 'success',
-                        confirmButtonColor: '#22c55e'
+                        confirmButtonColor: '#4c1d95'
+                    }).then(() => {
+                        window.location.href = 'dim.html'; 
                     });
                 } else {
-                    throw new Error(result.error);
+                    throw new Error(result.error || 'Error al registrarse');
                 }
             } catch (error) {
                 Swal.fire({
-                    title: 'Aviso del Sistema',
+                    title: 'Atención',
                     text: error.message,
                     icon: 'warning',
-                    confirmButtonColor: '#ef4444'
+                    confirmButtonColor: '#4c1d95'
                 });
-            } finally {
                 btn.disabled = false;
-                btnText.textContent = 'Validar y Generar PDF';
+                btnText.textContent = 'Confirmar Asistencia al DIM →';
             }
         });
-
-        async function generarPDF(nombre, cedula) {
-            // 1. Inyectar datos en el HTML
-            document.getElementById('diplomaName').textContent = nombre;
-            document.getElementById('diplomaCedula').textContent = cedula;
-            
-            // 2. Generar Código QR Dinámico
-            const qrContainer = document.getElementById('qrCode');
-            qrContainer.innerHTML = ''; // Limpiar anterior si existe
-            new QRCode(qrContainer, {
-                // Genera un enlace falso pero creíble para validación
-                text: `https://www.evem.unet.edu.ve/validar?id=${cedula}`,
-                width: 90,
-                height: 90,
-                colorDark : "#0f172a",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
-
-            // Darle 300ms al QR para que se termine de dibujar en el DOM
-            await new Promise(r => setTimeout(r, 300));
-
-            // 3. Tomar la foto (Aumentamos escala para que el texto salga super nítido)
-            const diplomaElement = document.getElementById('diploma-template');
-            const canvas = await html2canvas(diplomaElement, { 
-                scale: 3, 
-                useCORS: true,
-                backgroundColor: "#ffffff"
-            }); 
-            
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-            // 4. Crear y exportar PDF
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('landscape', 'mm', 'a4');
-            
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            
-            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save(`Certificado_Academico_${nombre.replace(/\s+/g, '_')}.pdf`);
-        }
     </script>
 
     <style>
-        /* ESTILOS DEL BUSCADOR */
-        .cert-search-section {
-            padding: 80px 0; background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-            min-height: 60vh; display: flex; align-items: center;
+        /* FONDO HERO */
+        .dim-hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 60vh;
+            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
+            z-index: 1;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
         }
 
-        .search-card {
-            background: white; padding: 50px 40px; border-radius: 24px;
-            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative;
+        .registration-split-section {
+            position: relative; z-index: 2;
+            padding: 60px 0 100px;
         }
 
-        .cert-icon-top {
-            font-size: 4rem; margin-top: -80px; margin-bottom: 20px;
-            background: white; width: 100px; height: 100px; line-height: 100px;
-            margin-left: auto; margin-right: auto; border-radius: 50%;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid #f8fafc;
+        .split-layout {
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px;
+            align-items: flex-start;
         }
 
-        .search-card h1 { color: #1e293b; font-size: 2.2rem; font-weight: 900; margin-bottom: 15px; }
-        .search-card p { color: #64748b; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6; }
-
-        .cert-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
-        .cert-form input {
-            padding: 18px; border: 2px solid #e2e8f0; border-radius: 12px;
-            font-size: 1.2rem; text-align: center; font-weight: 700; color: #1e3a8a;
-            background: #f8fafc; transition: all 0.3s;
-        }
-        .cert-form input:focus { outline: none; border-color: #d4af37; background: white; }
-
-        .cert-form button {
-            background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white;
-            border: none; padding: 18px; border-radius: 12px; font-size: 1.1rem;
-            font-weight: 800; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3); border-bottom: 4px solid #0f172a;
-        }
-        .cert-form button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(30, 58, 138, 0.4); }
-        .cert-form button:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
-
-        .date-warning {
-            background: #fffbeb; color: #b45309; padding: 15px; border-radius: 10px;
-            font-size: 0.9rem; border: 1px solid #fde68a;
-        }
-
-        /* =========================================================
-           DISEÑO DEL DIPLOMA ACADÉMICO VIP (A4 Landscape: 1123 x 794)
-           ========================================================= */
-        .diploma-container {
-            width: 1123px; height: 794px; background: #ffffff;
-            position: relative; box-sizing: border-box; overflow: hidden;
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        .diploma-watermark {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 250px; font-weight: 900; color: rgba(15, 23, 42, 0.03);
-            z-index: 1; letter-spacing: 20px; font-family: Arial, sans-serif;
-        }
-
-        .diploma-border-outer {
-            position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px;
-            border: 12px solid #0f172a; /* Azul Marino muy oscuro */
-            z-index: 2; padding: 6px; box-sizing: border-box;
-        }
-
-        .diploma-border-inner {
-            height: 100%; border: 3px solid #d4af37; /* Dorado Premium */
-            box-sizing: border-box; padding: 40px;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-
-        /* Cabecera */
-        .diploma-header-logos {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;
-        }
-        .logo-box { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
-        .logo-box img { max-width: 100%; max-height: 100%; opacity: 0.9; }
+        /* LADO IZQUIERDO: TARJETA DE CRISTAL */
+        .info-panel { padding-top: 10px; }
         
-        .header-text-center { text-align: center; flex-grow: 1; padding: 0 20px; }
-        .header-text-center h4 { font-size: 14px; color: #475569; margin: 0 0 5px 0; letter-spacing: 2px; }
-        .header-text-center h2 { font-size: 22px; color: #0f172a; margin: 0 0 5px 0; font-weight: bold; }
-        .header-text-center h3 { font-size: 16px; color: #334155; margin: 0; }
-
-        /* Cuerpo */
-        .diploma-body { text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .info-panel-card {
+            background: rgba(30, 10, 60, 0.4); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
         
-        .diploma-grant { font-size: 22px; color: #475569; font-style: italic; margin-bottom: 30px; }
+        .badge-dim {
+            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            background: rgba(255,255,255,0.15); font-weight: 800; font-size: 0.8rem;
+            letter-spacing: 1px; margin-bottom: 20px; color: white;
+        }
+
+        .info-title { 
+            font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; 
+            line-height: 1.2; color: #ffffff !important; 
+        }
         
-        .diploma-name {
-            font-size: 48px; color: #0f172a; margin: 0 auto 30px;
-            font-family: 'Georgia', serif; font-style: italic; font-weight: bold;
-            border-bottom: 2px dashed #d4af37; display: inline-block; padding: 0 50px 10px;
+        .info-subtitle { 
+            font-size: 1.1rem; color: #e9d5ff !important; 
+            margin-bottom: 40px; line-height: 1.6; 
         }
 
-        .diploma-reason {
-            max-width: 850px; margin: 0 auto 30px; font-size: 19px;
-            line-height: 1.8; color: #334155; text-align: justify;
-            text-align-last: center; /* Centra la última línea del texto justificado */
+        .benefits-vertical-grid { display: flex; flex-direction: column; gap: 20px; }
+        
+        .benefit-row {
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(255,255,255,0.08); padding: 15px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease;
         }
 
-        .diploma-date { font-size: 16px; color: #64748b; font-style: italic; }
+        .benefit-row:hover { transform: translateX(10px); background: rgba(255,255,255,0.12); }
+        
+        .b-icon {
+            font-size: 1.8rem; background: white; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center; border-radius: 12px;
+            flex-shrink: 0;
+        }
+        
+        .b-text h4 { margin: 0 0 5px 0; font-size: 1.05rem; color: white !important; font-weight: 700; }
+        .b-text p { margin: 0; font-size: 0.9rem; color: #cbd5e1 !important; }
 
-        /* Firmas */
-        .diploma-signatures {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            padding: 0 50px; margin-top: 10px;
+        /* LADO DERECHO (EL FORMULARIO) */
+        .form-card-premium {
+            background: white; border-radius: 24px; padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
-        .sig-block { width: 220px; text-align: center; }
-        .sig-line { border-bottom: 1px solid #0f172a; height: 60px; margin-bottom: 8px; }
-        .sig-name { font-size: 16px; font-weight: bold; color: #0f172a; margin: 0 0 3px 0; }
-        .sig-title { font-size: 14px; color: #64748b; margin: 0; font-style: italic; }
 
-        /* QR y Validación */
-        .diploma-footer-validation {
-            position: absolute; bottom: 45px; left: 50px;
-            display: flex; align-items: center; gap: 15px;
+        .form-heading {
+            font-size: 2rem; color: #1e293b; margin-bottom: 30px; font-weight: 800;
         }
-        .qr-container {
-            width: 90px; height: 90px; padding: 5px; background: white;
-            border: 2px solid #e2e8f0; border-radius: 8px;
+
+        .form-section-title {
+            font-size: 1.1rem; font-weight: 700; color: #475569;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+            padding-bottom: 10px; border-bottom: 2px solid #f1f5f9;
         }
-        .validation-text { text-align: left; font-family: Arial, sans-serif; }
-        .validation-text p { margin: 0 0 3px 0; font-size: 11px; color: #475569; }
-        .validation-text p strong { color: #0f172a; font-size: 12px; }
+
+        .step-number {
+            background: #e9d5ff; color: #7e22ce; width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; font-size: 0.9rem;
+        }
+
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .input-wrapper label {
+            display: block; font-size: 0.85rem; font-weight: 700; color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .input-with-icon {
+            position: relative; display: flex; align-items: center;
+        }
+
+        .input-icon {
+            position: absolute; left: 15px; font-size: 1.2rem;
+        }
+
+        .input-with-icon input {
+            width: 100%; padding: 14px 15px 14px 45px;
+            border: 2px solid #e2e8f0; border-radius: 12px;
+            font-size: 1rem; color: #1e293b; transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-with-icon input:focus {
+            outline: none; border-color: #a855f7; background: white;
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
+        }
+
+        .form-notice {
+            background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+            padding: 15px; border-radius: 10px; font-size: 0.9rem; margin: 25px 0;
+            line-height: 1.5;
+        }
+
+        .btn-submit-premium {
+            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
+            color: white; border: none; padding: 18px 30px; border-radius: 14px;
+            font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%;
+            transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(76, 29, 149, 0.3);
+        }
+
+        .btn-submit-premium:hover {
+            transform: translateY(-3px); box-shadow: 0 15px 30px rgba(76, 29, 149, 0.4);
+        }
+
+        .btn-submit-premium:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .split-layout { grid-template-columns: 1fr; gap: 40px; }
+            .dim-hero-bg { height: 60vh; }
+            .info-panel { text-align: center; }
+            .benefits-vertical-grid { text-align: left; }
+        }
+        
+        @media (max-width: 768px) {
+            .input-grid { grid-template-columns: 1fr; gap: 15px; }
+            .form-card-premium { padding: 25px; }
+            .info-title { font-size: 2.2rem; }
+        }
     </style>
 </body>
 </html>

@@ -201,6 +201,49 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_certificate')
     }
 }
 
+// --- RUTA: VERIFICAR Y GENERAR CERTIFICADO EVEM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_evem_certificate') {
+    $cedula = isset($_GET['cedula']) ? $_GET['cedula'] : '';
+
+    if (empty($cedula)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Debes ingresar una cédula."]);
+        exit();
+    }
+
+    try {
+        // Buscamos a la persona y el curso que eligió
+        $stmt = $conn->prepare("SELECT full_name, course_preference, has_paid FROM participants WHERE cedula = ?");
+        $stmt->execute([$cedula]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            http_response_code(404);
+            echo json_encode(["error" => "No se encontró esta cédula en los registros de EVEM."]);
+            exit();
+        }
+
+        // Verificamos si ya pagó (has_paid = 1)
+        if (!isset($user['has_paid']) || $user['has_paid'] == 0) {
+            http_response_code(403);
+            echo json_encode(["error" => "El pago de inscripción a EVEM no ha sido verificado. Contacta a administración."]);
+            exit();
+        }
+
+        // Si existe y pagó, devolvemos el nombre y el curso
+        http_response_code(200);
+        echo json_encode([
+            "success" => true,
+            "fullName" => $user['full_name'],
+            "course" => $user['course_preference']
+        ]);
+
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno en el servidor: " . $e->getMessage()]);
+    }
+}
+
 // --- RUTA (ADMIN): OBTENER LISTA DEL DIM ---
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_participants') {
     try {
