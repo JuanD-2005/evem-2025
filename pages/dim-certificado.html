@@ -172,7 +172,7 @@
             const currentDate = new Date();
 
             // ⚠️ MODO DESARROLLADOR: Cambia a false en producción
-            const FORZAR_DESCARGA_PARA_PRUEBAS = true; 
+            const FORZAR_DESCARGA_PARA_PRUEBAS = false;
 
             if (currentDate < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
                 Swal.fire({
