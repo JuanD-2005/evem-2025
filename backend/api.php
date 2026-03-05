@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" en la UNET
-$username = "root";     // Ojo: Cámbialo al usuario de la UNET
-$password = "";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
+$db_name = "evem";          // El nombre de la BD en la UNET
+$username = "usuario_unet"; // El usuario que te den en la UNET
+$password = "clave_unet";   // La contraseña de la BD de la UNET
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password);
