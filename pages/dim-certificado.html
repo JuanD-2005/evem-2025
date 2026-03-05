@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificados DIM - EVEM 2026</title>
+    
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body style="background-color: #f8fafc;">
+    
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="https://www.unet.edu.ve/" target="_blank">🏛️ Portal UNET</a></li>
+                <li><a href="../index.html">⬅️ Volver a EVEM</a></li>
+            </ul>
+            <div class="central-logo-container">
+                <a href="dim.html">
+                    <img src="../assets/images/logo52aniv.png" alt="DIM Logo" class="central-logo" style="border-radius: 50%;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dim.html">🟣 Inicio DIM</a></li>
+                <li><a href="dim-registro.html">📝 Pre-Inscripción</a></li>
+                <li><a href="dim-certificado.html" style="color: #9333ea; font-weight: bold;">🎓 Certificados</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div style="height: 40px;"></div>
+
+    <section class="cert-search-section">
+        <div class="container" style="max-width: 600px;">
+            <div class="search-card">
+                <div class="cert-icon-top">🎓</div>
+                <h1>Portal de Emisión</h1>
+                <p>Ingresa tu número de cédula para generar tu certificado de asistencia al Día Internacional de las Matemáticas.</p>
+                
+                <form id="certForm" class="cert-form">
+                    <input type="text" id="searchCedula" placeholder="Ej: V-12345678" required autocomplete="off">
+                    <button type="submit" id="btnBuscar">
+                        <span id="btnText">Buscar y Generar PDF</span>
+                    </button>
+                </form>
+
+                <div class="date-warning">
+                    📅 <strong>Nota:</strong> Los certificados estarán habilitados para descarga a partir del <strong>27 de Marzo de 2026</strong>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div style="overflow: hidden; height: 0; width: 0;">
+        <div id="diploma-template" class="diploma-container">
+            <div class="diploma-border">
+                <div class="diploma-header">
+                    <h2>Universidad Nacional Experimental del Táchira</h2>
+                    <h3>Comité Organizador del DIM 2026</h3>
+                </div>
+                <div class="diploma-body">
+                    <p class="diploma-grant">Otorga el presente</p>
+                    <h1 class="diploma-title-text">CERTIFICADO</h1>
+                    <p class="diploma-to">a:</p>
+                    <h2 class="diploma-name" id="diplomaName">[NOMBRE DEL PARTICIPANTE]</h2>
+                    <p class="diploma-reason">
+                        Por su destacada participación y asistencia a las actividades académicas y conferencias realizadas en el marco del <strong>Día Internacional de las Matemáticas</strong>.
+                    </p>
+                    <p class="diploma-date">San Cristóbal, Táchira - 27 de Marzo de 2026</p>
+                </div>
+                <div class="diploma-signatures">
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <p>Comité Organizador</p>
+                        <p>EVEM / DIM</p>
+                    </div>
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <p>Rectorado</p>
+                        <p>UNET</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Universidad Nacional Experimental del Táchira</h4>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="conferencias.html">Conferencias</a></li>
+                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="contact.html">Inscripción EVEM</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto Institucional</h4>
+                    <p>Email: evem.tachira@gmail.com</p>
+                    <p>Sede 2026: UNET</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Universidad Nacional Experimental del Táchira - EVEM & DIM. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('certForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const cedula = document.getElementById('searchCedula').value.trim();
+            const btn = document.getElementById('btnBuscar');
+            const btnText = document.getElementById('btnText');
+            
+            // 🛑 CANDADO DE FECHA (27 de Marzo de 2026)
+            const unlockDate = new Date('2026-03-27T00:00:00');
+            const currentDate = new Date();
+
+            // ⚠️ MODO DESARROLLADOR: Cambia "false" por "true" en la línea de abajo para probarlo hoy mismo saltándote la fecha.
+            const FORZAR_DESCARGA_PARA_PRUEBAS = false; 
+
+            if (currentDate < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
+                Swal.fire({
+                    title: 'Aún no disponible',
+                    text: 'Los certificados se habilitarán automáticamente el 27 de Marzo una vez concluido el evento.',
+                    icon: 'info',
+                    confirmButtonColor: '#9333ea'
+                });
+                return;
+            }
+
+            // Si pasa la fecha (o forzaste la prueba), buscamos en la base de datos
+            btn.disabled = true;
+            btnText.textContent = 'Verificando... ⏳';
+
+            try {
+                const response = await fetch(`../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
+                const result = await response.json();
+
+                if (response.ok) {
+                    btnText.textContent = 'Generando PDF... 🖨️';
+                    await generarPDF(result.fullName);
+                    
+                    Swal.fire({
+                        title: '¡Certificado Generado!',
+                        text: 'Tu certificado se ha descargado con éxito.',
+                        icon: 'success',
+                        confirmButtonColor: '#22c55e'
+                    });
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Aviso del Sistema',
+                    text: error.message,
+                    icon: 'warning',
+                    confirmButtonColor: '#9333ea'
+                });
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Buscar y Generar PDF';
+            }
+        });
+
+        // FUNCIÓN QUE PINTA Y DESCARGA EL PDF
+        async function generarPDF(nombre) {
+            // 1. Ponemos el nombre en la plantilla HTML
+            document.getElementById('diplomaName').textContent = nombre;
+            
+            // 2. Tomamos la "foto" al HTML usando html2canvas
+            const diplomaElement = document.getElementById('diploma-template');
+            const canvas = await html2canvas(diplomaElement, { scale: 2 }); // Scale 2 para alta calidad
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+            // 3. Creamos el PDF (formato apaisado, tamaño A4)
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('landscape', 'mm', 'a4');
+            
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            
+            // 4. Pegamos la foto en el PDF y descargamos
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`Certificado_DIM_${nombre.replace(/\s+/g, '_')}.pdf`);
+        }
+    </script>
+
+    <style>
+        /* ESTILOS DEL BUSCADOR */
+        .cert-search-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
+            min-height: 60vh;
+            display: flex; align-items: center;
+        }
+
+        .search-card {
+            background: white; padding: 50px 40px; border-radius: 24px;
+            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .cert-icon-top {
+            font-size: 4rem; margin-top: -80px; margin-bottom: 20px;
+            background: white; width: 100px; height: 100px; line-height: 100px;
+            margin-left: auto; margin-right: auto; border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid #f8fafc;
+        }
+
+        .search-card h1 { color: #1e293b; font-size: 2.2rem; font-weight: 900; margin-bottom: 15px; }
+        .search-card p { color: #64748b; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6; }
+
+        .cert-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+
+        .cert-form input {
+            padding: 18px; border: 2px solid #e2e8f0; border-radius: 12px;
+            font-size: 1.2rem; text-align: center; font-weight: 700; color: #4c1d95;
+            background: #f8fafc; transition: all 0.3s;
+        }
+
+        .cert-form input:focus { outline: none; border-color: #9333ea; background: white; }
+
+        .cert-form button {
+            background: linear-gradient(135deg, #9333ea, #7e22ce); color: white;
+            border: none; padding: 18px; border-radius: 12px; font-size: 1.1rem;
+            font-weight: 800; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.3);
+        }
+
+        .cert-form button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(147, 51, 234, 0.4); }
+        .cert-form button:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .date-warning {
+            background: #fffbeb; color: #b45309; padding: 15px; border-radius: 10px;
+            font-size: 0.9rem; border: 1px solid #fde68a;
+        }
+
+        /* =========================================================
+           DISEÑO DEL DIPLOMA (Plantilla Oculta para el PDF)
+           Resolución proporcionada para A4 Landscape (1123 x 794)
+           ========================================================= */
+        .diploma-container {
+            width: 1123px; height: 794px; background: white;
+            padding: 40px; box-sizing: border-box;
+            background-image: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .diploma-border {
+            border: 15px solid #4c1d95;
+            height: 100%; box-sizing: border-box; padding: 50px;
+            border-radius: 20px; outline: 4px solid #d8b4fe; outline-offset: -25px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            text-align: center; position: relative;
+        }
+
+        .diploma-header h2 { color: #1e293b; font-size: 28px; margin: 0 0 10px 0; text-transform: uppercase; font-family: 'Times New Roman', serif; }
+        .diploma-header h3 { color: #64748b; font-size: 20px; margin: 0; font-family: 'Times New Roman', serif; }
+
+        .diploma-body { margin-top: 40px; flex-grow: 1; }
+        .diploma-grant { font-size: 22px; color: #475569; font-style: italic; margin-bottom: 20px; }
+        .diploma-title-text { font-size: 60px; color: #4c1d95; margin: 0 0 20px 0; letter-spacing: 10px; font-weight: 900; }
+        .diploma-to { font-size: 22px; color: #475569; margin-bottom: 20px; }
+        
+        .diploma-name {
+            font-size: 45px; color: #0f172a; border-bottom: 2px solid #cbd5e1;
+            display: inline-block; padding: 0 40px 10px; margin: 0 0 30px 0;
+            font-family: 'Georgia', serif; font-style: italic;
+        }
+
+        .diploma-reason { font-size: 20px; color: #334155; line-height: 1.6; max-width: 800px; margin: 0 auto 40px; }
+        .diploma-date { font-size: 18px; color: #64748b; font-weight: bold; }
+
+        .diploma-signatures { display: flex; justify-content: space-around; margin-top: 50px; }
+        .sig-block { width: 250px; }
+        .sig-line { border-bottom: 2px solid #475569; margin-bottom: 10px; height: 50px; }
+        .sig-block p { margin: 0; font-size: 16px; color: #475569; font-weight: bold; }
+    </style>
+</body>
+</html>

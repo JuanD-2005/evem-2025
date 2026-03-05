@@ -62,14 +62,11 @@
             <div class="showcase-grid">
                 
                 <div class="showcase-gallery">
-                    <div class="main-image">
-                        <img src="../assets/images/hotel-main.jpg" alt="Fachada del Hotel Oficial">
+                    <div class="main-image" id="hotel-carousel-container">
+                        <div class="hotel-slide active" style="background-image: url('../assets/images/hotel-main.jpg');"></div>
+                        <div class="hotel-slide" style="background-image: url('../assets/images/hotel-room.jpg');"></div>
+                        <div class="hotel-slide" style="background-image: url('../assets/images/hotel-pool.jpg');"></div>
                         <div class="stars-overlay">⭐⭐⭐⭐</div>
-                    </div>
-                    <div class="thumbnail-grid">
-                        <img src="../assets/images/hotel-room.jpg" alt="Habitaciones">
-                        <img src="../assets/images/hotel-pool.jpg" alt="Áreas Recreativas">
-                        <img src="../assets/images/hotel-restaurant.jpg" alt="Restaurante">
                     </div>
                 </div>
 
@@ -304,6 +301,7 @@
             border-radius: 10px;
             font-size: 1.2rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 5;
         }
 
         .thumbnail-grid {
@@ -450,6 +448,44 @@
             height: 100%;
             object-fit: cover;
         }
+
+        /* CSS del Carrusel del Hotel */
+        #hotel-carousel-container {
+            position: relative;
+            background-color: #000;
+        }
+
+        .hotel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hotel-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
     </style>
+
+    <script>
+        // JS del Carrusel del Hotel
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.hotel-slide');
+            let current = 0;
+            if (slides.length > 0) {
+                setInterval(() => {
+                    slides[current].classList.remove('active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('active');
+                }, 3500); // Cambia cada 3.5 segundos
+            }
+        });
+    </script>
 </body>
 </html>

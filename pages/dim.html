@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día Internacional de las Matemáticas - DIM 2026</title>
+    
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="https://www.unet.edu.ve/" target="_blank">🏛️ Portal UNET</a></li>
+                <li><a href="../index.html">⬅️ Volver a EVEM</a></li>
+            </ul>
+
+            <div class="central-logo-container">
+                <a href="dim.html">
+                    <img src="../assets/images/logo52aniv.png" alt="DIM Logo" class="central-logo" style="border-radius: 50%;">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="dim.html" style="color: #9333ea; font-weight: bold;">🟣 Inicio DIM</a></li>
+                <li><a href="dim-registro.html">📝 Pre-Inscripción</a></li>
+                <li><a href="dim-certificado.html">🎓 Certificados</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div style="height: 40px;"></div>
+
+    <section class="dim-hero">
+        <div class="dim-particles"></div>
+        <div class="container">
+            <div class="dim-header-content">
+                <div class="dim-badge">14 DE MARZO</div>
+                <h1 class="dim-title">Día Internacional de las Matemáticas</h1>
+                <p class="dim-subtitle">Celebrando la belleza, la utilidad y el poder transformador de los números en la UNET</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="dim-portal">
+        <div class="container">
+            <div class="portal-grid">
+                
+                <div class="portal-card action-register">
+                    <div class="portal-icon">📝</div>
+                    <h2>Pre-Inscripción al Evento</h2>
+                    <p>Asegura tu participación en las actividades especiales preparadas para celebrar el DIM. La inscripción es un requisito indispensable para la logística del evento.</p>
+                    <ul class="portal-list">
+                        <li>✔️ Acceso a todas las charlas del DIM</li>
+                        <li>✔️ Material de apoyo digital</li>
+                        <li>✔️ Registro en la base de datos oficial</li>
+                    </ul>
+                    <a href="dim-registro.html" class="btn-dim btn-primary-dim">Llenar Formulario de Asistencia</a>
+                </div>
+
+                <div class="portal-card action-certificate">
+                    <div class="portal-icon">🎓</div>
+                    <h2>Portal de Certificados</h2>
+                    <p>¿Ya asististe y formalizaste tu inscripción y pago? Ingresa con tu número de cédula para generar y descargar tu certificado oficial de participación en formato PDF.</p>
+                    <div class="certificate-status">
+                        <span class="status-dot"></span> Sistema de emisión activo
+                    </div>
+                    <a href="dim-certificado.html" class="btn-dim btn-outline-dim">Buscar y Descargar Certificado</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Universidad Nacional Experimental del Táchira</h4>
+                    <p>Av. Universidad, Paramillo</p>
+                    <p>San Cristóbal, Estado Táchira</p>
+                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="conferencias.html">Conferencias</a></li>
+                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="contact.html">Inscripción EVEM</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contacto Institucional</h4>
+                    <p>Email: evem.tachira@gmail.com</p>
+                    <p>Organiza: Universidad de Los Andes (ULA)</p>
+                    <p>Sede 2026: UNET</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Universidad Nacional Experimental del Táchira - EVEM & DIM. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        /* ESTILOS EXCLUSIVOS DEL DIM */
+        .dim-hero {
+            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
+            padding: 100px 0 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 -20px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Partículas de fondo matemáticas (CSS puro) */
+        .dim-particles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px),
+                              radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 60px 60px, 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.6;
+        }
+
+        .dim-header-content {
+            position: relative; z-index: 2;
+        }
+
+        .dim-badge {
+            display: inline-block; padding: 8px 20px; border-radius: 30px;
+            background: #d8b4fe; color: #4c1d95; font-weight: 900;
+            letter-spacing: 2px; margin-bottom: 20px; font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(216, 180, 254, 0.4);
+        }
+
+        .dim-title {
+            font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 15px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .dim-subtitle {
+            font-size: 1.2rem; color: #e9d5ff; max-width: 700px; margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* EL PORTAL DE ACCIONES */
+        .dim-portal {
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 80px;
+        }
+
+        .portal-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;
+        }
+
+        .portal-card {
+            background: white; border-radius: 24px; padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column;
+            border-top: 6px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .portal-card:hover { transform: translateY(-10px); }
+
+        .action-register { border-color: #9333ea; }
+        .action-certificate { border-color: #f59e0b; }
+
+        .portal-icon {
+            font-size: 3.5rem; margin-bottom: 20px;
+            background: #f3f4f6; width: 80px; height: 80px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 20px;
+        }
+
+        .portal-card h2 {
+            font-size: 1.8rem; color: #1e293b; margin-bottom: 15px; font-weight: 800;
+        }
+
+        .portal-card p {
+            color: #64748b; line-height: 1.7; margin-bottom: 25px; flex-grow: 1;
+        }
+
+        .portal-list {
+            list-style: none; padding: 0; margin-bottom: 30px;
+        }
+
+        .portal-list li {
+            margin-bottom: 10px; color: #475569; font-weight: 600; font-size: 0.95rem;
+        }
+
+        .certificate-status {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #f0fdf4; color: #166534; padding: 8px 15px;
+            border-radius: 10px; font-weight: 700; font-size: 0.9rem;
+            margin-bottom: 30px; width: fit-content;
+        }
+
+        .status-dot {
+            width: 10px; height: 10px; background: #22c55e; border-radius: 50%;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        /* BOTONES DEL DIM */
+        .btn-dim {
+            padding: 15px 30px; border-radius: 12px; font-weight: 700;
+            text-align: center; text-decoration: none; font-size: 1.1rem;
+            transition: all 0.3s ease; display: block;
+        }
+
+        .btn-primary-dim {
+            background: linear-gradient(135deg, #9333ea, #7e22ce); color: white;
+            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.3);
+        }
+
+        .btn-primary-dim:hover {
+            background: linear-gradient(135deg, #7e22ce, #581c87); transform: translateY(-3px); color: white;
+        }
+
+        .btn-outline-dim {
+            background: white; color: #1e293b; border: 2px solid #e2e8f0;
+        }
+
+        .btn-outline-dim:hover {
+            border-color: #f59e0b; color: #f59e0b; background: #fffbeb;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .portal-grid { grid-template-columns: 1fr; }
+            .dim-title { font-size: 2.5rem; }
+            .dim-portal { margin-top: -40px; }
+        }
+    </style>
+</body>
+</html>

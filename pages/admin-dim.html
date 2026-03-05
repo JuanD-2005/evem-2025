@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin DIM - Control de Pagos</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 20px; }
+        .admin-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; }
+        h1 { color: #1e293b; font-size: 2rem; margin: 0; }
+        .badge-admin { background: #ef4444; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: #f8fafc; color: #475569; text-align: left; padding: 15px; font-weight: 700; border-bottom: 2px solid #cbd5e1; }
+        td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: middle; }
+        tr:hover { background: #f8fafc; }
+        
+        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; display: inline-block; text-align: center; width: 90px; }
+        .status-paid { background: #dcfce7; color: #166534; }
+        .status-unpaid { background: #fee2e2; color: #991b1b; }
+        
+        .btn-toggle { border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-approve { background: #22c55e; color: white; }
+        .btn-approve:hover { background: #16a34a; }
+        .btn-revoke { background: #ef4444; color: white; }
+        .btn-revoke:hover { background: #dc2626; }
+        
+        .loader { text-align: center; padding: 50px; color: #64748b; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1>Control de Pagos DIM</h1>
+                <p style="color: #64748b; margin-top: 5px;">Habilita o deshabilita la descarga de certificados</p>
+            </div>
+            <div class="badge-admin">ACCESO RESTRINGIDO</div>
+        </div>
+
+        <table id="participantsTable">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Cédula</th>
+                    <th>Nombre Completo</th>
+                    <th>Institución</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="6" class="loader">Cargando participantes... ⏳</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', loadParticipants);
+
+        async function loadParticipants() {
+            const tbody = document.getElementById('tableBody');
+            try {
+                const response = await fetch('../backend/api.php?action=get_dim_participants');
+                const data = await response.json();
+                
+                tbody.innerHTML = ''; // Limpiar tabla
+                
+                if(data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay inscritos aún.</td></tr>';
+                    return;
+                }
+
+                data.forEach(user => {
+                    const isPaid = user.has_paid == 1;
+                    const statusClass = isPaid ? 'status-paid' : 'status-unpaid';
+                    const statusText = isPaid ? 'Aprobado' : 'Pendiente';
+                    
+                    const btnClass = isPaid ? 'btn-revoke' : 'btn-approve';
+                    const btnText = isPaid ? 'Revocar Pago' : 'Aprobar Pago';
+                    const newStatus = isPaid ? 0 : 1;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${user.fecha}</td>
+                        <td><strong>${user.cedula}</strong></td>
+                        <td>${user.full_name}</td>
+                        <td>${user.institution}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn-toggle ${btnClass}" onclick="togglePayment(${user.id}, ${newStatus}, '${user.full_name}')">
+                                ${btnText}
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error al conectar con la base de datos.</td></tr>';
+            }
+        }
+
+        async function togglePayment(userId, newStatus, userName) {
+            const actionText = newStatus === 1 ? 'aprobar' : 'revocar';
+            
+            // Confirmación antes de cambiar
+            const confirm = await Swal.fire({
+                title: `¿${actionText.toUpperCase()} el pago?`,
+                text: `Vas a ${actionText} el pago de ${userName}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: newStatus === 1 ? '#22c55e' : '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: `Sí, ${actionText}`,
+                cancelButtonText: 'Cancelar'
+            });
+
+            if (confirm.isConfirmed) {
+                try {
+                    const response = await fetch('../backend/api.php?action=toggle_payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: userId, has_paid: newStatus })
+                    });
+                    
+                    if (response.ok) {
+                        // Recargar la tabla para ver el cambio
+                        loadParticipants();
+                        Swal.fire({
+                            toast: true, position: 'top-end', icon: 'success',
+                            title: 'Estado actualizado', showConfirmButton: false, timer: 1500
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire('Error', 'No se pudo actualizar el pago', 'error');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

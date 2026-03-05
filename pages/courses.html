@@ -28,7 +28,7 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="../index.html#comite">⚙️ Comité</a></li>
+                <li><a href="conferencias.html">👥 Conferencias</a></li>
                 <li><a href="courses.html" style="color: var(--color-primary); font-weight: bold;">💠 Cursos</a></li>
                 <li><a href="contact.html">💬 Inscripción</a></li>
             </ul>
@@ -37,20 +37,46 @@
 
     <div style="height: 40px;"></div>
 
-    <section class="page-header">
+    <section class="page-header-premium">
+        <div class="header-animated-bg">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
         <div class="container">
-            <h1 class="page-title">Oferta Académica 2026</h1>
-            <p class="page-subtitle">Formación intensiva para el fortalecimiento de la educación matemática</p>
+            <div class="header-content-animated">
+                <div class="badge-official" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white;">OFERTA ACADÉMICA</div>
+                <h1 class="page-title-animated">Cursos Intensivos</h1>
+                <p class="page-subtitle-animated">Formación especializada para el fortalecimiento de la educación matemática</p>
+                
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Cursos</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Días</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">40</span>
+                        <span class="stat-label">Cupos c/u</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="courses-intro-section">
         <div class="container">
-            <div class="info-banner info-accent">
-                <div class="info-icon">📚</div>
-                <div class="info-content">
-                    <h3>Modalidad de Cursos</h3>
-                    <p>Cada participante podrá inscribirse en <strong>un (1) curso intensivo</strong> de su preferencia. Las sesiones tienen una duración de 4 días y se llevarán a cabo en las instalaciones del Campus UNET.</p>
+            <div class="info-banner-modern">
+                <div class="banner-glow"></div>
+                <div class="info-icon-modern">📚</div>
+                <div class="info-content-modern">
+                    <h3>Modalidad de Inscripción</h3>
+                    <p>Cada participante podrá inscribirse en <strong>un (1) curso intensivo</strong> de su preferencia. Las sesiones prácticas y teóricas se llevarán a cabo en las instalaciones del Campus UNET.</p>
                 </div>
             </div>
         </div>
@@ -58,14 +84,15 @@
 
     <section class="courses-grid-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title centered">Cursos Disponibles</h2>
-                <p class="section-subtitle" style="text-align: center;">Explora nuestras áreas de estudio</p>
+            <div class="section-intro">
+                <h2 class="section-title-modern">Catálogo de Cursos 2026</h2>
+                <p class="section-description">Explora nuestras áreas de estudio y asegura tu cupo</p>
             </div>
 
-            <div id="courses-container" class="courses-modern-grid">
-                <div style="text-align: center; grid-column: 1 / -1; padding: 40px; color: var(--color-text-muted);">
-                    <h3>Cargando cursos desde el servidor... ⏳</h3>
+            <div id="courses-container" class="courses-premium-grid">
+                <div style="text-align: center; grid-column: 1 / -1; padding: 60px; color: var(--color-text-muted);">
+                    <div class="loading-spinner"></div>
+                    <h3 style="margin-top: 20px;">Cargando cursos desde el servidor...</h3>
                 </div>
             </div>
         </div>
@@ -78,16 +105,14 @@
                     <h4>Universidad Nacional Experimental del Táchira</h4>
                     <p>Av. Universidad, Paramillo</p>
                     <p>San Cristóbal, Estado Táchira</p>
-                    <p>Venezuela</p>
                     <p class="footer-phone">📞 +58 (276) 353-0422</p>
-                    <p class="footer-email">✉️ info@unet.edu.ve</p>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Enlaces Rápidos</h4>
                     <ul class="footer-links">
                         <li><a href="../index.html">Inicio</a></li>
-                        <li><a href="courses.html">Cursos</a></li>
+                        <li><a href="conferencias.html">Conferencias</a></li>
                         <li><a href="alojamiento.html">Alojamiento</a></li>
                         <li><a href="contact.html">Inscripción</a></li>
                     </ul>
@@ -110,114 +135,192 @@
     <script src="../js/main.js"></script>
 
     <style>
-        .page-header {
+        /* ============================================
+           HEADER ANIMADO PREMIUM (Ajustado al azul oficial)
+           ============================================ */
+        .page-header-premium {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-            color: var(--color-text-light);
-            padding-top: 80px !important;
-            padding-bottom: 160px !important; 
+            padding: 80px 0 140px; 
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
 
-        .page-header .page-title {
-            color: var(--color-text-light);
+        .header-animated-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;
         }
 
-        .info-banner {
-            display: flex;
-            gap: var(--spacing-lg);
-            padding: var(--spacing-xl);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
-            margin-top: -100px !important; 
-            position: relative;
-            z-index: 10;
-            background-color: white;
-            border-left: 6px solid var(--color-info);
+        .floating-shape {
+            position: absolute; border-radius: 50%; opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
         }
 
-        .info-icon { font-size: 2.5rem; }
+        .shape-1 { width: 250px; height: 250px; background: white; top: -100px; right: -50px; animation-delay: 0s; }
+        .shape-2 { width: 150px; height: 150px; background: var(--color-secondary); bottom: -30px; left: 10%; animation-delay: 5s; }
+        .shape-3 { width: 100px; height: 100px; background: white; top: 50%; left: -50px; animation-delay: 10s; }
 
-        .courses-modern-grid {
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-content-animated { position: relative; z-index: 2; }
+
+        .badge-official {
+            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 20px;
+        }
+
+        .page-title-animated {
+            font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .page-subtitle-animated {
+            font-size: 1.2rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;
+            max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+
+        .header-stats { display: flex; justify-content: center; align-items: center; gap: 2rem; }
+        .stat-item { display: flex; flex-direction: column; align-items: center; }
+        .stat-number { font-size: 2.2rem; font-weight: 900; color: var(--color-secondary); }
+        .stat-label { font-size: 0.85rem; color: white; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.3); }
+
+        /* ============================================
+           BANNER FLOTANTE MODERNO
+           ============================================ */
+        .courses-intro-section {
+            margin-top: -70px; position: relative; z-index: 10; padding-bottom: 2rem;
+        }
+
+        .info-banner-modern {
+            background: white; border-radius: 20px; padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            display: flex; gap: 1.5rem; align-items: center;
+            border-left: 6px solid var(--color-primary); position: relative; overflow: hidden;
+        }
+
+        .banner-glow {
+            position: absolute; top: -50%; right: -50px; width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.08) 0%, transparent 70%); border-radius: 50%;
+        }
+
+        .info-icon-modern { font-size: 3rem; animation: pulse 2s infinite; flex-shrink: 0; }
+        .info-content-modern h3 { font-size: 1.5rem; color: var(--color-primary-dark); margin-bottom: 0.4rem; }
+        .info-content-modern p { font-size: 1rem; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
+
+        /* ============================================
+           NUEVO ESTILO DE TARJETAS (Inyectadas por JS)
+           ============================================ */
+        .courses-grid-section { padding: 3rem 0 5rem; background-color: var(--color-bg-secondary); }
+        .section-intro { text-align: center; margin-bottom: 3.5rem; }
+        .section-title-modern { font-size: 2.5rem; font-weight: 900; color: var(--color-primary-dark); margin-bottom: 0.5rem; }
+        .section-description { font-size: 1.1rem; color: var(--color-text-secondary); }
+
+        .courses-premium-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: var(--spacing-2xl);
-            margin-top: var(--spacing-3xl);
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2.5rem;
         }
 
         .modern-course-card {
             background: white;
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-md);
+            border-radius: 20px;
+            padding: 2.5rem 2rem 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             position: relative;
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--color-primary);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
         }
 
         .modern-course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: rgba(52, 152, 219, 0.2);
         }
 
         .card-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--color-success);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            position: absolute; top: 20px; right: 20px;
+            color: white; padding: 6px 14px; border-radius: 30px;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 2;
         }
 
         .card-icon-header {
-            font-size: 3rem;
-            margin-bottom: var(--spacing-md);
-            opacity: 0.8;
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 2px solid white;
+            transform: translateY(-10px);
         }
 
         .modern-course-title {
-            font-size: var(--font-size-xl);
-            color: var(--color-primary-dark);
-            margin-bottom: 5px;
+            font-size: 1.4rem; font-weight: 800; color: var(--color-primary-dark);
+            margin-bottom: 1rem; line-height: 1.3;
         }
 
         .modern-course-teacher {
-            font-weight: 600;
-            color: var(--color-text-primary);
-            margin: 0;
+            font-size: 1rem; font-weight: 700; color: var(--color-text-primary);
+            display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
         }
+        .modern-course-teacher::before { content: "👨‍🏫"; font-size: 1.2rem; }
 
         .modern-course-institution {
-            font-size: var(--font-size-sm);
-            color: var(--color-text-muted);
-            margin-bottom: var(--spacing-lg);
+            font-size: 0.85rem; font-weight: 600; color: var(--color-secondary);
+            margin-bottom: 1rem; padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modern-course-card > p[style] {
+            font-size: 0.95rem !important;
+            line-height: 1.6;
+            margin-top: 0 !important;
+            flex-grow: 1; 
+        }
+
+        .course-stats {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin-top: 1.5rem;
         }
 
         .stat-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            font-weight: 600;
+            display: flex; justify-content: space-between;
+            font-size: 0.85rem; margin-bottom: 10px; font-weight: 700;
+            color: var(--color-text-secondary);
         }
 
         .progress-bar-container {
-            height: 10px;
-            background: #eee;
-            border-radius: 10px;
-            overflow: hidden;
+            height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden;
         }
 
         .progress-fill {
-            height: 100%;
-            background: var(--color-success);
-            border-radius: 10px;
+            height: 100%; border-radius: 10px; transition: width 1s ease-in-out;
         }
 
+        .loading-spinner {
+            width: 50px; height: 50px;
+            border: 5px solid #f3f3f3; border-top: 5px solid var(--color-primary);
+            border-radius: 50%; margin: 0 auto;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         @media (max-width: 768px) {
-            .info-banner { margin-top: -50px !important; flex-direction: column; text-align: center; }
+            .page-header-premium { padding: 60px 0 100px; }
+            .page-title-animated { font-size: 2.5rem; }
+            .header-stats { flex-wrap: wrap; gap: 1rem; }
+            .info-banner-modern { flex-direction: column; text-align: center; }
+            .banner-glow { display: none; }
         }
     </style>
 </body>
