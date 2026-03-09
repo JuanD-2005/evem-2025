@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem";          // El nombre de la BD en la UNET
-$username = "usuario_unet"; // El usuario que te den en la UNET
-$password = "clave_unet";   // La contraseña de la BD de la UNET
+$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" en la UNET
+$username = "root";     // Ojo: Cámbialo al usuario de la UNET
+$password = "";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password);
@@ -174,6 +174,47 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_evem_certific
 // ==========================================
 // RUTAS DEL EVENTO DIM (Registro y Certificados)
 // ==========================================
+
+// --- RUTA: REGISTRAR EQUIPO PARA LA TRIVIA DIM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim_team') {
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (empty($data->pseudonym) || empty($data->captainCedula)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Faltan datos obligatorios."]);
+        exit();
+    }
+
+    try {
+        // Verificar si el seudónimo ya fue elegido por otro equipo
+        $check = $conn->prepare("SELECT id FROM dim_teams WHERE pseudonym = ?");
+        $check->execute([$data->pseudonym]);
+        if ($check->rowCount() > 0) {
+            http_response_code(409); // Conflicto
+            echo json_encode(["error" => "El seudónimo '" . $data->pseudonym . "' ya fue registrado por otro equipo. ¡Elige otro rápido!"]);
+            exit();
+        }
+
+        // Insertar el nuevo equipo
+        $sql = "INSERT INTO dim_teams (pseudonym, captain_cedula, captain_name, captain_phone, members) 
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            $data->pseudonym,
+            $data->captainCedula,
+            $data->captainName,
+            $data->captainPhone,
+            $data->members
+        ]);
+
+        http_response_code(201);
+        echo json_encode(["message" => "¡Equipo registrado exitosamente para la Trivia!"]);
+
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+}
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim') {
     $data = json_decode(file_get_contents("php://input"));
