@@ -17,25 +17,26 @@
     <header class="top-bar">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="pages/contact.html">👤 Inscríbete</a></li>
-                <li><a href="#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
+                <li><a href="index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
+                <li><a href="index.html#comite">🏠 Comité</a></li>
                 <li><a href="pages/alojamiento.html">🏨 Alojamiento</a></li>
             </ul>
 
             <div class="central-logo-container">
-                <img src="assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
+                <a href="index.html">
+                    <img src="assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
+                </a>
             </div>
 
             <ul class="nav-links">
-                <li><a href="#comite">🏠 Comité</a></li>
-                <li><a href="#speakers">👥 Conferencias</a></li>
                 <li><a href="pages/courses.html">💠 Cursos</a></li>
+                <li><a href="pages/conferencias.html">👥 Conferencias</a></li>
+                <li><a href="pages/contact.html">📝 Inscríbete</a></li>
             </ul>
         </div>
     </header>
 
     <section class="hero-2026">
-        <!-- Carrusel de fondos -->
         <div class="hero-carousel">
             <div class="hero-slide active" style="background-image: url('assets/images/hero-tachira.jpg');"></div>
             <div class="hero-slide" style="background-image: url('assets/images/hero-2.jpg');"></div>
@@ -43,25 +44,24 @@
             <div class="hero-slide" style="background-image: url('assets/images/hero-4.jpg');"></div>
         </div>
 
-        <!-- Overlay azul (permanece igual) -->
         <div class="hero-overlay-blue"></div>
 
-        <!-- Contenido (permanece igual) -->
         <div class="hero-content-2026">
             <h2 class="hero-edition">XXVIII</h2>
             <h1 class="hero-title-main">Escuela Venezolana para la<br>Enseñanza de la Matemática</h1>
             
             <div class="hero-subtitle-blue">EVEM 2026</div>
 
-            <div class="logos-container">
-                <img src="assets/images/unet-logo.png" alt="UNET" class="partner-logo">
-                <img src="assets/images/ula-logo.png" alt="ULA" class="partner-logo">
-                <img src="assets/images/evem-icon.png" alt="EVEM" class="partner-logo">
-                <img src="assets/images/encomat-logo.png" alt="ENCOMAT" class="partner-logo">
+            <div class="logos-container" style="display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; margin-top: 30px;">
+                <img src="assets/images/unet-logo.png" alt="UNET" class="partner-logo" style="height: 65px; object-fit: contain;">
+                <img src="assets/images/logoPostgrado.jpeg" alt="Postgrado UNET" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
+                <img src="assets/images/ula-logo.png" alt="ULA" class="partner-logo" style="height: 65px; object-fit: contain;">
+                <img src="assets/images/cedic-Sinfondo.png" alt="CEDIC" class="partner-logo" style="height: 65px; object-fit: contain;">
+                <img src="assets/images/DiaPi.jpeg" alt="DIM" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
+                <img src="assets/images/encomat-logo.png" alt="ENCOMAT" class="partner-logo" style="height: 65px; object-fit: contain;">
             </div>
         </div>
 
-        <!-- Controles del carrusel -->
         <button class="carousel-control prev" aria-label="Anterior">
             <span>‹</span>
         </button>
@@ -69,7 +69,6 @@
             <span>›</span>
         </button>
 
-        <!-- Indicadores -->
         <div class="carousel-indicators">
             <button class="indicator active" data-slide="0" aria-label="Ir a imagen 1"></button>
             <button class="indicator" data-slide="1" aria-label="Ir a imagen 2"></button>

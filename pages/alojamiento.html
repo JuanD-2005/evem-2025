@@ -16,9 +16,9 @@
     <header class="top-bar">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="../index.html">🏠 Inicio</a></li>
                 <li><a href="../index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
-                <li><a href="alojamiento.html" style="color: var(--color-primary); font-weight: bold;">🏨 Alojamiento</a></li>
+                <li><a href="../index.html#comite">🏠 Comité</a></li>
+                <li><a href="alojamiento.html">🏨 Alojamiento</a></li>
             </ul>
 
             <div class="central-logo-container">
@@ -28,9 +28,9 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="../index.html#comite">⚙️ Comité</a></li>
                 <li><a href="courses.html">💠 Cursos</a></li>
-                <li><a href="contact.html">💬 Inscripción</a></li>
+                <li><a href="conferencias.html">👥 Conferencias</a></li>
+                <li><a href="contact.html">📝 Inscríbete</a></li>
             </ul>
         </div>
     </header>
@@ -474,18 +474,38 @@
     </style>
 
     <script>
-        // JS del Carrusel del Hotel
         document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.hotel-slide');
-            let current = 0;
-            if (slides.length > 0) {
-                setInterval(() => {
-                    slides[current].classList.remove('active');
-                    current = (current + 1) % slides.length;
-                    slides[current].classList.add('active');
-                }, 3500); // Cambia cada 3.5 segundos
+            const carousel = document.getElementById('florianaCarousel');
+            
+            for(let i = 1; i <= 28; i++) {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide fade';
+                
+                if(i === 1) slide.style.display = 'block'; 
+                else slide.style.display = 'none';
+
+                // AQUÍ ESTÁ LA MAGIA: floriana(${i}).jpg
+                slide.innerHTML = `<img src="../assets/images/fotoscarrusel/floriana(${i}).jpg" alt="Floriana ${i}" style="width:100%; height:500px; object-fit:cover; border-radius: 10px;">`;
+                
+                carousel.insertBefore(slide, carousel.querySelector('.prev'));
             }
+            
+            showSlides(slideIndex);
         });
+
+        let slideIndex = 1;
+        function plusSlides(n) { showSlides(slideIndex += n); }
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (slides.length === 0) return;
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slides[slideIndex-1].style.display = "block";  
+        }
     </script>
 </body>
 </html>
