@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Equipos DIM - EVEM 2026</title>
+    
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background-color: #f8fafc;">
+    
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="https://www.unet.edu.ve/" target="_blank">🏛️ Portal UNET</a></li>
+                <li><a href="../index.html">⬅️ Volver a EVEM</a></li>
+            </ul>
+            <div class="central-logo-container">
+                <a href="dim.html">
+                    <img src="../assets/images/DiaPi.jpeg" alt="DIM Logo" class="central-logo" style="border-radius: 8px;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dim.html">🟣 Inicio DIM</a></li>
+                <li><a href="dim-registro.html">📝 Inscripción Indv.</a></li>
+                <li><a href="dim-certificado.html">🎓 Certificados</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div style="height: 60px;"></div>
+
+    <section class="team-registration" style="padding: 40px 0 100px;">
+        <div class="container" style="max-width: 700px;">
+            
+            <div style="background: white; border-radius: 24px; padding: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border-top: 8px solid #f59e0b;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <span style="font-size: 3rem;">🏆</span>
+                    <h1 style="color: #1e293b; font-size: 2.2rem; font-weight: 900; margin-top: 10px;">Trivia Matemática</h1>
+                    <p style="color: #64748b; font-size: 1.1rem;">Inscripción oficial por equipos</p>
+                </div>
+
+                <form id="teamForm">
+                    
+                    <div style="margin-bottom: 30px; background: #fffbeb; padding: 20px; border-radius: 15px; border: 1px dashed #fcd34d;">
+                        <label style="display: block; font-weight: bold; color: #92400e; margin-bottom: 10px;">1. Nombre de tu Equipo (Seudónimo)</label>
+                        
+                        <input type="text" id="pseudonym" placeholder="Ej: Los Pitagóricos, Equipo Newton..." required autocomplete="off" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #fde68a; font-size: 1.1rem; color: #b45309; font-weight: bold; background: white; transition: 0.3s;">
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #475569; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">2. Datos del Capitán del Equipo</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label style="font-size: 0.9rem; font-weight: bold; color: #64748b;">Cédula</label>
+                                <input type="text" id="captainCedula" placeholder="Ej: V-12345678" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-top: 5px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.9rem; font-weight: bold; color: #64748b;">Teléfono / WhatsApp</label>
+                                <input type="text" id="captainPhone" placeholder="0414-0000000" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-top: 5px;">
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <label style="font-size: 0.9rem; font-weight: bold; color: #64748b;">Nombre Completo del Capitán</label>
+                            <input type="text" id="captainName" placeholder="Nombres y Apellidos" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-top: 5px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #475569; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">3. Resto del Equipo</h3>
+                        <label style="font-size: 0.9rem; font-weight: bold; color: #64748b;">Escribe los nombres de los demás integrantes (Uno por línea)</label>
+                        <textarea id="members" rows="4" placeholder="- Integrante 2&#10;- Integrante 3&#10;- Integrante 4" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-top: 5px; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn" style="background: #f59e0b; color: white; border: none; padding: 18px 30px; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);">
+                        Registrar Equipo Oficialmente →
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('teamForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Verificando disponibilidad... ⏳';
+
+            const formData = {
+                pseudonym: document.getElementById('pseudonym').value,
+                captainCedula: document.getElementById('captainCedula').value,
+                captainName: document.getElementById('captainName').value,
+                captainPhone: document.getElementById('captainPhone').value,
+                members: document.getElementById('members').value
+            };
+
+            try {
+                const response = await fetch('../backend/api.php?action=register_dim_team', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: '¡Equipo Registrado!',
+                        text: `El equipo "${formData.pseudonym}" ha sido inscrito con éxito en la Trivia.`,
+                        icon: 'success',
+                        confirmButtonColor: '#f59e0b'
+                    }).then(() => {
+                        window.location.href = 'dim.html'; 
+                    });
+                } else {
+                    throw new Error(result.error || 'Error al registrar el equipo');
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Seudónimo no disponible',
+                    text: error.message,
+                    icon: 'warning',
+                    confirmButtonColor: '#ef4444'
+                });
+                btn.disabled = false;
+                btn.textContent = 'Registrar Equipo Oficialmente →';
+            }
+        });
+    </script>
+</body>
+</html>
