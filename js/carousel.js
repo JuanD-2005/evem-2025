@@ -10,7 +10,7 @@ class HeroCarousel {
         this.nextBtn = document.querySelector('.carousel-control.next');
         this.currentSlide = 0;
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 5000; // 5 segundos
+        this.autoPlayDelay = 8000; // 8 segundos
 
         if (this.slides.length > 0) {
             this.init();
@@ -86,6 +86,10 @@ class HeroCarousel {
     }
 
     startAutoPlay() {
+        if (this.autoPlayInterval) {
+            return;
+        }
+
         this.autoPlayInterval = setInterval(() => {
             this.nextSlide();
         }, this.autoPlayDelay);
