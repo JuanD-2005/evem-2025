@@ -39,7 +39,7 @@
 
     <section class="page-header">
         <div class="container">
-            <div class="badge-official">HOTEL OFICIAL EVEM 2026</div>
+            <div class="badge-official">Alojamiento participantes EVEM</div>
             <h1 class="page-title">Nuestro Hogar en San Cristóbal</h1>
             <p class="page-subtitle">Un espacio diseñado para el descanso, el confort y la convivencia académica</p>
         </div>
@@ -62,17 +62,17 @@
             <div class="showcase-grid">
                 
                 <div class="showcase-gallery">
-                    <div class="main-image" id="hotel-carousel-container">
-                        <div class="hotel-slide active" style="background-image: url('../assets/images/hotel-main.jpg');"></div>
-                        <div class="hotel-slide" style="background-image: url('../assets/images/hotel-room.jpg');"></div>
-                        <div class="hotel-slide" style="background-image: url('../assets/images/hotel-pool.jpg');"></div>
+                    <div class="main-image" id="florianaCarousel" style="position: relative; background: #000;">
                         <div class="stars-overlay">⭐⭐⭐⭐</div>
+                        
+                        <a class="prev" onclick="plusSlides(-1)" style="cursor: pointer; position: absolute; top: 50%; left: 0; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 24px; transition: 0.6s ease; border-radius: 0 8px 8px 0; background-color: rgba(0,0,0,0.6); z-index: 10;">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)" style="cursor: pointer; position: absolute; top: 50%; right: 0; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 24px; transition: 0.6s ease; border-radius: 8px 0 0 8px; background-color: rgba(0,0,0,0.6); z-index: 10;">&#10095;</a>
                     </div>
                 </div>
 
                 <div class="showcase-details">
-                    <h2 class="hotel-title">[Nombre del Hotel Oficial]</h2>
-                    <p class="hotel-location">📍 San Cristóbal, Táchira (A pocos minutos de la UNET)</p>
+                    <h2 class="hotel-title">Desarrollo turístico Floriana</h2>
+                    <p class="hotel-location">📍 A media hora de la UNET</p>
                     
                     <div class="hotel-description">
                         <p>Nuestro hotel sede ha sido cuidadosamente seleccionado para brindar la mejor experiencia a los docentes. Cuenta con amplias habitaciones climatizadas, espacios ideales para la lectura y el descanso después de los cursos, y un ambiente seguro y cordial.</p>
@@ -81,7 +81,18 @@
 
                     <h3 class="amenities-title">Conoce las Instalaciones</h3>
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/TU_ID_DE_VIDEO" title="Recorrido Hotel Oficial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div style="display: flex; justify-content: center; margin: 0 auto;">
+                            <iframe 
+                                width="315" 
+                                height="560" 
+                                src="https://www.youtube.com/embed/mRUBdxThS78" 
+                                title="Desarrollo Turístico Floriana" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen 
+                                style="border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                            </iframe>
+                        </div>
                         
                         </div>
                     <h3 class="amenities-title">¿Qué incluye tu estadía?</h3>
@@ -112,13 +123,6 @@
                         </div>
                     </div>
 
-                    <div class="booking-card">
-                        <div class="booking-info">
-                            <h4>Gestiona tu Reserva</h4>
-                            <p>Contacta directamente al comité de logística para asegurar tu lugar en el hotel oficial.</p>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Reservar mi Cupo →</a>
-                    </div>
                 </div>
 
             </div>
@@ -429,24 +433,19 @@
 
         /* --- ESTILOS PARA EL VIDEO --- */
         .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* Mantiene la proporción 16:9 exacta */
-            height: 0;
-            overflow: hidden;
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: var(--spacing-xl);
-            background-color: #000; /* Fondo negro mientras carga */
+            overflow: visible;
+            background-color: transparent;
         }
 
         .video-wrapper iframe,
         .video-wrapper video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            position: static;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         /* CSS del Carrusel del Hotel */
@@ -484,9 +483,10 @@
                 if(i === 1) slide.style.display = 'block'; 
                 else slide.style.display = 'none';
 
-                // AQUÍ ESTÁ LA MAGIA: floriana(${i}).jpg
-                slide.innerHTML = `<img src="../assets/images/fotoscarrusel/floriana(${i}).jpg" alt="Floriana ${i}" style="width:100%; height:500px; object-fit:cover; border-radius: 10px;">`;
+                // AQUÍ EL CAMBIO A .jpeg Y LA ALTURA A 400px
+                slide.innerHTML = `<img src="../assets/images/fotoscarrusel/floriana(${i}).jpeg" alt="Floriana ${i}" style="width:100%; height:400px; object-fit:cover; border-radius: var(--border-radius-lg);">`;
                 
+                // Lo insertamos antes de que aparezcan los botones
                 carousel.insertBefore(slide, carousel.querySelector('.prev'));
             }
             
