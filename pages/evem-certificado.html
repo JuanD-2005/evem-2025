@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../css/responsive.css">
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
@@ -42,9 +41,9 @@
     <section class="cert-search-section">
         <div class="container" style="max-width: 600px;">
             <div class="search-card">
-                <div class="cert-icon-top">🎓</div>
-                <h1 style="color: var(--color-primary-dark);">Certificados de Cursos</h1>
-                <p>Ingresa tu número de cédula. El sistema detectará automáticamente el curso que aprobaste y generará tu certificado avalado.</p>
+                <div class="cert-icon-top" style="border-color: #1e3a8a; color: #1e3a8a;">🎓</div>
+                <h1 style="color: #1e3a8a; font-size: 2.2rem; font-weight: 900; margin-bottom: 15px;">Certificados de Cursos</h1>
+                <p style="color: #64748b; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6;">Ingresa tu número de cédula. El sistema detectará automáticamente el curso que aprobaste y generará tu certificado avalado.</p>
                 
                 <form id="certForm" class="cert-form">
                     <input type="text" id="searchCedula" placeholder="Ej: V-12345678" required autocomplete="off">
@@ -54,84 +53,13 @@
                 </form>
 
                 <div class="date-warning">
-                    📅 <strong>Aviso:</strong> Certificados habilitados a partir de la finalización del congreso.
+                    📅 <strong>Modo Pruebas Activado:</strong> Generación de certificados habilitada.
                 </div>
             </div>
         </div>
     </section>
 
-    <div style="overflow: hidden; height: 0; width: 0;">
-        <div id="diploma-template" class="diploma-container">
-            <div class="diploma-watermark">EVEM</div>
-            
-            <div class="diploma-border-outer">
-                <div class="diploma-border-inner">
-                    
-                    <div class="diploma-header-logos">
-                        <div class="logo-box">
-                            <img src="../assets/images/logo52aniv.png" alt="Logo Izquierdo">
-                        </div>
-                        <div class="header-text-center">
-                            <h4>REPÚBLICA BOLIVARIANA DE VENEZUELA</h4>
-                            <h2>UNIVERSIDAD NACIONAL EXPERIMENTAL DEL TÁCHIRA</h2>
-                            <h3>UNIVERSIDAD DE LOS ANDES</h3>
-                        </div>
-                        <div class="logo-box">
-                            <img src="../assets/images/evem-logo.png" alt="Logo Derecho">
-                        </div>
-                    </div>
-
-                    <div class="diploma-body">
-                        <p class="diploma-grant">Otorga el presente certificado académico a:</p>
-                        
-                        <div class="diploma-name-container">
-                            <h1 class="diploma-name" id="diplomaName">[NOMBRE DEL PARTICIPANTE]</h1>
-                        </div>
-                        
-                        <div class="diploma-reason">
-                            <p>Por haber participado y aprobado satisfactoriamente el curso intensivo denominado: <br>
-                               <span class="course-highlight" id="diplomaCourse">"[NOMBRE DEL CURSO]"</span> <br>
-                               impartido durante la XXVIII Escuela Venezolana para la Enseñanza de la Matemática, con una duración de 32 horas académicas.</p>
-                        </div>
-                        
-                        <p class="diploma-date">Expedido en San Cristóbal, Estado Táchira, en el año 2026.</p>
-                    </div>
-
-                    <div class="diploma-footer-unified">
-                        <div class="diploma-validation-block">
-                            <div class="qr-container">
-                                <div id="qrCode"></div>
-                            </div>
-                            <div class="validation-text">
-                                <p><strong>DOCUMENTO VERIFICADO</strong></p>
-                                <p>ID: <span id="diplomaCedula">[CEDULA]</span></p>
-                                <p>EVEM-2026</p>
-                            </div>
-                        </div>
-
-                        <div class="diploma-signatures-block">
-                            <div class="sig-block">
-                                <div class="sig-line"></div>
-                                <p class="sig-name">Dr. Raúl Casanova Ostos</p>
-                                <p class="sig-title">Rector UNET</p>
-                            </div>
-                            <div class="sig-block">
-                                <div class="sig-line"></div>
-                                <p class="sig-name">Comité Académico</p>
-                                <p class="sig-title">EVEM</p>
-                            </div>
-                            <div class="sig-block">
-                                <div class="sig-line"></div>
-                                <p class="sig-name" id="diplomaFacilitador">Facilitador</p>
-                                <p class="sig-title">Profesor del Curso</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="qrCodeHidden" style="display: none;"></div>
 
     <script>
         document.getElementById('certForm').addEventListener('submit', async (e) => {
@@ -140,9 +68,9 @@
             const btn = document.getElementById('btnBuscar');
             const btnText = document.getElementById('btnText');
             
-            // MODO DESARROLLADOR: En true para que puedas probar ahorita mismo.
-            const FORZAR_DESCARGA_PARA_PRUEBAS = false;
-            const unlockDate = new Date('2026-04-01T00:00:00'); // Fecha hipotética de fin de EVEM
+            // ⚠️ MODO DESARROLLADOR: Puesto en TRUE para que lo pruebes YA
+            const FORZAR_DESCARGA_PARA_PRUEBAS = true;
+            const unlockDate = new Date('2026-04-01T00:00:00'); 
 
             if (new Date() < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
                 Swal.fire('Aún no disponible', 'Los certificados se habilitarán al finalizar el evento.', 'info');
@@ -160,7 +88,12 @@
                     btnText.textContent = 'Generando Documento... 🖨️';
                     await generarPDF(result.fullName, cedula, result.course);
                     
-                    Swal.fire('¡Certificado Generado!', `Tu certificado del curso "${result.course}" ha sido descargado.`, 'success');
+                    Swal.fire({
+                        title: '¡Certificado Generado!', 
+                        text: `Tu certificado del curso "${result.course}" ha sido descargado.`, 
+                        icon: 'success',
+                        confirmButtonColor: '#1e3a8a'
+                    });
                 } else {
                     throw new Error(result.error);
                 }
@@ -172,102 +105,85 @@
             }
         });
 
+        // ==========================================
+        // MOTOR DE INYECCIÓN (EVEM - NOMBRE Y CURSO)
+        // ==========================================
         async function generarPDF(nombre, cedula, curso) {
-            document.getElementById('diplomaName').textContent = nombre;
-            document.getElementById('diplomaCedula').textContent = cedula;
-            document.getElementById('diplomaCourse').textContent = `"${curso}"`;
+            const { jsPDF } = globalThis.jspdf;
+            const pdf = new jsPDF('landscape', 'mm', 'a4'); 
             
-            const qrContainer = document.getElementById('qrCode');
-            qrContainer.innerHTML = ''; 
-            new QRCode(qrContainer, {
-                text: `https://www.evem.unet.edu.ve/validar-evem?id=${cedula}`,
-                width: 80, height: 80,
-                colorDark : "#1e3a8a", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+            // 1. Cargar el placeholder de Canva
+            const img = new Image();
+            img.src = '../assets/images/plantilla-evem.jpg'; 
+            
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = () => reject(new Error('No se encontró la imagen plantilla-evem.jpg'));
             });
 
-            await new Promise(r => setTimeout(r, 300));
+            pdf.addImage(img, 'JPEG', 0, 0, 297, 210);
 
-            const diplomaElement = document.getElementById('diploma-template');
-            const canvas = await html2canvas(diplomaElement, { scale: 3, useCORS: true, backgroundColor: "#ffffff" }); 
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('landscape', 'mm', 'a4');
-            pdf.addImage(imgData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-            pdf.save(`Certificado_EVEM_${nombre.replace(/\s+/g, '_')}.pdf`);
+            const pageWidth = pdf.internal.pageSize.getWidth();
+
+            // 2. Imprimir el Nombre del Participante
+            pdf.setFont("times", "bolditalic");
+            pdf.setTextColor(30, 58, 138); // Azul EVEM
+            pdf.setFontSize(38); 
+            let textWidth = pdf.getTextWidth(nombre);
+            let textX = (pageWidth - textWidth) / 2;
+            
+            const alturaNombreY = 105; // Ajusta esta altura según tu placeholder
+            pdf.text(nombre, textX, alturaNombreY);
+
+            // 3. Imprimir el Nombre del Curso (Más pequeño y debajo)
+            pdf.setFont("helvetica", "bold");
+            pdf.setTextColor(71, 85, 105); // Color gris oscuro
+            pdf.setFontSize(18); 
+            const textoCurso = `"${curso}"`;
+            textWidth = pdf.getTextWidth(textoCurso);
+            textX = (pageWidth - textWidth) / 2;
+            
+            const alturaCursoY = 135; // Ajusta esta altura para que quede debajo del nombre
+            pdf.text(textoCurso, textX, alturaCursoY);
+
+            // 4. Generar el QR apuntando a validar-evem.html
+            const qrContainer = document.getElementById('qrCodeHidden');
+            qrContainer.innerHTML = '';
+
+            const urlBase = globalThis.location.href.replace('evem-certificado.html', '');
+            const enlaceReal = `${urlBase}validar-evem.html?id=${cedula}`;
+
+            new QRCode(qrContainer, {
+                text: enlaceReal,
+                width: 256, height: 256, colorDark: "#1e3a8a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H
+            });
+
+            await new Promise(r => setTimeout(r, 100)); 
+            const qrCanvas = qrContainer.querySelector('canvas');
+            if(qrCanvas) {
+                const qrDataUrl = qrCanvas.toDataURL('image/png');
+                
+                // Usando las mismas coordenadas exactas de la esquina que perfeccionaste antes
+                pdf.addImage(qrDataUrl, 'PNG', 18, 168, 28, 28);
+            }
+
+            // 5. Descargar PDF
+            pdf.save(`Certificado_EVEM_${nombre.replaceAll(/\s+/g, '_')}.pdf`);
         }
     </script>
 
     <style>
-        /* ESTILOS DEL BUSCADOR EVEM */
-        .cert-search-section {
-            padding: 80px 0; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-            min-height: 60vh; display: flex; align-items: center;
-        }
-        .search-card {
-            background: white; padding: 50px 40px; border-radius: 24px;
-            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative;
-        }
-        .cert-icon-top {
-            font-size: 4rem; margin-top: -80px; margin-bottom: 20px;
-            background: white; width: 100px; height: 100px; line-height: 100px;
-            margin-left: auto; margin-right: auto; border-radius: 50%; border: 5px solid #f8fafc;
-        }
+        /* CSS SIMPLIFICADO AL MÁXIMO (Azul EVEM) */
+        .cert-search-section { padding: 80px 0; background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%); min-height: 60vh; display: flex; align-items: center; }
+        .search-card { background: white; padding: 50px 40px; border-radius: 24px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; }
+        .cert-icon-top { font-size: 4rem; margin-top: -80px; margin-bottom: 20px; background: white; width: 100px; height: 100px; line-height: 100px; margin-left: auto; margin-right: auto; border-radius: 50%; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid #f8fafc; }
         .cert-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
-        .cert-form input {
-            padding: 18px; border: 2px solid #e2e8f0; border-radius: 12px;
-            font-size: 1.2rem; text-align: center; font-weight: 700; color: var(--color-primary-dark);
-            background: #f8fafc; transition: all 0.3s;
-        }
+        .cert-form input { padding: 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1.2rem; text-align: center; font-weight: 700; color: #1e3a8a; background: #f8fafc; transition: all 0.3s; }
         .cert-form input:focus { outline: none; border-color: #d4af37; background: white; }
-        .cert-form button {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); color: white;
-            border: none; padding: 18px; border-radius: 12px; font-size: 1.1rem;
-            font-weight: 800; cursor: pointer; transition: 0.3s;
-        }
-        .cert-form button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .date-warning { background: #eff6ff; color: #1e3a8a; padding: 15px; border-radius: 10px; font-size: 0.9rem; }
-
-        /* DIPLOMA EVEM (Azul y Oro) */
-        .diploma-container {
-            width: 1123px; height: 794px; background: #ffffff; position: relative; box-sizing: border-box; overflow: hidden; font-family: 'Times New Roman', Times, serif;
-        }
-        .diploma-watermark {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 280px; font-weight: 900; color: rgba(30, 58, 138, 0.03); z-index: 1; letter-spacing: 20px; font-family: Arial, sans-serif;
-        }
-        .diploma-border-outer {
-            position: absolute; top: 30px; left: 30px; right: 30px; bottom: 30px;
-            border: 12px solid #1e3a8a; /* Azul EVEM */ z-index: 2; padding: 6px; box-sizing: border-box;
-        }
-        .diploma-border-inner {
-            height: 100%; border: 3px solid #d4af37; box-sizing: border-box; padding: 35px 40px;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .diploma-header-logos { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px; }
-        .logo-box { width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; }
-        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .header-text-center { text-align: center; flex-grow: 1; padding: 0 20px; }
-        .header-text-center h4 { font-size: 14px; color: #475569; margin: 0 0 5px 0; letter-spacing: 2px; }
-        .header-text-center h2 { font-size: 22px; color: #1e3a8a; margin: 0 0 5px 0; font-weight: bold; }
-        .header-text-center h3 { font-size: 16px; color: #334155; margin: 0; }
-        .diploma-body { text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .diploma-grant { font-size: 22px; color: #475569; font-style: italic; margin-bottom: 20px; }
-        .diploma-name-container { margin: 0 auto 25px; display: inline-block; border-bottom: 2px solid #d4af37; padding: 0 40px 5px; }
-        .diploma-name { font-size: 52px; color: #1e3a8a; margin: 0; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; line-height: 1.3; }
-        .diploma-reason { max-width: 900px; margin: 0 auto 25px; font-size: 19px; line-height: 1.8; color: #334155; text-align: center; }
-        .course-highlight { font-size: 24px; font-weight: bold; color: #1e3a8a; display: inline-block; margin: 10px 0; }
-        .diploma-date { font-size: 16px; color: #64748b; font-style: italic; }
-        .diploma-footer-unified { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px; padding: 0 10px; }
-        .diploma-validation-block { display: flex; align-items: center; gap: 12px; width: 250px; }
-        .qr-container { width: 80px; height: 80px; padding: 5px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; flex-shrink: 0; }
-        .validation-text { text-align: left; font-family: Arial, sans-serif; }
-        .validation-text p { margin: 0 0 4px 0; font-size: 11px; color: #475569; }
-        .validation-text p strong { color: #1e3a8a; font-size: 12px; }
-        .diploma-signatures-block { display: flex; justify-content: space-between; flex-grow: 1; padding-left: 40px; }
-        .sig-block { width: 200px; text-align: center; }
-        .sig-line { border-bottom: 1px solid #1e3a8a; height: 50px; margin-bottom: 8px; }
-        .sig-name { font-size: 15px; font-weight: bold; color: #1e3a8a; margin: 0 0 3px 0; }
-        .sig-title { font-size: 13px; color: #64748b; margin: 0; font-style: italic; }
+        .cert-form button { background: linear-gradient(135deg, #1e3a8a, #172554); color: white; border: none; padding: 18px; border-radius: 12px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3); border-bottom: 4px solid #172554; }
+        .cert-form button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(30, 58, 138, 0.4); }
+        .cert-form button:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
+        .date-warning { background: #eff6ff; color: #1e3a8a; padding: 15px; border-radius: 10px; font-size: 0.9rem; border: 1px solid #bfdbfe; }
     </style>
 </body>
 </html>

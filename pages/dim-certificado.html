@@ -53,8 +53,12 @@
                     </button>
                 </form>
 
-                <div class="date-warning">
-                    📅 <strong>Modo Pruebas Activado:</strong> Puedes descargar el certificado saltando la validación de fecha.
+
+                <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                    <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 10px;">¿Participaste en la Trivia por equipos?</p>
+                    <a href="dim-certificados-equipos.html" style="color: #4c1d95; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                        Descargar certificados de equipo 🏆 →
+                    </a>
                 </div>
             </div>
         </div>
@@ -104,7 +108,7 @@
             const currentDate = new Date();
 
             // ⚠️ MODO DESARROLLADOR: Cambia a false en producción
-            const FORZAR_DESCARGA_PARA_PRUEBAS = true; 
+            const FORZAR_DESCARGA_PARA_PRUEBAS = false; 
 
             if (currentDate < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
                 Swal.fire('Aún no disponible', 'Los certificados se habilitarán el 27 de Marzo.', 'info');
@@ -144,7 +148,7 @@
         // ==========================================
         async function generarPDF(nombre, cedula) {
             const { jsPDF } = globalThis.jspdf;
-            const pdf = new jsPDF('landscape', 'mm', 'a4'); // Hoja Carta/A4 Acostada
+            const pdf = new jsPDF('landscape', 'mm', 'a4'); 
             
             // 1. Cargar la imagen de Canva
             const img = new Image();
@@ -168,9 +172,7 @@
             const textWidth = pdf.getTextWidth(nombre);
             const textX = (pageWidth - textWidth) / 2;
 
-            // 👇👇👇 AQUÍ CONTROLAS LA ALTURA DEL TEXTO 👇👇👇
-            // El número 115 es la distancia desde arriba (en milímetros). 
-            // Si el nombre queda muy arriba, súbele a 125. Si queda muy abajo, bájalo a 105.
+            // A ALTURA DEL TEXTO
             const alturaY = 95; 
             
             pdf.text(nombre, textX, alturaY);
@@ -187,11 +189,12 @@
                 width: 256, height: 256, colorDark: "#1c3a6a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H
             });
 
-            await new Promise(r => setTimeout(r, 100)); // Micro-pausa para que se dibuje
+            await new Promise(r => setTimeout(r, 100)); 
             const qrCanvas = qrContainer.querySelector('canvas');
             if(qrCanvas) {
                 const qrDataUrl = qrCanvas.toDataURL('image/png');
-                // X=18 (Pegado a la izquierda), Y=168 (Pegado abajo), Tamaño 28x28
+
+                
                 pdf.addImage(qrDataUrl, 'PNG', 6.5, 178, 28, 28);
 
                 pdf.setFontSize(9);
@@ -206,7 +209,7 @@
     </script>
 
     <style>
-        /* CSS SIMPLIFICADO AL MÁXIMO */
+        /* CSS  */
         .cert-search-section { padding: 80px 0; background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%); min-height: 60vh; display: flex; align-items: center; }
         .search-card { background: white; padding: 50px 40px; border-radius: 24px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; }
         .cert-icon-top { font-size: 4rem; margin-top: -80px; margin-bottom: 20px; background: white; width: 100px; height: 100px; line-height: 100px; margin-left: auto; margin-right: auto; border-radius: 50%; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid #f8fafc; }

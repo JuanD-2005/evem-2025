@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Certificado - EVEM 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; border-top: 8px solid #1e3a8a; } /* Borde Azul EVEM */
+        .icon { font-size: 4.5rem; margin-bottom: 20px; }
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        h1 { color: #1e293b; font-size: 1.6rem; margin-bottom: 10px; font-weight: 900; }
+        p { color: #64748b; font-size: 1.05rem; line-height: 1.5; margin-bottom: 25px; }
+        .data-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; margin-bottom: 25px; }
+        .data-box strong { display: block; color: #1e3a8a; font-size: 1.3rem; margin-bottom: 8px; }
+        .course-name { font-size: 1.05rem; color: #334155; font-weight: bold; margin-top: 15px; display: block; font-style: italic; line-height: 1.4; }
+        .btn { display: inline-block; background: #1e3a8a; color: white; padding: 14px 28px; border-radius: 12px; text-decoration: none; font-weight: bold; width: 100%; box-sizing: border-box; transition: 0.3s; }
+        .btn:hover { background: #172554; transform: translateY(-2px); }
+        .logo { height: 60px; margin-bottom: 15px; object-fit: contain; }
+    </style>
+</head>
+<body>
+    <div class="card" id="resultCard">
+        <div class="icon">⏳</div>
+        <h1>Verificando...</h1>
+        <p>Conectando con la base de datos oficial de la EVEM.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Capturamos la cédula desde el QR
+            const urlParams = new URLSearchParams(window.location.search);
+            const cedula = urlParams.get('id');
+            const card = document.getElementById('resultCard');
+
+            if (!cedula) {
+                card.innerHTML = `<div class="icon error">❌</div><h1>Error de Escaneo</h1><p>Código QR inválido o dañado.</p>`;
+                return;
+            }
+
+            try {
+                // 2. Llamamos a la API específica de la EVEM
+                const response = await fetch(`../backend/api.php?action=check_evem_certificate&cedula=${encodeURIComponent(cedula)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    // 3. ¡Éxito! Mostramos el nombre, la cédula y el CURSO aprobado.
+                    card.innerHTML = `
+                        <img src="../assets/images/evem-logo.png" alt="EVEM" class="logo">
+                        <div class="icon success">✅</div>
+                        <h1>Documento Auténtico</h1>
+                        <p>Este certificado es válido y está registrado en la base de datos oficial.</p>
+                        <div class="data-box">
+                            <strong>${data.fullName}</strong>
+                            <span style="color: #475569; font-weight: bold;">C.I: ${cedula}</span><br>
+                            
+                            <span class="course-name">Curso: "${data.course}"</span>
+                            
+                            <span style="font-size: 0.85rem; color: #94a3b8; margin-top: 15px; display: block; border-top: 1px solid #e2e8f0; padding-top: 10px;">XXVIII Escuela Venezolana para la Enseñanza de la Matemática</span>
+                        </div>
+                        <a href="../index.html" class="btn">Ir al portal de EVEM</a>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Certificado no encontrado en los registros de cursos.');
+                }
+            } catch (error) {
+                card.innerHTML = `
+                    <div class="icon error">❌</div>
+                    <h1>Certificado Inválido</h1>
+                    <p>${error.message}</p>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Si crees que es un error, contacta al comité académico.</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
