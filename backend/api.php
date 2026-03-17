@@ -216,6 +216,48 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim_team'
     }
 }
 
+// --- RUTA: BUSCAR EQUIPO PARA CERTIFICADOS DIM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_team') {
+    $pseudonym = isset($_GET['pseudonym']) ? trim($_GET['pseudonym']) : '';
+
+    try {
+        $stmt = $conn->prepare("SELECT * FROM dim_teams WHERE pseudonym = ?");
+        $stmt->execute([$pseudonym]);
+        $team = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($team) {
+            http_response_code(200);
+            echo json_encode($team);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "No encontramos ningún equipo registrado con el seudónimo '" . $pseudonym . "'."]);
+        }
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+    exit();
+}
+
+// --- RUTA: OBTENER MURAL DE PARTICIPANTES PUBLICOS ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_participants') {
+    try {
+        $sql = "SELECT full_name AS nombre, institution AS institucion, participation_type AS modalidad
+                FROM participants
+                ORDER BY id DESC";
+
+        $stmt = $conn->query($sql);
+        $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        http_response_code(200);
+        echo json_encode($participantes);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno al cargar el mural: " . $e->getMessage()]);
+    }
+    exit();
+}
+
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_dim') {
     $data = json_decode(file_get_contents("php://input"));
 
@@ -294,6 +336,25 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_certificate')
     }
 }
 
+// --- RUTA: OBTENER MURAL DE PARTICIPANTES DIM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_participants') {
+    try {
+        $sql = "SELECT full_name AS nombre, institution AS institucion
+                FROM dim_participants
+                ORDER BY registration_date DESC";
+
+        $stmt = $conn->query($sql);
+        $participantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        http_response_code(200);
+        echo json_encode($participantes);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno al cargar el mural DIM: " . $e->getMessage()]);
+    }
+    exit();
+}
+
 // ==========================================
 // RUTAS DE ADMINISTRACIÓN SECRETA
 // ==========================================
@@ -325,7 +386,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_evem_paymen
     }
 }
 
-elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_participants') {
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_dim_admin_participants') {
     try {
         $stmt = $conn->query("SELECT id, cedula, full_name, email, institution, has_paid, DATE_FORMAT(registration_date, '%d/%m/%Y') as fecha FROM dim_participants ORDER BY registration_date DESC");
         echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));

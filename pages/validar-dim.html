@@ -28,42 +28,71 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // Capturamos la cédula que viene pegada en el link del QR
             const urlParams = new URLSearchParams(globalThis.location.search);
+
+            // Detectamos qué tipo de QR estamos escaneando
             const cedula = urlParams.get('id');
+            const equipo = urlParams.get('equipo');
+            const nombre = urlParams.get('nombre');
+
             const card = document.getElementById('resultCard');
 
-            if (!cedula) {
-                card.innerHTML = `<div class="icon error">❌</div><h1>Error de Escaneo</h1><p>Código QR inválido o dañado.</p>`;
-                return;
+            // --- CASO 1: CERTIFICADO INDIVIDUAL (Tiene Cédula) ---
+            if (cedula) {
+                try {
+                    const response = await fetch(`../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        mostrarExito(data.fullName, `C.I: ${cedula}`, 'Día Internacional de las Matemáticas (DIM 2026)');
+                    } else {
+                        throw new Error(data.error || 'Certificado no encontrado en los registros.');
+                    }
+                } catch (error) {
+                    mostrarError(error.message);
+                }
+            }
+            // --- CASO 2: CERTIFICADO DE EQUIPOS (Tiene Equipo y Nombre) ---
+            else if (equipo && nombre) {
+                try {
+                    // Consultamos si el equipo realmente existe en la base de datos
+                    const response = await fetch(`../backend/api.php?action=get_dim_team&pseudonym=${encodeURIComponent(equipo)}`);
+
+                    if (response.ok) {
+                        mostrarExito(nombre, `Equipo: ${equipo}`, 'Trivia Matemática - DIM 2026');
+                    } else {
+                        throw new Error('El equipo referenciado no se encuentra registrado en la base de datos oficial.');
+                    }
+                } catch (error) {
+                    mostrarError(error.message);
+                }
+            }
+            // --- CASO 3: ENLACE ROTO O MANIPULADO ---
+            else {
+                mostrarError('Código QR inválido o enlace dañado.');
             }
 
-            try {
-                // Consultamos a nuestra API si esa cédula pagó y está registrada
-                const response = await fetch(`../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
-                const data = await response.json();
+            // Funciones auxiliares para no repetir código HTML
+            function mostrarExito(nombrePrincipal, subtitulo, evento) {
+                card.innerHTML = `
+                    <img src="../assets/images/DiaPi.png" alt="DIM" class="logo" style="border-radius: 50%; width: 80px; height: 80px; object-fit: cover; border: 3px solid #e2e8f0;">
+                    <div class="icon success">✅</div>
+                    <h1>Documento Auténtico</h1>
+                    <p>Este certificado es válido y está respaldado por la base de datos oficial.</p>
+                    <div class="data-box">
+                        <strong>${nombrePrincipal}</strong>
+                        <span style="color: #475569; font-weight: bold;">${subtitulo}</span><br>
+                        <span style="font-size: 0.9rem; color: #94a3b8; margin-top: 10px; display: block; border-top: 1px solid #e2e8f0; padding-top: 10px;">${evento}</span>
+                    </div>
+                    <a href="../index.html" class="btn">Ir al portal de EVEM</a>
+                `;
+            }
 
-                if (response.ok) {
-                    card.innerHTML = `
-                        <img src="../assets/images/DiaPi.png" alt="DIM" class="logo">
-                        <div class="icon success">✅</div>
-                        <h1>Documento Auténtico</h1>
-                        <p>Este certificado es válido y está registrado en la base de datos oficial.</p>
-                        <div class="data-box">
-                            <strong>${data.fullName}</strong>
-                            <span style="color: #475569; font-weight: bold;">C.I: ${cedula}</span><br>
-                            <span style="font-size: 0.9rem; color: #94a3b8; margin-top: 10px; display: block; border-top: 1px solid #e2e8f0; padding-top: 10px;">Día Internacional de las Matemáticas (DIM 2026)</span>
-                        </div>
-                        <a href="../index.html" class="btn">Ir al portal de EVEM</a>
-                    `;
-                } else {
-                    throw new Error(data.error || 'Certificado no encontrado en los registros.');
-                }
-            } catch (error) {
+            function mostrarError(mensaje) {
                 card.innerHTML = `
                     <div class="icon error">❌</div>
                     <h1>Certificado Inválido</h1>
-                    <p>${error.message}</p>
+                    <p>${mensaje}</p>
                     <p style="font-size: 0.85rem; color: #94a3b8;">Si crees que es un error, contacta al comité organizador.</p>
                 `;
             }
