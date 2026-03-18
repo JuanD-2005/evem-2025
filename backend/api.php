@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" en la UNET
+$db_name = "evem"; // Ojo: Cámbialo a "evem" en la UNET
 $username = "root";     // Ojo: Cámbialo al usuario de la UNET
-$password = "";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
+$password = "BD.Evem*2026";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password);
@@ -129,6 +129,35 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
         http_response_code(500);
         echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
     }
+}
+
+// --- RUTA: REGISTRO FESTIVAL DE LAS CIENCIAS ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register_festival') {
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (!empty($data->teamName) && !empty($data->institution) && !empty($data->members)) {
+        try {
+            // Asumimos que existe una tabla llamada festival_teams
+            $sql = "INSERT INTO festival_teams (team_name, institution, area, members) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([
+                $data->teamName,
+                $data->institution,
+                $data->area ?? '',
+                $data->members
+            ]);
+
+            http_response_code(201);
+            echo json_encode(["message" => "Equipo registrado exitosamente en el Festival."]);
+        } catch(Exception $e) {
+            http_response_code(500);
+            echo json_encode(["error" => "Error en la BD: " . $e->getMessage()]);
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(["error" => "Por favor completa los campos obligatorios."]);
+    }
+    exit();
 }
 
 // --- RUTA: VERIFICAR Y GENERAR CERTIFICADO EVEM ---

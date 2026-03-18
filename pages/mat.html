@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades Matemáticas — EVEM 2026</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f172a;
+            --navy-mid: #1e3a8a;
+            --blue: #0ea5e9;
+            --blue-mid: #0284c7;
+            --blue-dark: #075985;
+            --slate: #475569;
+            --slate-light: #94a3b8;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+            --radius: 16px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--navy);
+            overflow-x: hidden;
+        }
+
+        /* ─── NAV ─── */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(15,23,42,0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.78);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .central-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .central-logo {
+            height: 36px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: var(--blue); }
+
+        .nav-logo {
+            height: 36px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .nav-badge {
+            background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .nav-badge:hover { opacity: 0.85; transform: translateY(-1px); }
+
+        /* ─── HERO ─── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--navy);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(14,165,233,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14,165,233,0.07) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(30,58,138,0.6) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            padding: 0 24px;
+            max-width: 880px;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(14,165,233,0.12);
+            border: 1px solid rgba(14,165,233,0.3);
+            color: var(--blue);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, var(--blue), #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, rgba(14,165,233,0.5), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.1); }
+        }
+
+        /* ─── LAYOUT ─── */
+        .page-body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+
+        .sidebar-header {
+            background: var(--navy);
+            padding: 20px 24px;
+        }
+
+        .sidebar-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 4px;
+        }
+
+        .sidebar-header p {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .sidebar-nav {
+            padding: 8px;
+        }
+
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--slate);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .sidebar-nav-link:hover {
+            background: #f0f9ff;
+            color: var(--blue-mid);
+        }
+
+        .sidebar-nav-link .icon {
+            width: 32px;
+            height: 32px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .sidebar-nav-link:hover .icon {
+            background: #e0f2fe;
+        }
+
+        .sidebar-cta {
+            margin: 8px;
+            background: linear-gradient(135deg, var(--navy-mid), var(--blue-dark));
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sidebar-cta img {
+            width: 80px;
+            margin-bottom: 12px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .sidebar-cta p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .sidebar-cta-btn {
+            display: block;
+            background: var(--blue);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .sidebar-cta-btn:hover {
+            background: #38bdf8;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(14,165,233,0.35);
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 56px;
+        }
+
+        /* ─── ARTICLE CARDS ─── */
+        .article-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+        }
+
+        .article-header {
+            padding: 40px 40px 0;
+        }
+
+        .article-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eff6ff;
+            color: var(--navy-mid);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        .article-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .article-header p {
+            color: var(--slate);
+            line-height: 1.75;
+            font-size: 1rem;
+            max-width: 640px;
+            padding-bottom: 32px;
+        }
+
+        .article-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .article-logo {
+            height: 56px;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        /* ─── CAROUSEL ─── */
+        .carousel-wrap {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-track img {
+            min-width: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--navy-mid);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .carousel-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .carousel-btn.prev { left: 16px; }
+        .carousel-btn.next { right: 16px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            width: 20px;
+            background: white;
+        }
+
+        /* ─── REVEAL ANIMATIONS ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .page-body {
+                grid-template-columns: 1fr;
+                padding-top: 40px;
+            }
+            .sidebar { position: static; }
+            .hero-title { font-size: 2.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="../index.html">⬅️ Volver al Inicio</a></li>
+            </ul>
+            <div class="central-logo-container">
+                <a href="../index.html">
+                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="festival.html" style="color: #0ea5e9; font-weight: bold;">Festival de las Ciencias 🚀</a></li>
+            </ul>
+        </div>
+    </header>
+    <div style="height: 40px;"></div>
+
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+                EVEM 2026 · Actividades
+            </div>
+            <h1 class="hero-title">
+                Formando el talento<br>
+                <span>matemático</span> del mañana
+            </h1>
+            <p class="hero-sub">
+                Comprometidos en fomentar el estudio y la pasión por las matemáticas a través de olimpiadas, encuentros académicos y experiencias transformadoras.
+            </p>
+            <div class="hero-scroll">
+                <div class="scroll-line"></div>
+                Explorar
+            </div>
+        </div>
+    </section>
+
+    <div class="page-body">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <div class="sidebar-header">
+                    <h3>Navegación</h3>
+                    <p>Menú de Actividades</p>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#olimpiadas" class="sidebar-nav-link">
+                        <span class="icon">🏆</span>
+                        Olimpiadas
+                    </a>
+                    <a href="#encomat" class="sidebar-nav-link">
+                        <span class="icon">📚</span>
+                        Encomat 2026
+                    </a>
+                </nav>
+                <div class="sidebar-cta">
+                    <img src="../assets/images/logo-cedic.png" alt="CEDIC">
+                    <p>Nuestro próximo gran evento científico te espera</p>
+                    <a href="festival.html" class="sidebar-cta-btn">Festival de la Ciencia →</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main-content">
+
+            <!-- ARTÍCULO: OLIMPIADAS -->
+            <article id="olimpiadas" class="article-card reveal">
+                <div class="article-header">
+                    <div class="article-tag">⚡ Competencia</div>
+                    <h2>Olimpiadas y Jornadas Juveniles</h2>
+                    <p>Las olimpiadas son un espacio para que los estudiantes demuestren sus habilidades analíticas. Nos enorgullece organizar competencias a nivel regional y nacional para descubrir a los talentos del mañana.</p>
+                </div>
+                <div class="carousel-wrap">
+                    <div class="carousel-track" id="olimTrack">
+                        <img src="../assets/images/olim1.jpg" alt="Olimpiadas 1">
+                        <img src="../assets/images/olim2.jpg" alt="Olimpiadas 2">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('olim', -1)">❮</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('olim', 1)">❯</button>
+                    <div class="carousel-dots" id="olimDots"></div>
+                </div>
+            </article>
+
+            <!-- ARTÍCULO: ENCOMAT -->
+            <article id="encomat" class="article-card reveal">
+                <div class="article-header">
+                    <div class="article-header-row">
+                        <div>
+                            <div class="article-tag">📖 Encuentro Académico</div>
+                            <h2>Encomat 2026</h2>
+                        </div>
+                        <img src="../assets/images/logo-encomat.png" alt="Encomat" class="article-logo">
+                    </div>
+                    <p>El Encuentro de Saberes Matemáticos reúne a la comunidad académica para discutir nuevas metodologías y avances en la enseñanza de las ciencias exactas.</p>
+                </div>
+                <div class="carousel-wrap">
+                    <div class="carousel-track" id="encomatTrack">
+                        <img src="../assets/images/encomat1.jpg" alt="Encomat 1">
+                        <img src="../assets/images/encomat2.jpg" alt="Encomat 2">
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('encomat', -1)">❮</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('encomat', 1)">❯</button>
+                    <div class="carousel-dots" id="encomatDots"></div>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <script>
+        // ── Carousels ──
+        const carousels = {
+            olim: { index: 0, track: null, dots: null, total: 0 },
+            encomat: { index: 0, track: null, dots: null, total: 0 }
+        };
+
+        function initCarousel(id) {
+            const c = carousels[id];
+            c.track = document.getElementById(id + 'Track');
+            c.dots = document.getElementById(id + 'Dots');
+            c.total = c.track.children.length;
+            c.dots.innerHTML = Array.from({length: c.total}, (_, i) =>
+                `<div class="dot ${i===0?'active':''}" onclick="goToSlide('${id}', ${i})"></div>`
+            ).join('');
+        }
+
+        function updateCarousel(id) {
+            const c = carousels[id];
+            c.track.style.transform = `translateX(-${c.index * 100}%)`;
+            c.dots.querySelectorAll('.dot').forEach((d, i) =>
+                d.classList.toggle('active', i === c.index));
+        }
+
+        function moveCarousel(id, dir) {
+            const c = carousels[id];
+            c.index = (c.index + dir + c.total) % c.total;
+            updateCarousel(id);
+        }
+
+        function goToSlide(id, i) {
+            carousels[id].index = i;
+            updateCarousel(id);
+        }
+
+        initCarousel('olim');
+        initCarousel('encomat');
+
+        // Auto-advance
+        setInterval(() => moveCarousel('olim', 1), 5000);
+        setInterval(() => moveCarousel('encomat', 1), 6500);
+
+        // ── Scroll reveal ──
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
