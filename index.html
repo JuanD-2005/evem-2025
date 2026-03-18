@@ -213,6 +213,58 @@
         </div>
     </section>
 
+    <!-- SECCIÓN: MÁS EVENTOS (CARRUSEL GRANDE) -->
+    <section class="more-events-section" style="padding: 80px 0; background-color: #f8fafc; border-top: 1px solid #e2e8f0;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 2.5rem; color: #1e3a8a; font-weight: 900;">Olimpiadas y Más Eventos</h2>
+                <p style="color: #64748b; font-size: 1.1rem;">Descubre otras iniciativas impulsadas por nuestros departamentos</p>
+            </div>
+
+            <!-- Carrusel de Imágenes Grandes -->
+            <div style="position: relative; max-width: 1000px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
+                
+                <div id="indexEventSlider" style="display: flex; height: 500px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <!-- Imagen 1 -->
+                    <div style="min-width: 100%; position: relative;">
+                        <img src="assets/images/placeholder-olim1.jpg" alt="Olimpiadas" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
+                            <h3 style="color: white; font-size: 2rem; margin-bottom: 5px;">Olimpiadas de Matemáticas</h3>
+                            <p style="color: #cbd5e1; font-size: 1.1rem;">Fomentando el pensamiento analítico</p>
+                        </div>
+                    </div>
+                    <!-- Imagen 2 -->
+                    <div style="min-width: 100%; position: relative;">
+                        <img src="assets/images/placeholder-olim2.jpg" alt="Jornadas" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
+                            <h3 style="color: white; font-size: 2rem; margin-bottom: 5px;">Jornadas Juveniles</h3>
+                            <p style="color: #cbd5e1; font-size: 1.1rem;">Competencia y excelencia académica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Control -->
+                <button onclick="moverSliderEventos(-1)" style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); color: #1e3a8a;">❮</button>
+                <button onclick="moverSliderEventos(1)" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); color: #1e3a8a;">❯</button>
+            </div>
+
+            <!-- Botón hacia la nueva página -->
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="pages/mat.html" class="btn" style="background: #1e3a8a; color: white; padding: 16px 40px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; text-decoration: none; display: inline-block; box-shadow: 0 10px 20px rgba(30,58,138,0.2); transition: 0.3s;">Explorar todas las actividades →</a>
+            </div>
+        </div>
+
+        <script>
+            let indexSlide = 0;
+            function moverSliderEventos(direccion) {
+                const slider = document.getElementById('indexEventSlider');
+                const totalSlides = slider.children.length;
+                indexSlide = (indexSlide + direccion + totalSlides) % totalSlides;
+                slider.style.transform = `translateX(-${indexSlide * 100}%)`;
+            }
+        </script>
+    </section>
+
     <section class="cta-section" id="inscribete">
         <div class="container">
             <h2 class="cta-title">¿Listo para formar parte de EVEM 2026?</h2>
