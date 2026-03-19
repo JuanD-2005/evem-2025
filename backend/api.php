@@ -442,6 +442,59 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_payment') {
     }
 }
 
+// --- RUTA: OBTENER EQUIPOS DEL FESTIVAL (PANEL ADMIN) ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_festival_teams') {
+    try {
+        $stmt = $conn->query("SELECT * FROM festival_teams ORDER BY created_at DESC");
+        http_response_code(200);
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+    exit();
+}
+
+// --- RUTA: CAMBIAR ESTATUS (PAGO/APROBADO) FESTIVAL ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle_festival_status') {
+    $data = json_decode(file_get_contents("php://input"));
+    if (isset($data->id) && isset($data->status)) {
+        try {
+            $stmt = $conn->prepare("UPDATE festival_teams SET status = ? WHERE id = ?");
+            $stmt->execute([$data->status, $data->id]);
+            http_response_code(200);
+            echo json_encode(["success" => true]);
+        } catch(Exception $e) {
+            http_response_code(500);
+            echo json_encode(["error" => "Error al actualizar: " . $e->getMessage()]);
+        }
+    }
+    exit();
+}
+
+// --- RUTA: VALIDAR CERTIFICADO DEL FESTIVAL ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_festival_certificate') {
+    $team_name = isset($_GET['team']) ? trim($_GET['team']) : '';
+    try {
+        // Solo es valido si el estatus es 1 (Pagado/Aprobado)
+        $stmt = $conn->prepare("SELECT * FROM festival_teams WHERE team_name = ? AND status = 1");
+        $stmt->execute([$team_name]);
+        $team = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($team) {
+            http_response_code(200);
+            echo json_encode(["success" => true, "team" => $team]);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Certificado invalido o el equipo no esta solvente."]);
+        }
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+    exit();
+}
+
 // --- RESPUESTA POR DEFECTO ---
 else {
     echo json_encode(["status" => "API PHP de EVEM y DIM Activa y Operativa"]);

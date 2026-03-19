@@ -3,172 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin EVEM - Control de Pagos</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
+    <title>Panel Admin — EVEM 2026 · Control de Pagos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body { background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 20px; }
-        .admin-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid #1e3a8a; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; }
-        h1 { color: #1e3a8a; font-size: 2.2rem; margin: 0; font-weight: 900; }
-        .badge-admin { background: #ef4444; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { background: #f8fafc; color: #475569; text-align: left; padding: 15px; font-weight: 700; border-bottom: 2px solid #cbd5e1; }
-        td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: middle; }
-        tr:hover { background: #f8fafc; }
-        
-        .course-tag { background: #eff6ff; color: #1e40af; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; border: 1px solid #bfdbfe; display: inline-block; }
+        :root {
+            --accent: #1d4ed8;
+            --accent-dark: #1e3a8a;
+            --accent-pale: #eff6ff;
+            --navy: #0f172a;
+            --slate: #475569;
+            --muted: #94a3b8;
+            --border: #e2e8f0;
+            --bg: #f1f5f9;
+            --success: #059669;
+            --success-pale: #dcfce7;
+            --success-text: #166534;
+            --warning: #d97706;
+            --warning-pale: #fef3c7;
+            --warning-text: #92400e;
+            --danger: #dc2626;
+            --danger-pale: #fee2e2;
+            --danger-text: #991b1b;
+        }
 
-        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; display: inline-block; text-align: center; width: 90px; }
-        .status-paid { background: #dcfce7; color: #166534; }
-        .status-unpaid { background: #fee2e2; color: #991b1b; }
-        
-        .btn-toggle { border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-approve { background: #22c55e; color: white; }
-        .btn-approve:hover { background: #16a34a; }
-        .btn-revoke { background: #ef4444; color: white; }
-        .btn-revoke:hover { background: #dc2626; }
-        
-        .loader { text-align: center; padding: 50px; color: #64748b; font-size: 1.2rem; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; }
+
+        .topbar { background: var(--navy); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .topbar-left { display: flex; align-items: center; gap: 12px; }
+        .topbar-event-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,0.3); }
+        .topbar-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: white; }
+        .topbar-subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-left: 8px; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 8px; }
+        .badge-restricted { background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.3); color: #fca5a5; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+        .topbar-back { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; display: flex; align-items: center; gap: 5px; margin-right: 16px; }
+        .topbar-back:hover { color: white; }
+
+        .page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
+        .page-header { margin-bottom: 28px; }
+        .page-header h1 { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 4px; }
+        .page-header p { color: var(--muted); font-size: 0.875rem; }
+
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .stat-card { background: white; border-radius: 14px; padding: 20px 22px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .stat-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+        .stat-value { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-sub { font-size: 0.75rem; color: var(--muted); }
+
+        .table-card { background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.05); overflow: hidden; }
+        .table-toolbar { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .table-toolbar h3 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+
+        .toolbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+        .filter-select { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--navy); background: var(--bg); outline: none; transition: border-color 0.2s; }
+        .filter-select:focus { border-color: var(--accent); }
+
+        .search-wrap { position: relative; }
+        .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; }
+        .search-input { padding: 8px 12px 8px 34px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--navy); background: var(--bg); outline: none; width: 220px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,0.1); background: white; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table thead th { background: #f8fafc; padding: 12px 18px; text-align: left; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+        .data-table tbody tr { transition: background 0.15s; }
+        .data-table tbody tr:hover { background: #f8fafc; }
+        .data-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+        .data-table td { padding: 14px 18px; font-size: 0.875rem; color: var(--slate); vertical-align: middle; }
+        .td-main { font-weight: 600; color: var(--navy); }
+        .td-mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--accent); font-weight: 500; }
+
+        .course-tag { display: inline-flex; align-items: center; background: var(--accent-pale); color: var(--accent-dark); font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; border: 1px solid #bfdbfe; max-width: 200px; }
+
+        .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+        .status-badge.paid   { background: var(--success-pale); color: var(--success-text); }
+        .status-badge.unpaid { background: var(--warning-pale); color: var(--warning-text); }
+        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+        .btn-action { padding: 7px 14px; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.18s; white-space: nowrap; }
+        .btn-action.approve { background: var(--success-pale); color: var(--success-text); }
+        .btn-action.approve:hover { background: #bbf7d0; transform: translateY(-1px); }
+        .btn-action.revoke { background: var(--danger-pale); color: var(--danger-text); }
+        .btn-action.revoke:hover { background: #fecaca; transform: translateY(-1px); }
+
+        .table-state { padding: 48px 24px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+        .loader-ring { width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--accent-pale); border-top-color: var(--accent); animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="adminWrapper" style="display: none;">
-        <div class="admin-container">
-            <div class="admin-header">
-                <div>
-                    <h1>Control de Pagos EVEM</h1>
-                    <p style="color: #64748b; margin-top: 5px;">Habilita la descarga de certificados por curso aprobado</p>
-                </div>
-                <div class="badge-admin">ACCESO RESTRINGIDO</div>
+    <div id="adminWrapper" style="display:none;">
+        <nav class="topbar">
+            <div class="topbar-left">
+                <div class="topbar-event-dot"></div>
+                <span class="topbar-title">EVEM 2026</span>
+                <span class="topbar-subtitle">Escuela Venezolana para la Enseñanza de la Matemática</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <a href="../index.html" class="topbar-back">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11L5 7l4-4"/></svg>
+                    Portal EVEM
+                </a>
+                <span class="badge-restricted">Acceso restringido</span>
+            </div>
+        </nav>
+
+        <div class="page">
+            <div class="page-header">
+                <h1>Control de Pagos — EVEM</h1>
+                <p>Habilita la descarga de certificados por curso aprobado</p>
             </div>
 
-            <table id="participantsTable">
-                <thead>
-                    <tr>
-                        <th>Cédula</th>
-                        <th>Nombre Completo</th>
-                        <th>Institución</th>
-                        <th>Curso Inscrito</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr><td colspan="6" class="loader">Cargando participantes de EVEM... ⏳</td></tr>
-                </tbody>
-            </table>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-label">Total inscritos</div>
+                    <div class="stat-value" id="statTotal">—</div>
+                    <div class="stat-sub">participantes EVEM</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pagos aprobados</div>
+                    <div class="stat-value success" id="statApproved">—</div>
+                    <div class="stat-sub">certificado disponible</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pendientes</div>
+                    <div class="stat-value warning" id="statPending">—</div>
+                    <div class="stat-sub">sin pago confirmado</div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-toolbar">
+                    <h3>Participantes inscritos</h3>
+                    <div class="toolbar-right">
+                        <select class="filter-select" id="courseFilter">
+                            <option value="">Todos los cursos</option>
+                        </select>
+                        <div class="search-wrap">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input class="search-input" type="text" id="searchInput" placeholder="Buscar por nombre o cédula...">
+                        </div>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Nombre Completo</th>
+                                <th>Institución</th>
+                                <th>Curso</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr><td colspan="6" class="table-state"><div class="loader-ring"></div>Cargando participantes...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Al cargar, primero pedimos el PIN
-        document.addEventListener('DOMContentLoaded', checkPIN);
+        let allUsers = [];
 
-        async function checkPIN() {
-            const { value: pin } = await Swal.fire({
-                title: 'Acceso Restringido',
-                text: 'Ingrese el PIN de administración EVEM:',
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                title: 'Panel Administrativo',
+                html: '<p style="color:#64748b;font-size:0.9rem;margin-bottom:4px;">EVEM 2026 · Escuela Venezolana para la Enseñanza de la Matemática</p><p style="color:#94a3b8;font-size:0.8rem;">Ingresa el PIN de acceso</p>',
                 input: 'password',
                 inputPlaceholder: '****',
-                inputAttributes: { maxlength: 4, autocapitalize: 'off', autocorrect: 'off' },
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                confirmButtonColor: '#1e3a8a',
-                confirmButtonText: 'Desbloquear Panel'
+                inputAttributes: { maxlength: 4, autocapitalize: 'off' },
+                allowOutsideClick: false, allowEscapeKey: false,
+                confirmButtonText: 'Ingresar al Panel →',
+                confirmButtonColor: '#1d4ed8'
+            }).then((result) => {
+                if (result.value === '2026') {
+                    document.getElementById('adminWrapper').style.display = 'block';
+                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Acceso concedido', showConfirmButton: false, timer: 1800 });
+                    loadParticipants();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'PIN Incorrecto', text: 'Acceso denegado.', confirmButtonColor: '#dc2626' })
+                        .then(() => window.location.href = '../index.html');
+                }
             });
+        });
 
-            // AQUÍ PUEDES CAMBIAR EL PIN (actualmente es 2026)
-            if (pin === '2026') {
-                document.getElementById('adminWrapper').style.display = 'block';
-                Swal.fire({
-                    toast: true, position: 'top-end', icon: 'success',
-                    title: 'Acceso Autorizado', showConfirmButton: false, timer: 1500
+        function applyFilters() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const course = document.getElementById('courseFilter').value;
+            renderTable(allUsers.filter(u =>
+                (u.full_name.toLowerCase().includes(q) || u.cedula.includes(q)) &&
+                (!course || u.course_preference === course)
+            ));
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('courseFilter').addEventListener('change', applyFilters);
+
+        async function loadParticipants() {
+            try {
+                const response = await fetch('../backend/api.php?action=get_evem_participants');
+                allUsers = await response.json();
+
+                // Populate course filter
+                const courses = [...new Set(allUsers.map(u => u.course_preference))].sort();
+                const sel = document.getElementById('courseFilter');
+                courses.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c; opt.textContent = c;
+                    sel.appendChild(opt);
                 });
-                loadParticipants();
-            } else {
-                await Swal.fire({
-                    icon: 'error', title: 'PIN Incorrecto', text: 'Acceso denegado. Redirigiendo...', 
-                    confirmButtonColor: '#ef4444', allowOutsideClick: false, allowEscapeKey: false
-                });
-                window.location.href = '../index.html';
+
+                updateStats(allUsers);
+                renderTable(allUsers);
+            } catch {
+                document.getElementById('tableBody').innerHTML = `<tr><td colspan="6" class="table-state" style="color:#dc2626;">Error al conectar con la base de datos de EVEM.</td></tr>`;
             }
         }
 
-        async function loadParticipants() {
+        function updateStats(users) {
+            const approved = users.filter(u => u.has_paid == 1).length;
+            document.getElementById('statTotal').textContent    = users.length;
+            document.getElementById('statApproved').textContent = approved;
+            document.getElementById('statPending').textContent  = users.length - approved;
+        }
+
+        function renderTable(users) {
             const tbody = document.getElementById('tableBody');
-            try {
-                const response = await fetch('../backend/api.php?action=get_evem_participants');
-                const data = await response.json();
-                
-                tbody.innerHTML = ''; 
-                
-                if(data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay inscritos en EVEM aún.</td></tr>';
-                    return;
-                }
-
-                data.forEach(user => {
-                    const isPaid = user.has_paid == 1;
-                    const statusClass = isPaid ? 'status-paid' : 'status-unpaid';
-                    const statusText = isPaid ? 'Aprobado' : 'Pendiente';
-                    const btnClass = isPaid ? 'btn-revoke' : 'btn-approve';
-                    const btnText = isPaid ? 'Revocar Pago' : 'Aprobar Pago';
-                    const newStatus = isPaid ? 0 : 1;
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><strong>${user.cedula}</strong></td>
-                        <td>${user.full_name}</td>
+            if (!users.length) { tbody.innerHTML = `<tr><td colspan="6" class="table-state">No se encontraron participantes.</td></tr>`; return; }
+            tbody.innerHTML = users.map(user => {
+                const isPaid = user.has_paid == 1;
+                return `
+                    <tr>
+                        <td class="td-mono">${user.cedula}</td>
+                        <td class="td-main">${user.full_name}</td>
                         <td>${user.institution}</td>
                         <td><span class="course-tag">${user.course_preference}</span></td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td>
-                            <button class="btn-toggle ${btnClass}" onclick="togglePayment(${user.id}, ${newStatus}, '${user.full_name}')">
-                                ${btnText}
+                            <span class="status-badge ${isPaid ? 'paid' : 'unpaid'}">
+                                <span class="status-dot"></span>
+                                ${isPaid ? 'Aprobado' : 'Pendiente'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-action ${isPaid ? 'revoke' : 'approve'}"
+                                onclick="togglePayment(${user.id}, ${isPaid ? 0 : 1}, '${user.full_name.replace(/'/g,"\\'")}')">
+                                ${isPaid ? 'Revocar' : 'Aprobar'}
                             </button>
                         </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (error) {
-                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error al conectar con la base de datos de EVEM.</td></tr>';
-            }
+                    </tr>
+                `;
+            }).join('');
         }
 
         async function togglePayment(userId, newStatus, userName) {
-            const actionText = newStatus === 1 ? 'aprobar' : 'revocar';
-            const confirm = await Swal.fire({
-                title: `¿${actionText.toUpperCase()} el pago?`,
-                text: `Vas a ${actionText} el pago de EVEM de ${userName}`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: newStatus === 1 ? '#22c55e' : '#ef4444',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: `Sí, ${actionText}`,
+            const isApproving = newStatus === 1;
+            const { isConfirmed } = await Swal.fire({
+                title: isApproving ? '¿Aprobar pago?' : '¿Revocar pago?',
+                html: `<p style="color:#475569;font-size:0.9rem;">Participante: <strong>${userName}</strong></p>`,
+                icon: 'question', showCancelButton: true,
+                confirmButtonColor: isApproving ? '#059669' : '#dc2626',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: isApproving ? 'Sí, aprobar' : 'Sí, revocar',
                 cancelButtonText: 'Cancelar'
             });
 
-            if (confirm.isConfirmed) {
+            if (isConfirmed) {
                 try {
-                    const response = await fetch('../backend/api.php?action=toggle_evem_payment', {
+                    await fetch('../backend/api.php?action=toggle_evem_payment', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: userId, has_paid: newStatus })
                     });
-                    
-                    if (response.ok) {
-                        loadParticipants();
-                        Swal.fire({
-                            toast: true, position: 'top-end', icon: 'success',
-                            title: 'Estado de EVEM actualizado', showConfirmButton: false, timer: 1500
-                        });
-                    }
-                } catch (error) {
+                    await loadParticipants();
+                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Estado de EVEM actualizado', showConfirmButton: false, timer: 1500 });
+                } catch {
                     Swal.fire('Error', 'No se pudo actualizar el pago', 'error');
                 }
             }
