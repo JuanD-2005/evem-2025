@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Inscripción — Festival de las Ciencias CEDIC</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
-    <link rel="stylesheet" href="../css/layout.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/reset.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
@@ -45,7 +42,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .nav-container {
+        .nav-inner {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
@@ -53,32 +50,69 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            position: relative;
         }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links a {
+        .nav-link {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover { color: white; }
-
-        .central-logo-container {
             display: flex;
             align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: white; }
+
+        /* ─── GOTA CENTRAL ─── */
+        .central-logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            width: 112px;
+            height: 108px;
+            border-radius: 0 0 56px 56px;
+            background: linear-gradient(180deg, #075985 0%, #0c4a6e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: none;
+            box-shadow:
+                0 10px 28px rgba(0, 0, 0, 0.35),
+                inset 0 -3px 10px rgba(56, 189, 248, 0.10);
+            display: flex;
             justify-content: center;
+            align-items: center;
+            padding-top: 12px;
+            z-index: 101;
+            transition: box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .central-logo-container:hover {
+            box-shadow:
+                0 14px 36px rgba(0, 0, 0, 0.4),
+                inset 0 -3px 14px rgba(56, 189, 248, 0.18);
+        }
+
+        .central-logo {
+            width: 68px;
+            height: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.92;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .central-logo-container:hover .central-logo {
+            transform: scale(1.06);
+            opacity: 1;
+        }
+
+        .nav-brand {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: white;
         }
 
         /* ─── PAGE LAYOUT ─── */
@@ -86,7 +120,7 @@
             min-height: 100vh;
             display: grid;
             grid-template-columns: 1fr 520px;
-            padding-top: 24px;
+            padding-top: 64px;
         }
 
         /* ─── LEFT PANEL ─── */
@@ -292,6 +326,7 @@
             transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
             outline: none;
             -webkit-appearance: none;
+            appearance: none;
         }
 
         .field input::placeholder,
@@ -438,21 +473,18 @@
 <body>
 
     <header class="top-bar">
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="festival.html">⬅️ Volver a Info. del Festival</a></li>
-            </ul>
-            <div class="central-logo-container">
-                <a href="festival.html" style="font-weight: 900; color: #0ea5e9; font-size: 1.5rem; text-decoration: none;">
-                    CEDIC UNET
-                </a>
-            </div>
-            <ul class="nav-links">
-                <li style="visibility: hidden;"><a href="#">Espacio</a></li>
-            </ul>
+        <div class="nav-inner">
+            <a href="festival.html" class="nav-link">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
+                Festival
+            </a>
+            <!-- Gota central institucional -->
+            <a href="festival.html" class="central-logo-container">
+                <img src="../assets/images/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo" style="max-height: 55px; width: auto; object-fit: contain; margin-top: 5px;">
+            </a>
+            <span style="font-size:0.82rem; color:rgba(255,255,255,0.5);">Inscripciones 2025</span>
         </div>
     </header>
-    <div style="height: 40px;"></div>
 
     <div class="page-layout">
 
@@ -476,7 +508,7 @@
                         <div class="rule-num">02</div>
                         <div>
                             <h4>Envío del trabajo</h4>
-                            <p>Después de inscribirte, envía el trabajo original en PDF a <strong style="color:#7dd3fc;">cedicunet@gmail.com</strong></p>
+                            <p>Después de inscribirte, envía el trabajo original en PDF a <strong style="color:#7dd3fc;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfbcbabbb6bcaab1baab9fb8b2beb6b3f1bcb0b2">[email&#160;protected]</a></strong></p>
                         </div>
                     </div>
                     <div class="rule-item">
@@ -499,7 +531,7 @@
                     <h4>¿Tienes preguntas?</h4>
                     <p>
                         📱 0414-7077573 · 0416-6314095<br>
-                        📧 <a href="mailto:cedicunet@gmail.com">cedicunet@gmail.com</a>
+                        📧 <a href="/cdn-cgi/l/email-protection#b3d0d6d7dad0c6ddd6c7f3d4ded2dadf9dd0dcde"><span class="__cf_email__" data-cfemail="b2d1d7d6dbd1c7dcd7c6f2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>
                     </p>
                 </div>
             </div>
@@ -577,7 +609,7 @@
                     </button>
 
                     <p class="form-footer">
-                        Después del registro, recuerda enviar tu PDF a <strong>cedicunet@gmail.com</strong><br>
+                        Después del registro, recuerda enviar tu PDF a <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="553630313c36203b3021153238343c397b363a38">[email&#160;protected]</a></strong><br>
                         especificando institución e integrantes.
                     </p>
                 </form>
@@ -585,7 +617,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ── Member counter ──
         const membersTA = document.getElementById('teamMembers');
         const badge = document.getElementById('memberBadge');
@@ -593,7 +625,7 @@
         function updateMemberCount() {
             const lines = membersTA.value.split('\n').filter(l => l.trim().length > 2);
             const n = lines.length;
-            badge.textContent = `${n} persona${n !== 1 ? 's' : ''}`;
+            badge.textContent = `${n} persona${n === 1 ? '' : 's'}`;
             badge.className = 'member-badge';
             if (n >= 3 && n <= 5) badge.classList.add('ok');
             else if (n > 5) badge.classList.add('error');
@@ -664,7 +696,7 @@
                         confirmButtonColor: '#0284c7',
                         confirmButtonText: 'Ver información del Festival'
                     });
-                    window.location.href = 'festival.html';
+                    globalThis.location.href = 'festival.html';
                 } else {
                     throw new Error(result.error || 'Error desconocido');
                 }
@@ -680,6 +712,8 @@
                 btn.classList.remove('loading');
             }
         });
+
+        updateMemberCount();
     </script>
 </body>
 </html>
