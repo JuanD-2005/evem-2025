@@ -97,6 +97,9 @@ async function loadCourses() {
                     <div class="card-icon-header">${icon}</div>
                     <h3 class="modern-course-title">${course.title}</h3>
                     <p class="modern-course-teacher">${course.instructor}</p>
+                    <div style="display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin: 8px 0;">
+                        🎯 Público: ${course.target_audience}
+                    </div>
                     <p class="modern-course-institution">Curso EVEM 2026</p>
                     
                     <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin: 15px 0;">

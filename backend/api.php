@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Configuración de Base de Datos
 $host = "localhost";
-$db_name = "evem"; // Ojo: Cámbialo a "evem" en la UNET
+$db_name = "evem_2025"; // Ojo: Cámbialo a "evem" en la UNET
 $username = "root";     // Ojo: Cámbialo al usuario de la UNET
-$password = "BD.Evem*2026";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
+$password = "";         // Ojo: Cámbialo a "BD.Evem*2026" en la UNET
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password);
@@ -491,6 +491,34 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_festival_cert
     } catch(Exception $e) {
         http_response_code(500);
         echo json_encode(["error" => "Error interno: " . $e->getMessage()]);
+    }
+    exit();
+}
+
+// --- RUTA: OBTENER IMAGENES DINAMICAS PARA CARRUSELES ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_carousel_images') {
+    $folder = isset($_GET['folder']) ? $_GET['folder'] : '';
+    
+    // Por seguridad, solo permitimos leer estas dos carpetas
+    if ($folder === 'carruseluno' || $folder === 'carruseldos') {
+        $directory = __DIR__ . '/../assets/images/' . $folder . '/';
+        $images = [];
+        
+        if (is_dir($directory)) {
+            $files = scandir($directory);
+            foreach ($files as $file) {
+                $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                // Filtramos para que solo lea archivos de imagen
+                if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                    $images[] = "../assets/images/" . $folder . "/" . $file;
+                }
+            }
+        }
+        http_response_code(200);
+        echo json_encode($images);
+    } else {
+        http_response_code(400);
+        echo json_encode(["error" => "Carpeta no permitida"]);
     }
     exit();
 }
