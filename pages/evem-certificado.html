@@ -48,12 +48,12 @@
                 <form id="certForm" class="cert-form">
                     <input type="text" id="searchCedula" placeholder="Ej: V-12345678" required autocomplete="off">
                     <button type="submit" id="btnBuscar">
-                        <span id="btnText">Validar y Generar PDF</span>
+                        <span id="btnText">Validar y Descargar Certificado</span>
                     </button>
                 </form>
 
                 <div class="date-warning">
-                    📅 <strong>Modo Pruebas Activado:</strong> Generación de certificados habilitada.
+                    ℹ️ <strong>Información:</strong> Los certificados estarán disponibles únicamente para los participantes que hayan completado y aprobado su curso.
                 </div>
             </div>
         </div>
@@ -68,11 +68,10 @@
             const btn = document.getElementById('btnBuscar');
             const btnText = document.getElementById('btnText');
             
-            // ⚠️ MODO DESARROLLADOR: Puesto en TRUE para que lo pruebes YA
-            const FORZAR_DESCARGA_PARA_PRUEBAS = true;
-            const unlockDate = new Date('2026-04-01T00:00:00'); 
+            // Fecha a partir de la cual se pueden descargar
+            const unlockDate = new Date('2026-09-01T00:00:00'); 
 
-            if (new Date() < unlockDate && !FORZAR_DESCARGA_PARA_PRUEBAS) {
+            if (new Date() < unlockDate) {
                 Swal.fire('Aún no disponible', 'Los certificados se habilitarán al finalizar el evento.', 'info');
                 return;
             }
@@ -101,7 +100,7 @@
                 Swal.fire('Aviso', error.message, 'warning');
             } finally {
                 btn.disabled = false;
-                btnText.textContent = 'Validar y Generar PDF';
+                btnText.textContent = 'Validar y Descargar Certificado';
             }
         });
 
@@ -163,7 +162,7 @@
             if(qrCanvas) {
                 const qrDataUrl = qrCanvas.toDataURL('image/png');
                 
-                // Usando las mismas coordenadas exactas de la esquina que perfeccionaste antes
+                // Usando las mismas coordenadas exactas de la esquina
                 pdf.addImage(qrDataUrl, 'PNG', 18, 168, 28, 28);
             }
 

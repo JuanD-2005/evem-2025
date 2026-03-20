@@ -588,10 +588,7 @@
                     <p>Las olimpiadas son un espacio para que los estudiantes demuestren sus habilidades analíticas. Nos enorgullece organizar competencias a nivel regional y nacional para descubrir a los talentos del mañana.</p>
                 </div>
                 <div class="carousel-wrap">
-                    <div class="carousel-track" id="olimTrack">
-                        <img src="../assets/images/olim1.jpg" alt="Olimpiadas 1">
-                        <img src="../assets/images/olim2.jpg" alt="Olimpiadas 2">
-                    </div>
+                    <div class="carousel-track" id="olimTrack"></div>
                     <button class="carousel-btn prev" onclick="moveCarousel('olim', -1)">❮</button>
                     <button class="carousel-btn next" onclick="moveCarousel('olim', 1)">❯</button>
                     <div class="carousel-dots" id="olimDots"></div>
@@ -611,10 +608,7 @@
                     <p>El Encuentro de Saberes Matemáticos reúne a la comunidad académica para discutir nuevas metodologías y avances en la enseñanza de las ciencias exactas.</p>
                 </div>
                 <div class="carousel-wrap">
-                    <div class="carousel-track" id="encomatTrack">
-                        <img src="../assets/images/encomat1.jpg" alt="Encomat 1">
-                        <img src="../assets/images/encomat2.jpg" alt="Encomat 2">
-                    </div>
+                    <div class="carousel-track" id="encomatTrack"></div>
                     <button class="carousel-btn prev" onclick="moveCarousel('encomat', -1)">❮</button>
                     <button class="carousel-btn next" onclick="moveCarousel('encomat', 1)">❯</button>
                     <div class="carousel-dots" id="encomatDots"></div>
@@ -625,24 +619,61 @@
     </div>
 
     <script>
-        // ── Carousels ──
+        // ── Variables Base ──
         const carousels = {
             olim: { index: 0, track: null, dots: null, total: 0 },
             encomat: { index: 0, track: null, dots: null, total: 0 }
         };
 
+        // ── El Motor Dinámico (Nuevo) ──
+        async function cargarCarruselDinamico(idCarrusel, nombreCarpeta) {
+            try {
+                // 1. Pedimos las imágenes al PHP
+                const response = await fetch(`../backend/api.php?action=get_carousel_images&folder=${nombreCarpeta}`);
+                const imagenes = await response.json();
+                
+                const track = document.getElementById(idCarrusel + 'Track');
+                
+                // 2. Si hay imágenes, las inyectamos en el HTML
+                if (imagenes.length > 0) {
+                    imagenes.forEach(imgSrc => {
+                        track.innerHTML += `<img src="${imgSrc}" style="min-width: 100%; object-fit: cover;" alt="Imagen ${nombreCarpeta}">`;
+                    });
+                } else {
+                    track.innerHTML = `<div style="width: 100%; display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #64748b;">No hay imágenes en la carpeta ${nombreCarpeta}</div>`;
+                }
+
+                // 3. Inicializamos el carrusel matemáticamente
+                initCarousel(idCarrusel);
+                
+                // 4. Encendemos el avance automático
+                if(idCarrusel === 'olim') setInterval(() => moveCarousel('olim', 1), 5000);
+                if(idCarrusel === 'encomat') setInterval(() => moveCarousel('encomat', 1), 6500);
+
+            } catch (error) {
+                console.error(`Error cargando la carpeta ${nombreCarpeta}:`, error);
+            }
+        }
+
+        // ── Funciones Matemáticas del Carrusel ──
         function initCarousel(id) {
             const c = carousels[id];
             c.track = document.getElementById(id + 'Track');
             c.dots = document.getElementById(id + 'Dots');
-            c.total = c.track.children.length;
-            c.dots.innerHTML = Array.from({length: c.total}, (_, i) =>
-                `<div class="dot ${i===0?'active':''}" onclick="goToSlide('${id}', ${i})"></div>`
-            ).join('');
+            
+            // Calculamos el total DESPUÉS de que JS inyectó las imágenes
+            c.total = c.track.children.length; 
+            
+            if(c.total > 0) {
+                c.dots.innerHTML = Array.from({length: c.total}, (_, i) =>
+                    `<div class="dot ${i===0?'active':''}" onclick="goToSlide('${id}', ${i})"></div>`
+                ).join('');
+            }
         }
 
         function updateCarousel(id) {
             const c = carousels[id];
+            if (c.total === 0) return; // Protección si no hay fotos
             c.track.style.transform = `translateX(-${c.index * 100}%)`;
             c.dots.querySelectorAll('.dot').forEach((d, i) =>
                 d.classList.toggle('active', i === c.index));
@@ -650,6 +681,7 @@
 
         function moveCarousel(id, dir) {
             const c = carousels[id];
+            if (c.total === 0) return;
             c.index = (c.index + dir + c.total) % c.total;
             updateCarousel(id);
         }
@@ -659,14 +691,12 @@
             updateCarousel(id);
         }
 
-        initCarousel('olim');
-        initCarousel('encomat');
+        // ── ¡ARRANCAMOS EL SISTEMA! ──
+        // Le decimos qué ID de HTML se conecta con qué carpeta del servidor
+        cargarCarruselDinamico('olim', 'carruseluno');
+        cargarCarruselDinamico('encomat', 'carruseldos');
 
-        // Auto-advance
-        setInterval(() => moveCarousel('olim', 1), 5000);
-        setInterval(() => moveCarousel('encomat', 1), 6500);
-
-        // ── Scroll reveal ──
+        // ── Animaciones de Revelado ──
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -675,7 +705,6 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
