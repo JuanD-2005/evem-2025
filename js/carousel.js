@@ -64,15 +64,23 @@ class HeroCarousel {
 
     goToSlide(index) {
         // Remover active del slide actual
-        this.slides[this.currentSlide].classList.remove('active');
-        this.indicators[this.currentSlide].classList.remove('active');
+        if (this.slides[this.currentSlide]) this.slides[this.currentSlide].classList.remove('active');
+
+        // SEGURIDAD: Solo intentar quitar clase al puntito si este existe
+        if (this.indicators[this.currentSlide]) {
+            this.indicators[this.currentSlide].classList.remove('active');
+        }
 
         // Actualizar índice
         this.currentSlide = index;
 
         // Agregar active al nuevo slide
-        this.slides[this.currentSlide].classList.add('active');
-        this.indicators[this.currentSlide].classList.add('active');
+        if (this.slides[this.currentSlide]) this.slides[this.currentSlide].classList.add('active');
+
+        // SEGURIDAD: Solo intentar agregar clase al puntito si este existe
+        if (this.indicators[this.currentSlide]) {
+            this.indicators[this.currentSlide].classList.add('active');
+        }
     }
 
     nextSlide() {
