@@ -568,6 +568,10 @@
                         <span class="icon">📚</span>
                         Encomat 2026
                     </a>
+                    <a href="#astronomia" class="sidebar-nav-link">
+                        <span class="icon">🔭</span>
+                        Astronomía
+                    </a>
                 </nav>
                 <div class="sidebar-cta">
                     <img src="../assets/images/logo-cedic.png" alt="CEDIC">
@@ -615,6 +619,21 @@
                 </div>
             </article>
 
+            <!-- ARTÍCULO: ASTRONOMÍA -->
+            <article id="astronomia" class="article-card reveal">
+                <div class="article-header">
+                    <div class="article-tag" style="color: #1e3a8a; background: #e0e7ff;">🔭 Nueva Competencia</div>
+                    <h2>Olimpiadas de Astronomía</h2>
+                    <p>Incentivando la curiosidad por el cosmos y las ciencias espaciales en los jóvenes talentos de la región con retos académicos únicos y observación astronómica.</p>
+                </div>
+                <div class="carousel-wrap">
+                    <div class="carousel-track" id="astroTrack"></div>
+                    <button class="carousel-btn prev" onclick="moveCarousel('astro', -1)">❮</button>
+                    <button class="carousel-btn next" onclick="moveCarousel('astro', 1)">❯</button>
+                    <div class="carousel-dots" id="astroDots"></div>
+                </div>
+            </article>
+
         </main>
     </div>
 
@@ -622,7 +641,8 @@
         // ── Variables Base ──
         const carousels = {
             olim: { index: 0, track: null, dots: null, total: 0 },
-            encomat: { index: 0, track: null, dots: null, total: 0 }
+            encomat: { index: 0, track: null, dots: null, total: 0 },
+            astro: { index: 0, track: null, dots: null, total: 0 }
         };
 
         // ── El Motor Dinámico (Nuevo) ──
@@ -649,6 +669,7 @@
                 // 4. Encendemos el avance automático
                 if(idCarrusel === 'olim') setInterval(() => moveCarousel('olim', 1), 5000);
                 if(idCarrusel === 'encomat') setInterval(() => moveCarousel('encomat', 1), 6500);
+                if(idCarrusel === 'astro') setInterval(() => moveCarousel('astro', 1), 6000);
 
             } catch (error) {
                 console.error(`Error cargando la carpeta ${nombreCarpeta}:`, error);
@@ -695,6 +716,7 @@
         // Le decimos qué ID de HTML se conecta con qué carpeta del servidor
         cargarCarruselDinamico('olim', 'carruseluno');
         cargarCarruselDinamico('encomat', 'carruseldos');
+        cargarCarruselDinamico('astro', 'carruseltres');
 
         // ── Animaciones de Revelado ──
         const observer = new IntersectionObserver(entries => {
