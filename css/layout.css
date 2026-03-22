@@ -513,10 +513,11 @@ html {
     align-items: center;
     gap: 50px;
     margin-top: 40px;
-    background: rgba(255,255,255,0.1); /* Fondo sutil */
+    background: #ffffff; /* Fondo plano para legibilidad de logos */
     padding: 20px;
     border-radius: 20px;
-    backdrop-filter: blur(5px);
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .partner-logo {
