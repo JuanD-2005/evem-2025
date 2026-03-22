@@ -499,8 +499,9 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_festival_cert
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_carousel_images') {
     $folder = isset($_GET['folder']) ? $_GET['folder'] : '';
     
-    // Por seguridad, solo permitimos leer estas dos carpetas
-    if ($folder === 'carruseluno' || $folder === 'carruseldos') {
+    // Por seguridad, solo permitimos leer carpetas aprobadas
+    $allowedFolders = ['carruseluno', 'carruseldos', 'carruseltres'];
+    if (in_array($folder, $allowedFolders, true)) {
         $directory = __DIR__ . '/../assets/images/' . $folder . '/';
         $images = [];
         
