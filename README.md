@@ -72,11 +72,11 @@
 
 ```mermaid
 graph TD
-    A[🌐 Frontend <br> HTML/CSS/JS] -->|Fetch API| B((📡 API REST))
-    B --> C[🐘 PHP <br> (api.php)]
-    C --> D[(🗄️ MySQL)]
-    C --> E[✅ Validaciones <br> y lógica de negocio]
-    D --> F[📋 Tablas: courses, <br> participants, dim_participants]
+  A[Frontend HTML/CSS/JS] -->|Fetch API| B((API REST))
+  B --> C[PHP api.php]
+  C --> D[(MySQL)]
+  C --> E[Validaciones y logica de negocio]
+  D --> F[Tablas: courses, participants, dim_participants]
 ```
 
 ### 🛠️ Stack tecnológico
@@ -175,11 +175,11 @@ $password = "";
 
 ```mermaid
 graph TD
-    A[🌐 Frontend <br> HTML/CSS/JS] -->|Fetch API| B((📡 API REST))
-    B --> C[🐘 PHP <br> (api.php)]
-    C --> D[(🗄️ MySQL)]
-    C --> E[✅ Validations <br> and business logic]
-    D --> F[📋 Tables: courses, <br> participants, dim_participants]
+  A[Frontend HTML/CSS/JS] -->|Fetch API| B((API REST))
+  B --> C[PHP api.php]
+  C --> D[(MySQL)]
+  C --> E[Validations and business logic]
+  D --> F[Tables: courses, participants, dim_participants]
 ```
 
 ### 🛠️ Tech stack
