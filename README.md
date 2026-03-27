@@ -1,141 +1,240 @@
-# EVEM & DIM 2026 - Portal Web y Sistema de Gestión
+<div align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
 
-Portal oficial y sistema de gestión integral para la **XXVIII Escuela Venezolana para la Enseñanza de la Matemática (EVEM)** y el **Día Internacional de las Matemáticas (DIM)**. Organizado por la Universidad de Los Andes (ULA) y hospedado en la Universidad Nacional Experimental del Táchira (UNET).
+  <h1>🎓 EVEM & DIM 2026</h1>
+  <p><strong>Portal web y sistema de gestión integral para la XXVIII Escuela Venezolana para la Enseñanza de la Matemática y el Día Internacional de las Matemáticas</strong></p>
 
-> **Estado:** 🟢 Listo para Producción / Full Stack Funcional
-> **Edición:** 2026
-> **Arquitectura:** Frontend (Vanilla JS) + Backend (PHP/MySQL)
+  <a href="https://tudominio.com" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/🌐_Ver_demo-000000?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Ver demo" />
+  </a>
+</div>
 
-## 🚀 Tecnologías Utilizadas
+<br>
 
-El proyecto ha sido refactorizado para garantizar compatibilidad total con la infraestructura de servidores web tradicionales (Apache/Nginx) de la institución.
+## 🌍 Tabla de contenido | Table of contents
 
-### Frontend (Cliente)
-- **HTML5 Semántico**: Estructura optimizada, modular y accesible.
-- **CSS3 Moderno**: Diseño responsivo, variables CSS, Glassmorphism, animaciones y diseño institucional.
-- **JavaScript (Vanilla ES6+)**: Lógica asíncrona (Fetch API), generación de PDFs en cliente y manipulación del DOM.
-- **Librerías de Terceros**:
-  - `SweetAlert2`: Notificaciones y alertas modernas.
-  - `html2canvas` & `jsPDF`: Generación y exportación de certificados dinámicos al vuelo.
-
-### Backend (Servidor)
-- **PHP (Nativo - PDO)**: Procesamiento de rutas, lógica de negocio y seguridad.
-- **MySQL**: Base de datos relacional para control de cupos y registros.
+- [Español](#es)
+- [English](#en)
 
 ---
 
-## 📁 Estructura del Proyecto
+<a id="es"></a>
+## 🇪🇸 Español
 
-```text
-evem-2026/
-├── index.html                  # Página de Inicio (Hero, Quienes Somos, Accesos)
-├── assets/
-│   └── images/                 # Logos institucionales y recursos visuales
-├── css/
-│   ├── layout.css              # Estilos estructurales y Header Institucional
-│   ├── components.css          # Botones animados y tarjetas
-│   └── responsive.css          # Adaptabilidad a dispositivos móviles
-├── js/
-│   ├── api.js                  # Cliente API (Puente Frontend-Backend EVEM)
-│   └── main.js                 # Lógica de formularios y UI
-├── pages/
-│   ├── contact.html            # Formulario de Inscripción EVEM (Asistente/Poster)
-│   ├── courses.html            # Catálogo dinámico de cursos (EVEM)
-│   ├── conferencias.html       # Catálogo VIP de Conferencias Magistrales
-│   ├── alojamiento.html        # Información de hospedaje con carrusel JS
-│   ├── dim.html                # Landing Page oficial del evento DIM
-│   ├── dim-registro.html       # Formulario Split-Screen de inscripción al DIM
-│   ├── dim-certificado.html    # Generador de certificados PDF para el DIM
-│   └── admin-dim.html          # (Secreto) Panel de administración de pagos DIM
-└── backend/                    
-    └── api.php                 # Enrutador y controlador principal de la Base de Datos
+### 📝 Resumen del proyecto
 
+**EVEM & DIM 2026** es un portal web completo desarrollado para la **XXVIII Escuela Venezolana para la Enseñanza de la Matemática (EVEM)** y el **Día Internacional de las Matemáticas (DIM)**, eventos organizados por la Universidad de Los Andes (ULA) y hospedados en la Universidad Nacional Experimental del Táchira (UNET). La plataforma integra un sistema de registro, catálogo de cursos, generación de certificados digitales y un panel administrativo para gestionar inscripciones y pagos en tiempo real.
+
+> **Estado:** 🟢 Listo para producción  
+> **Arquitectura:** Frontend (Vanilla JS) + Backend (PHP/MySQL)  
+> **Edición:** 2026
+
+### 📱 Demo visual
+
+| Vista | Captura |
+|---|---|
+| **Página de inicio** | <img src="docs/media/home.png" alt="Inicio" width="400" /> |
+| **Formulario EVEM** | <img src="docs/media/evem-form.png" alt="Formulario EVEM" width="400" /> |
+| **Landing DIM** | <img src="docs/media/dim-landing.png" alt="Landing DIM" width="400" /> |
+| **Panel administrativo** | <img src="docs/media/admin-panel.png" alt="Admin" width="400" /> |
+
+> *Las capturas de pantalla se encuentran en la carpeta `docs/media/`.*
+
+### 🔐 Funcionalidades por evento / módulo
+
+| Módulo | Características |
+|---|---|
+| **EVEM** | Registro de asistentes y ponentes con selección de cursos, descuento automático de cupos, validación de disponibilidad. |
+| **DIM** | Landing exclusiva, formulario de inscripción dividido (split-layout), generación de certificados PDF tras verificación de pago, panel de gestión de pagos. |
+| **Catálogos** | Visualización dinámica de cursos EVEM y conferencias magistrales con control de cupos y diseño alternado. |
+| **Administración** | Interfaz oculta para consultar inscritos, cambiar estados de pago y exportar datos. |
+
+### 📈 Impacto del proyecto
+
+- **Alcance estimado:** Diseñado para gestionar cientos de inscripciones simultáneas en dos eventos paralelos.
+- **Eficiencia:** Reducción del tiempo de registro mediante validación automática de cupos y notificaciones en tiempo real.
+- **Optimización:** Generación de certificados al instante, evitando procesos manuales de impresión y entrega.
+- **Rendimiento:** Tiempo de carga optimizado gracias a la arquitectura cliente-servidor liviana y a la ausencia de frameworks pesados.
+
+### ⚙️ Logros técnicos
+
+- **Arquitectura modular:** Separación clara entre frontend (HTML/CSS/JS nativo) y backend (API RESTful en PHP).
+- **Base de datos relacional:** MySQL con control de cupos, relaciones entre tablas y consultas optimizadas con PDO.
+- **Generación de certificados 100% cliente:** Uso de `html2canvas` y `jsPDF` para crear diplomas dinámicos sin sobrecargar el servidor.
+- **Panel administrativo secreto:** Endpoints protegidos que permiten gestionar pagos sin exponer datos sensibles.
+- **Diseño responsivo:** Interfaces adaptadas a cualquier dispositivo, con correcciones específicas para encabezados institucionales y carruseles nativos.
+
+### 🏗️ Arquitectura
+
+```mermaid
+graph TD
+    A[🌐 Frontend <br> HTML/CSS/JS] -->|Fetch API| B((📡 API REST))
+    B --> C[🐘 PHP <br> (api.php)]
+    C --> D[(🗄️ MySQL)]
+    C --> E[✅ Validaciones <br> y lógica de negocio]
+    D --> F[📋 Tablas: courses, <br> participants, dim_participants]
 ```
 
-## ⚙️ Instalación y Despliegue
+### 🛠️ Stack tecnológico
 
-Este proyecto no requiere compiladores (como Node/NPM). Está diseñado para ser arrastrado y ejecutado (Plug & Play) en cualquier servidor LAMP/WAMP.
+| Categoría | Tecnología |
+|---|---|
+| **Frontend** | HTML5, CSS3, JavaScript (ES6) |
+| **Backend** | PHP 7+ (PDO) |
+| **Base de datos** | MySQL |
+| **Librerías** | SweetAlert2, html2canvas, jsPDF |
+| **Control de versiones** | Git y GitHub |
+| **Despliegue** | Apache / Nginx (LAMP/WAMP) |
 
-### 1. Base de Datos (MySQL)
+### 💻 Instalación local
 
-* Iniciar Apache y MySQL (ej. mediante XAMPP).
-* Crear una base de datos llamada `evem`.
-* Importar las consultas SQL para generar las siguientes tablas:
-* `courses` (Catálogo de cursos y control de cupos).
-* `participants` (Inscritos en EVEM).
-* `dim_participants` (Inscritos en el evento DIM con control de pagos).
+1. Clona el repositorio:
 
+```bash
+git clone https://github.com/tu-usuario/evem-2026.git
+```
 
+2. Inicia Apache y MySQL (ej. con XAMPP).
 
-### 2. Configuración del Backend (PHP)
+3. Importa la estructura de la base de datos:
 
-* Abrir el archivo `backend/api.php`.
-* Actualizar las credenciales de la base de datos según el entorno (Local o Producción):
+   - Crea una base de datos llamada `evem`.
+   - Ejecuta el script SQL (disponible en `database/schema.sql` o similar) para generar las tablas:
+     - `courses`
+     - `participants`
+     - `dim_participants`
+
+4. Configura las credenciales de la base de datos en `backend/api.php`:
 
 ```php
 $host = "localhost";
-$db_name = "evem";       // Nombre de la base de datos
-$username = "usuario";   // Credencial de BD
-$password = "clave";     // Credencial de BD
-
+$db_name = "evem";
+$username = "root";
+$password = "";
 ```
 
-### 3. Despliegue en Producción
+5. Coloca la carpeta raíz del proyecto en el directorio público del servidor (`htdocs` o `public_html`).
 
-* Subir el contenido completo de la carpeta raíz al directorio público del servidor (`public_html` o `htdocs`) mediante FTP/FileZilla.
+6. Accede a través de `http://localhost/evem-2026/`.
+
+**Compilación / despliegue:** No requiere pasos de compilación. Es un proyecto listo para copiar a cualquier servidor web con PHP y MySQL.
 
 ---
 
-## 🔌 API Endpoints (api.php)
+<a id="en"></a>
+## 🇺🇸 English
 
-El backend de PHP actúa como una API RESTful que responde a parámetros GET/POST:
+### 📝 Project summary
 
-### Módulo EVEM
+**EVEM & DIM 2026** is a comprehensive web portal for the **XXVIII Venezuelan School for Mathematics Education (EVEM)** and the **International Day of Mathematics (DIM)**. The events are organized by the University of Los Andes (ULA) and hosted at the National Experimental University of Táchira (UNET). The platform includes registration systems, course catalogs, digital certificate generation, and an admin panel to manage enrollments and payments in real time.
 
-| Método | Acción (`?action=`) | Descripción |
-| --- | --- | --- |
-| GET | `courses` | Obtiene la lista de cursos activos y cupos disponibles. |
-| POST | `register` | Registra un usuario en EVEM y descuenta cupos del curso. |
+> **Status:** 🟢 Production ready  
+> **Architecture:** Frontend (Vanilla JS) + Backend (PHP/MySQL)  
+> **Edition:** 2026
 
-### Módulo DIM
+### 📱 Visual demo
 
-| Método | Acción (`?action=`) | Descripción |
-| --- | --- | --- |
-| POST | `register_dim` | Registra un usuario en el evento DIM. |
-| GET | `check_certificate` | Valida si una cédula existe y si su pago fue aprobado. |
-| GET | `get_dim_participants` | (Admin) Lista todos los inscritos en el DIM. |
-| POST | `toggle_payment` | (Admin) Cambia el estado de pago de un usuario del DIM. |
+| View | Screenshot |
+|---|---|
+| **Homepage** | <img src="docs/media/home.png" alt="Home" width="400" /> |
+| **EVEM form** | <img src="docs/media/evem-form.png" alt="EVEM form" width="400" /> |
+| **DIM landing** | <img src="docs/media/dim-landing.png" alt="DIM landing" width="400" /> |
+| **Admin panel** | <img src="docs/media/admin-panel.png" alt="Admin panel" width="400" /> |
+
+> *Screenshots are located in the `docs/media/` folder.*
+
+### 🔐 Features by event / module
+
+| Module | Features |
+|---|---|
+| **EVEM** | Registration for attendees and speakers with course selection, automatic quota decrease, availability validation. |
+| **DIM** | Exclusive landing page, split-layout registration form, PDF certificate generation after payment verification, payment management panel. |
+| **Catalogs** | Dynamic display of EVEM courses and keynote lectures with quota control and alternating design. |
+| **Admin** | Hidden interface to view participants, change payment status, and export data. |
+
+### 📈 Project impact
+
+- **Estimated reach:** Designed to handle hundreds of simultaneous registrations for two parallel events.
+- **Efficiency:** Reduced registration time through automatic quota validation and real-time notifications.
+- **Optimization:** Instant certificate generation eliminates manual printing and distribution.
+- **Performance:** Fast loading times thanks to a lightweight client-server architecture and no heavy frameworks.
+
+### ⚙️ Technical achievements
+
+- **Modular architecture:** Clear separation between frontend (native HTML/CSS/JS) and backend (PHP RESTful API).
+- **Relational database:** MySQL with quota control, table relationships, and optimized PDO queries.
+- **100% client-side certificate generation:** `html2canvas` and `jsPDF` used to create dynamic diplomas without server overload.
+- **Hidden admin panel:** Protected endpoints to manage payments without exposing sensitive data.
+- **Responsive design:** Interfaces adapt to any device, with specific fixes for institutional headers and native carousels.
+
+### 🏗️ Architecture
+
+```mermaid
+graph TD
+    A[🌐 Frontend <br> HTML/CSS/JS] -->|Fetch API| B((📡 API REST))
+    B --> C[🐘 PHP <br> (api.php)]
+    C --> D[(🗄️ MySQL)]
+    C --> E[✅ Validations <br> and business logic]
+    D --> F[📋 Tables: courses, <br> participants, dim_participants]
+```
+
+### 🛠️ Tech stack
+
+| Category | Technology |
+|---|---|
+| **Frontend** | HTML5, CSS3, JavaScript (ES6) |
+| **Backend** | PHP 7+ (PDO) |
+| **Database** | MySQL |
+| **Libraries** | SweetAlert2, html2canvas, jsPDF |
+| **Version control** | Git and GitHub |
+| **Deployment** | Apache / Nginx (LAMP/WAMP) |
+
+### 💻 Local setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/evem-2026.git
+```
+
+2. Start Apache and MySQL (e.g., with XAMPP).
+
+3. Import the database structure:
+
+   - Create a database named `evem`.
+   - Run the SQL script (available in `database/schema.sql` or similar) to create the tables:
+     - `courses`
+     - `participants`
+     - `dim_participants`
+
+4. Configure database credentials in `backend/api.php`:
+
+```php
+$host = "localhost";
+$db_name = "evem";
+$username = "root";
+$password = "";
+```
+
+5. Place the project root folder in your server's public directory (`htdocs` or `public_html`).
+
+6. Access via `http://localhost/evem-2026/`.
+
+**Build / deployment:** No compilation steps required. The project is ready to be copied to any web server with PHP and MySQL.
 
 ---
 
-## ✨ Características Destacadas (v3.0)
+## 🤝 Contribuciones | Contributing
 
-### 1. Ecosistema Multievento
+1. Haz fork del repositorio / Fork this repository
+2. Crea una rama de trabajo / Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Haz commits descriptivos / Write clear commits (`git commit -m 'Add some AmazingFeature'`)
+4. Abre un Pull Request / Open a Pull Request
 
-El portal ahora maneja de forma paralela y sin conflictos dos eventos masivos (EVEM y DIM), con diseños visuales distintos pero unificados bajo una misma arquitectura.
+## 📄 Licencia | License
 
-### 2. Módulo DIM Completo
-
-* **Landing Exclusiva:** Diseño basado en tonalidades púrpura con navegación propia.
-* **Registro de Alta Conversión:** Formulario *Split-Layout* con panel informativo en cristal esmerilado.
-* **Generador de Certificados:** Sistema *Client-Side* que verifica el estatus de pago y dibuja en pantalla un diploma en PDF listo para descargar, incorporando candados de fecha para evitar descargas previas a la finalización del evento.
-* **Panel Administrativo:** Interfaz secreta para la validación y gestión de pagos en tiempo real.
-
-### 3. Mejoras UI/UX
-
-* Interfaces adaptativas (100% Mobile Friendly) con correcciones de superposición en el Header.
-* Catálogo de conferencias magistrales con diseño VIP alternado.
-* Carrusel de imágenes sin dependencias externas (Vanilla JS) para la sede de alojamiento.
-
----
-
-## 👥 Créditos y Autoría
-
-* **Desarrollo Full Stack**: Juan Paredes
-* **Diseño UI/UX**: Basado en requerimientos del Comité Organizador
-* **Organización**: Universidad de Los Andes (ULA)
-* **Sede Anfitriona**: Universidad Nacional Experimental del Táchira (UNET)
-
-```
-
-```
+Distribuido bajo la licencia MIT. / Distributed under the MIT License.
