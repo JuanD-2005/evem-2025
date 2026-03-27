@@ -8,7 +8,7 @@
   <h1>🎓 EVEM & DIM 2026</h1>
   <p><strong>Portal web y sistema de gestión integral para la XXVIII Escuela Venezolana para la Enseñanza de la Matemática y el Día Internacional de las Matemáticas</strong></p>
 
-  <a href="https://tudominio.com" target="_blank" rel="noopener noreferrer">
+  <a href="https://evem.unet.edu.ve/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/🌐_Ver_demo-000000?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Ver demo" />
   </a>
 </div>
@@ -95,7 +95,7 @@ graph TD
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/evem-2026.git
+git clone https://github.com/tu-usuario/evem-2025.git
 ```
 
 2. Inicia Apache y MySQL (ej. con XAMPP).
@@ -119,7 +119,7 @@ $password = "";
 
 5. Coloca la carpeta raíz del proyecto en el directorio público del servidor (`htdocs` o `public_html`).
 
-6. Accede a través de `http://localhost/evem-2026/`.
+6. Accede a través de `http://localhost/evem-2025/`.
 
 **Compilación / despliegue:** No requiere pasos de compilación. Es un proyecto listo para copiar a cualquier servidor web con PHP y MySQL.
 
@@ -198,7 +198,7 @@ graph TD
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/evem-2026.git
+git clone https://github.com/your-username/evem-2025.git
 ```
 
 2. Start Apache and MySQL (e.g., with XAMPP).
@@ -222,7 +222,7 @@ $password = "";
 
 5. Place the project root folder in your server's public directory (`htdocs` or `public_html`).
 
-6. Access via `http://localhost/evem-2026/`.
+6. Access via `http://localhost/evem-2025/`.
 
 **Build / deployment:** No compilation steps required. The project is ready to be copied to any web server with PHP and MySQL.
 
