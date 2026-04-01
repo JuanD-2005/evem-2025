@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -508,6 +508,10 @@
             padding: 24px 28px;
             margin-bottom: 16px;
             transition: background 0.2s;
+            /* Nuevas propiedades Flexbox */
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
 
         .schedule-item:hover { background: rgba(255,255,255,0.08); }
@@ -522,6 +526,30 @@
             background: var(--blue);
             border-radius: 50%;
             box-shadow: 0 0 0 3px rgba(14,165,233,0.25);
+        }
+
+        .speaker-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(14,165,233,0.4);
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .speaker-name {
+            color: #bae6fd;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .schedule-meta {
@@ -695,6 +723,7 @@
             .schedule-timeline { padding-left: 28px; }
             .schedule-timeline::before { left: 11px; }
             .schedule-item::before { left: -25px; }
+            .schedule-item { flex-direction: column; gap: 16px; }
         }
     </style>
 </head>
@@ -825,43 +854,79 @@
         </div>
     </section>
 
-    <!-- ─── PROGRAMA ─── -->
     <section class="schedule-section" id="programa">
         <div class="container">
             <span class="section-label">Cronograma</span>
             <h2 class="section-title">Programa de Conferencias</h2>
 
             <div class="schedule-timeline">
+                
                 <div class="schedule-item reveal">
-                    <div class="schedule-meta">
-                        <span class="schedule-date">Miércoles 09 Jul · Auditorio A</span>
-                        <span class="schedule-time">9:30 am</span>
+                    <img src="../assets/images/ponente1.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="speaker-avatar" style="display:none;">👤</div>
+                    
+                    <div>
+                        <div class="schedule-meta">
+                            <span class="schedule-date">Jueves 10 Jul · Auditorio A</span>
+                            <span class="schedule-time">9:30 am - 10:30 am</span>
+                        </div>
+                        <h4>Robótica educativa: una respuesta para todos</h4>
+                        <div class="speaker-name">👨‍🏫 Dr. Carlos Mendoza</div>
+                        <p>Exploración de la robótica como herramienta pedagógica inclusiva en el aula moderna.</p>
                     </div>
-                    <h4>Robótica educativa: una respuesta para todos</h4>
-                    <p>Exploración de la robótica como herramienta pedagógica inclusiva en el aula moderna.</p>
                 </div>
+
                 <div class="schedule-item reveal" style="transition-delay: 0.1s">
-                    <div class="schedule-meta">
-                        <span class="schedule-date">Miércoles 09 Jul · Auditorio A</span>
-                        <span class="schedule-time">10:45 am</span>
+                    <img src="../assets/images/ponente2.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="speaker-avatar" style="display:none;">👤</div>
+
+                    <div>
+                        <div class="schedule-meta">
+                            <span class="schedule-date">Jueves 10 Jul · Auditorio A</span>
+                            <span class="schedule-time">10:45 am - 11:45 am</span>
+                        </div>
+                        <h4>NARBED: Una Experiencia que Transforma la Enseñanza</h4>
+                        <div class="speaker-name">👩‍🏫 Profa. María Fernanda López</div>
+                        <p>Metodología innovadora para el aprendizaje basado en experiencias educativas reales.</p>
                     </div>
-                    <h4>NARBED: Una Experiencia que Transforma la Enseñanza</h4>
-                    <p>Metodología innovadora para el aprendizaje basado en experiencias educativas reales.</p>
                 </div>
+
                 <div class="schedule-item reveal" style="transition-delay: 0.2s">
-                    <div class="schedule-meta">
-                        <span class="schedule-date">Jueves 10 Jul · Auditorio A</span>
-                        <span class="schedule-time">9:30 am</span>
+                    <img src="../assets/images/ponente3.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="speaker-avatar" style="display:none;">👤</div>
+
+                    <div>
+                        <div class="schedule-meta">
+                            <span class="schedule-date">Viernes 11 Jul · Auditorio A</span>
+                            <span class="schedule-time">9:30 am - 10:30 am</span>
+                        </div>
+                        <h4>Realidad Aumentada: Transformando la Enseñanza de las Ciencias</h4>
+                        <div class="speaker-name">👨‍💻 Ing. Roberto Silva</div>
+                        <p>Aplicaciones de AR en laboratorios virtuales y visualización de fenómenos científicos complejos.</p>
                     </div>
-                    <h4>Realidad Aumentada: Transformando la Enseñanza de las Ciencias</h4>
-                    <p>Aplicaciones de AR en laboratorios virtuales y visualización de fenómenos científicos complejos.</p>
                 </div>
+
+                <div class="schedule-item reveal" style="transition-delay: 0.3s">
+                    <img src="../assets/images/ponente4.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="speaker-avatar" style="display:none;">👤</div>
+
+                    <div>
+                        <div class="schedule-meta">
+                            <span class="schedule-date">Viernes 11 Jul · Auditorio A</span>
+                            <span class="schedule-time">10:45 am - 12:00 m</span>
+                        </div>
+                        <h4>Inteligencia Artificial en el Aula de Clases</h4>
+                        <div class="speaker-name">👩‍🔬 Dra. Elena Rodríguez</div>
+                        <p>Cómo integrar herramientas de IA para potenciar el análisis de datos en proyectos estudiantiles.</p>
+                    </div>
+                </div>
+
             </div>
 
             <div class="expo-box reveal">
                 <div>
                     <h4>🗂 Expo-Festival de Proyectos</h4>
-                    <p>Miércoles y Jueves · 9:00 am a 12:00 m</p>
+                    <p>Jueves y Viernes · 9:00 am a 12:00 m</p>
                 </div>
                 <div style="text-align: right;">
                     <p style="color: #7dd3fc; font-weight: 600;">Hall de la Biblioteca UNET</p>
