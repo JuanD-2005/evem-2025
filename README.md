@@ -9,7 +9,7 @@
   <p><strong>Portal web y sistema de gestión integral para la XXVIII Escuela Venezolana para la Enseñanza de la Matemática y el Día Internacional de las Matemáticas</strong></p>
 
   <a href="https://evem.unet.edu.ve/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/🌐_Ver_demo-000000?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Ver demo" />
+    <img src="https://img.shields.io/badge/🌐_Web_oficial_EVEM_2026_-_San_Crist%C3%B3bal-000000?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Web oficial EVEM 2026 - San Cristóbal" />
   </a>
 </div>
 
