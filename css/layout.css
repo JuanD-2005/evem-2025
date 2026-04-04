@@ -530,6 +530,80 @@ html {
     transform: scale(1.1);
 }
 
+/* ==========================================
+   EFECTO ESPECIAL: LOGO CEDIC INTERACTIVO
+   ========================================== */
+
+.cedic-interactive-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* El latido constante (respiración cuántica) */
+.cedic-special {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    animation: cedicPulse 2s infinite alternate;
+}
+
+/* El efecto al pasar el mouse: se encoge y rota un poco */
+.cedic-interactive-link:hover .cedic-special {
+    transform: scale(0.85) rotate(-5deg) !important;
+    filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.9));
+    animation: none; /* Pausa el latido para hacer el encogimiento */
+}
+
+/* El globito de texto (Tooltip) OCULTO POR DEFECTO */
+.cedic-tooltip {
+    position: absolute;
+    bottom: -40px;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+
+    /* ESTO LO HACE INVISIBLE */
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+/* La colita del globo de texto */
+.cedic-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: #0ea5e9;
+}
+
+/* APARECE el globito SOLO al pasar el mouse */
+.cedic-interactive-link:hover .cedic-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Animación de latido suave */
+@keyframes cedicPulse {
+    0% { filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.3)); transform: scale(1); }
+    100% { filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.8)); transform: scale(1.05); }
+}
+
 /* Contenedor del carrusel de fondos */
 .hero-carousel {
     position: absolute;

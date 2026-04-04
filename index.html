@@ -12,6 +12,62 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .cedic-interactive-link {
+            position: relative !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+        }
+        .cedic-special {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            animation: cedicPulse 2s infinite alternate !important;
+        }
+        .cedic-interactive-link:hover .cedic-special {
+            transform: scale(0.85) rotate(-5deg) !important;
+            filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.9)) !important;
+            animation: none !important;
+        }
+        .cedic-tooltip {
+            position: absolute !important;
+            bottom: -40px !important;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+            color: white !important;
+            padding: 6px 14px !important;
+            border-radius: 20px !important;
+            font-size: 0.75rem !important;
+            font-weight: bold !important;
+            white-space: nowrap !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-10px) !important;
+            transition: all 0.3s ease !important;
+            pointer-events: none !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            z-index: 10 !important;
+        }
+        .cedic-tooltip::before {
+            content: '' !important;
+            position: absolute !important;
+            top: -4px !important;
+            left: 50% !important;
+            transform: translateX(-50%) rotate(45deg) !important;
+            width: 8px !important;
+            height: 8px !important;
+            background: #0ea5e9 !important;
+        }
+        .cedic-interactive-link:hover .cedic-tooltip {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+        }
+        @keyframes cedicPulse {
+            0% { filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.3)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.8)); transform: scale(1.05); }
+        }
+    </style>
 </head>
 <body>
     <header class="top-bar">
@@ -59,7 +115,10 @@
                 <img src="assets/images/logoPostgrado.png" alt="Postgrado UNET" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
                 
                 <img src="assets/images/ula-logo.png" alt="ULA" class="partner-logo" style="height: 65px; object-fit: contain;">
-                <img src="assets/images/cedic-Sinfondo.png" alt="CEDIC" class="partner-logo" style="height: 65px; object-fit: contain;">
+                <a href="pages/festival.html" class="cedic-interactive-link">
+                    <img src="assets/images/cedic-Sinfondo.png" alt="CEDIC" class="partner-logo cedic-special" style="height: 65px; object-fit: contain;">
+                    <span class="cedic-tooltip">¡Ir al Festival! 🚀</span>
+                </a>
                 
                 <img src="assets/images/DiaPi.png" alt="DIM" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
                 
