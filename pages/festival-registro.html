@@ -115,25 +115,37 @@
             color: white;
         }
 
-        /* ─── PAGE LAYOUT ─── */
+        /* ─── PAGE LAYOUT (DESKTOP) ─── */
         .page-layout {
+            display: flex; /* Cambiamos a Flexbox para control total */
+            width: 100%;
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 520px;
             padding-top: 64px;
         }
 
-        /* ─── LEFT PANEL ─── */
+        /* ─── LEFT PANEL (INFO) ─── */
         .info-panel {
+            width: 50%; /* Mitad exacta de la pantalla */
             background: linear-gradient(160deg, #0c4a6e 0%, #0369a1 50%, #075985 100%);
-            padding: 64px 56px;
-            position: sticky;
+            padding: 60px 40px;
+
+            /* El truco mágico: Lo pegamos a la pared izquierda */
+            position: fixed !important; /* El !important anula tu style en línea del HTML */
             top: 64px;
-            height: calc(100vh - 64px);
-            overflow-y: auto;
+            bottom: 0;
+            left: 0;
+            height: calc(100vh - 64px) !important;
+
             display: flex;
             flex-direction: column;
+            align-items: center; /* Centra todo el bloque */
             justify-content: center;
+            overflow-y: auto;
+        }
+
+        .info-panel > div:last-child {
+            max-width: 480px; /* Evita que los textos se estiren al infinito */
+            width: 100%;
         }
 
         .info-panel-bg {
@@ -173,10 +185,12 @@
             margin-bottom: 20px;
         }
 
-        .info-panel > p {
-            color: rgba(255,255,255,0.6);
-            line-height: 1.75;
-            font-size: 1rem;
+        /* 1. Damos fuerza, color y peso al texto introductorio */
+        .info-panel > div > p:first-of-type {
+            color: rgba(255, 255, 255, 0.9) !important; /* Casi blanco puro para maximo contraste */
+            font-weight: 500; /* Le damos ese toque Bold/Medium */
+            font-size: 1.05rem;
+            line-height: 1.6;
             margin-bottom: 40px;
         }
 
@@ -222,24 +236,28 @@
             line-height: 1.5;
         }
 
+        /* 2. Añadimos el salto de línea al final de la caja de contacto */
         .info-contact {
             margin-top: 40px;
+            margin-bottom: 60px; /* ¡AQUI ESTA EL SALTO DE LINEA FINAL! Da respiro abajo */
             background: rgba(255,255,255,0.07);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 14px;
             padding: 20px 24px;
         }
 
+        /* 3. También hacemos más legible el texto de la caja de contacto */
         .info-contact h4 {
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             margin-bottom: 10px;
         }
 
         .info-contact p {
-            color: rgba(255,255,255,0.55);
-            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.85); /* Mas brillante */
+            font-weight: 500; /* Un poco mas de peso */
+            font-size: 0.85rem;
             line-height: 1.6;
         }
 
@@ -250,13 +268,24 @@
 
         /* ─── RIGHT PANEL (FORM) ─── */
         .form-panel {
+            width: 50%; /* La otra mitad */
+            margin-left: 50%; /* Empuja este panel hacia la derecha */
             background: var(--bg);
-            padding: 48px 40px;
-            overflow-y: auto;
+            padding: 60px 40px;
+            min-height: calc(100vh - 64px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra el formulario */
+        }
+
+        .form-header, .form-card {
+            width: 100%;
+            max-width: 520px; /* Evita que el formulario se vuelva inmanejable */
         }
 
         .form-header {
-            margin-bottom: 36px;
+            margin-bottom: 48px; /* ¡Aumentamos el espacio hacia abajo! (Antes era 36px) */
         }
 
         .form-header h2 {
@@ -265,12 +294,13 @@
             font-weight: 800;
             color: var(--navy);
             letter-spacing: -0.02em;
-            margin-bottom: 6px;
+            margin-bottom: 10px; /* Un poquito más de aire debajo del título */
         }
 
         .form-header p {
-            color: var(--slate-light);
-            font-size: 0.9rem;
+            color: var(--navy); /* Lo cambiamos de gris claro a azul oscuro/casi negro */
+            font-size: 0.95rem; /* Un pelín más grande */
+            font-weight: 600; /* ¡Aquí le damos el Bold/Negrita! */
         }
 
         .form-card {
@@ -447,25 +477,78 @@
             line-height: 1.5;
         }
 
-        /* ─── RESPONSIVE ─── */
+        /* ─── RESPONSIVE (CIRUGÍA MÓVIL DEFINITIVA) ─── */
         @media (max-width: 900px) {
+
+            /* 1. HEADER MÓVIL (Logo Centrado) */
+            .nav-inner {
+                padding: 0 15px;
+                height: 60px;
+                display: flex;
+                justify-content: center; /* Obliga al logo a estar en el medio */
+                align-items: center;
+                position: relative;
+            }
+
+            .nav-link {
+                position: absolute;
+                left: 15px; /* Pega la flecha a la pared izquierda */
+                font-size: 0;
+                padding: 8px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                gap: 0;
+            }
+            .nav-link svg { margin: 0; }
+            .nav-inner > span { display: none; } /* Esconde el texto de inscripciones para ahorrar espacio */
+
+            .central-logo-container {
+                position: relative !important;
+                transform: none !important;
+                left: 0 !important;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            }
+            .central-logo {
+                width: 26px !important;
+                margin-top: 0 !important;
+            }
+
+            /* 2. LAYOUT APILADO (Mata la Superposición) */
             .page-layout {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column; /* Apila el panel azul ARRIBA del formulario */
+                padding-top: 60px;
             }
+
             .info-panel {
-                position: static;
-                height: auto;
+                width: 100%;
+                position: relative !important; /* Destruye el 'fixed' del PC */
+                top: auto !important;
+                left: auto !important;
+                height: auto !important; /* Crece según el texto */
                 min-height: auto;
-                padding: 48px 32px;
+                padding: 50px 24px;
+                overflow: visible; /* Elimina el doble scroll molesto */
             }
-            .field-group.two-col {
-                grid-template-columns: 1fr;
-            }
+            .info-panel h1 { font-size: 2.2rem; }
+
             .form-panel {
-                padding: 32px 20px;
+                width: 100%;
+                margin-left: 0 !important; /* Destruye el empuje del PC */
+                padding: 40px 15px;
             }
-            .form-card {
-                padding: 28px 20px;
+            .form-card { padding: 30px 20px; }
+
+            .field-group.two-col {
+                grid-template-columns: 1fr; /* Apila los campos de Nombre e Institución */
             }
         }
     </style>
@@ -494,7 +577,7 @@
             <div style="position:relative;">
                 <span class="info-eyebrow">Festival de las Ciencias 2025</span>
                 <h1>Portal de<br>Inscripción</h1>
-                <p>Registra tu equipo y participa en la celebración científica más importante del año. Tu trabajo podría publicarse en la edición especial <em>Aleph Subcero</em>.</p>
+                <p>Registra tu equipo y participa en la celebración científica más importante del año. Tu trabajo podría publicarse en la edición especial <em>Aleph Subcero</em>.<br></p>
 
                 <div class="info-rules">
                     <div class="rule-item">

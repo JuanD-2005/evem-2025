@@ -127,6 +127,79 @@
         .error-note { background: var(--error-pale); border-radius: 10px; padding: 12px 16px; font-size: 0.82rem; color: #7f1d1d; margin-bottom: 24px; text-align: left; }
 
         .verify-footer { margin-top: 20px; text-align: center; font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+
+        /* ─── RESPONSIVE MÓVIL (CIRUGÍA PARA VALIDACIONES) ─── */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .verify-wrap {
+                max-width: 100%;
+            }
+
+            /* 1. Cabecera y Status Band (Apilado elegante) */
+            .institution-bar {
+                padding: 12px 16px;
+            }
+            .institution-bar .org {
+                font-size: 0.65rem; /* Evita que el nombre largo rompa la barra */
+            }
+            .status-band {
+                padding: 24px 16px;
+                flex-direction: column; /* Apilamos el check y el texto */
+                text-align: center;
+                gap: 16px;
+            }
+            .status-text h2 { font-size: 1.2rem; }
+            .status-icon { width: 54px; height: 54px; }
+            .status-icon svg { width: 24px; height: 24px; }
+
+            /* 2. Cuerpo del certificado (Reducción de espacios) */
+            .cert-body {
+                padding: 24px 16px;
+            }
+            .cert-logo {
+                height: 40px; /* Logo un poco más discreto en móvil */
+            }
+
+            /* 3. Filas de datos (Label arriba, Valor abajo para que no choquen) */
+            .data-row {
+                flex-direction: column; /* Pone el título arriba del texto */
+                gap: 4px;
+                padding: 12px 16px;
+            }
+            .data-label {
+                min-width: auto;
+                padding-top: 0;
+                font-size: 0.65rem;
+            }
+            .data-value {
+                font-size: 0.95rem;
+            }
+
+            /* 4. Caja de Hash / Verificación (Previene que el texto largo se salga) */
+            .verify-hash {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                position: relative;
+                padding: 14px 16px;
+            }
+            .verify-status-dot {
+                position: absolute;
+                top: 14px;
+                right: 16px;
+            }
+            .verify-hash .hash-value {
+                font-size: 0.65rem; /* Achica el código alfanumérico para que quepa */
+            }
+
+            /* 5. Pantalla de Errores */
+            .error-body {
+                padding: 24px 16px;
+            }
+        }
     </style>
 </head>
 <body>
