@@ -6,7 +6,7 @@ class Navigation {
         this.navMobileMenu = document.querySelector('.nav-mobile-menu');
         this.navButtons = document.querySelectorAll('.nav-button, .nav-mobile-link');
         this.navbar = document.querySelector('.navbar');
-        
+
         this.init();
     }
 
@@ -48,10 +48,10 @@ class Navigation {
 
     toggleMenu() {
         if (!this.navMobileMenu) return;
-        
+
         this.navMobileMenu.classList.toggle('active');
-        this.navToggle.classList.toggle('active');
-        
+        this.navToggle?.classList.toggle('active');
+
         // Prevenir scroll cuando el menú está abierto
         if (this.navMobileMenu.classList.contains('active')) {
             document.body.style.overflow = 'hidden';
@@ -62,9 +62,9 @@ class Navigation {
 
     closeMenu() {
         if (!this.navMobileMenu) return;
-        
+
         this.navMobileMenu.classList.remove('active');
-        this.navToggle.classList.remove('active');
+        this.navToggle?.classList.remove('active');
         document.body.style.overflow = '';
     }
 
@@ -74,7 +74,7 @@ class Navigation {
             const href = link.getAttribute('href');
             
             // Solo aplicar a anchors internos
-            if (href && href.startsWith('#')) {
+            if (href?.startsWith('#')) {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const targetId = href.substring(1);
@@ -96,50 +96,77 @@ class Navigation {
 
     // Enlaces activos según scroll
     setupActiveLinks() {
+        // 1. Lógica original para el scroll de las secciones (Quiénes somos, Comité)
         const sections = document.querySelectorAll('section[id]');
-        
-        const observerOptions = {
-            rootMargin: '-100px 0px -66%',
-            threshold: 0
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    this.setActiveLink(id);
+                    this.setActiveLink(entry.target.getAttribute('id'));
                 }
             });
-        }, observerOptions);
+        }, { rootMargin: '-100px 0px -66%', threshold: 0 });
 
         sections.forEach(section => observer.observe(section));
+
+        // 2. NUEVA MAGIA: Auto-detectar la página actual para los botones móviles
+        const currentPath = window.location.pathname; // Ej: /pages/courses.html
+
+        this.navButtons.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // Extraemos solo el nombre del archivo (ej: 'courses.html')
+            const fileName = href.split('/').pop();
+
+            // Si la URL del navegador contiene el nombre del archivo de este botón...
+            if (fileName && fileName !== 'index.html' && currentPath.includes(fileName)) {
+                link.classList.add('active-page'); // Lo dejamos encendido
+            }
+            // Regla especial para el inicio
+            else if ((currentPath.endsWith('/') || currentPath.endsWith('index.html')) && href.includes('index.html')) {
+                // Opcional: Puedes encender la casita (Comité) si estás en el index
+                if (href.includes('#comite')) {
+                    link.classList.add('active-page');
+                }
+            }
+        });
     }
 
     setActiveLink(id) {
         this.navButtons.forEach(link => {
-            if (link.getAttribute('href') === `#${id}`) {
+            const href = link.getAttribute('href');
+
+            // Guard: solo tocamos .style si existe el enlace y apunta a un anchor
+            if (!href) return;
+
+            if (href === `#${id}`) {
                 link.style.borderBottomColor = 'var(--color-secondary)';
-            } else if (link.getAttribute('href')?.startsWith('#')) {
-                link.style.borderBottomColor = 'transparent';
+                return;
             }
+
+            if (href.startsWith('#')) {
+                link.style.borderBottomColor = 'transparent';
+                return;
+            }
+
+            link.style.borderBottomColor = '';
         });
     }
 
     // Navbar con sombra al hacer scroll
     setupStickyNavbar() {
-        let lastScroll = 0;
-        
+        // Guard principal: si no hay navbar en esta página, salimos
+        if (!this.navbar) return;
+
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
-            
+
             // Agregar/quitar sombra
             if (currentScroll > 10) {
                 this.navbar.style.boxShadow = 'var(--shadow-lg)';
             } else {
                 this.navbar.style.boxShadow = 'var(--shadow-md)';
             }
-            
-            lastScroll = currentScroll;
         });
     }
 }
@@ -147,8 +174,8 @@ class Navigation {
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new Navigation();
+        globalThis.__navigationInstance = new Navigation();
     });
 } else {
-    new Navigation();
+    globalThis.__navigationInstance = new Navigation();
 }
