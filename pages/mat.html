@@ -503,12 +503,100 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 900px) {
+
+            /* 1. HEADER APP-STYLE */
+            .nav-inner {
+                padding: 0 12px;
+                height: 60px;
+            }
+
+            /* Botón de Inicio: Ocultamos el texto "Inicio" y dejamos solo la flecha */
+            .nav-link {
+                font-size: 0;
+                padding: 8px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50%;
+                gap: 0;
+            }
+            .nav-link svg { margin: 0; }
+
+            /* Logo Central: Adiós a la gota gigante, hola círculo compacto */
+            .central-logo-container {
+                position: relative;
+                transform: none;
+                left: 0;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                padding: 0;
+                margin: 0;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .central-logo {
+                width: 28px;
+                margin-top: 0 !important; /* Quitamos el empuje manual */
+            }
+
+            /* Botón derecho: Píldora más compacta */
+            .nav-badge {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+                letter-spacing: 0;
+            }
+
+            /* 2. HERO SECTION */
+            .hero {
+                min-height: auto;
+                padding: 120px 15px 50px;
+            }
+            .hero-eyebrow {
+                font-size: 0.65rem;
+                padding: 4px 12px;
+                margin-bottom: 24px;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+                margin-bottom: 16px;
+            }
+            .hero-sub {
+                font-size: 0.95rem;
+                margin-bottom: 30px;
+                padding: 0 10px;
+            }
+
+            /* 3. LAYOUT GENERAL (Sidebar y Contenido) */
             .page-body {
                 grid-template-columns: 1fr;
-                padding-top: 40px;
+                padding: 40px 15px;
+                gap: 32px;
             }
-            .sidebar { position: static; }
-            .hero-title { font-size: 2.4rem; }
+            .sidebar {
+                position: static;
+            }
+
+            /* 4. TARJETAS Y CARRUSELES */
+            .article-header {
+                padding: 24px 20px 0;
+            }
+            .article-header h2 {
+                font-size: 1.5rem;
+            }
+            .article-logo {
+                height: 40px;
+            }
+            .carousel-wrap {
+                height: 250px; /* Carrusel más bajo para que no ocupe toda la pantalla del cel */
+            }
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            .carousel-btn.prev { left: 10px; }
+            .carousel-btn.next { right: 10px; }
         }
     </style>
 </head>
