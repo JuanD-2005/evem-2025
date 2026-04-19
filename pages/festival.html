@@ -896,6 +896,7 @@
             <div class="hero-actions">
                 <a href="#inscripcion" class="btn-primary">Registrar mi equipo</a>
                 <a href="#programa" class="btn-ghost">Ver programa →</a>
+                <button onclick="abrirAfiche()" class="btn-ghost" style="border-color: #38bdf8; color: #38bdf8; cursor: pointer;">🖼️ Ver Afiche</button>
             </div>
         </div>
 
@@ -1103,7 +1104,60 @@
         </div>
     </div>
 
+    <div id="aficheModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s ease;">
+        <div style="position: relative; text-align: center; max-width: 90vw; max-height: 90vh; animation: slideUp 0.4s ease-out forwards;">
+            <button onclick="cerrarAfiche()" style="position: absolute; top: -40px; right: -10px; background: none; border: none; color: white; font-size: 2.5rem; cursor: pointer; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">&times;</button>
+            <img src="../assets/images/afiche-festival.jpeg" alt="Afiche del Festival" style="max-width: 100%; max-height: 75vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); object-fit: contain;">
+            <div style="margin-top: 20px;">
+                <a href="../assets/images/afiche-festival.jpeg" download="Afiche_Festival_Ciencias_UNET.jpeg" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; font-size: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                    📥 Descargar Afiche Oficial
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes slideUp {
+            from { transform: translateY(30px); }
+            to { transform: translateY(0); }
+        }
+    </style>
+
     <script>
+        // Funciones para abrir y cerrar el Modal del Afiche
+        const modalAfiche = document.getElementById('aficheModal');
+
+        function abrirAfiche() {
+            modalAfiche.style.display = 'flex';
+            // Pequeno truco para que la transicion de opacidad funcione
+            setTimeout(() => { modalAfiche.style.opacity = '1'; }, 10);
+            document.body.style.overflow = 'hidden'; // Evita que se pueda scrollear el fondo
+        }
+
+        function cerrarAfiche() {
+            modalAfiche.style.opacity = '0';
+            setTimeout(() => {
+                modalAfiche.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Devuelve el scroll al body
+            }, 300);
+        }
+
+        // Cierra el modal si el usuario hace clic afuera de la imagen
+        modalAfiche.addEventListener('click', function(e) {
+            if (e.target === this) { cerrarAfiche(); }
+        });
+
+        // MAGIA: Abrir automaticamente 1 segundo despues de cargar la pagina
+        window.addEventListener('DOMContentLoaded', () => {
+            // Opcional: Puedes usar sessionStorage para que solo salga la PRIMERA vez que entran
+            if (!sessionStorage.getItem('aficheVisto')) {
+                setTimeout(() => {
+                    abrirAfiche();
+                    sessionStorage.setItem('aficheVisto', 'true');
+                }, 1000); // 1000ms = 1 segundo de retraso
+            }
+        });
+
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
