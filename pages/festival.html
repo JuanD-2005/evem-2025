@@ -716,6 +716,43 @@
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
+        /* ─── ESTRATEGIA: LEER MÁS (PONENCIAS) ─── */
+        .bio-text {
+            color: rgba(255,255,255,0.6) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            margin-bottom: 8px !important;
+            /* Transición suave al expandir */
+            transition: all 0.3s ease;
+        }
+
+        .bio-text.collapsed {
+            display: -webkit-box;
+            line-clamp: 2;
+            -webkit-line-clamp: 2; /* Muestra solo 2 líneas por defecto */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn-read-more {
+            background: none;
+            border: none;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .btn-read-more:hover {
+            color: #bae6fd;
+            text-decoration: underline;
+        }
+
         /* ─── CAMPO DE FUERZA (DESKTOP) ─── */
         /* Evita que el texto del Hero suba demasiado y choque con el logo */
         .hero {
@@ -889,7 +926,7 @@
             <h1 class="hero-title">Festival de<br>las Ciencias</h1>
             <p class="hero-subtitle">Una experiencia que transforma la forma de ver el universo</p>
             <div class="hero-meta">
-                <span class="meta-pill">📅 09 y 10 de Julio, 2025</span>
+                <span class="meta-pill">📅 28 y 29 de mayo, 2026</span>
                 <span class="meta-pill">📍 UNET, San Cristóbal</span>
                 <span class="meta-pill">🎓 Edición Especial Aleph Subcero</span>
             </div>
@@ -985,72 +1022,79 @@
     </section>
 
     <section class="schedule-section" id="programa">
-        <div class="container">
-            <span class="section-label">Cronograma</span>
-            <h2 class="section-title">Programa de Conferencias</h2>
+    <div class="container">
+        <span class="section-label">Cronograma</span>
+        <h2 class="section-title">Programa de Conferencias</h2>
 
-            <div class="schedule-timeline">
+        <div class="schedule-timeline">
+            
+            <div class="schedule-item reveal">
+                <img src="../assets/images/lorenaConf.png" alt="Dra. Erika Blanco" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="speaker-avatar" style="display:none;">👤</div>
                 
-                <div class="schedule-item reveal">
-                    <img src="../assets/images/ponente1.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="speaker-avatar" style="display:none;">👤</div>
-                    
-                    <div>
-                        <div class="schedule-meta">
-                            <span class="schedule-date">Jueves 10 Jul · Auditorio A</span>
-                            <span class="schedule-time">9:30 am - 10:30 am</span>
-                        </div>
-                        <h4>Robótica educativa: una respuesta para todos</h4>
-                        <div class="speaker-name">👨‍🏫 Dr. Carlos Mendoza</div>
-                        <p>Exploración de la robótica como herramienta pedagógica inclusiva en el aula moderna.</p>
+                <div>
+                    <div class="schedule-meta">
+                        <span class="schedule-date">Jueves 28 May · Auditorio B</span>
+                        <span class="schedule-time">9:30 am - 10:30 am</span>
+                    </div>
+                    <h4>Biología 360°: Un recorrido por las fronteras de la vida y la innovación biotecnológica.</h4>
+                    <div class="speaker-name">👨‍🏫 Dra. Erika L. Blanco Carrero</div>
+                    <div class="speaker-bio">
+                        <p class="bio-text collapsed">Biólogo y Doctora en Ecología Tropical con Maestría en Agronomía (Mención Producción Vegetal). Galardonada con el Premio Nacional de Ciencia y Tecnología (Mención Investigador Novel, 2018). La Dra. Blanco se especializa en biotecnología agrícola orientada a la seguridad y soberanía alimentaria sostenible. Su labor investigativa destaca por la aplicación estratégica de bioinoculantes, específicamente Rizobacterias Promotoras del Crecimiento Vegetal (PGPR) nativas de la región andina venezolana. Con un enfoque integral agroecosistémico, ha demostrado que la inoculación microbiana no solo optimiza el rendimiento, sino que mejora significativamente las propiedades microbiológicas y enzimáticas del suelo, incluso en condiciones críticas de déficit hídrico. Sus contribuciones ofrecen soluciones escalables para la restauración de suelos y la resiliencia ambiental en el marco de una agricultura sustentable.</p>
+                        <button class="btn-read-more" onclick="toggleBio(this)">Leer biografía completa ↓</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="schedule-item reveal" style="transition-delay: 0.1s">
-                    <img src="../assets/images/ponente2.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="speaker-avatar" style="display:none;">👤</div>
+            <div class="schedule-item reveal" style="transition-delay: 0.1s">
+                <img src="../assets/images/ReTFIMA2.png" alt="RETFIMAT" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="speaker-avatar" style="display:none;">👤</div>
 
-                    <div>
-                        <div class="schedule-meta">
-                            <span class="schedule-date">Jueves 10 Jul · Auditorio A</span>
-                            <span class="schedule-time">10:45 am - 11:45 am</span>
-                        </div>
-                        <h4>NARBED: Una Experiencia que Transforma la Enseñanza</h4>
-                        <div class="speaker-name">👩‍🏫 Profa. María Fernanda López</div>
-                        <p>Metodología innovadora para el aprendizaje basado en experiencias educativas reales.</p>
+                <div>
+                    <div class="schedule-meta">
+                        <span class="schedule-date">Jueves 28 May · Auditorio B</span>
+                        <span class="schedule-time">10:45 am - 11:45 am</span>
+                    </div>
+                    <h4>Continuación: Exposicion de proyectos y lanzamiento oficial de RETFIMAT</h4>
+                    <div class="speaker-name">🏫 Red Tachirense de Física y Matemática (RETFIMAT)</div>
+                    <div class="speaker-bio">
+                        <p class="bio-text collapsed">RETFIMAT nace como una plataforma de vanguardia diseñada para interconectar a docentes, investigadores y estudiantes apasionados por las ciencias. Su propósito fundamental es elevar el estándar de la enseñanza de la física y la matemática en el estado Táchira. En este sentido, el Centro de Enseñanza y Divulgación de las Ciencias (CEDIC) asume la dirección estratégica de esta integración, funcionando como el nodo central que proporciona recursos pedagógicos, formación continua y apoyo para que los Centros de Ciencias de las instituciones educativas desarrollen sus actividades científicas de forma estructurada.</p>
+                        <button class="btn-read-more" onclick="toggleBio(this)">Leer más detalles ↓</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="schedule-item reveal" style="transition-delay: 0.2s">
-                    <img src="../assets/images/ponente3.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="speaker-avatar" style="display:none;">👤</div>
+            <div class="schedule-item reveal" style="transition-delay: 0.2s">
+                <img src="../assets/images/marceyConf.png" alt="Dr. Marcey García" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="speaker-avatar" style="display:none;">👤</div>
 
-                    <div>
-                        <div class="schedule-meta">
-                            <span class="schedule-date">Viernes 11 Jul · Auditorio A</span>
-                            <span class="schedule-time">9:30 am - 10:30 am</span>
-                        </div>
-                        <h4>Realidad Aumentada: Transformando la Enseñanza de las Ciencias</h4>
-                        <div class="speaker-name">👨‍💻 Ing. Roberto Silva</div>
-                        <p>Aplicaciones de AR en laboratorios virtuales y visualización de fenómenos científicos complejos.</p>
+                <div>
+                    <div class="schedule-meta">
+                        <span class="schedule-date">Viernes 29 May · Auditorio B</span>
+                        <span class="schedule-time">9:30 am - 10:30 am</span>
+                    </div>
+                    <h4>La Robótica como eje integrador: Evolución de las competencias transversales en el itinerario académico.</h4>
+                    <div class="speaker-name">👨‍💻 Dr. Marcey García</div>
+                    <div class="speaker-bio">
+                        <p class="bio-text collapsed">Es Ingeniero Mecánico con una Maestría en Ingeniería Electrónica por la UNET y un Doctorado en Ingeniería Mecatrónica por la Universidad de Málaga, España. Adscrito al Núcleo de Diseño Mecánico del Departamento de Ingeniería Mecánica, actualmente ejerce como profesor en las áreas de Diseño Mecánico, Dibujo de Elementos de Máquinas y Robótica. También trabaja como profesor asesor y evaluador en el máster de Inteligencia Artificial, por la Universidad Internacional de Valencia (España). Fue el organizador principal de dos (02) competencias tachirenses de robótica (TachiBots) desarrolladas en los años 2024 y 2025. Es también el responsable del Laboratorio de Prototipos de la UNET, donde ha dirigido numerosos proyectos de investigación y trabajos de grado, entre los que destaca el desarrollo del robot Lázaro. Su trayectoria incluye 48 publicaciones en revistas y congresos, con 12 artículos indexados en el JCR. Sus principales líneas de investigación abarcan la robótica móvil, la navegabilidad, las aplicaciones de inteligencia artificial en robótica y el diseño mecánico, con un enfoque particular en el desarrollo de estructuras para robots.</p>
+                        <button class="btn-read-more" onclick="toggleBio(this)">Leer biografía completa ↓</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="schedule-item reveal" style="transition-delay: 0.3s">
-                    <img src="../assets/images/ponente4.jpg" alt="Ponente" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="speaker-avatar" style="display:none;">👤</div>
+            <div class="schedule-item reveal" style="transition-delay: 0.3s">
+                <img src="../assets/images/ponente4.jpg" alt="Estudiantes" class="speaker-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="speaker-avatar" style="display:none;">👤</div>
 
-                    <div>
-                        <div class="schedule-meta">
-                            <span class="schedule-date">Viernes 11 Jul · Auditorio A</span>
-                            <span class="schedule-time">10:45 am - 12:00 m</span>
-                        </div>
-                        <h4>Inteligencia Artificial en el Aula de Clases</h4>
-                        <div class="speaker-name">👩‍🔬 Dra. Elena Rodríguez</div>
-                        <p>Cómo integrar herramientas de IA para potenciar el análisis de datos en proyectos estudiantiles.</p>
+                <div>
+                    <div class="schedule-meta">
+                        <span class="schedule-date">Viernes 29 May · Auditorio B</span>
+                        <span class="schedule-time">10:45 am - 12:00 m</span>
                     </div>
+                    <h4>Foro: La Ciencia desde Nuestras Voces</h4>
+                    <div class="speaker-name">👩‍🔬 Estudiantes de media general</div>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Percepciones estudiantiles en el aprendizaje científico.</p>
                 </div>
-
             </div>
 
             <div class="expo-box reveal">
@@ -1063,8 +1107,10 @@
                     <p>Ambos días del evento</p>
                 </div>
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- ─── COMITÉ ─── -->
     <section class="section">
@@ -1089,7 +1135,7 @@
         <div style="background: white; padding: 50px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 60px; text-align: center; border-top: 5px solid #0ea5e9;">
             <h2 style="color: #0284c7; margin-bottom: 15px; font-size: 2.5rem;">¿Listos para participar?</h2>
             <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Inscripciones habilitadas a partir del 27 de mayo de 2025. Los certificados estaran disponibles al culminar el evento.
+                Inscripciones habilitadas para la edición 2026. Los certificados estarán disponibles al culminar el evento.
             </p>
 
             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
@@ -1166,6 +1212,19 @@
                 }
             });
         }, { threshold: 0.08 });
+
+        // Lógica para Expandir/Contraer las biografías del Cronograma
+        function toggleBio(btn) {
+            const bioText = btn.previousElementSibling;
+
+            if (bioText.classList.contains('collapsed')) {
+                bioText.classList.remove('collapsed');
+                btn.innerHTML = 'Ver menos ↑';
+            } else {
+                bioText.classList.add('collapsed');
+                btn.innerHTML = 'Leer biografía completa ↓';
+            }
+        }
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
