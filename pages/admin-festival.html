@@ -312,9 +312,19 @@
 
         .btn-action.approve { background: var(--success-pale); color: var(--success-text); }
         .btn-action.approve:hover { background: #bbf7d0; transform: translateY(-1px); }
-
         .btn-action.revoke { background: var(--danger-pale); color: var(--danger-text); }
         .btn-action.revoke:hover { background: #fecaca; transform: translateY(-1px); }
+        .btn-action.delete { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
+        .btn-action.delete:hover { background: #ffe4e6; transform: translateY(-1px); }
+
+        .action-group { display: flex; align-items: center; gap: 6px; }
+
+        .btn-export { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--accent); color: white; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.18s; }
+        .btn-export:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(2,132,199,0.25); }
+        .btn-export svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+        .results-count { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+        .topbar-logo { height: 28px; width: auto; opacity: 0.9; filter: brightness(0) invert(1); margin-right: 4px; }
 
         /* ─── EMPTY / LOADER ─── */
         .table-state {
@@ -348,6 +358,7 @@
     <div id="adminWrapper" style="display:none;">
         <nav class="topbar">
             <div class="topbar-left">
+                <img src="../assets/images/unet-logo.png" alt="UNET" class="topbar-logo">
                 <div class="topbar-event-dot"></div>
                 <span class="topbar-title">Festival de las Ciencias</span>
                 <span class="topbar-subtitle">CEDIC · UNET</span>
@@ -389,10 +400,19 @@
             <!-- TABLE -->
             <div class="table-card">
                 <div class="table-toolbar">
-                    <h3>Registro de equipos</h3>
-                    <div class="search-wrap">
-                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                        <input class="search-input" type="text" id="searchInput" placeholder="Buscar equipo o institución...">
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <h3>Registro de equipos</h3>
+                        <span class="results-count" id="resultsCount"></span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <div class="search-wrap">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input class="search-input" type="text" id="searchInput" placeholder="Buscar equipo o institución...">
+                        </div>
+                        <button class="btn-export" onclick="exportCSV()">
+                            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Exportar CSV
+                        </button>
                     </div>
                 </div>
                 <div style="overflow-x:auto;">
@@ -404,7 +424,7 @@
                                 <th>Área</th>
                                 <th>Integrantes</th>
                                 <th>Estado</th>
-                                <th>Acción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -460,6 +480,46 @@
             ));
         });
 
+        async function deleteTeam(teamId, teamName) {
+            const { isConfirmed } = await Swal.fire({
+                title: '¿Eliminar equipo?',
+                html: `<p style="color:#475569;font-size:0.9rem;">Esta acción es <strong>permanente</strong> y no se puede deshacer.</p><p style="margin-top:8px;color:#0f172a;font-weight:600;">${teamName}</p>`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
+            if (isConfirmed) {
+                try {
+                    await fetch('../backend/api.php?action=delete_festival_team', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: teamId })
+                    });
+                    await loadTeams();
+                    Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Equipo eliminado', showConfirmButton: false, timer: 1500 });
+                } catch {
+                    Swal.fire('Error', 'No se pudo eliminar el equipo.', 'error');
+                }
+            }
+        }
+
+        function exportCSV() {
+            if (!allTeams.length) return;
+            const headers = ['Equipo', 'Institución', 'Área', 'Integrantes', 'Estado'];
+            const rows = allTeams.map(t => [
+                t.team_name, t.institution, t.area, t.members,
+                t.status == 1 ? 'Aprobado' : 'Pendiente'
+            ]);
+            const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = `festival-equipos-${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+        }
+
         async function loadTeams() {
             const tbody = document.getElementById('tableBody');
             try {
@@ -481,6 +541,8 @@
 
         function renderTable(teams) {
             const tbody = document.getElementById('tableBody');
+            const countEl = document.getElementById('resultsCount');
+            if (countEl) countEl.textContent = teams.length ? `${teams.length} resultado${teams.length !== 1 ? 's' : ''}` : '';
             if (!teams.length) {
                 tbody.innerHTML = `<tr><td colspan="6" class="table-state">No se encontraron equipos.</td></tr>`;
                 return;
@@ -500,10 +562,16 @@
                             </span>
                         </td>
                         <td>
-                            <button class="btn-action ${isPaid ? 'revoke' : 'approve'}"
-                                onclick="toggleStatus(${team.id}, ${isPaid ? 0 : 1}, '${team.team_name.replace(/'/g,"\\'")}')">
-                                ${isPaid ? 'Revocar' : 'Aprobar'}
-                            </button>
+                            <div class="action-group">
+                                <button class="btn-action ${isPaid ? 'revoke' : 'approve'}"
+                                    onclick="toggleStatus(${team.id}, ${isPaid ? 0 : 1}, '${team.team_name.replace(/'/g,"\\'")}')">
+                                    ${isPaid ? 'Revocar' : 'Aprobar'}
+                                </button>
+                                <button class="btn-action delete"
+                                    onclick="deleteTeam(${team.id}, '${team.team_name.replace(/'/g,"\\'")}')">
+                                    Eliminar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
