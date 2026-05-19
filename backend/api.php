@@ -495,6 +495,22 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_festival_cert
     exit();
 }
 
+// --- RUTA: OBTENER POSTERS PARA LA PÁGINA PÚBLICA ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_posters') {
+    try {
+        // Buscamos en 'participants' y usamos los nombres reales de las columnas
+        $stmt = $conn->query("SELECT full_name, institution, poster_title, poster_abstract FROM participants WHERE participation_type = 'poster' ORDER BY id DESC");
+        $posters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        http_response_code(200);
+        echo json_encode($posters);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al obtener los posters."]);
+    }
+    exit();
+}
+
 // --- RUTA: OBTENER IMAGENES DINAMICAS PARA CARRUSELES ---
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_carousel_images') {
     $folder = isset($_GET['folder']) ? $_GET['folder'] : '';
@@ -522,6 +538,77 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_carousel_images
         echo json_encode(["error" => "Carpeta no permitida"]);
     }
     exit();
+}
+
+// ==========================================
+// RUTAS DE ELIMINACIÓN (ADMIN)
+// ==========================================
+
+// --- RUTA: ELIMINAR PARTICIPANTE EVEM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete_evem_participant') {
+    $data = json_decode(file_get_contents("php://input"));
+    if (!isset($data->id)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Falta el ID del participante"]);
+        exit();
+    }
+    try {
+        // Primero obtenemos el curso para decrementar el cupo
+        $getUser = $conn->prepare("SELECT course_preference FROM participants WHERE id = ?");
+        $getUser->execute([$data->id]);
+        $user = $getUser->fetch(PDO::FETCH_ASSOC);
+
+        // Eliminamos el participante
+        $stmt = $conn->prepare("DELETE FROM participants WHERE id = ?");
+        $stmt->execute([$data->id]);
+
+        // Si había un curso asignado, decrementamos el cupo (sin bajar de 0)
+        if ($user && !empty($user['course_preference'])) {
+            $conn->prepare("UPDATE courses SET current_enrollment = GREATEST(current_enrollment - 1, 0) WHERE title = ?")
+                 ->execute([$user['course_preference']]);
+        }
+
+        echo json_encode(["success" => true]);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al eliminar participante EVEM: " . $e->getMessage()]);
+    }
+}
+
+// --- RUTA: ELIMINAR PARTICIPANTE DIM ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete_dim_participant') {
+    $data = json_decode(file_get_contents("php://input"));
+    if (!isset($data->id)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Falta el ID del participante"]);
+        exit();
+    }
+    try {
+        $stmt = $conn->prepare("DELETE FROM dim_participants WHERE id = ?");
+        $stmt->execute([$data->id]);
+        echo json_encode(["success" => true]);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al eliminar participante DIM: " . $e->getMessage()]);
+    }
+}
+
+// --- RUTA: ELIMINAR EQUIPO FESTIVAL ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'delete_festival_team') {
+    $data = json_decode(file_get_contents("php://input"));
+    if (!isset($data->id)) {
+        http_response_code(400);
+        echo json_encode(["error" => "Falta el ID del equipo"]);
+        exit();
+    }
+    try {
+        $stmt = $conn->prepare("DELETE FROM festival_teams WHERE id = ?");
+        $stmt->execute([$data->id]);
+        echo json_encode(["success" => true]);
+    } catch(Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al eliminar equipo Festival: " . $e->getMessage()]);
+    }
 }
 
 // --- RESPUESTA POR DEFECTO ---

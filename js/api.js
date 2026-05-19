@@ -139,7 +139,56 @@ async function loadCourses() {
     }
 }
 
+// Función para cargar los posters
+async function loadPosters() {
+    const container = document.getElementById('posters-grid');
+    if (!container) return;
+
+    container.innerHTML = '<div class="loading-spinner"></div>';
+    
+    try {
+        const response = await fetch('../backend/api.php?action=get_posters');
+        const posters = await response.json();
+
+        if (!response.ok) throw new Error('Error al cargar la API');
+
+        if (posters.length === 0) {
+            container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-secondary); padding: 20px;">Aún no hay ponencias registradas.</p>';
+            return;
+        }
+
+        container.innerHTML = posters.map(poster => `
+            <div class="course-card" style="display: flex; flex-direction: column; border-top: 4px solid var(--color-primary);">
+                <div class="course-content" style="flex-grow: 1; padding: 25px;">
+                    
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
+                        <div style="width: 45px; height: 45px; background: var(--color-primary-light); color: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                            📊
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; font-size: 1rem; color: var(--color-text); font-weight: bold;">${poster.full_name}</h4>
+                            <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary);">${poster.institution || 'Sin institución'}</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="course-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--color-primary-dark);">
+                        ${poster.poster_title || 'Título por definir'}
+                    </h3>
+                    <p class="course-instructor" style="font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); font-style: normal;">
+                        ${poster.poster_abstract || 'Sin resumen disponible.'}
+                    </p>
+                </div>
+            </div>
+        `).join('');
+        
+    } catch (error) {
+        console.error(error);
+        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: #ef4444; padding: 20px;">Error al cargar las ponencias. Intente más tarde.</p>';
+    }
+}
+
 // Ejecutar la función cuando la página termine de cargar
 document.addEventListener('DOMContentLoaded', () => {
     loadCourses();
+    loadPosters();
 });

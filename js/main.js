@@ -81,9 +81,9 @@ class EVEMApp {
             data.acceptedTerms = this.form.querySelector('[name="terms"]')?.checked;
 
             // CORRECCIÓN AQUÍ TAMBIÉN: 'this.api'
-            const response = await this.api.registerParticipant(data);
+            await this.api.registerParticipant(data);
 
-            this.showNotification(`¡Inscripción Exitosa! ID: ${response.id}`, 'success');
+            this.showNotification('Tu registro se ha completado correctamente. Nos pondremos en contacto contigo.', 'success');
             this.form.reset();
             
             // Recargar cursos para actualizar cupos
