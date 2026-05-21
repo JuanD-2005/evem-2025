@@ -305,11 +305,11 @@
 
     <style>
         /* ============================================
-           HEADER ANIMADO
+           HEADER ANIMADO (COMPACTO)
            ============================================ */
         .page-header-conferences {
             background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-            padding: 80px 0 120px;
+            padding: 40px 0 52px;
             position: relative;
             overflow: hidden;
         }
@@ -334,40 +334,40 @@
 
         .header-content-animated { position: relative; z-index: 2; text-align: center; }
 
-        /* ESTILOS DE LA ETIQUETA AGREGADOS AQUÍ */
         .badge-official {
-            display: inline-block; padding: 6px 16px; border-radius: 20px;
-            font-size: 0.8rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 20px;
+            display: inline-block; padding: 5px 16px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 14px;
         }
 
         .page-title-animated {
-            font-size: 3rem; 
-            font-weight: 900; color: white; margin-bottom: 0.5rem;
+            font-size: 2.8rem; 
+            font-weight: 900; color: white; margin-bottom: 0.3rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .page-subtitle-animated {
-            font-size: 1.2rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;
+            font-size: 1.05rem; color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;
+            max-width: 580px; margin-left: auto; margin-right: auto;
         }
 
         .header-stats { display: flex; justify-content: center; align-items: center; gap: 1.5rem; }
         .stat-item { display: flex; flex-direction: column; align-items: center; }
-        .stat-number { font-size: 2.2rem; font-weight: 900; color: var(--color-secondary); }
-        .stat-label { font-size: 0.8rem; color: white; text-transform: uppercase; }
-        .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.3); }
+        .stat-number { font-size: 1.8rem; font-weight: 900; color: var(--color-secondary); line-height: 1; }
+        .stat-label { font-size: 0.75rem; color: white; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.3); }
 
         /* ============================================
-           BANNER FLOTANTE
+           BANNER FLOTANTE (COMPACTO)
            ============================================ */
         .courses-intro-section {
-            margin-top: -60px;
-            position: relative; z-index: 10; padding-bottom: 2rem;
+            margin-top: -38px;
+            position: relative; z-index: 10; padding-bottom: 1.5rem;
         }
 
         .info-banner-modern {
-            background: white; border-radius: 15px; padding: 1.5rem 2rem;
+            background: white; border-radius: 14px; padding: 1.2rem 1.8rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: flex; gap: 1.5rem; align-items: center;
+            display: flex; gap: 1.2rem; align-items: center;
             border-left: 5px solid var(--color-info); position: relative; overflow: hidden;
         }
 
@@ -376,23 +376,23 @@
             background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%); border-radius: 50%;
         }
 
-        .info-icon-modern { font-size: 2.5rem; animation: pulse 2s infinite; flex-shrink: 0; }
+        .info-icon-modern { font-size: 2rem; animation: pulse 2s infinite; flex-shrink: 0; }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
 
-        .info-content-modern h3 { font-size: 1.4rem; color: var(--color-primary); margin-bottom: 0.2rem; }
-        .info-content-modern p { font-size: 0.95rem; color: var(--color-text-secondary); margin: 0; }
+        .info-content-modern h3 { font-size: 1.25rem; color: var(--color-primary); margin-bottom: 0.2rem; }
+        .info-content-modern p { font-size: 0.9rem; color: var(--color-text-secondary); margin: 0; }
 
         /* ============================================
            GRID DE CONFERENCIAS
            ============================================ */
-        .conferences-showcase { padding: 3rem 0; }
-        .section-intro { text-align: center; margin-bottom: 3rem; }
-        .section-title-modern { font-size: 2.2rem; font-weight: 900; color: var(--color-primary-dark); margin-bottom: 0.5rem; }
-        .section-description { font-size: 1.1rem; color: var(--color-text-secondary); }
+        .conferences-showcase { padding: 2rem 0; }
+        .section-intro { text-align: center; margin-bottom: 2rem; }
+        .section-title-modern { font-size: 2.2rem; font-weight: 900; color: var(--color-primary-dark); margin-bottom: 0.3rem; }
+        .section-description { font-size: 1rem; color: var(--color-text-secondary); }
 
         .conferences-grid-compact {
             display: grid;
@@ -494,6 +494,11 @@
         @media (max-width: 768px) {
             .info-banner-modern { flex-direction: column; text-align: center; margin-top: -40px; }
             .section-title-modern { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 560px) {
+            .page-header-conferences { padding: 32px 0 44px; }
+            .header-stats { gap: 1rem; }
         }
     </style>
 </body>
