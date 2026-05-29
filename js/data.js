@@ -19,7 +19,7 @@ const EVEM_DATA = {
             address: "Av. Universidad, Paramillo, San Cristóbal"
         },
         contact: {
-            email: "evem.tachira@gmail.com",
+            email: "evem@unet.edu.ve",
             phone: "+58 (276) 353-0422",
             organizingUniversity: "Universidad de Los Andes (ULA)"
         }
