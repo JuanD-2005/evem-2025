@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificados — Festival de las Ciencias CEDIC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/typography.css">
     <link rel="stylesheet" href="../css/layout.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Librerías para Alertas y PDFs -->
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
         body {
@@ -26,11 +26,13 @@
             overflow-x: hidden;
         }
 
-        /* Fondo cuántico */
         .hero-pattern {
-            position: absolute; inset: 0; z-index: -1;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
             background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
             background-size: 32px 32px;
+            pointer-events: none;
         }
 
         .cert-container {
@@ -39,13 +41,15 @@
             align-items: center;
             justify-content: center;
             padding: 120px 20px 60px;
+            position: relative;
+            z-index: 1;
         }
 
         .cert-card {
             background: white;
             border-radius: 24px;
             padding: 50px 40px;
-            max-width: 600px;
+            max-width: 620px;
             width: 100%;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
@@ -71,21 +75,70 @@
             font-size: 2.2rem;
             font-weight: 800;
             color: #0284c7;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             letter-spacing: -0.02em;
         }
 
-        .cert-card p {
-            color: #475569;
-            margin-bottom: 30px;
-            font-size: 1.05rem;
+        .cert-card > p {
+            color: #64748b;
+            margin-bottom: 22px;
+            font-size: 1rem;
             line-height: 1.6;
         }
 
-        .cert-form { display: flex; flex-direction: column; gap: 15px; }
-        
+        /* ─── TABS ─── */
+        .search-tabs {
+            display: flex;
+            gap: 8px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 16px;
+        }
+
+        .search-tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 9px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .search-tab.active {
+            background: white;
+            color: #0284c7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* ─── HINTS ─── */
+        .search-hint {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            color: #0369a1;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        /* ─── FORM ─── */
+        .cert-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
         .cert-form input {
-            padding: 18px;
+            padding: 16px 18px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 1.1rem;
@@ -98,40 +151,187 @@
         }
 
         .cert-form input:focus {
-            outline: none; border-color: #0ea5e9; background: white;
+            outline: none;
+            border-color: #0ea5e9;
+            background: white;
             box-shadow: 0 0 0 4px rgba(14,165,233,0.15);
         }
 
         .cert-form button {
             background: linear-gradient(135deg, #0284c7, #0ea5e9);
-            color: white; border: none; padding: 18px;
-            border-radius: 12px; font-size: 1.1rem; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(14,165,233,0.3);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(14,165,233,0.3);
             font-family: 'DM Sans', sans-serif;
+            border-bottom: 4px solid #075985;
         }
 
-        .cert-form button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(14,165,233,0.4);
+        .cert-form button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(14,165,233,0.4); }
+        .cert-form button:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
+
+        .info-box {
+            background: #f8fafc;
+            color: #475569;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2e8f0;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        /* ─── TEAM PREVIEW ─── */
+        .team-preview {
+            display: none;
+            margin-top: 28px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 24px;
+            text-align: left;
+        }
+        .team-preview.visible { display: block; }
+
+        .preview-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .team-name-badge {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0284c7;
+            margin-bottom: 3px;
+        }
+
+        .team-inst {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .members-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .member-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .member-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #0f172a;
+            flex: 1;
+        }
+
+        .member-cedula {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* el integrante que buscó */
+        .member-row.is-me {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+        .member-row.is-me .member-avatar {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+
+        /* ─── PROGRESS ─── */
+        .progress-wrap { display: none; margin-bottom: 14px; }
+        .progress-wrap.visible { display: block; }
+
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0284c7, #0ea5e9);
+            border-radius: 999px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-label {
+            font-size: 0.82rem;
+            color: #64748b;
+            text-align: center;
+        }
+
+        /* ─── DOWNLOAD BUTTON ─── */
+        .download-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(5,150,105,0.3);
+            border-bottom: 4px solid #047857;
+        }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(5,150,105,0.4); }
+        .download-btn:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
+
+        @media (max-width: 640px) {
+            .cert-card { padding: 40px 20px; }
+            .cert-card h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header con bloque blanco -->
     <header class="top-bar">
         <div class="nav-container">
             <ul class="nav-links">
                 <li><a href="festival.html">⬅️ Volver al Festival</a></li>
             </ul>
-            
             <div class="central-logo-container">
                 <a href="festival.html">
-                    <img src="../assets/images/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo" style="max-height: 55px; width: auto; object-fit: contain; margin-top: 5px;">
+                    <img src="../assets/images/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo"
+                         style="max-height: 55px; width: auto; object-fit: contain; margin-top: 5px;">
                 </a>
             </div>
-            
             <ul class="nav-links">
                 <li><a href="festival-registro.html" style="color: rgba(255,255,255,0.8); font-weight: 500;">Inscripción</a></li>
             </ul>
@@ -144,80 +344,378 @@
         <div class="cert-card">
             <div class="cert-icon">🎓</div>
             <h1>Certificados del Festival</h1>
-            <p>Ingresa el nombre de tu equipo o tu cédula para generar y descargar tu certificado de participación oficial.</p>
-            
-            <form id="placeholderCertForm" class="cert-form">
-                <input type="text" id="searchData" placeholder="Ej: Equipo Einstein o V-12345678" required autocomplete="off">
-                <button type="submit" id="btnDescargar">
-                    Descargar Certificado 📄
+            <p>Busca tu equipo para descargar los certificados de todos los integrantes.</p>
+
+            <!-- Tabs de modo -->
+            <div class="search-tabs">
+                <button type="button" class="search-tab active" data-mode="cedula">Por Cédula</button>
+                <button type="button" class="search-tab" data-mode="equipo">Por Nombre del Equipo</button>
+            </div>
+
+            <!-- Hints contextuales -->
+            <div id="hintCedula" class="search-hint">
+                🔢 Ingresa <strong>solo los dígitos</strong> de tu cédula, sin letras ni guiones.<br>
+                Ejemplo: si tu CI es <em>V-12345678</em>, escribe <strong>12345678</strong>
+            </div>
+            <div id="hintEquipo" class="search-hint" style="display:none;">
+                🔤 Escribe el nombre del proyecto <strong>exactamente como fue registrado</strong>.<br>
+                Útil si ningún integrante registró su cédula.
+            </div>
+
+            <form id="certForm" class="cert-form">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Ej: 12345678"
+                    required
+                    autocomplete="off"
+                    inputmode="numeric"
+                >
+                <button type="submit" id="btnBuscar">
+                    <span id="btnText">Buscar Equipo 🔍</span>
                 </button>
             </form>
+
+            <div class="info-box">
+                ℹ️ Se generará un certificado individual por cada integrante registrado en el equipo.
+            </div>
+
+            <!-- Preview del equipo (aparece tras la búsqueda) -->
+            <div id="teamPreview" class="team-preview">
+                <div class="preview-label">Equipo encontrado</div>
+                <div id="teamNameBadge" class="team-name-badge"></div>
+                <div id="teamInstText" class="team-inst"></div>
+                <div id="membersList" class="members-list"></div>
+
+                <div id="progressWrap" class="progress-wrap">
+                    <div class="progress-bar-bg">
+                        <div id="progressFill" class="progress-bar-fill"></div>
+                    </div>
+                    <div id="progressLabel" class="progress-label">Preparando...</div>
+                </div>
+
+                <button id="btnDescargar" class="download-btn">
+                    Descargar Certificados del Equipo 📥
+                </button>
+            </div>
         </div>
     </div>
 
+    <div id="qrCodeHidden" style="display:none; position:absolute; left:-9999px;"></div>
+
     <script>
-        document.getElementById('placeholderCertForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = document.getElementById('searchData').value.trim();
-            
-            Swal.fire({
-                title: 'Generando Documento...',
-                html: 'Preparando certificado para <b>' + input + '</b>',
-                allowOutsideClick: false,
-                didOpen: () => { Swal.showLoading() }
+        // ─────────────────────────────────────────────
+        // ESTADO
+        // ─────────────────────────────────────────────
+        let teamData   = null;
+        let searchMode = 'cedula'; // 'cedula' | 'equipo'
+
+        // ─────────────────────────────────────────────
+        // TABS
+        // ─────────────────────────────────────────────
+        document.querySelectorAll('.search-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                searchMode = tab.dataset.mode;
+
+                document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const input = document.getElementById('searchInput');
+
+                if (searchMode === 'cedula') {
+                    document.getElementById('hintCedula').style.display = '';
+                    document.getElementById('hintEquipo').style.display = 'none';
+                    input.placeholder  = 'Ej: 12345678';
+                    input.inputMode    = 'numeric';
+                } else {
+                    document.getElementById('hintCedula').style.display = 'none';
+                    document.getElementById('hintEquipo').style.display = '';
+                    input.placeholder  = 'Ej: Sistema de purificación solar';
+                    input.inputMode    = 'text';
+                }
+
+                // Limpiar estado anterior
+                input.value = '';
+                document.getElementById('teamPreview').classList.remove('visible');
+                teamData = null;
             });
+        });
+
+        // ─────────────────────────────────────────────
+        // PARSER DE INTEGRANTES
+        // Convierte el TEXT de la BD en [{name, cedula}]
+        //
+        // Formatos que maneja:
+        //   Juan Paredes (C.I: 31357791)   → cedula = "31357791"
+        //   Jose Bravo (V-31122695)         → cedula = "31122695"
+        //   Maria López (CI 12345678)       → cedula = "12345678"
+        //   Ana Torres (31000000)           → cedula = "31000000"
+        //   Fulanito                        → cedula = null  (se omite en el PDF)
+        //
+        // NOTA: cedula guarda solo los dígitos para comparación interna.
+        // En el PDF NO se imprime la cédula, así que el formato original no importa.
+        // ─────────────────────────────────────────────
+        function parseMembersText(rawText) {
+            return rawText
+                .replace(/\r\n/g, '\n').replace(/\r/g, '\n') // normalizar CRLF
+                .split('\n')
+                .map(l => l.trim())
+                .filter(l => l.length > 1)
+                .map(line => {
+                    const nameMatch = line.match(/^([^(]+)/);
+                    const name = (nameMatch ? nameMatch[1] : line).trim();
+                    if (!name) return null;
+                    const ciMatch = line.match(/\(.*?(\d{5,10}).*?\)/);
+                    const cedula  = ciMatch ? ciMatch[1] : null;
+                    return { name, cedula };
+                })
+                .filter(m => m !== null);
+        }
+
+        // Solo dígitos, para comparar cédulas con formato distinto
+        function soloDigitos(str) {
+            return (str || '').replace(/\D/g, '');
+        }
+
+        // ─────────────────────────────────────────────
+        // PASO 1: BUSCAR EQUIPO
+        // ─────────────────────────────────────────────
+        document.getElementById('certForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const rawInput = document.getElementById('searchInput').value.trim();
+            const btn      = document.getElementById('btnBuscar');
+            const btnText  = document.getElementById('btnText');
+
+            // Fecha de habilitación
+            const unlockDate = new Date('2026-05-28T00:00:00');
+            if (new Date() < unlockDate) {
+                Swal.fire({ title: 'Aún no disponible', text: 'Los certificados se habilitarán al finalizar el evento.', icon: 'info', confirmButtonColor: '#0284c7' });
+                return;
+            }
+
+            // Validación básica por modo
+            if (searchMode === 'cedula' && soloDigitos(rawInput).length < 5) {
+                Swal.fire({ title: 'Cédula inválida', text: 'Ingresa solo los dígitos de tu cédula (mínimo 5 números).', icon: 'warning', confirmButtonColor: '#0284c7' });
+                return;
+            }
+            if (searchMode === 'equipo' && rawInput.length < 3) {
+                Swal.fire({ title: 'Nombre muy corto', text: 'Escribe al menos 3 caracteres del nombre del equipo.', icon: 'warning', confirmButtonColor: '#0284c7' });
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.textContent = 'Buscando... ⏳';
+            document.getElementById('teamPreview').classList.remove('visible');
+            teamData = null;
 
             try {
-                // Simular un pequeño tiempo de carga para efecto realista
-                await new Promise(r => setTimeout(r, 1500));
+                // El backend recibe el parámetro 'cedula' o 'team' según el modo
+                let url;
+                if (searchMode === 'cedula') {
+                    url = `../backend/api.php?action=check_festival_certificate&cedula=${encodeURIComponent(soloDigitos(rawInput))}`;
+                } else {
+                    url = `../backend/api.php?action=check_festival_certificate&team=${encodeURIComponent(rawInput)}`;
+                }
 
-                const { jsPDF } = globalThis.jspdf;
-                const pdf = new jsPDF('landscape', 'mm', 'a4'); 
+                const res  = await fetch(url);
+                const data = await res.json();
 
-                // Dibujar un fondo oficial (Azul claro)
-                pdf.setFillColor(240, 249, 255);
-                pdf.rect(0, 0, 297, 210, 'F');
+                if (!res.ok) throw new Error(data.error || 'No se encontró ningún equipo.');
 
-                // Bordes decorativos
-                pdf.setDrawColor(14, 165, 233);
-                pdf.setLineWidth(3);
-                pdf.rect(10, 10, 277, 190);
+                // Parsear members TEXT → array
+                // Log para depuración — quitar cuando funcione
+                console.log('[Festival Cert] Respuesta del backend:', data);
 
-                // Textos del certificado
-                pdf.setFont("helvetica", "bold");
-                pdf.setTextColor(3, 105, 161);
-                pdf.setFontSize(28);
-                pdf.text("CERTIFICADO DE PARTICIPACIÓN", 148.5, 60, { align: "center" });
-                
-                pdf.setFontSize(14);
-                pdf.setTextColor(71, 85, 105);
-                pdf.text("Se otorga el presente reconocimiento a:", 148.5, 90, { align: "center" });
+                // El campo members puede venir como 'members' o dentro de un objeto anidado
+                const row = data.team ?? data; // soporta {team:{...}} y fila plana
+                const rawMembers = row.members ?? '';
+                if (!rawMembers) {
+                    throw new Error('El servidor no devolvió los integrantes del equipo.');
+                }
 
-                // Nombre ingresado
-                pdf.setFont("helvetica", "bolditalic");
-                pdf.setFontSize(36);
-                pdf.setTextColor(15, 23, 42);
-                pdf.text(input, 148.5, 115, { align: "center" });
+                const parsedMembers = parseMembersText(rawMembers);
 
-                pdf.setFont("helvetica", "normal");
-                pdf.setFontSize(14);
-                pdf.setTextColor(71, 85, 105);
-                pdf.text("Por su valiosa participación en el Festival de las Ciencias 2025.", 148.5, 140, { align: "center" });
-                pdf.text("Centro de Enseñanza y Divulgación de las Ciencias (CEDIC)", 148.5, 150, { align: "center" });
+                teamData = {
+                    teamName   : row.team_name   ?? '',
+                    institution: row.institution ?? '',
+                    area       : row.area        ?? '',
+                    members    : parsedMembers
+                };
 
-                pdf.save(`Certificado_${input.replaceAll(/\s+/g, '_')}.pdf`);
-                
-                Swal.fire({
-                    title: '¡Descarga Exitosa!',
-                    text: 'Tu certificado ha sido generado correctamente.',
-                    icon: 'success',
-                    confirmButtonColor: '#0ea5e9'
-                });
+                renderTeamPreview(teamData, searchMode === 'cedula' ? soloDigitos(rawInput) : null);
 
-            } catch (error) {
-                Swal.fire('Error', 'Hubo un problema al generar el PDF.', 'error');
+            } catch (err) {
+                Swal.fire({ title: 'Aviso', text: err.message, icon: 'warning', confirmButtonColor: '#0284c7' });
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Buscar Equipo 🔍';
             }
         });
+
+        // ─────────────────────────────────────────────
+        // RENDERIZAR PREVIEW
+        // cedulaDigits puede ser null (búsqueda por equipo → no hay "tú")
+        // ─────────────────────────────────────────────
+        function renderTeamPreview(data, cedulaDigits) {
+            document.getElementById('teamNameBadge').textContent = data.teamName;
+            document.getElementById('teamInstText').textContent  = `${data.institution} · ${data.area}`;
+
+            const list = document.getElementById('membersList');
+            list.innerHTML = '';
+
+            data.members.forEach(m => {
+                const isMe     = cedulaDigits && m.cedula && soloDigitos(m.cedula) === cedulaDigits;
+                const initials = (m.name || '').split(' ').filter(p => p.length > 0).slice(0, 2).map(p => p[0]).join('').toUpperCase() || '?';
+
+                const row = document.createElement('div');
+                row.className = 'member-row' + (isMe ? ' is-me' : '');
+
+                // Cédula: solo mostrar si existe, en silencio si no
+                const cedulaHtml = m.cedula
+                    ? `<span class="member-cedula">${m.cedula}${isMe ? ' <strong style="color:#059669;font-size:0.75rem"> ✓ Tú</strong>' : ''}</span>`
+                    : '';   // Sin cédula → no se muestra nada
+
+                row.innerHTML = `
+                    <div class="member-avatar">${initials}</div>
+                    <span class="member-name">${m.name}</span>
+                    ${cedulaHtml}
+                `;
+                list.appendChild(row);
+            });
+
+            document.getElementById('progressWrap').classList.remove('visible');
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('teamPreview').classList.add('visible');
+        }
+
+        // ─────────────────────────────────────────────
+        // PASO 2: DESCARGAR CERTIFICADOS
+        // ─────────────────────────────────────────────
+        document.getElementById('btnDescargar').addEventListener('click', async () => {
+            if (!teamData) return;
+
+            const btn           = document.getElementById('btnDescargar');
+            const progressWrap  = document.getElementById('progressWrap');
+            const progressFill  = document.getElementById('progressFill');
+            const progressLabel = document.getElementById('progressLabel');
+
+            btn.disabled = true;
+            btn.textContent = 'Generando PDFs... 🖨️';
+            progressWrap.classList.add('visible');
+
+            const total = teamData.members.length;
+
+            try {
+                for (let i = 0; i < total; i++) {
+                    const member = teamData.members[i];
+                    progressLabel.textContent = `Generando ${i + 1} de ${total}: ${member.name}`;
+                    progressFill.style.width  = `${Math.round((i / total) * 100)}%`;
+
+                    await generarPDF(member.name, member.cedula, teamData.teamName, teamData.institution);
+
+                    await new Promise(r => setTimeout(r, 400));
+                }
+
+                progressFill.style.width  = '100%';
+                progressLabel.textContent = `✅ ${total} certificado${total !== 1 ? 's' : ''} generado${total !== 1 ? 's' : ''}.`;
+
+                Swal.fire({
+                    title: '¡Certificados Generados!',
+                    html : `Se descargaron <b>${total}</b> certificado${total !== 1 ? 's' : ''} para el equipo <b>${teamData.teamName}</b>.`,
+                    icon : 'success',
+                    confirmButtonColor: '#0284c7'
+                });
+
+            } catch (err) {
+                Swal.fire('Error', err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Descargar Certificados del Equipo 📥';
+            }
+        });
+
+        // ─────────────────────────────────────────────
+        // MOTOR DE INYECCIÓN PDF
+        // ─────────────────────────────────────────────
+        async function generarPDF(nombre, cedula, proyecto, institucion) {
+            const { jsPDF } = globalThis.jspdf;
+            const pdf = new jsPDF('landscape', 'mm', 'a4');
+
+            // 1. Plantilla de fondo
+            const img = new Image();
+            img.src = '../assets/images/plantilla-festival.jpg';
+
+            await new Promise((resolve, reject) => {
+                img.onload  = resolve;
+                img.onerror = () => reject(new Error('No se encontró plantilla-festival.jpg'));
+            });
+
+            pdf.addImage(img, 'JPEG', 0, 0, 297, 210);
+
+            const W = pdf.internal.pageSize.getWidth();
+
+            // 2. Nombre del integrante
+            pdf.setFont('times', 'bolditalic');
+            pdf.setTextColor(3, 105, 161);
+            pdf.setFontSize(36);
+            const n = fitText(pdf, nombre, W - 60);
+            pdf.text(n, (W - pdf.getTextWidth(n)) / 2, 105);
+
+            // NUEVO: 2.5 Cédula del integrante (solo si existe)
+            if (cedula) {
+                pdf.setFont('helvetica', 'normal');
+                pdf.setTextColor(100, 116, 139); // Tono gris plomo sutil (#64748b)
+                pdf.setFontSize(14);
+                const cedulaText = `C.I: ${cedula}`;
+                pdf.text(cedulaText, (W - pdf.getTextWidth(cedulaText)) / 2, 115);
+            }
+
+            // 3. Nombre del proyecto — ajustar Y según plantilla
+            pdf.setFont('helvetica', 'bold');
+            pdf.setTextColor(7, 89, 133);
+            pdf.setFontSize(16);
+            // Si la cédula existe, bajamos un poco el texto del proyecto para que respire, si no, lo dejamos igual
+            const yProyecto = cedula ? 134 : 130;
+            const p = fitText(pdf, `"${proyecto}"`, W - 80);
+            pdf.text(p, (W - pdf.getTextWidth(p)) / 2, yProyecto);
+
+            // 4. Institución — ajustar Y según plantilla
+            pdf.setFont('helvetica', 'normal');
+            pdf.setTextColor(71, 85, 105);
+            pdf.setFontSize(13);
+            const yInst = cedula ? 147 : 143;
+            const inst = fitText(pdf, institucion, W - 80);
+            pdf.text(inst, (W - pdf.getTextWidth(inst)) / 2, yInst);
+
+            // 5. QR → validar-festival.html?team=<proyecto>
+            const qrContainer = document.getElementById('qrCodeHidden');
+            qrContainer.innerHTML = '';
+
+            const base  = globalThis.location.href.replace('festival-certificado.html', '');
+            const qrUrl = `${base}validar-festival.html?team=${encodeURIComponent(proyecto)}`;
+
+            new QRCode(qrContainer, {
+                text: qrUrl, width: 256, height: 256,
+                colorDark: '#0369a1', colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            await new Promise(r => setTimeout(r, 120));
+
+            const canvas = qrContainer.querySelector('canvas');
+            if (canvas) pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 18, 168, 28, 28);
+
+            // 6. Guardar
+            pdf.save(`Certificado_Festival_${nombre.replaceAll(/\s+/g, '_')}.pdf`);
+        }
+
+        function fitText(pdf, text, maxWidth) {
+            while (pdf.getTextWidth(text) > maxWidth && text.length > 10) {
+                text = text.slice(0, -4) + '…';
+            }
+            return text;
+        }
     </script>
 </body>
 </html>
