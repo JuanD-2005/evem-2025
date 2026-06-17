@@ -52,155 +52,296 @@
     </section>
 
     <!-- ====================================================
+         SISTEMA DE PESTAÑAS
+         ==================================================== -->
+    <div class="tabs-wrapper">
+        <div class="container">
+            <div class="tabs-nav">
+                <button class="tab-btn tab-btn--active" id="btn-tab-pre-inscripcion" onclick="switchTab('pre-inscripcion')">
+                    <span class="tab-step">1</span>
+                    <span class="tab-label">Pre-Inscripción <em>(Reserva tu cupo)</em></span>
+                </button>
+                <div class="tabs-arrow">→</div>
+                <button class="tab-btn" id="btn-tab-pago" onclick="switchTab('pago')">
+                    <span class="tab-step">2</span>
+                    <span class="tab-label">Formalizar Inscripción <em>(Reportar Pago)</em></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
          BLOQUE PRINCIPAL: 2 COLUMNAS (formulario + sidebar)
          ==================================================== -->
     <section class="contact-main-section">
         <div class="container">
             <div class="contact-two-col">
 
-                <!-- COLUMNA IZQUIERDA: Formulario -->
+                <!-- COLUMNA IZQUIERDA: Formularios con pestañas -->
                 <div class="col-form">
-                    <div class="form-container">
-                        <div class="form-header">
-                            <h2>Formulario de Inscripción</h2>
-                            <p>Completa todos los campos para reservar tu cupo en EVEM 2026</p>
-                        </div>
 
-                        <form id="registrationForm" class="registration-form">
-                            <fieldset class="form-fieldset">
-                                <legend>Datos del Participante</legend>
-                                
-                                <div class="form-group">
-                                    <label for="fullName" class="form-label">Nombre Completo *</label>
-                                    <input type="text" id="fullName" name="fullName" class="form-input" required>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="cedula" class="form-label">Cédula de Identidad *</label>
-                                        <input type="text" id="cedula" name="cedula" class="form-input" placeholder="V-12345678" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">Teléfono *</label>
-                                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58..." required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Correo Electrónico *</label>
-                                    <input type="email" id="email" name="email" class="form-input" required>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-fieldset" style="background-color: #f8f9fa;">
-                                <legend>Modalidad de Participación</legend>
-                                
-                                <div class="form-group">
-                                    <label class="form-label">¿Cómo deseas participar?</label>
-                                    <div class="radio-group" style="margin-bottom: 20px;">
-                                        <label class="radio-label box-radio">
-                                            <input type="radio" name="participationType" value="participante" checked onchange="togglePosterFields(false)">
-                                            <span class="radio-text">🧑‍🏫 Asistente (Solo Cursos)</span>
-                                        </label>
-                                        <label class="radio-label box-radio">
-                                            <input type="radio" name="participationType" value="poster" onchange="togglePosterFields(true)">
-                                            <span class="radio-text">📊 Ponente (Presentar Poster)</span>
-                                        </label>
-                                    </div>
-                                    <p style="font-size: 0.9em; color: #475569; margin-top: -8px; margin-bottom: 0; line-height: 1.5;">
-                                        Ambas modalidades incluyen la participación en un curso. Si eliges la modalidad de ponente, además podrás presentar tu trabajo de investigación en esta edición.
-                                    </p>
-                                </div>
-
-                                <div id="posterFields" style="display: none; border-left: 3px solid var(--color-primary); padding-left: 15px;">
-                                    <div class="form-group">
-                                        <label for="posterTitle" class="form-label">Título del Poster *</label>
-                                        <input type="text" id="posterTitle" name="posterTitle" class="form-input">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="posterAbstract" class="form-label">Resumen del Trabajo *</label>
-                                        <textarea id="posterAbstract" name="posterAbstract" class="form-textarea" rows="4" placeholder="Breve descripción de su presentación..."></textarea>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-fieldset">
-                                <legend>Información Académica</legend>
-                                
-                                <div class="form-group">
-                                    <label for="institution" class="form-label">Institución *</label>
-                                    <input type="text" id="institution" name="institution" class="form-input" required>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Estado *</label>
-                                        <select id="state" name="state" class="form-select" required>
-                                            <option value="">Seleccione...</option>
-                                            <option value="Táchira">Táchira</option>
-                                            <option value="Mérida">Mérida</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city" class="form-label">Ciudad *</label>
-                                        <input type="text" id="city" name="city" class="form-input" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="position" class="form-label">Cargo *</label>
-                                        <select id="position" name="position" class="form-select" required>
-                                            <option value="Docente">Docente</option>
-                                            <option value="Estudiante">Estudiante</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="experience" class="form-label">Experiencia *</label>
-                                        <select id="experience" name="experience" class="form-select" required>
-                                            <option value="0-2">0-2 años</option>
-                                            <option value="3-5">3-5 años</option>
-                                            <option value="6+">Más de 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-fieldset">
-                                <legend>Inscripción a Curso</legend>
-                                <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
-                                    Aunque presentes poster, puedes inscribirte en un curso formativo.
-                                </p>
-                                <div class="form-group">
-                                    <label for="course" class="form-label">Seleccione el Curso *</label>
-                                    <select id="course" name="course" class="form-select" required>
-                                        <option value="">Cargando cursos...</option>
-                                    </select>
-                                </div>
-                            </fieldset>
-
-                            <fieldset class="form-fieldset">
-                                <div class="form-group">
-                                    <label class="form-label">¿Participaste antes?</label>
-                                    <div class="radio-group">
-                                        <label><input type="radio" name="previousParticipation" value="Si"> Sí</label>
-                                        <label><input type="radio" name="previousParticipation" value="No" checked> No</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">
-                                        <input type="checkbox" name="terms" value="yes" required>
-                                        Acepto los términos y condiciones
-                                    </label>
-                                </div>
-                            </fieldset>
-
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary btn-large">Enviar Inscripción</button>
+                    <!-- ======== PESTAÑA 1: PRE-INSCRIPCIÓN ======== -->
+                    <div id="tab-pre-inscripcion">
+                        <div class="form-container">
+                            <div class="form-header">
+                                <h2>Formulario de Pre-Inscripción</h2>
+                                <p>Completa todos los campos para reservar tu cupo en EVEM 2026</p>
                             </div>
-                        </form>
+
+                            <form id="registrationForm" class="registration-form">
+                                <fieldset class="form-fieldset">
+                                    <legend>Datos del Participante</legend>
+                                    
+                                    <div class="form-group">
+                                        <label for="fullName" class="form-label">Nombre Completo *</label>
+                                        <input type="text" id="fullName" name="fullName" class="form-input" required>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="cedula" class="form-label">Cédula de Identidad *</label>
+                                            <input type="text" id="cedula" name="cedula" class="form-input" placeholder="V-12345678" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone" class="form-label">Teléfono *</label>
+                                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Correo Electrónico *</label>
+                                        <input type="email" id="email" name="email" class="form-input" required>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-fieldset" style="background-color: #f8f9fa;">
+                                    <legend>Modalidad de Participación</legend>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">¿Cómo deseas participar?</label>
+                                        <div class="radio-group" style="margin-bottom: 20px;">
+                                            <label class="radio-label box-radio">
+                                                <input type="radio" name="participationType" value="participante" checked onchange="togglePosterFields(false)">
+                                                <span class="radio-text">🧑‍🏫 Asistente (Solo Cursos)</span>
+                                            </label>
+                                            <label class="radio-label box-radio">
+                                                <input type="radio" name="participationType" value="poster" onchange="togglePosterFields(true)">
+                                                <span class="radio-text">📊 Ponente (Presentar Poster)</span>
+                                            </label>
+                                        </div>
+                                        <p style="font-size: 0.9em; color: #475569; margin-top: -8px; margin-bottom: 0; line-height: 1.5;">
+                                            Ambas modalidades incluyen la participación en un curso. Si eliges la modalidad de ponente, además podrás presentar tu trabajo de investigación en esta edición.
+                                        </p>
+                                    </div>
+
+                                    <div id="posterFields" style="display: none; border-left: 3px solid var(--color-primary); padding-left: 15px;">
+                                        <div class="form-group">
+                                            <label for="posterTitle" class="form-label">Título del Poster *</label>
+                                            <input type="text" id="posterTitle" name="posterTitle" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="posterAbstract" class="form-label">Resumen del Trabajo *</label>
+                                            <textarea id="posterAbstract" name="posterAbstract" class="form-textarea" rows="4" placeholder="Breve descripción de su presentación..."></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-fieldset">
+                                    <legend>Información Académica</legend>
+                                    
+                                    <div class="form-group">
+                                        <label for="institution" class="form-label">Institución *</label>
+                                        <input type="text" id="institution" name="institution" class="form-input" required>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Estado *</label>
+                                            <select id="state" name="state" class="form-select" required>
+                                                <option value="">Seleccione...</option>
+                                                <option value="Amazonas">Amazonas</option>
+                                                <option value="Anzoátegui">Anzoátegui</option>
+                                                <option value="Apure">Apure</option>
+                                                <option value="Aragua">Aragua</option>
+                                                <option value="Barinas">Barinas</option>
+                                                <option value="Bolívar">Bolívar</option>
+                                                <option value="Carabobo">Carabobo</option>
+                                                <option value="Cojedes">Cojedes</option>
+                                                <option value="Delta Amacuro">Delta Amacuro</option>
+                                                <option value="Distrito Capital">Distrito Capital</option>
+                                                <option value="Falcón">Falcón</option>
+                                                <option value="Guárico">Guárico</option>
+                                                <option value="Lara">Lara</option>
+                                                <option value="Mérida">Mérida</option>
+                                                <option value="Miranda">Miranda</option>
+                                                <option value="Monagas">Monagas</option>
+                                                <option value="Nueva Esparta">Nueva Esparta</option>
+                                                <option value="Portuguesa">Portuguesa</option>
+                                                <option value="Sucre">Sucre</option>
+                                                <option value="Táchira">Táchira</option>
+                                                <option value="Trujillo">Trujillo</option>
+                                                <option value="La Guaira">La Guaira</option>
+                                                <option value="Yaracuy">Yaracuy</option>
+                                                <option value="Zulia">Zulia</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city" class="form-label">Ciudad *</label>
+                                            <input type="text" id="city" name="city" class="form-input" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="position" class="form-label">Cargo *</label>
+                                            <select id="position" name="position" class="form-select" required>
+                                                <option value="Docente">Docente/Profesor ($25)</option>
+                                                <option value="Estudiante">Estudiante ($15)</option>
+                                                <option value="Otro">Otro ($25)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="experience" class="form-label">Experiencia *</label>
+                                            <select id="experience" name="experience" class="form-select" required>
+                                                <option value="0-2">0-2 años</option>
+                                                <option value="3-5">3-5 años</option>
+                                                <option value="6+">Más de 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-fieldset">
+                                    <legend>Inscripción a Curso</legend>
+                                    <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
+                                        Aunque presentes poster, puedes inscribirte en un curso formativo.
+                                    </p>
+                                    <div class="form-group">
+                                        <label for="course" class="form-label">Seleccione el Curso *</label>
+                                        <select id="course" name="course" class="form-select" required>
+                                            <option value="">Cargando cursos...</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-fieldset">
+                                    <div class="form-group">
+                                        <label class="form-label">¿Participaste antes?</label>
+                                        <div class="radio-group">
+                                            <label><input type="radio" name="previousParticipation" value="Si"> Sí</label>
+                                            <label><input type="radio" name="previousParticipation" value="No" checked> No</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            <input type="checkbox" name="terms" value="yes" required>
+                                            Acepto los términos y condiciones
+                                        </label>
+                                    </div>
+                                </fieldset>
+
+                                <!-- BLOQUE INFORMATIVO DE PRECIOS -->
+                                <div class="pricing-info-block">
+                                    <div class="pricing-info-icon">💳</div>
+                                    <div class="pricing-info-content">
+                                        <p class="pricing-info-title">Tarifas de Inscripción</p>
+                                        <div class="pricing-tags">
+                                            <span class="pricing-tag pricing-tag--student">🎓 Estudiantes <strong>$15</strong></span>
+                                            <span class="pricing-tag pricing-tag--prof">👨‍🏫 Profesores y Otros <strong>$25</strong></span>
+                                        </div>
+                                        <p class="pricing-info-hint">* El pago debe realizarse entre las fechas del 25/07 al 10/08</p>
+                                        <p class="pricing-info-hint">Una vez reserves tu cupo, dirígete a la pestaña <strong>"2. Formalizar Inscripción"</strong> para subir tu comprobante de pago.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-large">Enviar Pre-Inscripción</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+
+                    <!-- ======== PESTAÑA 2: PAGO ======== -->
+                    <div id="tab-pago" style="display: none;">
+                        <div class="form-container">
+                            <div class="form-header">
+                                <h2>Formalizar Inscripción</h2>
+                                <p>Ingresa tu cédula y adjunta el comprobante de pago para completar tu inscripción</p>
+                            </div>
+
+                            <div class="payment-steps">
+                                <div class="payment-step">
+                                    <div class="payment-step-num">1</div>
+                                    <div class="payment-step-text">Realiza tu pago a través de los métodos indicados por el equipo organizador (Pago Móvil, transferencia, etc.)</div>
+                                </div>
+                                <div class="payment-step">
+                                    <div class="payment-step-num">2</div>
+                                    <div class="payment-step-text">Guarda el bauche/comprobante como imagen (JPG, PNG) o PDF.</div>
+                                </div>
+                                <div class="payment-step">
+                                    <div class="payment-step-num">3</div>
+                                    <div class="payment-step-text">Completa el formulario a continuación para reportar tu pago. (Pago entre el 25 de Julio y el 10 de Agosto)</div>
+                                </div>
+                            </div>
+
+                            <form id="paymentForm" class="registration-form">
+                                <fieldset class="form-fieldset">
+                                    <legend>Verificación de Identidad</legend>
+
+                                    <div class="form-group">
+                                        <label for="payment-cedula" class="form-label">Cédula de Identidad *</label>
+                                        <input
+                                            type="text"
+                                            id="payment-cedula"
+                                            name="cedula"
+                                            class="form-input"
+                                            placeholder="V-12345678"
+                                            required
+                                        >
+                                        <small class="form-hint">Debe coincidir con la cédula usada en la Pre-Inscripción.</small>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-fieldset">
+                                    <legend>Comprobante de Pago</legend>
+
+                                    <div class="form-group">
+                                        <label for="voucher" class="form-label">Bauche / Comprobante *</label>
+                                        <div class="file-upload-area" id="fileUploadArea">
+                                            <input
+                                                type="file"
+                                                id="voucher"
+                                                name="voucher"
+                                                accept="image/*,.pdf"
+                                                required
+                                                class="file-input-hidden"
+                                                onchange="handleFileChange(this)"
+                                            >
+                                            <div class="file-upload-ui" id="fileUploadUI" onclick="document.getElementById('voucher').click()">
+                                                <div class="file-upload-icon">📎</div>
+                                                <p class="file-upload-label">Haz clic para seleccionar archivo</p>
+                                                <p class="file-upload-hint">Imágenes (JPG, PNG) o PDF · Máx. 5MB</p>
+                                            </div>
+                                            <div class="file-selected-info" id="fileSelectedInfo" style="display:none;">
+                                                <span class="file-selected-icon">✅</span>
+                                                <span id="fileSelectedName"></span>
+                                                <button type="button" class="file-remove-btn" onclick="removeFile()">✕</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <div id="payment-feedback" class="form-feedback" style="display:none;"></div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-large" id="paymentSubmitBtn">
+                                        Enviar Comprobante
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- COLUMNA DERECHA: Sidebar con info del evento -->
@@ -226,6 +367,20 @@
                         <p><a href="mailto:evem@unet.edu.ve">evem@unet.edu.ve</a></p>
                         <p><a href="mailto:info@unet.edu.ve">info@unet.edu.ve</a></p>
                         <p style="margin-top: 8px;"><a href="tel:+582763530422">📞 +58 (276) 353-0422</a></p>
+                    </div>
+
+                    <div class="sidebar-card" style="border-left-color: #f59e0b; background-color: #fffbeb;">
+                        <div class="sidebar-card-icon">🛏️</div>
+                        <h3 style="color: #d97706; font-size: 1.1rem;">¡Hospedaje Garantizado!</h3>
+                        <p style="margin-bottom: 12px; font-size: 0.9rem;">
+                            Queremos que tu única preocupación sea aprender. Al formalizar tu inscripción, aseguras automáticamente una de nuestras <strong style="color: var(--color-primary);">80 alojamientos disponibles</strong> sin costo adicional.
+                        </p>
+                        <p style="margin-bottom: 12px; font-size: 0.85rem; color: #b45309;">
+                            ⏳ <strong>Cupos estrictamente limitados.</strong> ¡Reserva tu pre-inscripción ahora!
+                        </p>
+                        <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4;">
+                            📢 <strong>Aviso:</strong> Si se agotan estos 80 lugares, pronto habilitaremos nuevas sedes aliadas <strong>completamente gratuitas</strong>.
+                        </p>
                     </div>
 
                     <div class="sidebar-card sidebar-card--highlights">
@@ -349,6 +504,26 @@
     <script src="../js/main.js"></script>
 
     <script>
+        // ==========================================
+        // SISTEMA DE PESTAÑAS
+        // ==========================================
+        function switchTab(tabName) {
+            // Ocultar todos los paneles
+            document.getElementById('tab-pre-inscripcion').style.display = 'none';
+            document.getElementById('tab-pago').style.display = 'none';
+
+            // Desactivar todos los botones
+            document.getElementById('btn-tab-pre-inscripcion').classList.remove('tab-btn--active');
+            document.getElementById('btn-tab-pago').classList.remove('tab-btn--active');
+
+            // Activar el panel y botón seleccionados
+            document.getElementById('tab-' + tabName).style.display = 'block';
+            document.getElementById('btn-tab-' + tabName).classList.add('tab-btn--active');
+        }
+
+        // ==========================================
+        // TOGGLE CAMPOS DE POSTER
+        // ==========================================
         function togglePosterFields(show) {
             const fields = document.getElementById('posterFields');
             const titleInput = document.getElementById('posterTitle');
@@ -368,7 +543,96 @@
         }
 
         // ==========================================
-        // SCRIPT PARA CARGAR EL MURAL AL ABRIR LA PÁGINA
+        // FILE UPLOAD UI
+        // ==========================================
+        function handleFileChange(input) {
+            const ui = document.getElementById('fileUploadUI');
+            const info = document.getElementById('fileSelectedInfo');
+            const nameSpan = document.getElementById('fileSelectedName');
+
+            if (input.files && input.files[0]) {
+                ui.style.display = 'none';
+                nameSpan.textContent = input.files[0].name;
+                info.style.display = 'flex';
+            }
+        }
+
+        function removeFile() {
+            const input = document.getElementById('voucher');
+            const ui = document.getElementById('fileUploadUI');
+            const info = document.getElementById('fileSelectedInfo');
+
+            input.value = '';
+            ui.style.display = 'flex';
+            info.style.display = 'none';
+        }
+
+        // ==========================================
+        // FORMULARIO DE PAGO — fetch con FormData
+        // ==========================================
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('paymentSubmitBtn');
+            const feedback = document.getElementById('payment-feedback');
+
+            const cedula = document.getElementById('payment-cedula').value.trim();
+            const voucherFile = document.getElementById('voucher').files[0];
+
+            if (!cedula || !voucherFile) {
+                showPaymentFeedback('error', '⚠️ Por favor completa todos los campos obligatorios.');
+                return;
+            }
+
+            // Validación de tamaño (5MB)
+            if (voucherFile.size > 5 * 1024 * 1024) {
+                showPaymentFeedback('error', '⚠️ El archivo supera el tamaño máximo permitido (5MB).');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            feedback.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('cedula', cedula);
+            formData.append('voucher', voucherFile);
+
+            try {
+                const response = await fetch('../backend/api.php?action=confirm_payment', {
+                    method: 'POST',
+                    body: formData
+                    // NO establecer Content-Type — el browser lo pone automáticamente con el boundary correcto
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showPaymentFeedback('success', '✅ ' + (data.message || '¡Comprobante enviado con éxito! Será revisado por el equipo organizador.'));
+                    document.getElementById('paymentForm').reset();
+                    removeFile();
+                } else {
+                    showPaymentFeedback('error', '❌ ' + (data.error || 'Ocurrió un error. Inténtalo de nuevo.'));
+                }
+            } catch (err) {
+                console.error('Error al enviar comprobante:', err);
+                showPaymentFeedback('error', '❌ Error de conexión. Verifica tu red e inténtalo de nuevo.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Comprobante';
+            }
+        });
+
+        function showPaymentFeedback(type, message) {
+            const feedback = document.getElementById('payment-feedback');
+            feedback.className = 'form-feedback form-feedback--' + type;
+            feedback.textContent = message;
+            feedback.style.display = 'block';
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ==========================================
+        // MURAL DE PARTICIPANTES
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             cargarMural();
@@ -444,6 +708,319 @@
 
     <style>
         /* ============================================
+           SISTEMA DE PESTAÑAS
+           ============================================ */
+        .tabs-wrapper {
+            background: white;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .tabs-nav {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 28px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn:hover {
+            color: var(--color-primary);
+            background: #f0f4f8;
+        }
+
+        .tab-btn--active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+            background: rgba(30, 58, 138, 0.04);
+        }
+
+        .tab-step {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn--active .tab-step {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .tab-label em {
+            font-style: normal;
+            font-weight: 400;
+            color: #94a3b8;
+            font-size: 0.85em;
+        }
+
+        .tab-btn--active .tab-label em {
+            color: #7aa2d4;
+        }
+
+        .tabs-arrow {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           BLOQUE DE PRECIOS INFORMATIVO
+           ============================================ */
+        .pricing-info-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+            border: 1.5px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 1.4rem;
+        }
+
+        .pricing-info-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pricing-info-content {
+            flex: 1;
+        }
+
+        .pricing-info-title {
+            font-weight: 800;
+            color: #1e3a8a;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .pricing-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pricing-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+        }
+
+        .pricing-tag--student {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .pricing-tag--prof {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pricing-tag strong {
+            font-size: 1rem;
+        }
+
+        .pricing-info-hint {
+            font-size: 0.84rem;
+            color: #475569;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* ============================================
+           FORMULARIO DE PAGO — PASOS
+           ============================================ */
+        .payment-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 1.4rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .payment-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .payment-step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            font-size: 0.78rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .payment-step-text {
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           FILE UPLOAD CUSTOM UI
+           ============================================ */
+        .file-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--color-primary);
+        }
+
+        .file-input-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .file-upload-ui {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 20px;
+            cursor: pointer;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .file-upload-ui:hover {
+            background: #f0f4f8;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+        }
+
+        .file-upload-label {
+            font-weight: 600;
+            color: var(--color-primary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .file-upload-hint {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        .file-selected-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: #f0fdf4;
+        }
+
+        .file-selected-icon {
+            font-size: 1.2rem;
+        }
+
+        #fileSelectedName {
+            flex: 1;
+            font-size: 0.88rem;
+            color: #15803d;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .file-remove-btn {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           FEEDBACK DEL FORMULARIO DE PAGO
+           ============================================ */
+        .form-feedback {
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .form-feedback--success {
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            color: #15803d;
+        }
+
+        .form-feedback--error {
+            background: #fef2f2;
+            border: 1.5px solid #fca5a5;
+            color: #b91c1c;
+        }
+
+        /* ============================================
+           FORM HINT
+           ============================================ */
+        .form-hint {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* ============================================
            HEADER COMPACTO UNIFICADO
            ============================================ */
         .page-header-compact {
@@ -496,7 +1073,6 @@
             align-items: start;
         }
 
-        /* --- Columna formulario --- */
         .col-form {}
 
         .form-container {
@@ -531,7 +1107,7 @@
             flex-direction: column;
             gap: 1.2rem;
             position: sticky;
-            top: 20px;
+            top: 70px; /* Ajustado por el sticky de las tabs */
         }
 
         .sidebar-card {
@@ -551,7 +1127,6 @@
         .sidebar-card--accent h3,
         .sidebar-card--accent p { color: white !important; }
 
-        /* Forzar texto secundario totalmente blanco dentro de la tarjeta de acento */
         .sidebar-card--accent .sidebar-date-sub {
             color: white !important;
             opacity: 1 !important;
@@ -580,7 +1155,6 @@
         }
 
         .sidebar-date-sub { font-size: 0.82rem !important; opacity: 0.85; }
-
         .sidebar-detail { margin-top: 4px !important; font-size: 0.82rem !important; }
 
         .highlights-list {
@@ -607,10 +1181,12 @@
             .form-row { grid-template-columns: 1fr; }
             .page-title-compact { font-size: 2rem; }
             .col-sidebar { flex-direction: column; }
+            .tab-btn { padding: 12px 16px; font-size: 0.82rem; }
+            .pricing-info-block { flex-direction: column; gap: 8px; }
         }
 
         /* ============================================
-           MURAL Y MODAL (sin cambios de funcionalidad)
+           MURAL Y MODAL
            ============================================ */
         .mural-section {
             padding: 50px 0; background-color: #f8fafc;
@@ -684,8 +1260,9 @@
             gap: 20px;
         }
         .grid-card { width: 100%; min-height: 140px; }
+
         /* ============================================
-           SECCIÓN MAPA INTERACTIVO
+           SECCIÓN MAPA
            ============================================ */
         .map-section {
             padding: 4rem 0;
@@ -699,8 +1276,8 @@
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             border: 4px solid white;
-            background: #f0f4f8; 
-            line-height: 0; /* Elimina el espacio fantasma debajo del iframe */
+            background: #f0f4f8;
+            line-height: 0;
         }
         
         .map-container iframe {
@@ -710,14 +1287,9 @@
             border: none;
         }
 
-        /* Ajuste para dispositivos móviles */
         @media (max-width: 600px) {
-            .map-container iframe {
-                height: 350px;
-            }
-            .map-section {
-                padding: 2.5rem 0;
-            }
+            .map-container iframe { height: 350px; }
+            .map-section { padding: 2.5rem 0; }
         }
     </style>
 </body>

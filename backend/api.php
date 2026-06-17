@@ -567,6 +567,114 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'get_carousel_images
     exit();
 }
 
+// --- RUTA: OBTENER COMPROBANTE DE PAGO ---
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'confirm_payment') {
+
+    // 1. Validar que llegaron los datos requeridos
+    $cedula = isset($_POST['cedula']) ? trim($_POST['cedula']) : '';
+
+    if (empty($cedula)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'La cédula es obligatoria.']);
+        exit();
+    }
+
+    if (!isset($_FILES['voucher']) || $_FILES['voucher']['error'] !== UPLOAD_ERR_OK) {
+        $uploadErrors = [
+            UPLOAD_ERR_INI_SIZE   => 'El archivo supera el límite del servidor (upload_max_filesize).',
+            UPLOAD_ERR_FORM_SIZE  => 'El archivo supera el límite del formulario.',
+            UPLOAD_ERR_PARTIAL    => 'El archivo se subió de forma incompleta.',
+            UPLOAD_ERR_NO_FILE    => 'No se recibió ningún archivo.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Falta la carpeta temporal del servidor.',
+            UPLOAD_ERR_CANT_WRITE => 'Error al escribir el archivo en disco.',
+            UPLOAD_ERR_EXTENSION  => 'Una extensión de PHP bloqueó la subida.',
+        ];
+        $errorCode = $_FILES['voucher']['error'] ?? UPLOAD_ERR_NO_FILE;
+        $errorMsg  = $uploadErrors[$errorCode] ?? 'Error desconocido al subir el archivo.';
+        http_response_code(400);
+        echo json_encode(['error' => $errorMsg]);
+        exit();
+    }
+
+    // 2. Verificar que el participante existe en la tabla
+    try {
+        $check = $conn->prepare('SELECT id FROM participants WHERE cedula = ?');
+        $check->execute([$cedula]);
+        if ($check->rowCount() === 0) {
+            http_response_code(404);
+            echo json_encode(['error' => 'No se encontró ninguna inscripción con esa cédula. ¿Ya completaste la Pre-Inscripción?']);
+            exit();
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al verificar la cédula: ' . $e->getMessage()]);
+        exit();
+    }
+
+    // 3. Validar tipo MIME del archivo (whitelist estricta)
+    $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+    $finfo        = new finfo(FILEINFO_MIME_TYPE);
+    $detectedMime = $finfo->file($_FILES['voucher']['tmp_name']);
+
+    if (!in_array($detectedMime, $allowedMimes, true)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG, PNG, WEBP) o PDF.']);
+        exit();
+    }
+
+    // 4. Crear la carpeta uploads/ si no existe (relativa al api.php)
+    $uploadsDir = __DIR__ . '/uploads/';
+    if (!is_dir($uploadsDir)) {
+        if (!mkdir($uploadsDir, 0755, true)) {
+            http_response_code(500);
+            echo json_encode(['error' => 'No se pudo crear la carpeta de uploads en el servidor.']);
+            exit();
+        }
+    }
+
+    // 5. Generar nombre de archivo seguro y único
+    $originalExt  = pathinfo($_FILES['voucher']['name'], PATHINFO_EXTENSION);
+    $safeExt      = strtolower($originalExt);
+    $safeFilename = 'bauche_' . preg_replace('/[^a-zA-Z0-9_\-]/', '', $cedula) . '_' . time() . '.' . $safeExt;
+    $destination  = $uploadsDir . $safeFilename;
+
+    // 6. Mover el archivo temporal a su destino definitivo
+    if (!move_uploaded_file($_FILES['voucher']['tmp_name'], $destination)) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al guardar el archivo en el servidor. Verifica los permisos de la carpeta uploads/.']);
+        exit();
+    }
+
+    // 7. Actualizar la BD: guardar la ruta del bauche y cambiar el estado a 'revision'
+    try {
+        $stmt = $conn->prepare(
+            "UPDATE participants
+             SET voucher_path    = ?,
+                 payment_status  = 'revision'
+             WHERE cedula = ?"
+        );
+        $stmt->execute(['uploads/' . $safeFilename, $cedula]);
+
+        if ($stmt->rowCount() === 0) {
+            // El archivo ya se subió pero el UPDATE no afectó filas (inesperado)
+            http_response_code(404);
+            echo json_encode(['error' => 'El comprobante se guardó pero no se pudo actualizar el registro. Contacta a soporte.']);
+            exit();
+        }
+
+        http_response_code(200);
+        echo json_encode([
+            'message' => '¡Comprobante recibido! Tu pago quedó en estado de revisión. El equipo organizador lo verificará pronto.',
+        ]);
+
+    } catch (Exception $e) {
+        // Si falla la BD, eliminar el archivo ya subido para no dejar basura
+        @unlink($destination);
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al actualizar el registro: ' . $e->getMessage()]);
+    }
+}
+
 // ==========================================
 // RUTAS DE ELIMINACIÓN (ADMIN)
 // ==========================================
