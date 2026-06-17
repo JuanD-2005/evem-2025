@@ -60,6 +60,27 @@
                     <p>Para la XXVIII edición de EVEM hemos seleccionado un hotel exclusivo para todos nuestros participantes. Esto nos permitirá compartir, hacer networking y disfrutar de la experiencia completa de la Escuela en comunidad.</p>
                 </div>
             </div>
+            
+            <div class="urgency-banner" role="region" aria-label="Hospedaje garantizado">
+                <div class="banner-left-accent">
+                    <div class="bed-counter">
+                        <span class="counter-num">80</span>
+                        <span class="counter-text">Camas<br><small>Gratis</small></span>
+                    </div>
+                </div>
+
+                <div class="urgency-content">
+                    <h3 class="urgency-title">🛏️ ¡Hospedaje Garantizado!</h3>
+                    <p class="urgency-main-text">Queremos que tu única preocupación sea aprender. Al formalizar tu inscripción, aseguras automáticamente una de nuestras camas disponibles <strong>sin costo adicional</strong>.</p>
+
+                    <div class="urgency-alert">
+                        <div class="pulse-icon">⏳</div>
+                        <p><strong>Cupos estrictamente limitados.</strong> <a class="reserve-link" href="contact.html">¡Reserva tu pre-inscripción ahora!</a></p>
+                    </div>
+
+                    <div class="ally-notice">📢 <strong>Aviso:</strong> Si se agotan estos 80 lugares, pronto habilitaremos nuevas sedes aliadas completamente gratuitas.</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -391,6 +412,185 @@
             }
             .video-wrapper {
                 height: 480px; /* Ajuste ligeramente más pequeño para móviles */
+            }
+        }
+
+        /* ============================================
+           BANNER DE URGENCIA / HOSPEDAJE GARANTIZADO
+           ============================================ */
+        .urgency-banner {
+            /* 1. SEPARACIÓN: Lo despegamos del banner superior */
+            margin-top: 2.5rem; 
+            
+            /* 2. ESTÉTICA CURVA: Añadimos bordes redondeados y una sombra suave */
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            
+            background: linear-gradient(to right, #ffffff, #fdfbf7);
+            border: 1px solid rgba(243, 156, 18, 0.3); /* Borde más sutil y elegante */
+            position: relative;
+            
+            /* 3. CLAVE: overflow: hidden hace que el recuadro naranja respete las curvas de las esquinas */
+            overflow: hidden; 
+            align-items: stretch;
+            padding: 0; 
+            display: flex;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Efecto hover sutil para que se sienta interactivo */
+        .urgency-banner:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(243, 156, 18, 0.12);
+        }
+
+        /* Bloque llamativo izquierdo (El "Ticket") */
+        .banner-left-accent {
+            background: linear-gradient(135deg, var(--color-secondary, #f39c12) 0%, #d68910 100%);
+            /* Le damos más padding interior para que no se vea apretado */
+            padding: 2.5rem 2rem; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 170px; /* Un poco más ancho para equilibrar proporciones */
+        }
+
+        .bed-counter {
+            text-align: center;
+            color: white;
+            animation: pulse-soft 2s infinite;
+        }
+
+        .counter-num {
+            display: block;
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .counter-text {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-top: 8px;
+        }
+
+        /* Contenido derecho */
+        .urgency-content {
+            /* Aumentamos el padding para que respire el texto y no toque los bordes */
+            padding: 2.5rem; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .urgency-title {
+            color: var(--color-primary-dark);
+            font-size: 1.6rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+
+        .urgency-main-text {
+            font-size: 1.05rem !important;
+            color: var(--color-text-secondary) !important;
+            margin-bottom: 1.5rem !important;
+            line-height: 1.6;
+        }
+
+        /* Caja de alerta con el reloj */
+        .urgency-alert {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(243, 156, 18, 0.08);
+            padding: 16px 24px;
+            border-radius: 12px; /* Esquinas más redondeadas también aquí */
+            margin-bottom: 1.2rem;
+            border-left: 4px solid var(--color-secondary, #f39c12);
+        }
+
+        .urgency-alert p {
+            margin: 0 !important;
+            color: #b97700 !important;
+            font-size: 1rem !important;
+        }
+
+        .reserve-link {
+            color: var(--color-primary-dark);
+            font-weight: 800;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+            margin-left: 5px;
+        }
+
+        .reserve-link:hover {
+            color: var(--color-secondary, #f39c12);
+        }
+
+        /* Aviso de sedes aliadas */
+        .ally-notice {
+            font-size: 0.9rem;
+            color: var(--color-text-muted, #7f8c8d);
+            background: #f8fafc;
+            padding: 10px 16px;
+            border-radius: 8px; /* Suavizamos los bordes del mensaje inferior */
+            display: inline-block;
+        }
+
+        /* Animaciones */
+        .pulse-icon {
+            font-size: 1.6rem;
+            animation: swing 2s infinite ease-in-out;
+            transform-origin: top center;
+        }
+
+        @keyframes pulse-soft {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes swing {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(15deg); }
+            40% { transform: rotate(-10deg); }
+            60% { transform: rotate(5deg); }
+            80% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .urgency-banner {
+                flex-direction: column;
+            }
+            .banner-left-accent {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            .bed-counter {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .counter-num {
+                font-size: 2.8rem;
+            }
+            .counter-text {
+                text-align: left;
+                margin-top: 0;
+            }
+            .urgency-content {
+                padding: 1.8rem 1.5rem; /* Ajustamos márgenes en móvil */
+            }
+            .urgency-alert {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
     </style>

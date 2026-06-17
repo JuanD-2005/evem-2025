@@ -125,14 +125,64 @@
         <div class="container">
             <div class="section-intro">
                 <h2 class="section-title-modern">Posters y Ponencias</h2>
-                <p class="section-description">Trabajos de investigación presentados en esta edición de la EVEM</p>
+                <p class="section-description">Lineamientos para presentar tu investigación en esta edición</p>
             </div>
-            <div id="posters-grid" class="courses-premium-grid">
-                <div style="text-align: center; grid-column: 1 / -1; padding: 60px; color: var(--color-text-muted);">
-                    <div class="loading-spinner"></div>
-                    <h3 style="margin-top: 20px;">Cargando posters desde el servidor...</h3>
+
+            <div class="poster-guidelines-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div style="font-size: 2.2rem; margin-bottom: 8px;">📏</div>
+                            <h3>Espacio Físico</h3>
+                            <p>Conoce las dimensiones disponibles para tu póster.</p>
+                            <div class="hover-hint">Pasa el cursor ➔</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Espacio Físico</h4>
+                            <p>Conoce las dimensiones disponibles para tu póster.</p>
+                            <div style="font-weight:800; font-size:1.1rem; margin-top:12px;">1.20m x 1.70m<br><span style="font-size:0.9rem; font-weight:600;">Ancho × Alto</span></div>
+                            <div class="dimension-box" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div style="font-size: 2.2rem; margin-bottom: 8px;">🎨</div>
+                            <h3>Diseño y Contenido</h3>
+                            <p>Estructura de diseño libre, pero con elementos indispensables.</p>
+                            <div class="hover-hint">Pasa el cursor ➔</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Elementos Obligatorios</h4>
+                            <ul class="poster-checklist">
+                                <li>✓ Título y Autores</li>
+                                <li>✓ Institución</li>
+                                <li>✓ Resumen</li>
+                                <li>✓ Introducción</li>
+                                <li>✓ Hallazgos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div style="font-size: 2.2rem; margin-bottom: 8px;">☕</div>
+                            <h3>Exhibición</h3>
+                            <p>¿Cuándo y dónde será visto tu trabajo?</p>
+                            <div class="hover-hint">Pasa el cursor ➔</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4>Coffee Breaks</h4>
+                            <p>Los pósteres serán el centro de atención durante los descansos del evento, fomentando el networking académico.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -465,6 +515,123 @@
         @media (max-width: 560px) {
             .page-header-premium { padding: 32px 0 44px; }
             .header-bottom-row { flex-direction: column; gap: 1.2rem; }
+        }
+        /* ============================================
+           INTERACTIVIDAD POSTERS (FLIP CARDS)
+           ============================================ */
+        .poster-guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+            perspective: 1000px; /* Da el efecto de profundidad 3D */
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* El giro ocurre al hacer hover */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .flip-card-front {
+            background-color: white;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .flip-card-back p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.95;
+        }
+
+        .hover-hint {
+            margin-top: auto;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-secondary, #f39c12);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+        }
+
+        .poster-checklist {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .poster-checklist li {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 4px;
+        }
+
+        .poster-checklist li:last-child {
+            border-bottom: none;
+        }
+
+        /* Representación visual de proporción 1.20 x 1.70 */
+        .dimension-box {
+            width: 60px;
+            height: 85px;
+            border: 2px dashed rgba(255,255,255,0.8);
+            margin-top: 1rem;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(3px); }
+            100% { opacity: 0.6; transform: translateX(0); }
         }
     </style>
 
