@@ -1,99 +1,99 @@
 class EVEMApiClient {
-    constructor() {
-        // 1. Detectar si estamos dentro de la carpeta "pages"
-        // (Verifica si la URL del navegador contiene "/pages/")
-        const isPagesFolder = window.location.pathname.includes('/pages/');
+  constructor() {
+    // Usamos ruta absoluta (comienza con /) para que funcione en cualquier nivel
+    this.baseURL = "/backend/api.php?action=";
+    console.log("API Configurada en:", this.baseURL);
+  }
 
-        // 2. Definir el prefijo
-        // Si estamos en pages, usamos "../../" para salir (2 niveles). Si no, usamos vacio "".
-        const prefix = isPagesFolder ? '../../' : '';
+  async request(endpoint, options = {}) {
+    // endpoint llega como "/courses", le quitamos la barra "/"
+    const action = endpoint.replace("/", "");
+    const url = `${this.baseURL}${action}`;
 
-        // 3. Construir la ruta final
-        this.baseURL = `${prefix}backend/api.php?action=`;
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+      });
 
-        console.log('API Configurada en:', this.baseURL); // Para depurar
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || `Error ${response.status}: Algo salió mal`,
+        );
+      }
+
+      return data;
+    } catch (error) {
+      console.error("API Error:", error);
+      throw error;
     }
+  }
 
-    async request(endpoint, options = {}) {
-        // endpoint llega como "/courses", le quitamos la barra "/"
-        const action = endpoint.replace('/', '');
-        const url = `${this.baseURL}${action}`;
+  // Obtener lista de cursos
+  async getCourses() {
+    return this.request("/courses");
+  }
 
-        try {
-            const response = await fetch(url, {
-                ...options,
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...options.headers,
-                },
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || `Error ${response.status}: Algo salió mal`);
-            }
-
-            return data;
-        } catch (error) {
-            console.error('API Error:', error);
-            throw error;
-        }
-    }
-
-    // Obtener lista de cursos
-    async getCourses() {
-        return this.request('/courses');
-    }
-
-    // Registrar participante
-    async registerParticipant(formData) {
-        return this.request('/register', {
-            method: 'POST',
-            body: JSON.stringify(formData)
-        });
-    }
+  // Registrar participante
+  async registerParticipant(formData) {
+    return this.request("/register", {
+      method: "POST",
+      body: JSON.stringify(formData),
+    });
+  }
 }
 
 // Función para cargar cursos en courses.html
 async function loadCourses() {
-    const container = document.getElementById('courses-container');
-    if (!container) return; // Si no estamos en la página de cursos, no hace nada
+  const container = document.getElementById("courses-container");
+  if (!container) return; // Si no estamos en la página de cursos, no hace nada
 
-    try {
-        // Asegúrate de que esta URL apunte a tu backend correctamente
-        const isPagesFolder = window.location.pathname.includes('/pages/');
-        const prefix = isPagesFolder ? '../../' : '';
-        const response = await fetch(`${prefix}backend/api.php?action=courses`); 
-        const courses = await response.json();
+  try {
+    // Petición absoluta directa al backend
+    const response = await fetch("/backend/api.php?action=courses");
+    const courses = await response.json();
 
-        // Limpiamos el mensaje de "Cargando..."
-        container.innerHTML = '';
+    // Limpiamos el mensaje de "Cargando..."
+    container.innerHTML = "";
 
-        // Recorremos cada curso que viene de la base de datos
-        courses.forEach(course => {
-            // 1. Cálculos matemáticos para la barra de progreso
-            const capacity = Number.parseInt(course.max_capacity, 10) || 40;
-            const enrolled = Number.parseInt(course.current_enrollment, 10) || 0;
-            const available = capacity - enrolled;
-            const percentage = Math.round((enrolled / capacity) * 100);
-            
-            // 2. Definir colores y textos según los cupos
-            const isFull = available <= 0;
-            const badgeText = isFull ? 'Agotado' : 'Cupos Libres';
-            const badgeColor = isFull ? 'var(--color-error)' : 'var(--color-success)';
-            const barColor = isFull ? 'var(--color-error)' : 'var(--color-success)';
+    // Recorremos cada curso que viene de la base de datos
+    courses.forEach((course) => {
+      // 1. Cálculos matemáticos para la barra de progreso
+      const capacity = Number.parseInt(course.max_capacity, 10) || 40;
+      const enrolled = Number.parseInt(course.current_enrollment, 10) || 0;
+      const available = capacity - enrolled;
+      const percentage = Math.round((enrolled / capacity) * 100);
 
-            // 3. (Opcional) Asignar un icono divertido según el título del curso
-            let icon = '📘';
-            const titleLower = course.title.toLowerCase();
-            if(titleLower.includes('geometría')) icon = '📐';
-            else if(titleLower.includes('cálculo') || titleLower.includes('derivada')) icon = '📈';
-            else if(titleLower.includes('ia') || titleLower.includes('inteligencia')) icon = '🤖';
-            else if(titleLower.includes('fracciones') || titleLower.includes('operaciones')) icon = '➗';
+      // 2. Definir colores y textos según los cupos
+      const isFull = available <= 0;
+      const badgeText = isFull ? "Agotado" : "Cupos Libres";
+      const badgeColor = isFull ? "var(--color-error)" : "var(--color-success)";
+      const barColor = isFull ? "var(--color-error)" : "var(--color-success)";
 
-            // 4. Armar la tarjeta HTML idéntica a nuestro diseño moderno
-            const cardHTML = `
+      // 3. (Opcional) Asignar un icono divertido según el título del curso
+      let icon = "📘";
+      const titleLower = course.title.toLowerCase();
+      if (titleLower.includes("geometría")) icon = "📐";
+      else if (
+        titleLower.includes("cálculo") ||
+        titleLower.includes("derivada")
+      )
+        icon = "📈";
+      else if (titleLower.includes("ia") || titleLower.includes("inteligencia"))
+        icon = "🤖";
+      else if (
+        titleLower.includes("fracciones") ||
+        titleLower.includes("operaciones")
+      )
+        icon = "➗";
+
+      // 4. Armar la tarjeta HTML idéntica a nuestro diseño moderno
+      const cardHTML = `
                 <article class="modern-course-card">
                     <div class="card-badge" style="background-color: ${badgeColor};">${badgeText}</div>
                     <div class="card-icon-header">${icon}</div>
@@ -103,9 +103,9 @@ async function loadCourses() {
                         🎯 Público: ${course.target_audience}
                     </div>
                     <p class="modern-course-institution">Curso EVEM 2026</p>
-                    
+
                     <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin: 15px 0;">
-                        ${course.description || 'Curso intensivo de 4 días de duración.'}
+                        ${course.description || "Curso intensivo de 4 días de duración."}
                     </p>
 
                     <div class="course-stats">
@@ -126,73 +126,76 @@ async function loadCourses() {
                 </article>
             `;
 
-            // Insertar la tarjeta en la página
-            container.innerHTML += cardHTML;
-        });
-
-    } catch (error) {
-        console.error('Error al cargar la base de datos:', error);
-        container.innerHTML = `
+      // Insertar la tarjeta en la página
+      container.innerHTML += cardHTML;
+    });
+  } catch (error) {
+    console.error("Error al cargar la base de datos:", error);
+    container.innerHTML = `
             <div style="text-align: center; grid-column: 1 / -1; padding: 40px; color: var(--color-error);">
                 <h3>Error al conectar con el servidor 🚨</h3>
                 <p>Por favor, revisa que XAMPP esté encendido y la base de datos activa.</p>
             </div>
         `;
-    }
+  }
 }
 
 // Función para cargar los posters
 async function loadPosters() {
-    const container = document.getElementById('posters-grid');
-    if (!container) return;
+  const container = document.getElementById("posters-grid");
+  if (!container) return;
 
-    container.innerHTML = '<div class="loading-spinner"></div>';
-    
-    try {
-        const isPagesFolder = window.location.pathname.includes('/pages/');
-        const prefix = isPagesFolder ? '../../' : '';
-        const response = await fetch(`${prefix}backend/api.php?action=get_posters`);
-        const posters = await response.json();
+  container.innerHTML = '<div class="loading-spinner"></div>';
 
-        if (!response.ok) throw new Error('Error al cargar la API');
+  try {
+    // Petición absoluta directa al backend
+    const response = await fetch("/backend/api.php?action=get_posters");
+    const posters = await response.json();
 
-        if (posters.length === 0) {
-            container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-secondary); padding: 20px;">Aún no hay ponencias registradas.</p>';
-            return;
-        }
+    if (!response.ok) throw new Error("Error al cargar la API");
 
-        container.innerHTML = posters.map(poster => `
+    if (posters.length === 0) {
+      container.innerHTML =
+        '<p style="text-align: center; grid-column: 1 / -1; color: var(--color-text-secondary); padding: 20px;">Aún no hay ponencias registradas.</p>';
+      return;
+    }
+
+    container.innerHTML = posters
+      .map(
+        (poster) => `
             <div class="course-card" style="display: flex; flex-direction: column; border-top: 4px solid var(--color-primary);">
                 <div class="course-content" style="flex-grow: 1; padding: 25px;">
-                    
+
                     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px;">
                         <div style="width: 45px; height: 45px; background: var(--color-primary-light); color: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
                             📊
                         </div>
                         <div>
                             <h4 style="margin: 0; font-size: 1rem; color: var(--color-text); font-weight: bold;">${poster.full_name}</h4>
-                            <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary);">${poster.institution || 'Sin institución'}</p>
+                            <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary);">${poster.institution || "Sin institución"}</p>
                         </div>
                     </div>
-                    
+
                     <h3 class="course-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--color-primary-dark);">
-                        ${poster.poster_title || 'Título por definir'}
+                        ${poster.poster_title || "Título por definir"}
                     </h3>
                     <p class="course-instructor" style="font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); font-style: normal;">
-                        ${poster.poster_abstract || 'Sin resumen disponible.'}
+                        ${poster.poster_abstract || "Sin resumen disponible."}
                     </p>
                 </div>
             </div>
-        `).join('');
-        
-    } catch (error) {
-        console.error(error);
-        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: #ef4444; padding: 20px;">Error al cargar las ponencias. Intente más tarde.</p>';
-    }
+        `,
+      )
+      .join("");
+  } catch (error) {
+    console.error(error);
+    container.innerHTML =
+      '<p style="text-align: center; grid-column: 1 / -1; color: #ef4444; padding: 20px;">Error al cargar las ponencias. Intente más tarde.</p>';
+  }
 }
 
 // Ejecutar la función cuando la página termine de cargar
-document.addEventListener('DOMContentLoaded', () => {
-    loadCourses();
-    loadPosters();
+document.addEventListener("DOMContentLoaded", () => {
+  loadCourses();
+  loadPosters();
 });
