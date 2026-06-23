@@ -2,6 +2,15 @@
 
 class EVEMApp {
     constructor() {
+        // Créditos de Desarrollo (Easter Egg)
+        console.log(
+            "%c🚀 Arquitectura y Desarrollo por Juan Paredes", 
+            "color: #0ea5e9; font-size: 14px; font-weight: bold; border: 1px solid #0ea5e9; padding: 4px 8px; border-radius: 4px;"
+        );
+        console.log("Ingeniería Informática - UNET | Full-Stack Web Developer");
+        console.log("GitHub: https://github.com/JuanD-2005");
+        console.log("LinkedIn: https://www.linkedin.com/in/juan-diego-paredes-g%C3%A1mez-21415338a/");
+
         console.log("🎓 EVEM 2025 - Inicializando...");
         
         // 1. AQUÍ CREAMOS LA CONEXIÓN (IMPORTANTE)
