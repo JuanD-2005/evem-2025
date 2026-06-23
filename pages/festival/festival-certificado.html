@@ -6,10 +6,10 @@
     <title>Certificados — Festival de las Ciencias CEDIC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
-    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/typography.css">
+    <link rel="stylesheet" href="../../css/layout.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -328,7 +328,7 @@
             </ul>
             <div class="central-logo-container">
                 <a href="festival.html">
-                    <img src="../assets/images/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo"
+                    <img src="../../assets/logos/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo"
                          style="max-height: 55px; width: auto; object-fit: contain; margin-top: 5px;">
                 </a>
             </div>
@@ -513,9 +513,9 @@
                 // El backend recibe el parámetro 'cedula' o 'team' según el modo
                 let url;
                 if (searchMode === 'cedula') {
-                    url = `../backend/api.php?action=check_festival_certificate&cedula=${encodeURIComponent(soloDigitos(rawInput))}`;
+                    url = `../../backend/api.php?action=check_festival_certificate&cedula=${encodeURIComponent(soloDigitos(rawInput))}`;
                 } else {
-                    url = `../backend/api.php?action=check_festival_certificate&team=${encodeURIComponent(rawInput)}`;
+                    url = `../../backend/api.php?action=check_festival_certificate&team=${encodeURIComponent(rawInput)}`;
                 }
 
                 const res  = await fetch(url);
@@ -644,7 +644,7 @@
 
             // 1. Plantilla de fondo
             const img = new Image();
-            img.src = '../assets/images/plantilla-festival.jpg';
+            img.src = '../../assets/certificados/plantilla-festival.jpg';
 
             await new Promise((resolve, reject) => {
                 img.onload  = resolve;

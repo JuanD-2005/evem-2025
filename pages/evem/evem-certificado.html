@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificados EVEM 2026</title>
     
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/typography.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -21,12 +21,12 @@
     <header class="top-bar">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="../index.html">🏠 Inicio</a></li>
+                <li><a href="../../index.html">🏠 Inicio</a></li>
                 <li><a href="courses.html">💠 Volver a Cursos</a></li>
             </ul>
             <div class="central-logo-container">
-                <a href="../index.html">
-                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
+                <a href="../../index.html">
+                    <img src="../../assets/logos/evem-logo.png" alt="EVEM Logo" class="central-logo">
                 </a>
             </div>
             <ul class="nav-links">
@@ -80,7 +80,7 @@
             btnText.textContent = 'Buscando curso... ⏳';
 
             try {
-                const response = await fetch(`../backend/api.php?action=check_evem_certificate&cedula=${encodeURIComponent(cedula)}`);
+                const response = await fetch(`../../backend/api.php?action=check_evem_certificate&cedula=${encodeURIComponent(cedula)}`);
                 const result = await response.json();
 
                 if (response.ok) {
@@ -113,7 +113,7 @@
             
             // 1. Cargar el placeholder de Canva
             const img = new Image();
-            img.src = '../assets/images/plantilla-evem.jpg'; 
+            img.src = '../../assets/certificados/plantilla-evem.jpg'; 
             
             await new Promise((resolve, reject) => {
                 img.onload = resolve;

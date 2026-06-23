@@ -507,7 +507,7 @@
                             <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
                             Festival de las Ciencias 2025
                         </div>
-                        <img src="../assets/images/cedic-Sinfondo.png" alt="CEDIC" class="cert-logo">
+                        <img src="../../assets/logos/cedic-Sinfondo.png" alt="CEDIC" class="cert-logo">
                         <div class="data-rows">
                             <div class="data-row">
                                 <span class="data-label">Equipo</span>
@@ -587,7 +587,7 @@
 
             if (teamName) {
                 try {
-                    const response = await fetch(`../backend/api.php?action=check_festival_certificate&team=${encodeURIComponent(teamName)}`);
+                    const response = await fetch(`../../backend/api.php?action=check_festival_certificate&team=${encodeURIComponent(teamName)}`);
                     const data = await response.json();
                     if (response.ok) {
                         wrap.innerHTML = buildSuccess(data);

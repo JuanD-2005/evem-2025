@@ -358,13 +358,13 @@
     <div id="adminWrapper" style="display:none;">
         <nav class="topbar">
             <div class="topbar-left">
-                <img src="../assets/images/unet-logo.png" alt="UNET" class="topbar-logo">
+                <img src="../../assets/logos/unet-logo.png" alt="UNET" class="topbar-logo">
                 <div class="topbar-event-dot"></div>
                 <span class="topbar-title">Festival de las Ciencias</span>
                 <span class="topbar-subtitle">CEDIC · UNET</span>
             </div>
             <div style="display:flex;align-items:center;gap:12px;">
-                <a href="festival.html" class="topbar-back">
+                <a href="../festival/festival.html" class="topbar-back">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11L5 7l4-4"/></svg>
                     Volver al sitio
                 </a>
@@ -468,7 +468,7 @@
                     loadTeams();
                 } else {
                     Swal.fire({ icon: 'error', title: 'Clave incorrecta', text: 'No autorizado.', confirmButtonColor: '#dc2626' })
-                        .then(() => window.location.href = 'festival.html');
+                        .then(() => window.location.href = '../festival/festival.html');
                 }
             });
         });
@@ -493,7 +493,7 @@
             });
             if (isConfirmed) {
                 try {
-                    await fetch('../backend/api.php?action=delete_festival_team', {
+                    await fetch('../../backend/api.php?action=delete_festival_team', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: teamId })
@@ -523,7 +523,7 @@
         async function loadTeams() {
             const tbody = document.getElementById('tableBody');
             try {
-                const response = await fetch('../backend/api.php?action=get_festival_teams');
+                const response = await fetch('../../backend/api.php?action=get_festival_teams');
                 allTeams = await response.json();
                 updateStats(allTeams);
                 renderTable(allTeams);
@@ -593,7 +593,7 @@
 
             if (isConfirmed) {
                 try {
-                    await fetch('../backend/api.php?action=toggle_festival_status', {
+                    await fetch('../../backend/api.php?action=toggle_festival_status', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id, status: newStatus })

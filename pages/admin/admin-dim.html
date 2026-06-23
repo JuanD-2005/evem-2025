@@ -103,13 +103,13 @@
     <div id="adminWrapper" style="display:none;">
         <nav class="topbar">
             <div class="topbar-left">
-                <img src="../assets/images/unet-logo.png" alt="UNET" class="topbar-logo">
+                <img src="../../assets/logos/unet-logo.png" alt="UNET" class="topbar-logo">
                 <div class="topbar-event-dot"></div>
                 <span class="topbar-title">Día Internacional de las Matemáticas</span>
                 <span class="topbar-subtitle">DIM 2026 · EVEM</span>
             </div>
             <div style="display:flex;align-items:center;gap:12px;">
-                <a href="../index.html" class="topbar-back">
+                <a href="../../index.html" class="topbar-back">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11L5 7l4-4"/></svg>
                     Portal EVEM
                 </a>
@@ -199,7 +199,7 @@
                     loadParticipants();
                 } else {
                     Swal.fire({ icon: 'error', title: 'PIN Incorrecto', text: 'Acceso denegado.', confirmButtonColor: '#dc2626' })
-                        .then(() => window.location.href = '../index.html');
+                        .then(() => window.location.href = '../../index.html');
                 }
             });
         });
@@ -213,7 +213,7 @@
 
         async function loadParticipants() {
             try {
-                const response = await fetch('../backend/api.php?action=get_dim_admin_participants');
+                const response = await fetch('../../backend/api.php?action=get_dim_admin_participants');
                 allUsers = await response.json();
                 updateStats(allUsers);
                 renderTable(allUsers);
@@ -279,7 +279,7 @@
 
             if (isConfirmed) {
                 try {
-                    await fetch('../backend/api.php?action=toggle_payment', {
+                    await fetch('../../backend/api.php?action=toggle_payment', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: userId, has_paid: newStatus })
@@ -304,7 +304,7 @@
             });
             if (isConfirmed) {
                 try {
-                    await fetch('../backend/api.php?action=delete_dim_participant', {
+                    await fetch('../../backend/api.php?action=delete_dim_participant', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: userId })

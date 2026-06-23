@@ -1,0 +1,28 @@
+services:
+  # 1. Nuestro servidor Web
+  web:
+    build: .
+    ports:
+      - "8000:80" # Tu proyecto vivirá en localhost:8000
+    volumes:
+      - .:/var/www/html # Sincroniza tu código en tiempo real
+    depends_on:
+      - db # Espera a que la base de datos despierte primero
+
+  # 2. Nuestra Base de Datos
+  db:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: evem_2025
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: secretpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql # Guarda los datos aunque apagues Docker
+
+# Esto crea un "disco duro" virtual para que tu BD no se borre al apagar
+volumes:
+  db_data:
