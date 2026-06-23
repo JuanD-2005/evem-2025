@@ -6,7 +6,7 @@ function get_posters($conn) {
         // Buscamos en 'participants' y usamos los nombres reales de las columnas
         $stmt = $conn->query("SELECT full_name, institution, poster_title, poster_abstract FROM participants WHERE participation_type = 'poster' ORDER BY id DESC");
         $posters = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         http_response_code(200);
         echo json_encode($posters);
     } catch(Exception $e) {
@@ -17,20 +17,20 @@ function get_posters($conn) {
 
 function get_carousel_images($conn) {
     $folder = isset($_GET['folder']) ? $_GET['folder'] : '';
-    
+
     // Por seguridad, solo permitimos leer carpetas aprobadas
     $allowedFolders = ['carruseluno', 'carruseldos', 'carruseltres', 'fotoscarrusel'];
     if (in_array($folder, $allowedFolders, true)) {
         $directory = __DIR__ . '/../../assets/carruseles/' . $folder . '/';
         $images = [];
-        
+
         if (is_dir($directory)) {
             $files = scandir($directory);
             foreach ($files as $file) {
                 $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 // Filtramos para que solo lea archivos de imagen
                 if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                    $images[] = "../assets/carruseles/" . $folder . "/" . $file;
+                    $images[] = "/assets/carruseles/" . $folder . "/" . $file;
                 }
             }
         }
@@ -127,19 +127,19 @@ function confirm_payment($conn) {
              WHERE cedula = ?"
          );
          $stmt->execute(['uploads/' . $safeFilename, $cedula]);
- 
+
          if ($stmt->rowCount() === 0) {
              // El archivo ya se subió pero el UPDATE no afectó filas (inesperado)
              http_response_code(404);
              echo json_encode(['error' => 'El comprobante se guardó pero no se pudo actualizar el registro. Contacta a soporte.']);
              exit();
          }
- 
+
          http_response_code(200);
          echo json_encode([
              'message' => '¡Comprobante recibido! Tu pago quedó en estado de revisión. El equipo organizador lo verificará pronto.',
          ]);
- 
+
      } catch (Exception $e) {
          // Si falla la BD, eliminar el archivo ya subido para no dejar basura
          @unlink($destination);

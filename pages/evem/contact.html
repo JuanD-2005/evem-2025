@@ -1,500 +1,773 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacto e Inscripción - EVEM 2026</title>
-    
-    <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/variables.css">
-    <link rel="stylesheet" href="../../css/typography.css">
-    <link rel="stylesheet" href="../../css/layout.css">
-    <link rel="stylesheet" href="../../css/components.css">
-    <link rel="stylesheet" href="../../css/responsive.css">
-</head>
-<body>
+
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="../../css/typography.css" />
+    <link rel="stylesheet" href="../../css/layout.css" />
+    <link rel="stylesheet" href="../../css/components.css" />
+    <link rel="stylesheet" href="../../css/responsive.css" />
+  </head>
+  <body>
     <header class="top-bar">
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="../../index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
-                <li><a href="../../index.html#comite">🏠 Comité</a></li>
-                <li><a href="alojamiento.html">🏨 Alojamiento</a></li>
-            </ul>
+      <div class="nav-container">
+        <ul class="nav-links">
+          <li>
+            <a href="../../index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a>
+          </li>
+          <li><a href="../../index.html#comite">🏠 Comité</a></li>
+          <li><a href="alojamiento.html">🏨 Alojamiento</a></li>
+        </ul>
 
-            <div class="central-logo-container">
-                <a href="../../index.html">
-                    <img src="../../assets/logos/evem-logo.png" alt="EVEM Logo" class="central-logo">
-                </a>
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="courses.html">💠 Cursos</a></li>
-                <li><a href="conferencias.html">👥 Conferencias</a></li>
-                <li><a href="contact.html">📝 Inscríbete</a></li>
-            </ul>
+        <div class="central-logo-container">
+          <a href="../../index.html">
+            <img
+              src="../../assets/logos/evem-logo.png"
+              alt="EVEM Logo"
+              class="central-logo"
+            />
+          </a>
         </div>
+
+        <ul class="nav-links">
+          <li><a href="courses.html">💠 Cursos</a></li>
+          <li><a href="conferencias.html">👥 Conferencias</a></li>
+          <li><a href="contact.html">📝 Inscríbete</a></li>
+        </ul>
+      </div>
     </header>
 
-    <div style="height: 40px;"></div>
+    <div style="height: 40px"></div>
 
     <section class="page-header-compact">
-        <div class="header-bg-shapes">
-            <div class="hshape hshape-1"></div>
-            <div class="hshape hshape-2"></div>
+      <div class="header-bg-shapes">
+        <div class="hshape hshape-1"></div>
+        <div class="hshape hshape-2"></div>
+      </div>
+      <div class="container">
+        <div class="compact-header-content">
+          <div class="badge-pill">📝 XXVIII Edición</div>
+          <h1 class="page-title-compact">Inscripción EVEM 2026</h1>
+          <p class="page-subtitle-compact">
+            Reserva tu cupo · Del 08 al 11 de Septiembre · Campus UNET, Táchira
+          </p>
         </div>
-        <div class="container">
-            <div class="compact-header-content">
-                <div class="badge-pill">📝 XXVIII Edición</div>
-                <h1 class="page-title-compact">Inscripción EVEM 2026</h1>
-                <p class="page-subtitle-compact">Reserva tu cupo · Del 08 al 11 de Septiembre · Campus UNET, Táchira</p>
-            </div>
-        </div>
+      </div>
     </section>
 
     <!-- ====================================================
          SISTEMA DE PESTAÑAS
          ==================================================== -->
     <div class="tabs-wrapper">
-        <div class="container">
-            <div class="tabs-nav">
-                <button class="tab-btn tab-btn--active" id="btn-tab-pre-inscripcion" onclick="switchTab('pre-inscripcion')">
-                    <span class="tab-step">1</span>
-                    <span class="tab-label">Pre-Inscripción <em>(Reserva tu cupo)</em></span>
-                </button>
-                <div class="tabs-arrow">→</div>
-                <button class="tab-btn" id="btn-tab-pago" onclick="switchTab('pago')">
-                    <span class="tab-step">2</span>
-                    <span class="tab-label">Formalizar Inscripción <em>(Reportar Pago)</em></span>
-                </button>
-            </div>
+      <div class="container">
+        <div class="tabs-nav">
+          <button
+            class="tab-btn tab-btn--active"
+            id="btn-tab-pre-inscripcion"
+            onclick="switchTab('pre-inscripcion')"
+          >
+            <span class="tab-step">1</span>
+            <span class="tab-label"
+              >Pre-Inscripción <em>(Reserva tu cupo)</em></span
+            >
+          </button>
+          <div class="tabs-arrow">→</div>
+          <button class="tab-btn" id="btn-tab-pago" onclick="switchTab('pago')">
+            <span class="tab-step">2</span>
+            <span class="tab-label"
+              >Formalizar Inscripción <em>(Reportar Pago)</em></span
+            >
+          </button>
         </div>
+      </div>
     </div>
 
     <!-- ====================================================
          BLOQUE PRINCIPAL: 2 COLUMNAS (formulario + sidebar)
          ==================================================== -->
     <section class="contact-main-section">
-        <div class="container">
-            <div class="contact-two-col">
-
-                <!-- COLUMNA IZQUIERDA: Formularios con pestañas -->
-                <div class="col-form">
-
-                    <!-- ======== PESTAÑA 1: PRE-INSCRIPCIÓN ======== -->
-                    <div id="tab-pre-inscripcion">
-                        <div class="form-container">
-                            <div class="form-header">
-                                <h2>Formulario de Pre-Inscripción</h2>
-                                <p>Completa todos los campos para reservar tu cupo en EVEM 2026</p>
-                            </div>
-
-                            <form id="registrationForm" class="registration-form">
-                                <fieldset class="form-fieldset">
-                                    <legend>Datos del Participante</legend>
-                                    
-                                    <div class="form-group">
-                                        <label for="fullName" class="form-label">Nombre Completo *</label>
-                                        <input type="text" id="fullName" name="fullName" class="form-input" required>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="cedula" class="form-label">Cédula de Identidad *</label>
-                                            <input type="text" id="cedula" name="cedula" class="form-input" placeholder="V-12345678" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone" class="form-label">Teléfono *</label>
-                                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+58..." required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Correo Electrónico *</label>
-                                        <input type="email" id="email" name="email" class="form-input" required>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-fieldset" style="background-color: #f8f9fa;">
-                                    <legend>Modalidad de Participación</legend>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">¿Cómo deseas participar?</label>
-                                        <div class="radio-group" style="margin-bottom: 20px;">
-                                            <label class="radio-label box-radio">
-                                                <input type="radio" name="participationType" value="participante" checked onchange="togglePosterFields(false)">
-                                                <span class="radio-text">🧑‍🏫 Asistente (Solo Cursos)</span>
-                                            </label>
-                                            <label class="radio-label box-radio">
-                                                <input type="radio" name="participationType" value="poster" onchange="togglePosterFields(true)">
-                                                <span class="radio-text">📊 Ponente (Presentar Poster)</span>
-                                            </label>
-                                        </div>
-                                        <p style="font-size: 0.9em; color: #475569; margin-top: -8px; margin-bottom: 0; line-height: 1.5;">
-                                            Ambas modalidades incluyen la participación en un curso. Si eliges la modalidad de ponente, además podrás presentar tu trabajo de investigación en esta edición.
-                                        </p>
-                                    </div>
-
-                                    <div id="posterFields" style="display: none; border-left: 3px solid var(--color-primary); padding-left: 15px;">
-                                        <div class="form-group">
-                                            <label for="posterTitle" class="form-label">Título del Poster *</label>
-                                            <input type="text" id="posterTitle" name="posterTitle" class="form-input">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="posterAbstract" class="form-label">Resumen del Trabajo *</label>
-                                            <textarea id="posterAbstract" name="posterAbstract" class="form-textarea" rows="4" placeholder="Breve descripción de su presentación..."></textarea>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-fieldset">
-                                    <legend>Información Académica</legend>
-                                    
-                                    <div class="form-group">
-                                        <label for="institution" class="form-label">Institución *</label>
-                                        <input type="text" id="institution" name="institution" class="form-input" required>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Estado *</label>
-                                            <select id="state" name="state" class="form-select" required>
-                                                <option value="">Seleccione...</option>
-                                                <option value="Amazonas">Amazonas</option>
-                                                <option value="Anzoátegui">Anzoátegui</option>
-                                                <option value="Apure">Apure</option>
-                                                <option value="Aragua">Aragua</option>
-                                                <option value="Barinas">Barinas</option>
-                                                <option value="Bolívar">Bolívar</option>
-                                                <option value="Carabobo">Carabobo</option>
-                                                <option value="Cojedes">Cojedes</option>
-                                                <option value="Delta Amacuro">Delta Amacuro</option>
-                                                <option value="Distrito Capital">Distrito Capital</option>
-                                                <option value="Falcón">Falcón</option>
-                                                <option value="Guárico">Guárico</option>
-                                                <option value="Lara">Lara</option>
-                                                <option value="Mérida">Mérida</option>
-                                                <option value="Miranda">Miranda</option>
-                                                <option value="Monagas">Monagas</option>
-                                                <option value="Nueva Esparta">Nueva Esparta</option>
-                                                <option value="Portuguesa">Portuguesa</option>
-                                                <option value="Sucre">Sucre</option>
-                                                <option value="Táchira">Táchira</option>
-                                                <option value="Trujillo">Trujillo</option>
-                                                <option value="La Guaira">La Guaira</option>
-                                                <option value="Yaracuy">Yaracuy</option>
-                                                <option value="Zulia">Zulia</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="city" class="form-label">Ciudad *</label>
-                                            <input type="text" id="city" name="city" class="form-input" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="position" class="form-label">Cargo *</label>
-                                            <select id="position" name="position" class="form-select" required>
-                                                <option value="Docente">Docente/Profesor ($25)</option>
-                                                <option value="Estudiante">Estudiante ($15)</option>
-                                                <option value="Otro">Otro ($25)</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="experience" class="form-label">Experiencia *</label>
-                                            <select id="experience" name="experience" class="form-select" required>
-                                                <option value="0-2">0-2 años</option>
-                                                <option value="3-5">3-5 años</option>
-                                                <option value="6+">Más de 5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-fieldset">
-                                    <legend>Inscripción a Curso</legend>
-                                    <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
-                                        Aunque presentes poster, puedes inscribirte en un curso formativo.
-                                    </p>
-                                    <div class="form-group">
-                                        <label for="course" class="form-label">Seleccione el Curso *</label>
-                                        <select id="course" name="course" class="form-select" required>
-                                            <option value="">Cargando cursos...</option>
-                                        </select>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-fieldset">
-                                    <div class="form-group">
-                                        <label class="form-label">¿Participaste antes?</label>
-                                        <div class="radio-group">
-                                            <label><input type="radio" name="previousParticipation" value="Si"> Sí</label>
-                                            <label><input type="radio" name="previousParticipation" value="No" checked> No</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">
-                                            <input type="checkbox" name="terms" value="yes" required>
-                                            Acepto los términos y condiciones
-                                        </label>
-                                    </div>
-                                </fieldset>
-
-                                <!-- BLOQUE INFORMATIVO DE PRECIOS -->
-                                <div class="pricing-info-block">
-                                    <div class="pricing-info-icon">💳</div>
-                                    <div class="pricing-info-content">
-                                        <p class="pricing-info-title">Tarifas de Inscripción</p>
-                                        <div class="pricing-tags">
-                                            <span class="pricing-tag pricing-tag--student">🎓 Estudiantes <strong>$15</strong></span>
-                                            <span class="pricing-tag pricing-tag--prof">👨‍🏫 Profesores y Otros <strong>$25</strong></span>
-                                        </div>
-                                        <p class="pricing-info-hint">* El pago debe realizarse entre las fechas del 25/07 al 10/08</p>
-                                        <p class="pricing-info-hint">Una vez reserves tu cupo, dirígete a la pestaña <strong>"2. Formalizar Inscripción"</strong> para subir tu comprobante de pago.</p>
-                                    </div>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary btn-large">Enviar Pre-Inscripción</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- ======== PESTAÑA 2: PAGO ======== -->
-                    <div id="tab-pago" style="display: none;">
-                        <div class="form-container">
-                            <div class="form-header">
-                                <h2>Formalizar Inscripción</h2>
-                                <p>Ingresa tu cédula y adjunta el comprobante de pago para completar tu inscripción</p>
-                            </div>
-
-                            <div class="payment-steps">
-                                <div class="payment-step">
-                                    <div class="payment-step-num">1</div>
-                                    <div class="payment-step-text">Realiza tu pago a través de los métodos indicados por el equipo organizador (Pago Móvil, transferencia, etc.)</div>
-                                </div>
-                                <div class="payment-step">
-                                    <div class="payment-step-num">2</div>
-                                    <div class="payment-step-text">Guarda el bauche/comprobante como imagen (JPG, PNG) o PDF.</div>
-                                </div>
-                                <div class="payment-step">
-                                    <div class="payment-step-num">3</div>
-                                    <div class="payment-step-text">Completa el formulario a continuación para reportar tu pago. (Pago entre el 25 de Julio y el 10 de Agosto)</div>
-                                </div>
-                            </div>
-
-                            <form id="paymentForm" class="registration-form">
-                                <fieldset class="form-fieldset">
-                                    <legend>Verificación de Identidad</legend>
-
-                                    <div class="form-group">
-                                        <label for="payment-cedula" class="form-label">Cédula de Identidad *</label>
-                                        <input
-                                            type="text"
-                                            id="payment-cedula"
-                                            name="cedula"
-                                            class="form-input"
-                                            placeholder="V-12345678"
-                                            required
-                                        >
-                                        <small class="form-hint">Debe coincidir con la cédula usada en la Pre-Inscripción.</small>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-fieldset">
-                                    <legend>Comprobante de Pago</legend>
-
-                                    <div class="form-group">
-                                        <label for="voucher" class="form-label">Bauche / Comprobante *</label>
-                                        <div class="file-upload-area" id="fileUploadArea">
-                                            <input
-                                                type="file"
-                                                id="voucher"
-                                                name="voucher"
-                                                accept="image/*,.pdf"
-                                                required
-                                                class="file-input-hidden"
-                                                onchange="handleFileChange(this)"
-                                            >
-                                            <div class="file-upload-ui" id="fileUploadUI" onclick="document.getElementById('voucher').click()">
-                                                <div class="file-upload-icon">📎</div>
-                                                <p class="file-upload-label">Haz clic para seleccionar archivo</p>
-                                                <p class="file-upload-hint">Imágenes (JPG, PNG) o PDF · Máx. 5MB</p>
-                                            </div>
-                                            <div class="file-selected-info" id="fileSelectedInfo" style="display:none;">
-                                                <span class="file-selected-icon">✅</span>
-                                                <span id="fileSelectedName"></span>
-                                                <button type="button" class="file-remove-btn" onclick="removeFile()">✕</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <div id="payment-feedback" class="form-feedback" style="display:none;"></div>
-
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary btn-large" id="paymentSubmitBtn">
-                                        Enviar Comprobante
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
+      <div class="container">
+        <div class="contact-two-col">
+          <!-- COLUMNA IZQUIERDA: Formularios con pestañas -->
+          <div class="col-form">
+            <!-- ======== PESTAÑA 1: PRE-INSCRIPCIÓN ======== -->
+            <div id="tab-pre-inscripcion">
+              <div class="form-container">
+                <div class="form-header">
+                  <h2>Formulario de Pre-Inscripción</h2>
+                  <p>
+                    Completa todos los campos para reservar tu cupo en EVEM 2026
+                  </p>
                 </div>
 
-                <!-- COLUMNA DERECHA: Sidebar con info del evento -->
-                <aside class="col-sidebar">
+                <form id="registrationForm" class="registration-form">
+                  <fieldset class="form-fieldset">
+                    <legend>Datos del Participante</legend>
 
-                    <div class="sidebar-card sidebar-card--accent">
-                        <div class="sidebar-card-icon">📅</div>
-                        <h3>Fechas del Evento</h3>
-                        <p class="sidebar-date-main">08 – 11 Sep 2026</p>
-                        <p class="sidebar-date-sub">Lunes a Jueves · 8:00 AM – 6:00 PM</p>
+                    <div class="form-group">
+                      <label for="fullName" class="form-label"
+                        >Nombre Completo *</label
+                      >
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        class="form-input"
+                        required
+                      />
                     </div>
 
-                    <div class="sidebar-card">
-                        <div class="sidebar-card-icon">📍</div>
-                        <h3>Sede</h3>
-                        <p>Universidad Nacional Experimental del Táchira</p>
-                        <p class="sidebar-detail">Av. Universidad, Paramillo<br>San Cristóbal, Táchira</p>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="cedula" class="form-label"
+                          >Cédula de Identidad *</label
+                        >
+                        <input
+                          type="text"
+                          id="cedula"
+                          name="cedula"
+                          class="form-input"
+                          placeholder="V-12345678"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="phone" class="form-label">Teléfono *</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          class="form-input"
+                          placeholder="+58..."
+                          required
+                        />
+                      </div>
                     </div>
 
-                    <div class="sidebar-card">
-                        <div class="sidebar-card-icon">📬</div>
-                        <h3>Contacto</h3>
-                        <p><a href="mailto:evem@unet.edu.ve">evem@unet.edu.ve</a></p>
-                        <p><a href="mailto:info@unet.edu.ve">info@unet.edu.ve</a></p>
-                        <p style="margin-top: 8px;"><a href="tel:+582763530422">📞 +58 (276) 353-0422</a></p>
+                    <div class="form-group">
+                      <label for="email" class="form-label"
+                        >Correo Electrónico *</label
+                      >
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input"
+                        required
+                      />
+                    </div>
+                  </fieldset>
+
+                  <fieldset
+                    class="form-fieldset"
+                    style="background-color: #f8f9fa"
+                  >
+                    <legend>Modalidad de Participación</legend>
+
+                    <div class="form-group">
+                      <label class="form-label">¿Cómo deseas participar?</label>
+                      <div class="radio-group" style="margin-bottom: 20px">
+                        <label class="radio-label box-radio">
+                          <input
+                            type="radio"
+                            name="participationType"
+                            value="participante"
+                            checked
+                            onchange="togglePosterFields(false)"
+                          />
+                          <span class="radio-text"
+                            >🧑‍🏫 Asistente (Solo Cursos)</span
+                          >
+                        </label>
+                        <label class="radio-label box-radio">
+                          <input
+                            type="radio"
+                            name="participationType"
+                            value="poster"
+                            onchange="togglePosterFields(true)"
+                          />
+                          <span class="radio-text"
+                            >📊 Ponente (Presentar Poster)</span
+                          >
+                        </label>
+                      </div>
+                      <p
+                        style="
+                          font-size: 0.9em;
+                          color: #475569;
+                          margin-top: -8px;
+                          margin-bottom: 0;
+                          line-height: 1.5;
+                        "
+                      >
+                        Ambas modalidades incluyen la participación en un curso.
+                        Si eliges la modalidad de ponente, además podrás
+                        presentar tu trabajo de investigación en esta edición.
+                      </p>
                     </div>
 
-                    <div class="sidebar-card" style="border-left-color: #f59e0b; background-color: #fffbeb;">
-                        <div class="sidebar-card-icon">🛏️</div>
-                        <h3 style="color: #d97706; font-size: 1.1rem;">¡Hospedaje Garantizado!</h3>
-                        <p style="margin-bottom: 12px; font-size: 0.9rem;">
-                            Queremos que tu única preocupación sea aprender. Al formalizar tu inscripción, aseguras automáticamente una de nuestras <strong style="color: var(--color-primary);">80 alojamientos disponibles</strong> sin costo adicional.
-                        </p>
-                        <p style="margin-bottom: 12px; font-size: 0.85rem; color: #b45309;">
-                            ⏳ <strong>Cupos estrictamente limitados.</strong> ¡Reserva tu pre-inscripción ahora!
-                        </p>
-                        <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4;">
-                            📢 <strong>Aviso:</strong> Si se agotan estos 80 lugares, pronto habilitaremos nuevas sedes aliadas <strong>completamente gratuitas</strong>.
-                        </p>
+                    <div
+                      id="posterFields"
+                      style="
+                        display: none;
+                        border-left: 3px solid var(--color-primary);
+                        padding-left: 15px;
+                      "
+                    >
+                      <div class="form-group">
+                        <label for="posterTitle" class="form-label"
+                          >Título del Poster *</label
+                        >
+                        <input
+                          type="text"
+                          id="posterTitle"
+                          name="posterTitle"
+                          class="form-input"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="posterAbstract" class="form-label"
+                          >Resumen del Trabajo *</label
+                        >
+                        <textarea
+                          id="posterAbstract"
+                          name="posterAbstract"
+                          class="form-textarea"
+                          rows="4"
+                          placeholder="Breve descripción de su presentación..."
+                        ></textarea>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="form-fieldset">
+                    <legend>Información Académica</legend>
+
+                    <div class="form-group">
+                      <label for="institution" class="form-label"
+                        >Institución *</label
+                      >
+                      <input
+                        type="text"
+                        id="institution"
+                        name="institution"
+                        class="form-input"
+                        required
+                      />
                     </div>
 
-                    <div class="sidebar-card sidebar-card--highlights">
-                        <h3>✅ ¿Qué incluye?</h3>
-                        <ul class="highlights-list">
-                            <li>Curso a elección dictado por Profesionales</li>
-                            <li>Conferencias magistrales gratis</li>
-                            <li>Certificado de participación</li>
-                            <li>Acceso a posters y ponencias</li>
-                            <li>Comunidad docente nacional</li>
-                        </ul>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="state" class="form-label">Estado *</label>
+                        <select
+                          id="state"
+                          name="state"
+                          class="form-select"
+                          required
+                        >
+                          <option value="">Seleccione...</option>
+                          <option value="Amazonas">Amazonas</option>
+                          <option value="Anzoátegui">Anzoátegui</option>
+                          <option value="Apure">Apure</option>
+                          <option value="Aragua">Aragua</option>
+                          <option value="Barinas">Barinas</option>
+                          <option value="Bolívar">Bolívar</option>
+                          <option value="Carabobo">Carabobo</option>
+                          <option value="Cojedes">Cojedes</option>
+                          <option value="Delta Amacuro">Delta Amacuro</option>
+                          <option value="Distrito Capital">
+                            Distrito Capital
+                          </option>
+                          <option value="Falcón">Falcón</option>
+                          <option value="Guárico">Guárico</option>
+                          <option value="Lara">Lara</option>
+                          <option value="Mérida">Mérida</option>
+                          <option value="Miranda">Miranda</option>
+                          <option value="Monagas">Monagas</option>
+                          <option value="Nueva Esparta">Nueva Esparta</option>
+                          <option value="Portuguesa">Portuguesa</option>
+                          <option value="Sucre">Sucre</option>
+                          <option value="Táchira">Táchira</option>
+                          <option value="Trujillo">Trujillo</option>
+                          <option value="La Guaira">La Guaira</option>
+                          <option value="Yaracuy">Yaracuy</option>
+                          <option value="Zulia">Zulia</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="city" class="form-label">Ciudad *</label>
+                        <input
+                          type="text"
+                          id="city"
+                          name="city"
+                          class="form-input"
+                          required
+                        />
+                      </div>
                     </div>
 
-                </aside>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="position" class="form-label">Cargo *</label>
+                        <select
+                          id="position"
+                          name="position"
+                          class="form-select"
+                          required
+                        >
+                          <option value="Docente">
+                            Docente/Profesor ($25)
+                          </option>
+                          <option value="Estudiante">Estudiante ($15)</option>
+                          <option value="Otro">Otro ($25)</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="experience" class="form-label"
+                          >Experiencia *</label
+                        >
+                        <select
+                          id="experience"
+                          name="experience"
+                          class="form-select"
+                          required
+                        >
+                          <option value="0-2">0-2 años</option>
+                          <option value="3-5">3-5 años</option>
+                          <option value="6+">Más de 5</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
 
+                  <fieldset class="form-fieldset">
+                    <legend>Inscripción a Curso</legend>
+                    <p
+                      style="font-size: 0.9em; color: #666; margin-bottom: 10px"
+                    >
+                      Aunque presentes poster, puedes inscribirte en un curso
+                      formativo.
+                    </p>
+                    <div class="form-group">
+                      <label for="course" class="form-label"
+                        >Seleccione el Curso *</label
+                      >
+                      <select
+                        id="course"
+                        name="course"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Cargando cursos...</option>
+                      </select>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="form-fieldset">
+                    <div class="form-group">
+                      <label class="form-label">¿Participaste antes?</label>
+                      <div class="radio-group">
+                        <label
+                          ><input
+                            type="radio"
+                            name="previousParticipation"
+                            value="Si"
+                          />
+                          Sí</label
+                        >
+                        <label
+                          ><input
+                            type="radio"
+                            name="previousParticipation"
+                            value="No"
+                            checked
+                          />
+                          No</label
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">
+                        <input
+                          type="checkbox"
+                          name="terms"
+                          value="yes"
+                          required
+                        />
+                        Acepto los términos y condiciones
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <!-- BLOQUE INFORMATIVO DE PRECIOS -->
+                  <div class="pricing-info-block">
+                    <div class="pricing-info-icon">💳</div>
+                    <div class="pricing-info-content">
+                      <p class="pricing-info-title">Tarifas de Inscripción</p>
+                      <div class="pricing-tags">
+                        <span class="pricing-tag pricing-tag--student"
+                          >🎓 Estudiantes <strong>$15</strong></span
+                        >
+                        <span class="pricing-tag pricing-tag--prof"
+                          >👨‍🏫 Profesores y Otros <strong>$25</strong></span
+                        >
+                      </div>
+                      <p class="pricing-info-hint">
+                        * El pago debe realizarse entre las fechas del 25/07 al
+                        10/08
+                      </p>
+                      <p class="pricing-info-hint">
+                        Una vez reserves tu cupo, dirígete a la pestaña
+                        <strong>"2. Formalizar Inscripción"</strong> para subir
+                        tu comprobante de pago.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">
+                      Enviar Pre-Inscripción
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+
+            <!-- ======== PESTAÑA 2: PAGO ======== -->
+            <div id="tab-pago" style="display: none">
+              <div class="form-container">
+                <div class="form-header">
+                  <h2>Formalizar Inscripción</h2>
+                  <p>
+                    Ingresa tu cédula y adjunta el comprobante de pago para
+                    completar tu inscripción
+                  </p>
+                </div>
+
+                <div class="payment-steps">
+                  <div class="payment-step">
+                    <div class="payment-step-num">1</div>
+                    <div class="payment-step-text">
+                      Realiza tu pago a través de los métodos indicados por el
+                      equipo organizador (Pago Móvil, transferencia, etc.)
+                    </div>
+                  </div>
+                  <div class="payment-step">
+                    <div class="payment-step-num">2</div>
+                    <div class="payment-step-text">
+                      Guarda el bauche/comprobante como imagen (JPG, PNG) o PDF.
+                    </div>
+                  </div>
+                  <div class="payment-step">
+                    <div class="payment-step-num">3</div>
+                    <div class="payment-step-text">
+                      Completa el formulario a continuación para reportar tu
+                      pago. (Pago entre el 25 de Julio y el 10 de Agosto)
+                    </div>
+                  </div>
+                </div>
+
+                <form id="paymentForm" class="registration-form">
+                  <fieldset class="form-fieldset">
+                    <legend>Verificación de Identidad</legend>
+
+                    <div class="form-group">
+                      <label for="payment-cedula" class="form-label"
+                        >Cédula de Identidad *</label
+                      >
+                      <input
+                        type="text"
+                        id="payment-cedula"
+                        name="cedula"
+                        class="form-input"
+                        placeholder="V-12345678"
+                        required
+                      />
+                      <small class="form-hint"
+                        >Debe coincidir con la cédula usada en la
+                        Pre-Inscripción.</small
+                      >
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="form-fieldset">
+                    <legend>Comprobante de Pago</legend>
+
+                    <div class="form-group">
+                      <label for="voucher" class="form-label"
+                        >Bauche / Comprobante *</label
+                      >
+                      <div class="file-upload-area" id="fileUploadArea">
+                        <input
+                          type="file"
+                          id="voucher"
+                          name="voucher"
+                          accept="image/*,.pdf"
+                          required
+                          class="file-input-hidden"
+                          onchange="handleFileChange(this)"
+                        />
+                        <div
+                          class="file-upload-ui"
+                          id="fileUploadUI"
+                          onclick="document.getElementById('voucher').click()"
+                        >
+                          <div class="file-upload-icon">📎</div>
+                          <p class="file-upload-label">
+                            Haz clic para seleccionar archivo
+                          </p>
+                          <p class="file-upload-hint">
+                            Imágenes (JPG, PNG) o PDF · Máx. 5MB
+                          </p>
+                        </div>
+                        <div
+                          class="file-selected-info"
+                          id="fileSelectedInfo"
+                          style="display: none"
+                        >
+                          <span class="file-selected-icon">✅</span>
+                          <span id="fileSelectedName"></span>
+                          <button
+                            type="button"
+                            class="file-remove-btn"
+                            onclick="removeFile()"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <div
+                    id="payment-feedback"
+                    class="form-feedback"
+                    style="display: none"
+                  ></div>
+
+                  <div class="form-actions">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-large"
+                      id="paymentSubmitBtn"
+                    >
+                      Enviar Comprobante
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: Sidebar con info del evento -->
+          <aside class="col-sidebar">
+            <div class="sidebar-card sidebar-card--accent">
+              <div class="sidebar-card-icon">📅</div>
+              <h3>Fechas del Evento</h3>
+              <p class="sidebar-date-main">08 – 11 Sep 2026</p>
+              <p class="sidebar-date-sub">Lunes a Jueves · 8:00 AM – 6:00 PM</p>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-icon">📍</div>
+              <h3>Sede</h3>
+              <p>Universidad Nacional Experimental del Táchira</p>
+              <p class="sidebar-detail">
+                Av. Universidad, Paramillo<br />San Cristóbal, Táchira
+              </p>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sidebar-card-icon">📬</div>
+              <h3>Contacto</h3>
+              <p><a href="mailto:evem@unet.edu.ve">evem@unet.edu.ve</a></p>
+              <p><a href="mailto:info@unet.edu.ve">info@unet.edu.ve</a></p>
+              <p style="margin-top: 8px">
+                <a href="tel:+582763530422">📞 +58 (276) 353-0422</a>
+              </p>
+            </div>
+
+            <div
+              class="sidebar-card"
+              style="border-left-color: #f59e0b; background-color: #fffbeb"
+            >
+              <div class="sidebar-card-icon">🛏️</div>
+              <h3 style="color: #d97706; font-size: 1.1rem">
+                ¡Hospedaje Garantizado!
+              </h3>
+              <p style="margin-bottom: 12px; font-size: 0.9rem">
+                Queremos que tu única preocupación sea aprender. Al formalizar
+                tu inscripción, aseguras automáticamente una de nuestras
+                <strong style="color: var(--color-primary)"
+                  >80 alojamientos disponibles</strong
+                >
+                sin costo adicional.
+              </p>
+              <p
+                style="margin-bottom: 12px; font-size: 0.85rem; color: #b45309"
+              >
+                ⏳ <strong>Cupos estrictamente limitados.</strong> ¡Reserva tu
+                pre-inscripción ahora!
+              </p>
+              <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4">
+                📢 <strong>Aviso:</strong> Si se agotan estos 80 lugares, pronto
+                habilitaremos nuevas sedes aliadas
+                <strong>completamente gratuitas</strong>.
+              </p>
+            </div>
+
+            <div class="sidebar-card sidebar-card--highlights">
+              <h3>✅ ¿Qué incluye?</h3>
+              <ul class="highlights-list">
+                <li>Curso a elección dictado por Profesionales</li>
+                <li>Conferencias magistrales gratis</li>
+                <li>Certificado de participación</li>
+                <li>Acceso a posters y ponencias</li>
+                <li>Comunidad docente nacional</li>
+              </ul>
+            </div>
+          </aside>
         </div>
+      </div>
     </section>
 
     <section class="mural-section" id="mural">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-size: 2.5rem; color: #1e3a8a; margin-bottom: 10px;">Mural de Participantes</h2>
-                <p style="color: #64748b; font-size: 1.1rem;">Conoce a los colegas que ya aseguraron su lugar en la EVEM 2026</p>
-            </div>
-
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 30px">
+          <h2 style="font-size: 2.5rem; color: #1e3a8a; margin-bottom: 10px">
+            Mural de Participantes
+          </h2>
+          <p style="color: #64748b; font-size: 1.1rem">
+            Conoce a los colegas que ya aseguraron su lugar en la EVEM 2026
+          </p>
         </div>
+      </div>
 
-        <div class="ticker-wrapper">
-            <div class="ticker-track" id="muralParticipantes">
-                <div style="text-align: center; width: 100vw; color: #64748b; padding: 40px;">
-                    Cargando lista de asistentes... ⏳
-                </div>
-            </div>
+      <div class="ticker-wrapper">
+        <div class="ticker-track" id="muralParticipantes">
+          <div
+            style="
+              text-align: center;
+              width: 100vw;
+              color: #64748b;
+              padding: 40px;
+            "
+          >
+            Cargando lista de asistentes... ⏳
+          </div>
         </div>
+      </div>
 
-        <div style="text-align: center; margin-top: 30px;">
-            <button onclick="abrirDirectorio()" class="btn" style="background: transparent; border: 2px solid #1e3a8a; color: #1e3a8a;">
-                Ver Directorio Completo 👥
-            </button>
-        </div>
+      <div style="text-align: center; margin-top: 30px">
+        <button
+          onclick="abrirDirectorio()"
+          class="btn"
+          style="
+            background: transparent;
+            border: 2px solid #1e3a8a;
+            color: #1e3a8a;
+          "
+        >
+          Ver Directorio Completo 👥
+        </button>
+      </div>
     </section>
 
-    <div id="directorioModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Directorio de Participantes</h2>
-                <button onclick="cerrarDirectorio()" class="close-btn" aria-label="Cerrar">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="mural-grid" id="gridParticipantes">
-                </div>
-            </div>
+    <div id="directorioModal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Directorio de Participantes</h2>
+          <button
+            onclick="cerrarDirectorio()"
+            class="close-btn"
+            aria-label="Cerrar"
+          >
+            &times;
+          </button>
         </div>
+        <div class="modal-body">
+          <div class="mural-grid" id="gridParticipantes"></div>
+        </div>
+      </div>
     </div>
 
     <section class="map-section">
-        <div class="container">
-            <h2 class="section-title centered" style="text-align: center; font-size: 2.2rem; color: #1e3a8a; margin-bottom: 2rem; font-weight: 900;">¿Cómo llegar?</h2>
-            <div class="map-container">
-                <iframe 
-                    src="https://maps.google.com/maps?q=Universidad%20Nacional%20Experimental%20del%20T%C3%A1chira,%20San%20Cristobal,%20Venezuela&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+      <div class="container">
+        <h2
+          class="section-title centered"
+          style="
+            text-align: center;
+            font-size: 2.2rem;
+            color: #1e3a8a;
+            margin-bottom: 2rem;
+            font-weight: 900;
+          "
+        >
+          ¿Cómo llegar?
+        </h2>
+        <div class="map-container">
+          <iframe
+            src="https://maps.google.com/maps?q=Universidad%20Nacional%20Experimental%20del%20T%C3%A1chira,%20San%20Cristobal,%20Venezuela&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
         </div>
+      </div>
     </section>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Universidad Nacional Experimental del Táchira</h4>
-                    <p>Av. Universidad, Paramillo</p>
-                    <p>San Cristóbal, Estado Táchira</p>
-                    <p>Venezuela</p>
-                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
-                    <p class="footer-email">✉️ info@unet.edu.ve</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="../../index.html">Inicio</a></li>
-                        <li><a href="courses.html">Cursos</a></li>
-                        <li><a href="tribute.html">Homenaje</a></li>
-                        <li><a href="contact.html">Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Servicios</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Aula Virtual</a></li>
-                        <li><a href="#">Biblioteca Digital</a></li>
-                        <li><a href="#">Sistema de Gestión</a></li>
-                        <li><a href="#">Correo Institucional</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Universidad Nacional Experimental del Táchira</h4>
+            <p>Av. Universidad, Paramillo</p>
+            <p>San Cristóbal, Estado Táchira</p>
+            <p>Venezuela</p>
+            <p class="footer-phone">📞 +58 (276) 353-0422</p>
+            <p class="footer-email">✉️ info@unet.edu.ve</p>
+          </div>
 
-                <div class="footer-col">
-                    <h4>Contacto EVEM</h4>
-                    <p>Email: evem@unet.edu.ve</p>
-                    <p>Organiza: Universidad de Los Andes (ULA)</p>
-                    <p>Sede 2026: UNET</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
-            </div>
+          <div class="footer-col">
+            <h4>Enlaces Rápidos</h4>
+            <ul class="footer-links">
+              <li><a href="../../index.html">Inicio</a></li>
+              <li><a href="courses.html">Cursos</a></li>
+              <li><a href="tribute.html">Homenaje</a></li>
+              <li><a href="contact.html">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Servicios</h4>
+            <ul class="footer-links">
+              <li><a href="#">Aula Virtual</a></li>
+              <li><a href="#">Biblioteca Digital</a></li>
+              <li><a href="#">Sistema de Gestión</a></li>
+              <li><a href="#">Correo Institucional</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Contacto EVEM</h4>
+            <p>Email: evem@unet.edu.ve</p>
+            <p>Organiza: Universidad de Los Andes (ULA)</p>
+            <p>Sede 2026: UNET</p>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 Universidad Nacional Experimental del Táchira. Todos los
+            derechos reservados.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="../../js/data.js"></script>
@@ -504,166 +777,200 @@
     <script src="../../js/main.js"></script>
 
     <script>
-        // ==========================================
-        // SISTEMA DE PESTAÑAS
-        // ==========================================
-        function switchTab(tabName) {
-            // Ocultar todos los paneles
-            document.getElementById('tab-pre-inscripcion').style.display = 'none';
-            document.getElementById('tab-pago').style.display = 'none';
+      // ==========================================
+      // SISTEMA DE PESTAÑAS
+      // ==========================================
+      function switchTab(tabName) {
+        // Ocultar todos los paneles
+        document.getElementById("tab-pre-inscripcion").style.display = "none";
+        document.getElementById("tab-pago").style.display = "none";
 
-            // Desactivar todos los botones
-            document.getElementById('btn-tab-pre-inscripcion').classList.remove('tab-btn--active');
-            document.getElementById('btn-tab-pago').classList.remove('tab-btn--active');
+        // Desactivar todos los botones
+        document
+          .getElementById("btn-tab-pre-inscripcion")
+          .classList.remove("tab-btn--active");
+        document
+          .getElementById("btn-tab-pago")
+          .classList.remove("tab-btn--active");
 
-            // Activar el panel y botón seleccionados
-            document.getElementById('tab-' + tabName).style.display = 'block';
-            document.getElementById('btn-tab-' + tabName).classList.add('tab-btn--active');
+        // Activar el panel y botón seleccionados
+        document.getElementById("tab-" + tabName).style.display = "block";
+        document
+          .getElementById("btn-tab-" + tabName)
+          .classList.add("tab-btn--active");
+      }
+
+      // ==========================================
+      // TOGGLE CAMPOS DE POSTER
+      // ==========================================
+      function togglePosterFields(show) {
+        const fields = document.getElementById("posterFields");
+        const titleInput = document.getElementById("posterTitle");
+        const abstractInput = document.getElementById("posterAbstract");
+
+        if (show) {
+          fields.style.display = "block";
+          titleInput.required = true;
+          abstractInput.required = true;
+        } else {
+          fields.style.display = "none";
+          titleInput.required = false;
+          abstractInput.required = false;
+          titleInput.value = "";
+          abstractInput.value = "";
         }
+      }
 
-        // ==========================================
-        // TOGGLE CAMPOS DE POSTER
-        // ==========================================
-        function togglePosterFields(show) {
-            const fields = document.getElementById('posterFields');
-            const titleInput = document.getElementById('posterTitle');
-            const abstractInput = document.getElementById('posterAbstract');
-            
-            if (show) {
-                fields.style.display = 'block';
-                titleInput.required = true;
-                abstractInput.required = true;
+      // ==========================================
+      // FILE UPLOAD UI
+      // ==========================================
+      function handleFileChange(input) {
+        const ui = document.getElementById("fileUploadUI");
+        const info = document.getElementById("fileSelectedInfo");
+        const nameSpan = document.getElementById("fileSelectedName");
+
+        if (input.files && input.files[0]) {
+          ui.style.display = "none";
+          nameSpan.textContent = input.files[0].name;
+          info.style.display = "flex";
+        }
+      }
+
+      function removeFile() {
+        const input = document.getElementById("voucher");
+        const ui = document.getElementById("fileUploadUI");
+        const info = document.getElementById("fileSelectedInfo");
+
+        input.value = "";
+        ui.style.display = "flex";
+        info.style.display = "none";
+      }
+
+      // ==========================================
+      // FORMULARIO DE PAGO — fetch con FormData
+      // ==========================================
+      document
+        .getElementById("paymentForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("paymentSubmitBtn");
+          const feedback = document.getElementById("payment-feedback");
+
+          const cedula = document.getElementById("payment-cedula").value.trim();
+          const voucherFile = document.getElementById("voucher").files[0];
+
+          if (!cedula || !voucherFile) {
+            showPaymentFeedback(
+              "error",
+              "⚠️ Por favor completa todos los campos obligatorios.",
+            );
+            return;
+          }
+
+          // Validación de tamaño (5MB)
+          if (voucherFile.size > 5 * 1024 * 1024) {
+            showPaymentFeedback(
+              "error",
+              "⚠️ El archivo supera el tamaño máximo permitido (5MB).",
+            );
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Enviando...";
+          feedback.style.display = "none";
+
+          const formData = new FormData();
+          formData.append("cedula", cedula);
+          formData.append("voucher", voucherFile);
+
+          try {
+            const response = await fetch(
+              "/backend/api.php?action=confirm_payment",
+              {
+                method: "POST",
+                body: formData,
+                // NO establecer Content-Type — el browser lo pone automáticamente con el boundary correcto
+              },
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+              showPaymentFeedback(
+                "success",
+                "✅ " +
+                  (data.message ||
+                    "¡Comprobante enviado con éxito! Será revisado por el equipo organizador."),
+              );
+              document.getElementById("paymentForm").reset();
+              removeFile();
             } else {
-                fields.style.display = 'none';
-                titleInput.required = false;
-                abstractInput.required = false;
-                titleInput.value = '';
-                abstractInput.value = '';
+              showPaymentFeedback(
+                "error",
+                "❌ " + (data.error || "Ocurrió un error. Inténtalo de nuevo."),
+              );
             }
-        }
-
-        // ==========================================
-        // FILE UPLOAD UI
-        // ==========================================
-        function handleFileChange(input) {
-            const ui = document.getElementById('fileUploadUI');
-            const info = document.getElementById('fileSelectedInfo');
-            const nameSpan = document.getElementById('fileSelectedName');
-
-            if (input.files && input.files[0]) {
-                ui.style.display = 'none';
-                nameSpan.textContent = input.files[0].name;
-                info.style.display = 'flex';
-            }
-        }
-
-        function removeFile() {
-            const input = document.getElementById('voucher');
-            const ui = document.getElementById('fileUploadUI');
-            const info = document.getElementById('fileSelectedInfo');
-
-            input.value = '';
-            ui.style.display = 'flex';
-            info.style.display = 'none';
-        }
-
-        // ==========================================
-        // FORMULARIO DE PAGO — fetch con FormData
-        // ==========================================
-        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const submitBtn = document.getElementById('paymentSubmitBtn');
-            const feedback = document.getElementById('payment-feedback');
-
-            const cedula = document.getElementById('payment-cedula').value.trim();
-            const voucherFile = document.getElementById('voucher').files[0];
-
-            if (!cedula || !voucherFile) {
-                showPaymentFeedback('error', '⚠️ Por favor completa todos los campos obligatorios.');
-                return;
-            }
-
-            // Validación de tamaño (5MB)
-            if (voucherFile.size > 5 * 1024 * 1024) {
-                showPaymentFeedback('error', '⚠️ El archivo supera el tamaño máximo permitido (5MB).');
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando...';
-            feedback.style.display = 'none';
-
-            const formData = new FormData();
-            formData.append('cedula', cedula);
-            formData.append('voucher', voucherFile);
-
-            try {
-                const response = await fetch('../../backend/api.php?action=confirm_payment', {
-                    method: 'POST',
-                    body: formData
-                    // NO establecer Content-Type — el browser lo pone automáticamente con el boundary correcto
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    showPaymentFeedback('success', '✅ ' + (data.message || '¡Comprobante enviado con éxito! Será revisado por el equipo organizador.'));
-                    document.getElementById('paymentForm').reset();
-                    removeFile();
-                } else {
-                    showPaymentFeedback('error', '❌ ' + (data.error || 'Ocurrió un error. Inténtalo de nuevo.'));
-                }
-            } catch (err) {
-                console.error('Error al enviar comprobante:', err);
-                showPaymentFeedback('error', '❌ Error de conexión. Verifica tu red e inténtalo de nuevo.');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar Comprobante';
-            }
+          } catch (err) {
+            console.error("Error al enviar comprobante:", err);
+            showPaymentFeedback(
+              "error",
+              "❌ Error de conexión. Verifica tu red e inténtalo de nuevo.",
+            );
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Enviar Comprobante";
+          }
         });
 
-        function showPaymentFeedback(type, message) {
-            const feedback = document.getElementById('payment-feedback');
-            feedback.className = 'form-feedback form-feedback--' + type;
-            feedback.textContent = message;
-            feedback.style.display = 'block';
-            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+      function showPaymentFeedback(type, message) {
+        const feedback = document.getElementById("payment-feedback");
+        feedback.className = "form-feedback form-feedback--" + type;
+        feedback.textContent = message;
+        feedback.style.display = "block";
+        feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
 
-        // ==========================================
-        // MURAL DE PARTICIPANTES
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarMural();
-        });
+      // ==========================================
+      // MURAL DE PARTICIPANTES
+      // ==========================================
+      document.addEventListener("DOMContentLoaded", () => {
+        cargarMural();
+      });
 
-        async function cargarMural() {
-            const track = document.getElementById('muralParticipantes');
-            const grid = document.getElementById('gridParticipantes');
+      async function cargarMural() {
+        const track = document.getElementById("muralParticipantes");
+        const grid = document.getElementById("gridParticipantes");
 
-            try {
-                const response = await fetch('../../backend/api.php?action=get_participants');
-                if(!response.ok) throw new Error('Error de red');
+        try {
+          const response = await fetch(
+            "/backend/api.php?action=get_participants",
+          );
+          if (!response.ok) throw new Error("Error de red");
 
-                const participantes = await response.json();
+          const participantes = await response.json();
 
-                if(participantes.length === 0) {
-                    track.innerHTML = '<div style="text-align: center; width: 100vw; color: #64748b; padding: 40px;">Aún no hay inscritos. ¡Sé el primero en aparecer aquí! 🚀</div>';
-                    grid.innerHTML = '<p style="text-align: center; width: 100%; color: #64748b;">No hay participantes registrados aún.</p>';
-                    return;
-                }
+          if (participantes.length === 0) {
+            track.innerHTML =
+              '<div style="text-align: center; width: 100vw; color: #64748b; padding: 40px;">Aún no hay inscritos. ¡Sé el primero en aparecer aquí! 🚀</div>';
+            grid.innerHTML =
+              '<p style="text-align: center; width: 100%; color: #64748b;">No hay participantes registrados aún.</p>';
+            return;
+          }
 
-                let tarjetasHTML = '';
-                let tarjetasGridHTML = '';
+          let tarjetasHTML = "";
+          let tarjetasGridHTML = "";
 
-                participantes.forEach(p => {
-                    const esPonente = p.modalidad === 'poster';
-                    const badgeClass = esPonente ? 'badge-ponente' : 'badge-asistente';
-                    const badgeText = esPonente ? '📊 Ponente' : '🧑‍🏫 Asistente';
-                    const borderStyle = esPonente ? 'border-left-color: #f59e0b;' : 'border-left-color: #1e3a8a;';
+          participantes.forEach((p) => {
+            const esPonente = p.modalidad === "poster";
+            const badgeClass = esPonente ? "badge-ponente" : "badge-asistente";
+            const badgeText = esPonente ? "📊 Ponente" : "🧑‍🏫 Asistente";
+            const borderStyle = esPonente
+              ? "border-left-color: #f59e0b;"
+              : "border-left-color: #1e3a8a;";
 
-                    tarjetasHTML += `
+            tarjetasHTML += `
                         <div class="mural-card" style="${borderStyle}">
                             <div>
                                 <div class="mural-name">${p.nombre}</div>
@@ -673,7 +980,7 @@
                         </div>
                     `;
 
-                    tarjetasGridHTML += `
+            tarjetasGridHTML += `
                         <div class="mural-card grid-card" style="${borderStyle}">
                             <div>
                                 <div class="mural-name">${p.nombre}</div>
@@ -682,615 +989,868 @@
                             <div class="mural-badge ${badgeClass}">${badgeText}</div>
                         </div>
                     `;
-                });
+          });
 
-                track.innerHTML = tarjetasHTML + tarjetasHTML;
-                grid.innerHTML = tarjetasGridHTML;
+          track.innerHTML = tarjetasHTML + tarjetasHTML;
+          grid.innerHTML = tarjetasGridHTML;
 
-                const velocidad = participantes.length * 4;
-                track.style.animationDuration = `${velocidad}s`;
-            } catch (error) {
-                console.error('Error al cargar el mural:', error);
-                track.innerHTML = '<div style="text-align: center; width: 100vw; color: #ef4444; padding: 40px;">No se pudo cargar la lista.</div>';
-            }
+          const velocidad = participantes.length * 4;
+          track.style.animationDuration = `${velocidad}s`;
+        } catch (error) {
+          console.error("Error al cargar el mural:", error);
+          track.innerHTML =
+            '<div style="text-align: center; width: 100vw; color: #ef4444; padding: 40px;">No se pudo cargar la lista.</div>';
         }
+      }
 
-        function abrirDirectorio() {
-            document.getElementById('directorioModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+      function abrirDirectorio() {
+        document.getElementById("directorioModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
 
-        function cerrarDirectorio() {
-            document.getElementById('directorioModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+      function cerrarDirectorio() {
+        document.getElementById("directorioModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
     </script>
 
     <style>
-        /* ============================================
+      /* ============================================
            SISTEMA DE PESTAÑAS
            ============================================ */
-        .tabs-wrapper {
-            background: white;
-            border-bottom: 2px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
+      .tabs-wrapper {
+        background: white;
+        border-bottom: 2px solid #e2e8f0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
 
-        .tabs-nav {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            padding: 0;
-            overflow-x: auto;
-        }
+      .tabs-nav {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0;
+        overflow-x: auto;
+      }
 
-        .tab-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 28px;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: #64748b;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            margin-bottom: -2px;
-        }
+      .tab-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 28px;
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #64748b;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        margin-bottom: -2px;
+      }
 
-        .tab-btn:hover {
-            color: var(--color-primary);
-            background: #f0f4f8;
-        }
+      .tab-btn:hover {
+        color: var(--color-primary);
+        background: #f0f4f8;
+      }
 
-        .tab-btn--active {
-            color: var(--color-primary);
-            border-bottom-color: var(--color-primary);
-            background: rgba(30, 58, 138, 0.04);
-        }
+      .tab-btn--active {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+        background: rgba(30, 58, 138, 0.04);
+      }
 
-        .tab-step {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #e2e8f0;
-            color: #64748b;
-            font-size: 0.85rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            transition: all 0.2s ease;
-        }
+      .tab-step {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 800;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+      }
 
-        .tab-btn--active .tab-step {
-            background: var(--color-primary);
-            color: white;
-        }
+      .tab-btn--active .tab-step {
+        background: var(--color-primary);
+        color: white;
+      }
 
-        .tab-label em {
-            font-style: normal;
-            font-weight: 400;
-            color: #94a3b8;
-            font-size: 0.85em;
-        }
+      .tab-label em {
+        font-style: normal;
+        font-weight: 400;
+        color: #94a3b8;
+        font-size: 0.85em;
+      }
 
-        .tab-btn--active .tab-label em {
-            color: #7aa2d4;
-        }
+      .tab-btn--active .tab-label em {
+        color: #7aa2d4;
+      }
 
-        .tabs-arrow {
-            color: #cbd5e1;
-            font-size: 1.2rem;
-            padding: 0 4px;
-            flex-shrink: 0;
-        }
+      .tabs-arrow {
+        color: #cbd5e1;
+        font-size: 1.2rem;
+        padding: 0 4px;
+        flex-shrink: 0;
+      }
 
-        /* ============================================
+      /* ============================================
            BLOQUE DE PRECIOS INFORMATIVO
            ============================================ */
-        .pricing-info-block {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-            border: 1.5px solid #bfdbfe;
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 1.4rem;
-        }
+      .pricing-info-block {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+        border: 1.5px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-bottom: 1.4rem;
+      }
 
-        .pricing-info-icon {
-            font-size: 1.8rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
+      .pricing-info-icon {
+        font-size: 1.8rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
 
-        .pricing-info-content {
-            flex: 1;
-        }
+      .pricing-info-content {
+        flex: 1;
+      }
 
-        .pricing-info-title {
-            font-weight: 800;
-            color: #1e3a8a;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
+      .pricing-info-title {
+        font-weight: 800;
+        color: #1e3a8a;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+      }
 
-        .pricing-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
+      .pricing-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
 
-        .pricing-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-        }
+      .pricing-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.88rem;
+      }
 
-        .pricing-tag--student {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
+      .pricing-tag--student {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
 
-        .pricing-tag--prof {
-            background: #dcfce7;
-            color: #15803d;
-        }
+      .pricing-tag--prof {
+        background: #dcfce7;
+        color: #15803d;
+      }
 
-        .pricing-tag strong {
-            font-size: 1rem;
-        }
+      .pricing-tag strong {
+        font-size: 1rem;
+      }
 
-        .pricing-info-hint {
-            font-size: 0.84rem;
-            color: #475569;
-            line-height: 1.5;
-            margin: 0;
-        }
+      .pricing-info-hint {
+        font-size: 0.84rem;
+        color: #475569;
+        line-height: 1.5;
+        margin: 0;
+      }
 
-        /* ============================================
+      /* ============================================
            FORMULARIO DE PAGO — PASOS
            ============================================ */
-        .payment-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 16px 18px;
-            margin-bottom: 1.4rem;
-            border: 1px solid #e2e8f0;
-        }
+      .payment-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 16px 18px;
+        margin-bottom: 1.4rem;
+        border: 1px solid #e2e8f0;
+      }
 
-        .payment-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
+      .payment-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
 
-        .payment-step-num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            color: white;
-            font-size: 0.78rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
+      .payment-step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        color: white;
+        font-size: 0.78rem;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
 
-        .payment-step-text {
-            font-size: 0.88rem;
-            color: #475569;
-            line-height: 1.5;
-        }
+      .payment-step-text {
+        font-size: 0.88rem;
+        color: #475569;
+        line-height: 1.5;
+      }
 
-        /* ============================================
+      /* ============================================
            FILE UPLOAD CUSTOM UI
            ============================================ */
-        .file-upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
+      .file-upload-area {
+        border: 2px dashed #cbd5e1;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
 
-        .file-upload-area:hover {
-            border-color: var(--color-primary);
-        }
+      .file-upload-area:hover {
+        border-color: var(--color-primary);
+      }
 
-        .file-input-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
+      .file-input-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
 
-        .file-upload-ui {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 28px 20px;
-            cursor: pointer;
-            gap: 6px;
-            transition: background 0.2s;
-        }
+      .file-upload-ui {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 20px;
+        cursor: pointer;
+        gap: 6px;
+        transition: background 0.2s;
+      }
 
-        .file-upload-ui:hover {
-            background: #f0f4f8;
-        }
+      .file-upload-ui:hover {
+        background: #f0f4f8;
+      }
 
-        .file-upload-icon {
-            font-size: 2rem;
-        }
+      .file-upload-icon {
+        font-size: 2rem;
+      }
 
-        .file-upload-label {
-            font-weight: 600;
-            color: var(--color-primary);
-            font-size: 0.9rem;
-            margin: 0;
-        }
+      .file-upload-label {
+        font-weight: 600;
+        color: var(--color-primary);
+        font-size: 0.9rem;
+        margin: 0;
+      }
 
-        .file-upload-hint {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin: 0;
-        }
+      .file-upload-hint {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin: 0;
+      }
 
-        .file-selected-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
-            background: #f0fdf4;
-        }
+      .file-selected-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 18px;
+        background: #f0fdf4;
+      }
 
-        .file-selected-icon {
-            font-size: 1.2rem;
-        }
+      .file-selected-icon {
+        font-size: 1.2rem;
+      }
 
-        #fileSelectedName {
-            flex: 1;
-            font-size: 0.88rem;
-            color: #15803d;
-            font-weight: 600;
-            word-break: break-all;
-        }
+      #fileSelectedName {
+        flex: 1;
+        font-size: 0.88rem;
+        color: #15803d;
+        font-weight: 600;
+        word-break: break-all;
+      }
 
-        .file-remove-btn {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 700;
-            padding: 0 4px;
-            flex-shrink: 0;
-        }
+      .file-remove-btn {
+        background: none;
+        border: none;
+        color: #ef4444;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 0 4px;
+        flex-shrink: 0;
+      }
 
-        /* ============================================
+      /* ============================================
            FEEDBACK DEL FORMULARIO DE PAGO
            ============================================ */
-        .form-feedback {
-            border-radius: 10px;
-            padding: 14px 18px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
+      .form-feedback {
+        border-radius: 10px;
+        padding: 14px 18px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
 
-        .form-feedback--success {
-            background: #f0fdf4;
-            border: 1.5px solid #86efac;
-            color: #15803d;
-        }
+      .form-feedback--success {
+        background: #f0fdf4;
+        border: 1.5px solid #86efac;
+        color: #15803d;
+      }
 
-        .form-feedback--error {
-            background: #fef2f2;
-            border: 1.5px solid #fca5a5;
-            color: #b91c1c;
-        }
+      .form-feedback--error {
+        background: #fef2f2;
+        border: 1.5px solid #fca5a5;
+        color: #b91c1c;
+      }
 
-        /* ============================================
+      /* ============================================
            FORM HINT
            ============================================ */
-        .form-hint {
-            display: block;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 5px;
-        }
+      .form-hint {
+        display: block;
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin-top: 5px;
+      }
 
-        /* ============================================
+      /* ============================================
            HEADER COMPACTO UNIFICADO
            ============================================ */
-        .page-header-compact {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-            padding: 46px 0 68px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+      .page-header-compact {
+        background: linear-gradient(
+          135deg,
+          var(--color-primary) 0%,
+          var(--color-primary-dark) 100%
+        );
+        padding: 46px 0 68px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header-bg-shapes {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .hshape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.08;
+        animation: floatShape 18s ease-in-out infinite;
+      }
+      .hshape-1 {
+        width: 280px;
+        height: 280px;
+        background: white;
+        top: -120px;
+        right: -60px;
+        animation-delay: 0s;
+      }
+      .hshape-2 {
+        width: 160px;
+        height: 160px;
+        background: var(--color-secondary, #f39c12);
+        bottom: -50px;
+        left: 8%;
+        animation-delay: 6s;
+      }
+
+      @keyframes floatShape {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
         }
-
-        .header-bg-shapes { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-        .hshape { position: absolute; border-radius: 50%; opacity: 0.08; animation: floatShape 18s ease-in-out infinite; }
-        .hshape-1 { width: 280px; height: 280px; background: white; top: -120px; right: -60px; animation-delay: 0s; }
-        .hshape-2 { width: 160px; height: 160px; background: var(--color-secondary, #f39c12); bottom: -50px; left: 8%; animation-delay: 6s; }
-
-        @keyframes floatShape {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-18px) rotate(160deg); }
+        50% {
+          transform: translateY(-18px) rotate(160deg);
         }
+      }
 
-        .compact-header-content { position: relative; z-index: 2; }
+      .compact-header-content {
+        position: relative;
+        z-index: 2;
+      }
 
-        .badge-pill {
-            display: inline-block; padding: 6px 18px; border-radius: 30px;
-            background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.45);
-            font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 14px;
-        }
+      .badge-pill {
+        display: inline-block;
+        padding: 6px 18px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin-bottom: 14px;
+      }
 
-        .page-title-compact {
-            font-size: 2.6rem; font-weight: 900; color: white; margin-bottom: 0.4rem;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.18); line-height: 1.2;
-        }
+      .page-title-compact {
+        font-size: 2.6rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 0.4rem;
+        text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.18);
+        line-height: 1.2;
+      }
 
-        .page-subtitle-compact {
-            font-size: 1rem; color: rgba(255,255,255,0.9); margin: 0;
-        }
+      .page-subtitle-compact {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+      }
 
-        /* ============================================
+      /* ============================================
            LAYOUT PRINCIPAL 2 COLUMNAS
            ============================================ */
-        .contact-main-section {
-            padding: 2.5rem 0 3.5rem;
-            background: #f0f4f8;
-        }
+      .contact-main-section {
+        padding: 2.5rem 0 3.5rem;
+        background: #f0f4f8;
+      }
 
-        .contact-two-col {
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 2rem;
-            align-items: start;
-        }
+      .contact-two-col {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 2rem;
+        align-items: start;
+      }
 
-        .col-form {}
+      .col-form {
+      }
 
-        .form-container {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem 2.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-        }
+      .form-container {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+      }
 
-        .form-header { text-align: center; margin-bottom: 1.8rem; }
-        .form-header h2 { color: var(--color-primary); margin-bottom: 0.3rem; font-size: 1.6rem; }
-        .form-header p { color: var(--color-text-secondary); font-size: 0.9rem; }
+      .form-header {
+        text-align: center;
+        margin-bottom: 1.8rem;
+      }
+      .form-header h2 {
+        color: var(--color-primary);
+        margin-bottom: 0.3rem;
+        font-size: 1.6rem;
+      }
+      .form-header p {
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+      }
 
-        .form-fieldset {
-            border: 2px solid #eef2f7;
-            border-radius: 12px;
-            padding: 1.4rem 1.6rem;
-            margin-bottom: 1.4rem;
-        }
-        .form-fieldset legend {
-            font-size: 1rem; font-weight: 700; color: var(--color-primary); padding: 0 8px;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .radio-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .radio-label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-        .form-actions { display: flex; justify-content: center; margin-top: 1.5rem; }
-        .form-note { text-align: center; font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem; }
+      .form-fieldset {
+        border: 2px solid #eef2f7;
+        border-radius: 12px;
+        padding: 1.4rem 1.6rem;
+        margin-bottom: 1.4rem;
+      }
+      .form-fieldset legend {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-primary);
+        padding: 0 8px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .radio-group {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+      .form-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+      .form-note {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--color-text-muted);
+        margin-top: 1rem;
+      }
 
-        /* --- Sidebar --- */
-        .col-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            position: sticky;
-            top: 70px; /* Ajustado por el sticky de las tabs */
-        }
+      /* --- Sidebar --- */
+      .col-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        position: sticky;
+        top: 70px; /* Ajustado por el sticky de las tabs */
+      }
 
-        .sidebar-card {
-            background: white;
-            border-radius: 14px;
-            padding: 1.4rem 1.6rem;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
-            border-left: 5px solid var(--color-primary);
-        }
+      .sidebar-card {
+        background: white;
+        border-radius: 14px;
+        padding: 1.4rem 1.6rem;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+        border-left: 5px solid var(--color-primary);
+      }
 
-        .sidebar-card--accent {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-            border-left-color: transparent;
-            color: white;
-        }
+      .sidebar-card--accent {
+        background: linear-gradient(
+          135deg,
+          var(--color-primary) 0%,
+          var(--color-primary-dark) 100%
+        );
+        border-left-color: transparent;
+        color: white;
+      }
 
-        .sidebar-card--accent h3,
-        .sidebar-card--accent p { color: white !important; }
+      .sidebar-card--accent h3,
+      .sidebar-card--accent p {
+        color: white !important;
+      }
 
-        .sidebar-card--accent .sidebar-date-sub {
-            color: white !important;
-            opacity: 1 !important;
-        }
+      .sidebar-card--accent .sidebar-date-sub {
+        color: white !important;
+        opacity: 1 !important;
+      }
 
-        .sidebar-card--highlights { border-left-color: var(--color-secondary, #f39c12); }
+      .sidebar-card--highlights {
+        border-left-color: var(--color-secondary, #f39c12);
+      }
 
-        .sidebar-card-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+      .sidebar-card-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
 
-        .sidebar-card h3 {
-            font-size: 1rem; font-weight: 800; color: var(--color-primary-dark);
-            margin-bottom: 0.5rem;
-        }
+      .sidebar-card h3 {
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--color-primary-dark);
+        margin-bottom: 0.5rem;
+      }
 
-        .sidebar-card p {
-            font-size: 0.88rem; color: var(--color-text-secondary);
-            margin: 0; line-height: 1.5;
-        }
+      .sidebar-card p {
+        font-size: 0.88rem;
+        color: var(--color-text-secondary);
+        margin: 0;
+        line-height: 1.5;
+      }
 
-        .sidebar-card a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
-        .sidebar-card a:hover { text-decoration: underline; }
+      .sidebar-card a {
+        color: var(--color-primary);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .sidebar-card a:hover {
+        text-decoration: underline;
+      }
 
-        .sidebar-date-main {
-            font-size: 1.5rem !important; font-weight: 900 !important; color: white !important;
-            margin-bottom: 2px !important;
-        }
+      .sidebar-date-main {
+        font-size: 1.5rem !important;
+        font-weight: 900 !important;
+        color: white !important;
+        margin-bottom: 2px !important;
+      }
 
-        .sidebar-date-sub { font-size: 0.82rem !important; opacity: 0.85; }
-        .sidebar-detail { margin-top: 4px !important; font-size: 0.82rem !important; }
+      .sidebar-date-sub {
+        font-size: 0.82rem !important;
+        opacity: 0.85;
+      }
+      .sidebar-detail {
+        margin-top: 4px !important;
+        font-size: 0.82rem !important;
+      }
 
-        .highlights-list {
-            list-style: none; padding: 0; margin: 0;
-        }
-        .highlights-list li {
-            padding: 5px 0; font-size: 0.87rem; color: var(--color-text-secondary);
-            border-bottom: 1px solid #f0f4f8; display: flex; align-items: center; gap: 6px;
-        }
-        .highlights-list li:last-child { border-bottom: none; }
-        .highlights-list li::before { content: "✓"; font-weight: 900; color: var(--color-primary); font-size: 0.9rem; }
+      .highlights-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .highlights-list li {
+        padding: 5px 0;
+        font-size: 0.87rem;
+        color: var(--color-text-secondary);
+        border-bottom: 1px solid #f0f4f8;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .highlights-list li:last-child {
+        border-bottom: none;
+      }
+      .highlights-list li::before {
+        content: "✓";
+        font-weight: 900;
+        color: var(--color-primary);
+        font-size: 0.9rem;
+      }
 
-        /* ============================================
+      /* ============================================
            RESPONSIVE
            ============================================ */
-        @media (max-width: 900px) {
-            .contact-two-col { grid-template-columns: 1fr; }
-            .col-sidebar { position: static; flex-direction: row; flex-wrap: wrap; }
-            .sidebar-card { flex: 1 1 240px; }
+      @media (max-width: 900px) {
+        .contact-two-col {
+          grid-template-columns: 1fr;
         }
-
-        @media (max-width: 600px) {
-            .form-container { padding: 1.4rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .page-title-compact { font-size: 2rem; }
-            .col-sidebar { flex-direction: column; }
-            .tab-btn { padding: 12px 16px; font-size: 0.82rem; }
-            .pricing-info-block { flex-direction: column; gap: 8px; }
+        .col-sidebar {
+          position: static;
+          flex-direction: row;
+          flex-wrap: wrap;
         }
+        .sidebar-card {
+          flex: 1 1 240px;
+        }
+      }
 
-        /* ============================================
+      @media (max-width: 600px) {
+        .form-container {
+          padding: 1.4rem;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .page-title-compact {
+          font-size: 2rem;
+        }
+        .col-sidebar {
+          flex-direction: column;
+        }
+        .tab-btn {
+          padding: 12px 16px;
+          font-size: 0.82rem;
+        }
+        .pricing-info-block {
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+
+      /* ============================================
            MURAL Y MODAL
            ============================================ */
-        .mural-section {
-            padding: 50px 0; background-color: #f8fafc;
-            border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
-            overflow: hidden;
-        }
+      .mural-section {
+        padding: 50px 0;
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        overflow: hidden;
+      }
 
-        .ticker-wrapper {
-            width: 100%; overflow: hidden; position: relative;
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        }
+      .ticker-wrapper {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 5%,
+          black 95%,
+          transparent
+        );
+        -webkit-mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 5%,
+          black 95%,
+          transparent
+        );
+      }
 
-        .ticker-track {
-            display: flex; gap: 20px; width: max-content;
-            animation: scrollTicker linear infinite;
-        }
+      .ticker-track {
+        display: flex;
+        gap: 20px;
+        width: max-content;
+        animation: scrollTicker linear infinite;
+      }
 
-        .ticker-track:hover { animation-play-state: paused; }
+      .ticker-track:hover {
+        animation-play-state: paused;
+      }
 
-        .mural-card {
-            width: 300px; flex-shrink: 0;
-            background: white; padding: 25px 20px; border-radius: 12px;
-            border-left: 6px solid #1e3a8a; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column; justify-content: space-between;
-            min-height: 120px; cursor: default; transition: 0.3s;
-        }
+      .mural-card {
+        width: 300px;
+        flex-shrink: 0;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        border-left: 6px solid #1e3a8a;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 120px;
+        cursor: default;
+        transition: 0.3s;
+      }
 
-        .mural-card:hover { box-shadow: 0 10px 25px rgba(30,58,138,0.15); border-left-width: 10px; }
-        .mural-name { font-size: 1.15rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; line-height: 1.2; }
-        .mural-inst { font-size: 0.9rem; color: #64748b; margin-bottom: 15px; }
-        .mural-badge { display: inline-block; font-size: 0.8rem; font-weight: bold; padding: 5px 12px; border-radius: 20px; width: fit-content; }
-        .badge-asistente { background: #e0e7ff; color: #3730a3; }
-        .badge-ponente { background: #fef08a; color: #854d0e; }
+      .mural-card:hover {
+        box-shadow: 0 10px 25px rgba(30, 58, 138, 0.15);
+        border-left-width: 10px;
+      }
+      .mural-name {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      .mural-inst {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin-bottom: 15px;
+      }
+      .mural-badge {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 5px 12px;
+        border-radius: 20px;
+        width: fit-content;
+      }
+      .badge-asistente {
+        background: #e0e7ff;
+        color: #3730a3;
+      }
+      .badge-ponente {
+        background: #fef08a;
+        color: #854d0e;
+      }
 
-        @keyframes scrollTicker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+      @keyframes scrollTicker {
+        0% {
+          transform: translateX(0);
         }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.8); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px);
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+      }
+      .modal-content {
+        background: #f8fafc;
+        width: 90%;
+        max-width: 1100px;
+        max-height: 85vh;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        animation: modalFadeIn 0.3s ease-out;
+      }
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        .modal-content {
-            background: #f8fafc; width: 90%; max-width: 1100px; max-height: 85vh;
-            border-radius: 20px; display: flex; flex-direction: column;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25); animation: modalFadeIn 0.3s ease-out;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .modal-header {
-            padding: 25px 30px; border-bottom: 2px solid #e2e8f0;
-            display: flex; justify-content: space-between; align-items: center;
-            background: white; border-radius: 20px 20px 0 0;
-        }
-        .modal-header h2 { color: #1e3a8a; margin: 0; font-size: 1.8rem; }
-        .close-btn {
-            background: none; border: none; font-size: 2.5rem; color: #64748b;
-            cursor: pointer; line-height: 1; transition: 0.2s;
-        }
-        .close-btn:hover { color: #ef4444; }
-        .modal-body { padding: 30px; overflow-y: auto; }
-        .mural-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .grid-card { width: 100%; min-height: 140px; }
+      }
+      .modal-header {
+        padding: 25px 30px;
+        border-bottom: 2px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        border-radius: 20px 20px 0 0;
+      }
+      .modal-header h2 {
+        color: #1e3a8a;
+        margin: 0;
+        font-size: 1.8rem;
+      }
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 2.5rem;
+        color: #64748b;
+        cursor: pointer;
+        line-height: 1;
+        transition: 0.2s;
+      }
+      .close-btn:hover {
+        color: #ef4444;
+      }
+      .modal-body {
+        padding: 30px;
+        overflow-y: auto;
+      }
+      .mural-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .grid-card {
+        width: 100%;
+        min-height: 140px;
+      }
 
-        /* ============================================
+      /* ============================================
            SECCIÓN MAPA
            ============================================ */
-        .map-section {
-            padding: 4rem 0;
-            background-color: white;
-        }
+      .map-section {
+        padding: 4rem 0;
+        background-color: white;
+      }
 
-        .map-container {
-            position: relative;
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            border: 4px solid white;
-            background: #f0f4f8;
-            line-height: 0;
-        }
-        
+      .map-container {
+        position: relative;
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 4px solid white;
+        background: #f0f4f8;
+        line-height: 0;
+      }
+
+      .map-container iframe {
+        display: block;
+        width: 100%;
+        height: 450px;
+        border: none;
+      }
+
+      @media (max-width: 600px) {
         .map-container iframe {
-            display: block;
-            width: 100%;
-            height: 450px;
-            border: none;
+          height: 350px;
         }
-
-        @media (max-width: 600px) {
-            .map-container iframe { height: 350px; }
-            .map-section { padding: 2.5rem 0; }
+        .map-section {
+          padding: 2.5rem 0;
         }
+      }
     </style>
-</body>
+  </body>
 </html>

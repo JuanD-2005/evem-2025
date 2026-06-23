@@ -1,454 +1,841 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXVIII Escuela Venezolana para la Enseñanza de la Matemática - EVEM 2026</title>
-    <meta name="description" content="Evento educativo para docentes de matemáticas. San Cristóbal, Táchira - UNET">
-    
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      XXVIII Escuela Venezolana para la Enseñanza de la Matemática - EVEM 2026
+    </title>
+    <meta
+      name="description"
+      content="Evento educativo para docentes de matemáticas. San Cristóbal, Táchira - UNET"
+    />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/typography.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
     <style>
-        .cedic-interactive-link {
-            position: relative !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            text-decoration: none !important;
-            cursor: pointer !important;
+      .cedic-interactive-link {
+        position: relative !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+      }
+      .cedic-special {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        animation: cedicPulse 2s infinite alternate !important;
+      }
+      .cedic-interactive-link:hover .cedic-special {
+        transform: scale(0.85) rotate(-5deg) !important;
+        filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.9)) !important;
+        animation: none !important;
+      }
+      .cedic-tooltip {
+        position: absolute !important;
+        bottom: -40px !important;
+        background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+        color: white !important;
+        padding: 6px 14px !important;
+        border-radius: 20px !important;
+        font-size: 0.75rem !important;
+        font-weight: bold !important;
+        white-space: nowrap !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-10px) !important;
+        transition: all 0.3s ease !important;
+        pointer-events: none !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+        z-index: 10 !important;
+      }
+      .cedic-tooltip::before {
+        content: "" !important;
+        position: absolute !important;
+        top: -4px !important;
+        left: 50% !important;
+        transform: translateX(-50%) rotate(45deg) !important;
+        width: 8px !important;
+        height: 8px !important;
+        background: #0ea5e9 !important;
+      }
+      .cedic-interactive-link:hover .cedic-tooltip {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+      @keyframes cedicPulse {
+        0% {
+          filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.3));
+          transform: scale(1);
         }
-        .cedic-special {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-            animation: cedicPulse 2s infinite alternate !important;
+        100% {
+          filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.8));
+          transform: scale(1.05);
         }
-        .cedic-interactive-link:hover .cedic-special {
-            transform: scale(0.85) rotate(-5deg) !important;
-            filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.9)) !important;
-            animation: none !important;
-        }
-        .cedic-tooltip {
-            position: absolute !important;
-            bottom: -40px !important;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
-            color: white !important;
-            padding: 6px 14px !important;
-            border-radius: 20px !important;
-            font-size: 0.75rem !important;
-            font-weight: bold !important;
-            white-space: nowrap !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            transform: translateY(-10px) !important;
-            transition: all 0.3s ease !important;
-            pointer-events: none !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-            z-index: 10 !important;
-        }
-        .cedic-tooltip::before {
-            content: '' !important;
-            position: absolute !important;
-            top: -4px !important;
-            left: 50% !important;
-            transform: translateX(-50%) rotate(45deg) !important;
-            width: 8px !important;
-            height: 8px !important;
-            background: #0ea5e9 !important;
-        }
-        .cedic-interactive-link:hover .cedic-tooltip {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
-        }
-        @keyframes cedicPulse {
-            0% { filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.3)); transform: scale(1); }
-            100% { filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.8)); transform: scale(1.05); }
-        }
+      }
     </style>
     <style>
-        /* Forzar números de estadísticas en blanco */
-        .stat-number { color: white !important; }
-        /* Forzar título CTA en blanco */
-        .cta-title { color: white !important; }
+      /* Forzar números de estadísticas en blanco */
+      .stat-number {
+        color: white !important;
+      }
+      /* Forzar título CTA en blanco */
+      .cta-title {
+        color: white !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="top-bar">
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
-                <li><a href="index.html#comite">🏠 Comité</a></li>
-                <li><a href="pages/evem/alojamiento.html">🏨 Alojamiento</a></li>
-            </ul>
+      <div class="nav-container">
+        <ul class="nav-links">
+          <li><a href="index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
+          <li><a href="index.html#comite">🏠 Comité</a></li>
+          <li><a href="pages/evem/alojamiento.html">🏨 Alojamiento</a></li>
+        </ul>
 
-            <div class="central-logo-container">
-                <a href="index.html">
-                    <img src="assets/logos/evem-logo.png" alt="EVEM Logo" class="central-logo">
-                </a>
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="pages/evem/courses.html">💠 Cursos</a></li>
-                <li><a href="pages/evem/conferencias.html">👥 Conferencias</a></li>
-                <li><a href="pages/evem/contact.html">📝 Inscríbete</a></li>
-            </ul>
+        <div class="central-logo-container">
+          <a href="index.html">
+            <img
+              src="assets/logos/evem-logo.png"
+              alt="EVEM Logo"
+              class="central-logo"
+            />
+          </a>
         </div>
+
+        <ul class="nav-links">
+          <li><a href="pages/evem/courses.html">💠 Cursos</a></li>
+          <li><a href="pages/evem/conferencias.html">👥 Conferencias</a></li>
+          <li><a href="pages/evem/contact.html">📝 Inscríbete</a></li>
+        </ul>
+      </div>
     </header>
 
     <section class="hero-2026">
-        <div class="hero-carousel">
-            <div class="hero-slide active" style="background-image: url('assets/comunes/hero-tachira.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/comunes/hero-2.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/comunes/hero-3.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/comunes/hero-4.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('assets/comunes/obelisco.jpeg');"></div>
+      <div class="hero-carousel">
+        <div
+          class="hero-slide active"
+          style="
+            background-image: url(&quot;assets/comunes/hero-tachira.jpg&quot;);
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;assets/comunes/hero-2.jpg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;assets/comunes/hero-3.jpg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="background-image: url(&quot;assets/comunes/hero-4.jpg&quot;)"
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url(&quot;assets/comunes/obelisco.jpeg&quot;);
+          "
+        ></div>
+      </div>
+
+      <div class="hero-overlay-blue"></div>
+
+      <div class="hero-content-2026">
+        <h2 class="hero-edition">XXVIII</h2>
+        <h1 class="hero-title-main">
+          Escuela Venezolana para la<br />Enseñanza de la Matemática
+        </h1>
+
+        <div class="hero-subtitle-blue">EVEM 2026</div>
+
+        <div
+          class="logos-container"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          "
+        >
+          <a href="https://unet.edu.ve/" target="_blank" rel="noopener">
+            <img
+              src="assets/logos/unet-logo.png"
+              alt="UNET"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain"
+            />
+          </a>
+
+          <a
+            href="https://postgrado.unet.edu.ve/"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="assets/logos/logoPostgrado.png"
+              alt="Postgrado UNET"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain; border-radius: 8px"
+            />
+          </a>
+
+          <a href="https://www.ula.ve/" target="_blank" rel="noopener">
+            <img
+              src="assets/logos/ula-logo.png"
+              alt="ULA"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain"
+            />
+          </a>
+
+          <a href="https://www.upel.edu.ve/" target="_blank" rel="noopener">
+            <img
+              src="assets/logos/uppel.png"
+              alt="UPEL"
+              class="partner-logo"
+              style="height: 54px; object-fit: contain"
+            />
+          </a>
+
+          <a href="pages/festival/festival.html" class="cedic-interactive-link">
+            <img
+              src="assets/logos/cedic-Sinfondo.png"
+              alt="CEDIC"
+              class="partner-logo cedic-special"
+              style="height: 65px; object-fit: contain"
+            />
+            <span class="cedic-tooltip">¡Ir al Festival! 🚀</span>
+          </a>
+
+          <span>
+            <img
+              src="assets/logos/LogoCervantes.png"
+              alt="Cervantes"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain; border-radius: 8px"
+            />
+          </span>
+
+          <a href="pages/mat/mat.html">
+            <img
+              src="assets/logos/encomat-logo.png"
+              alt="ENCOMAT"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain"
+            />
+          </a>
+
+          <a href="#" aria-label="Logo Junio">
+            <img
+              src="assets/logos/Logo_Junio.png"
+              alt="Logo Junio"
+              class="partner-logo"
+              style="height: 65px; object-fit: contain"
+            />
+          </a>
         </div>
+      </div>
 
-        <div class="hero-overlay-blue"></div>
+      <button class="carousel-control prev" aria-label="Anterior">
+        <span>‹</span>
+      </button>
+      <button class="carousel-control next" aria-label="Siguiente">
+        <span>›</span>
+      </button>
 
-        <div class="hero-content-2026">
-            <h2 class="hero-edition">XXVIII</h2>
-            <h1 class="hero-title-main">Escuela Venezolana para la<br>Enseñanza de la Matemática</h1>
-            
-            <div class="hero-subtitle-blue">EVEM 2026</div>
-
-            <div class="logos-container" style="display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-                
-                <a href="https://unet.edu.ve/" target="_blank" rel="noopener">
-                    <img src="assets/logos/unet-logo.png" alt="UNET" class="partner-logo" style="height: 65px; object-fit: contain;">
-                </a>
-                
-                <a href="https://postgrado.unet.edu.ve/" target="_blank" rel="noopener">
-                    <img src="assets/logos/logoPostgrado.png" alt="Postgrado UNET" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
-                </a>
-                
-                <a href="https://www.ula.ve/" target="_blank" rel="noopener">
-                    <img src="assets/logos/ula-logo.png" alt="ULA" class="partner-logo" style="height: 65px; object-fit: contain;">
-                </a>
-                
-                <a href="https://www.upel.edu.ve/" target="_blank" rel="noopener">
-                    <img src="assets/logos/uppel.png" alt="UPEL" class="partner-logo" style="height: 54px; object-fit: contain;">
-                </a>
-
-                <a href="pages/festival/festival.html" class="cedic-interactive-link">
-                    <img src="assets/logos/cedic-Sinfondo.png" alt="CEDIC" class="partner-logo cedic-special" style="height: 65px; object-fit: contain;">
-                    <span class="cedic-tooltip">¡Ir al Festival! 🚀</span>
-                </a>
-                
-                <span>
-                    <img src="assets/logos/LogoCervantes.png" alt="Cervantes" class="partner-logo" style="height: 65px; object-fit: contain; border-radius: 8px;">
-                </span>
-                
-                <a href="pages/mat/mat.html">
-                    <img src="assets/logos/encomat-logo.png" alt="ENCOMAT" class="partner-logo" style="height: 65px; object-fit: contain;">
-                </a>
-
-                <a href="#" aria-label="Logo Junio">
-                    <img src="assets/logos/Logo_Junio.png" alt="Logo Junio" class="partner-logo" style="height: 65px; object-fit: contain;">
-                </a>
-            </div>
-        </div>
-
-        <button class="carousel-control prev" aria-label="Anterior">
-            <span>‹</span>
-        </button>
-        <button class="carousel-control next" aria-label="Siguiente">
-            <span>›</span>
-        </button>
-
-        <div class="carousel-indicators">
-            <button class="indicator active" data-slide="0" aria-label="Ir a imagen 1"></button>
-            <button class="indicator" data-slide="1" aria-label="Ir a imagen 2"></button>
-            <button class="indicator" data-slide="2" aria-label="Ir a imagen 3"></button>
-            <button class="indicator" data-slide="3" aria-label="Ir a imagen 4"></button>
-            <button class="indicator" data-slide="4" aria-label="Ir a imagen 5"></button>
-        </div>
+      <div class="carousel-indicators">
+        <button
+          class="indicator active"
+          data-slide="0"
+          aria-label="Ir a imagen 1"
+        ></button>
+        <button
+          class="indicator"
+          data-slide="1"
+          aria-label="Ir a imagen 2"
+        ></button>
+        <button
+          class="indicator"
+          data-slide="2"
+          aria-label="Ir a imagen 3"
+        ></button>
+        <button
+          class="indicator"
+          data-slide="3"
+          aria-label="Ir a imagen 4"
+        ></button>
+        <button
+          class="indicator"
+          data-slide="4"
+          aria-label="Ir a imagen 5"
+        ></button>
+      </div>
     </section>
 
     <section class="about-section" id="sobre-nosotros">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">San Cristóbal, la Ciudad de la Cordialidad</h2>
-                <p class="section-subtitle">— EVEM 2026 —</p>
-            </div>
-            
-            <div class="about-layout">
-                <!-- COLUMNA 1: El texto que ya tenías -->
-                <div class="about-text-content">
-                    <p>La Escuela Venezolana para la Enseñanza de la Matemática es un evento educativo anual que reúne docentes de matemáticas de la educación media. Durante cuatro días intensivos, ofrecemos cursos especializados y conferencias magistrales para enriquecer la formación y capacitación de los docentes en esta área fundamental.</p>
-                    <p>Nuestro objetivo es fomentar el intercambio de conocimientos, estrategias pedagógicas y experiencias entre los profesionales de la enseñanza de las matemáticas.</p>
-                    <p>En esta oportunidad, la Escuela se realizará en la Universidad Nacional Experimental del Táchira (UNET), en la hermosa ciudad de San Cristóbal, capital del Estado Táchira.</p>
-                    <p>Se ofrecerán cursos impartidos por profesores universitarios con amplia experiencia. La EVEM, organizada desde la Universidad de Los Andes (ULA), es un evento para educadores de educación media apasionados por las matemáticas. Durante cuatro días intensivos, nos sumergimos en un ambiente de aprendizaje colaborativo y actualización profesional.</p>
-                </div>
-
-                <!-- COLUMNA 2: El Video Vertical -->
-                <div class="vertical-video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/9XTA9KjAG1w" 
-                        title="Aniversario San Cristóbal - Sede EVEM 2026" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-            
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            San Cristóbal, la Ciudad de la Cordialidad
+          </h2>
+          <p class="section-subtitle">— EVEM 2026 —</p>
         </div>
+
+        <div class="about-layout">
+          <!-- COLUMNA 1: El texto que ya tenías -->
+          <div class="about-text-content">
+            <p>
+              La Escuela Venezolana para la Enseñanza de la Matemática es un
+              evento educativo anual que reúne docentes de matemáticas de la
+              educación media. Durante cuatro días intensivos, ofrecemos cursos
+              especializados y conferencias magistrales para enriquecer la
+              formación y capacitación de los docentes en esta área fundamental.
+            </p>
+            <p>
+              Nuestro objetivo es fomentar el intercambio de conocimientos,
+              estrategias pedagógicas y experiencias entre los profesionales de
+              la enseñanza de las matemáticas.
+            </p>
+            <p>
+              En esta oportunidad, la Escuela se realizará en la Universidad
+              Nacional Experimental del Táchira (UNET), en la hermosa ciudad de
+              San Cristóbal, capital del Estado Táchira.
+            </p>
+            <p>
+              Se ofrecerán cursos impartidos por profesores universitarios con
+              amplia experiencia. La EVEM, organizada desde la Universidad de
+              Los Andes (ULA), es un evento para educadores de educación media
+              apasionados por las matemáticas. Durante cuatro días intensivos,
+              nos sumergimos en un ambiente de aprendizaje colaborativo y
+              actualización profesional.
+            </p>
+          </div>
+
+          <!-- COLUMNA 2: El Video Vertical -->
+          <div class="vertical-video-container">
+            <iframe
+              src="https://www.youtube.com/embed/9XTA9KjAG1w"
+              title="Aniversario San Cristóbal - Sede EVEM 2026"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+              "
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3 class="stat-number">Talento Nacional</h3>
-                    <p class="stat-label">PROFESORES EXCEPCIONALES</p>
-                </div>
-                <div class="stat-card">
-                    <h3 class="stat-number">Desde 1996</h3>
-                    <p class="stat-label">CRECIENDO JUNTOS</p>
-                </div>
-                <div class="stat-card">
-                    <h3 class="stat-number">Educación Media</h3>
-                    <p class="stat-label">COMPROMISO CON LA ENSEÑANZA</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 class="stat-number">Talento Nacional</h3>
+            <p class="stat-label">PROFESORES EXCEPCIONALES</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-number">Desde 1996</h3>
+            <p class="stat-label">CRECIENDO JUNTOS</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="stat-number">Educación Media</h3>
+            <p class="stat-label">COMPROMISO CON LA ENSEÑANZA</p>
+          </div>
         </div>
+      </div>
     </section>
 
     <section class="committee-section" id="comite">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Comité Organizador</h2>
-                <p class="section-subtitle">El equipo EVEM 2026</p>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Comité Organizador</h2>
+          <p class="section-subtitle">El equipo EVEM 2026</p>
+        </div>
+
+        <div class="committee-grid">
+          <div class="committee-card">
+            <div class="committee-photo">
+              <div class="photo-placeholder">👤</div>
             </div>
+            <h3 class="committee-name">Dr. Arstides Arellán</h3>
+            <p class="committee-role">Coordinador General</p>
+            <p class="committee-institution">Universidad de Los Andes (ULA)</p>
+            <a href="mailto:aristide.arellan@gmail.com" class="committee-email"
+              >✉️ aristide.arellan@gmail.com</a
+            >
+          </div>
 
-            <div class="committee-grid">
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <div class="photo-placeholder">👤</div>
-                    </div>
-                    <h3 class="committee-name">Dr. Arstides Arellán</h3>
-                    <p class="committee-role">Coordinador General</p>
-                    <p class="committee-institution">Universidad de Los Andes (ULA)</p>
-                    <a href="mailto:aristide.arellan@gmail.com" class="committee-email">✉️ aristide.arellan@gmail.com</a>
-                </div>
+          <div class="committee-card">
+            <div class="committee-photo">
+              <!-- Aquí insertamos la foto real -->
+              <img
+                src="assets/comunes/gilberto.png"
+                alt="Dr. Gilberto Paredes"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  border-radius: 50%;
+                "
+              />
+            </div>
+            <h3 class="committee-name">Dr. Gilberto Paredes</h3>
+            <p class="committee-role">Coordinador UNET</p>
+            <p class="committee-institution">
+              Universidad Nacional Experimental del Táchira (UNET)
+            </p>
+            <a href="mailto:gilbpar@unet.edu.ve" class="committee-email"
+              >✉️ gilbpar@unet.edu.ve</a
+            >
+          </div>
 
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <!-- Aquí insertamos la foto real -->
-                        <img src="assets/comunes/gilberto.png" alt="Dr. Gilberto Paredes" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                    </div>
-                    <h3 class="committee-name">Dr. Gilberto Paredes</h3>
-                    <p class="committee-role">Coordinador UNET</p>
-                    <p class="committee-institution">Universidad Nacional Experimental del Táchira (UNET)</p>
-                    <a href="mailto:gilbpar@unet.edu.ve" class="committee-email">✉️ gilbpar@unet.edu.ve</a>
-                </div>
-
-                <div class="committee-card">
-                    <div class="committee-photo">
-                        <div class="photo-placeholder">👤</div>
-                    </div>
-                    <h3 class="committee-name">Prof. Álvaro Mendoza</h3>
-                    <p class="committee-role">Coordinador ULA</p>
-                    <p class="committee-institution">Núcleo Universitario Dr. Pedro Rincón Gutiérrez Universidad de Los Andes</p>
-                    <a href="mailto:aljomees@ula.ve" class="committee-email">✉️ aljomees@ula.ve</a>
-                </div>
-            </div> </div>
+          <div class="committee-card">
+            <div class="committee-photo">
+              <div class="photo-placeholder">👤</div>
+            </div>
+            <h3 class="committee-name">Prof. Álvaro Mendoza</h3>
+            <p class="committee-role">Coordinador ULA</p>
+            <p class="committee-institution">
+              Núcleo Universitario Dr. Pedro Rincón Gutiérrez Universidad de Los
+              Andes
+            </p>
+            <a href="mailto:aljomees@ula.ve" class="committee-email"
+              >✉️ aljomees@ula.ve</a
+            >
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="cards-section">
-        <div class="container">
-            <h2 class="section-title centered">Quiénes Somos</h2>
-            <div class="cards-grid">
-                <!-- Tarjeta 1: UNET -->
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/comunes/Campus_UNET.jpg" alt="Campus UNET">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Sede 2026</span>
-                        <h3 class="card-title">Universidad Nacional Experimental del Táchira</h3>
-                        <p class="card-text">La UNET nos abre sus puertas en esta nueva generación del evento, ofreciendo espacios modernos y una atmósfera académica excepcional.</p>
-                        <a href="#" class="card-link">Leer más →</a>
-                    </div>
-                </article>
-
-                <!-- Tarjeta 2: Cursos -->
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/comunes/Cursos.png" alt="Cursos">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Formación</span>
-                        <h3 class="card-title">Cursos Especializados</h3>
-                        <p class="card-text">Cursos de alta calidad impartidos por profesores universitarios con amplia trayectoria, cubriendo desde fundamentos hasta innovación.</p>
-                        <a href="pages/evem/courses.html" class="card-link">Leer más →</a>
-                    </div>
-                </article>
-
-                <!-- Tarjeta 3: DIM -->
-                <article class="info-card" style="border-top: 4px solid #9333ea;">
-                    <div class="card-image">
-                        <img src="assets/comunes/DiaPi.png" alt="Día de la Matemática"> 
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date" style="background: none;">Evento Especial</span>
-                        <h3 class="card-title">Día Internacional de las Matemáticas (DIM)</h3>
-                        <p class="card-text">Un espacio de encuentro con actividades exclusivas, conferencias y certificación avalada para todos los asistentes.</p>
-                        <a href="pages/dim/dim.html" class="card-link" style="color: #9333ea;">Portal del Evento →</a>
-                    </div>
-                </article>
-
-                <!-- Tarjeta 4: Maestría -->
-                <article class="info-card">
-                    <div class="card-image">
-                        <img src="assets/logos/logoPostgrado.jpeg" alt="Colaboración">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date">Postgrado UNET</span>
-                        <h3 class="card-title">Maestría de Matemáticas</h3>
-                        <p class="card-text">La apertura de la Cohorte 2026 demuestra que la UNET sigue siendo un faro de conocimiento a pesar de los desafíos.</p>
-                        <a href="https://www.unet.edu.ve/postmath/" class="card-link">Leer más →</a>
-                    </div>
-                </article>
-
-                <!-- NUEVA Tarjeta 5: Olimpiadas de Astronomía -->
-                <article class="info-card" style="border-top: 4px solid #1e3a8a;">
-                    <div class="card-image">
-                        <img src="assets/comunes/placeholder-olim1.jpeg" alt="Olimpiadas de Astronomía">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-date" style="color: #1e3a8a;">Competencia Científica</span>
-                        <h3 class="card-title">Olimpiadas de Astronomía</h3>
-                        <p class="card-text">Incentivando la curiosidad por el cosmos y las ciencias espaciales en los jóvenes talentos de la región con retos académicos únicos.</p>
-                        <a href="pages/mat/mat.html" class="card-link" style="color: #1e3a8a;">Ver Actividades →</a>
-                    </div>
-                </article>
+      <div class="container">
+        <h2 class="section-title centered">Quiénes Somos</h2>
+        <div class="cards-grid">
+          <!-- Tarjeta 1: UNET -->
+          <article class="info-card">
+            <div class="card-image">
+              <img src="assets/comunes/unet52.jpg" alt="UNET-CelebracionT" />
             </div>
+            <div class="card-content">
+              <span class="card-date">Sede 2026</span>
+              <h3 class="card-title">
+                Universidad Nacional Experimental del Táchira
+              </h3>
+              <p class="card-text">
+                La UNET nos abre sus puertas en esta nueva generación del
+                evento, ofreciendo espacios modernos y una atmósfera académica
+                excepcional.
+              </p>
+              <a href="#" class="card-link">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 2: Cursos -->
+          <article class="info-card">
+            <div class="card-image">
+              <img src="assets/comunes/Cursos.png" alt="Cursos" />
+            </div>
+            <div class="card-content">
+              <span class="card-date">Formación</span>
+              <h3 class="card-title">Cursos Especializados</h3>
+              <p class="card-text">
+                Cursos de alta calidad impartidos por profesores universitarios
+                con amplia trayectoria, cubriendo desde fundamentos hasta
+                innovación.
+              </p>
+              <a href="pages/evem/courses.html" class="card-link">Leer más →</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 3: DIM -->
+          <article class="info-card" style="border-top: 4px solid #9333ea">
+            <div class="card-image">
+              <img
+                src="assets/comunes/diamate.png"
+                alt="Día de la Matemática"
+              />
+            </div>
+            <div class="card-content">
+              <span class="card-date" style="background: none"
+                >Evento Especial</span
+              >
+              <h3 class="card-title">
+                Día Internacional de las Matemáticas (DIM)
+              </h3>
+              <p class="card-text">
+                Un espacio de encuentro con actividades exclusivas, conferencias
+                y certificación avalada para todos los asistentes.
+              </p>
+              <a
+                href="pages/dim/dim.html"
+                class="card-link"
+                style="color: #9333ea"
+                >Portal del Evento →</a
+              >
+            </div>
+          </article>
+
+          <!-- Tarjeta 4: Maestría -->
+          <article class="info-card">
+            <div class="card-image">
+              <img src="assets/logos/logoPostgrado.jpeg" alt="Colaboración" />
+            </div>
+            <div class="card-content">
+              <span class="card-date">Postgrado UNET</span>
+              <h3 class="card-title">Maestría de Matemáticas</h3>
+              <p class="card-text">
+                La apertura de la Cohorte 2026 demuestra que la UNET sigue
+                siendo un faro de conocimiento a pesar de los desafíos.
+              </p>
+              <a href="https://www.unet.edu.ve/postmath/" class="card-link"
+                >Leer más →</a
+              >
+            </div>
+          </article>
+
+          <!-- NUEVA Tarjeta 5: Olimpiadas de Astronomía -->
+          <article class="info-card" style="border-top: 4px solid #1e3a8a">
+            <div class="card-image">
+              <img
+                src="assets/comunes/placeholder-olim1.jpeg"
+                alt="Olimpiadas de Astronomía"
+              />
+            </div>
+            <div class="card-content">
+              <span class="card-date" style="color: #1e3a8a"
+                >Competencia Científica</span
+              >
+              <h3 class="card-title">Olimpiadas de Astronomía</h3>
+              <p class="card-text">
+                Incentivando la curiosidad por el cosmos y las ciencias
+                espaciales en los jóvenes talentos de la región con retos
+                académicos únicos.
+              </p>
+              <a
+                href="pages/mat/mat.html"
+                class="card-link"
+                style="color: #1e3a8a"
+                >Ver Actividades →</a
+              >
+            </div>
+          </article>
         </div>
+      </div>
     </section>
 
     <!-- SECCIÓN: MÁS EVENTOS (CARRUSEL GRANDE) -->
-    <section class="more-events-section" style="padding: 80px 0; background-color: #f8fafc; border-top: 1px solid #e2e8f0;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h2 style="font-size: 2.5rem; color: #1e3a8a; font-weight: 900;">Olimpiadas y Más Eventos</h2>
-                <p style="color: #64748b; font-size: 1.1rem;">Descubre otras iniciativas impulsadas por nuestros departamentos</p>
-            </div>
-
-            <!-- Carrusel de Imágenes Grandes -->
-            <div style="position: relative; max-width: 1000px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
-                
-                <div id="indexEventSlider" style="display: flex; height: 500px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
-                    
-                    <div style="min-width: 100%; position: relative;">
-                        <img src="assets/comunes/orm-villa.jpg" alt="ORM La Villa de los Niños" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);">
-                            <div style="background: #0ea5e9; color: white; display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;">Viernes 20-03-2026</div>
-                            <h3 style="color: white; font-size: 2rem; margin-bottom: 5px; line-height: 1.1;">U.E. Colegio La Villa de los Niños</h3>
-                            <p style="color: #cbd5e1; font-size: 1.1rem;">Presentación Prueba Preliminar Impresa - ORM</p>
-                        </div>
-                    </div>
-
-                    <div style="min-width: 100%; position: relative;">
-                        <img src="assets/comunes/placeholder-olim1.jpeg" alt="Olimpiadas" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
-                            <h3 style="color: white; font-size: 2rem; margin-bottom: 5px;">Olimpiadas de Matemáticas</h3>
-                            <p style="color: #cbd5e1; font-size: 1.1rem;">Fomentando el pensamiento analítico</p>
-                        </div>
-                    </div>
-
-                    <div style="min-width: 100%; position: relative;">
-                        <img src="assets/comunes/encomat-banner.jpg" alt="Encomat 2026" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
-                            <h3 style="color: white; font-size: 2rem; margin-bottom: 5px;">Encomat 2026</h3>
-                            <p style="color: #cbd5e1; font-size: 1.1rem;">Encuentro de Saberes Matemáticos</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Botones de Control -->
-                <button onclick="moverSliderEventos(-1)" style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); color: #1e3a8a;">❮</button>
-                <button onclick="moverSliderEventos(1)" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); color: #1e3a8a;">❯</button>
-            </div>
-
-            <!-- Botón hacia la nueva página -->
-            <div style="text-align: center; margin-top: 50px;">
-                <a href="pages/mat/mat.html" class="btn" style="background: #1e3a8a; color: white; padding: 16px 40px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; text-decoration: none; display: inline-block; box-shadow: 0 10px 20px rgba(30,58,138,0.2); transition: 0.3s;">Explorar todas las actividades →</a>
-            </div>
+    <section
+      class="more-events-section"
+      style="
+        padding: 80px 0;
+        background-color: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+      "
+    >
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 40px">
+          <h2 style="font-size: 2.5rem; color: #1e3a8a; font-weight: 900">
+            Olimpiadas y Más Eventos
+          </h2>
+          <p style="color: #64748b; font-size: 1.1rem">
+            Descubre otras iniciativas impulsadas por nuestros departamentos
+          </p>
         </div>
 
-        <script>
-            let indexSlide = 0;
-            function moverSliderEventos(direccion) {
-                const slider = document.getElementById('indexEventSlider');
-                const totalSlides = slider.children.length;
-                indexSlide = (indexSlide + direccion + totalSlides) % totalSlides;
-                slider.style.transform = `translateX(-${indexSlide * 100}%)`;
-            }
-        </script>
+        <!-- Carrusel de Imágenes Grandes -->
+        <div
+          style="
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+          "
+        >
+          <div
+            id="indexEventSlider"
+            style="
+              display: flex;
+              height: 500px;
+              transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            "
+          >
+            <div style="min-width: 100%; position: relative">
+              <img
+                src="assets/comunes/orm-villa.jpg"
+                alt="ORM La Villa de los Niños"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  object-position: top;
+                "
+              />
+              <div
+                style="
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  padding: 40px 30px;
+                  background: linear-gradient(
+                    to top,
+                    rgba(15, 23, 42, 0.95),
+                    transparent
+                  );
+                "
+              >
+                <div
+                  style="
+                    background: #0ea5e9;
+                    color: white;
+                    display: inline-block;
+                    padding: 4px 10px;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                  "
+                >
+                  Viernes 20-03-2026
+                </div>
+                <h3
+                  style="
+                    color: white;
+                    font-size: 2rem;
+                    margin-bottom: 5px;
+                    line-height: 1.1;
+                  "
+                >
+                  U.E. Colegio La Villa de los Niños
+                </h3>
+                <p style="color: #cbd5e1; font-size: 1.1rem">
+                  Presentación Prueba Preliminar Impresa - ORM
+                </p>
+              </div>
+            </div>
+
+            <div style="min-width: 100%; position: relative">
+              <img
+                src="assets/comunes/placeholder-olim1.jpeg"
+                alt="Olimpiadas"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div
+                style="
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  padding: 40px 30px;
+                  background: linear-gradient(
+                    to top,
+                    rgba(15, 23, 42, 0.9),
+                    transparent
+                  );
+                "
+              >
+                <h3 style="color: white; font-size: 2rem; margin-bottom: 5px">
+                  Olimpiadas de Matemáticas
+                </h3>
+                <p style="color: #cbd5e1; font-size: 1.1rem">
+                  Fomentando el pensamiento analítico
+                </p>
+              </div>
+            </div>
+
+            <div style="min-width: 100%; position: relative">
+              <img
+                src="assets/comunes/encomat-banner.jpeg"
+                alt="Encomat 2026"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div
+                style="
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  padding: 40px 30px;
+                  background: linear-gradient(
+                    to top,
+                    rgba(15, 23, 42, 0.9),
+                    transparent
+                  );
+                "
+              >
+                <h3 style="color: white; font-size: 2rem; margin-bottom: 5px">
+                  Encomat 2026
+                </h3>
+                <p style="color: #cbd5e1; font-size: 1.1rem">
+                  Encuentro de Saberes Matemáticos
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de Control -->
+          <button
+            onclick="moverSliderEventos(-1)"
+            style="
+              position: absolute;
+              top: 50%;
+              left: 20px;
+              transform: translateY(-50%);
+              background: rgba(255, 255, 255, 0.9);
+              border: none;
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              font-size: 1.5rem;
+              cursor: pointer;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+              color: #1e3a8a;
+            "
+          >
+            ❮
+          </button>
+          <button
+            onclick="moverSliderEventos(1)"
+            style="
+              position: absolute;
+              top: 50%;
+              right: 20px;
+              transform: translateY(-50%);
+              background: rgba(255, 255, 255, 0.9);
+              border: none;
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              font-size: 1.5rem;
+              cursor: pointer;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+              color: #1e3a8a;
+            "
+          >
+            ❯
+          </button>
+        </div>
+
+        <!-- Botón hacia la nueva página -->
+        <div style="text-align: center; margin-top: 50px">
+          <a
+            href="pages/mat/mat.html"
+            class="btn"
+            style="
+              background: #1e3a8a;
+              color: white;
+              padding: 16px 40px;
+              border-radius: 12px;
+              font-weight: bold;
+              font-size: 1.1rem;
+              text-decoration: none;
+              display: inline-block;
+              box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);
+              transition: 0.3s;
+            "
+            >Explorar todas las actividades →</a
+          >
+        </div>
+      </div>
+
+      <script>
+        let indexSlide = 0;
+        function moverSliderEventos(direccion) {
+          const slider = document.getElementById("indexEventSlider");
+          const totalSlides = slider.children.length;
+          indexSlide = (indexSlide + direccion + totalSlides) % totalSlides;
+          slider.style.transform = `translateX(-${indexSlide * 100}%)`;
+        }
+      </script>
     </section>
 
     <section class="cta-section" id="inscribete">
-        <div class="container">
-            <h2 class="cta-title">¿Listo para formar parte de EVEM 2026?</h2>
-            <p class="cta-text">Únete a cientos de docentes comprometidos con la excelencia en la enseñanza de las matemáticas</p>
-            
-            <div style="display: flex; justify-content: center; margin-top: 30px;">
-                <a href="pages/evem/contact.html" class="button btn-animate btn-type1" aria-label="Inscribirse en EVEM"></a>
-            </div>
-            
+      <div class="container">
+        <h2 class="cta-title">¿Listo para formar parte de EVEM 2026?</h2>
+        <p class="cta-text">
+          Únete a cientos de docentes comprometidos con la excelencia en la
+          enseñanza de las matemáticas
+        </p>
+
+        <div style="display: flex; justify-content: center; margin-top: 30px">
+          <a
+            href="pages/evem/contact.html"
+            class="button btn-animate btn-type1"
+            aria-label="Inscribirse en EVEM"
+          ></a>
         </div>
+      </div>
     </section>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Universidad Nacional Experimental del Táchira</h4>
-                    <p>Av. Universidad, Paramillo</p>
-                    <p>San Cristóbal, Estado Táchira</p>
-                    <p>Venezuela</p>
-                    <p class="footer-phone">📞 +58 (276) 353-0422</p>
-                    <p class="footer-email">✉️ info@unet.edu.ve</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Inicio</a></li>
-                        <li><a href="pages/evem/courses.html">Cursos</a></li>
-                        <li><a href="pages/evem/tribute.html">Homenaje</a></li>
-                        <li><a href="pages/evem/contact.html">Inscripción</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Servicios</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Aula Virtual</a></li>
-                        <li><a href="#">Biblioteca Digital</a></li>
-                        <li><a href="#">Sistema de Gestión</a></li>
-                        <li><a href="#">Correo Institucional</a></li>
-                        <li><a href="#">Soporte Técnico</a></li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Universidad Nacional Experimental del Táchira</h4>
+            <p>Av. Universidad, Paramillo</p>
+            <p>San Cristóbal, Estado Táchira</p>
+            <p>Venezuela</p>
+            <p class="footer-phone">📞 +58 (276) 353-0422</p>
+            <p class="footer-email">✉️ info@unet.edu.ve</p>
+          </div>
 
-                <div class="footer-col">
-                    <h4>Contacto EVEM</h4>
-                    <p>Email: evem@unet.edu.ve</p>
-                    <p>Organiza: Universidad de Los Andes (ULA)</p>
-                    <p>Sede 2026: UNET</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 Universidad Nacional Experimental del Táchira. Todos los derechos reservados.</p>
-            </div>
+          <div class="footer-col">
+            <h4>Enlaces Rápidos</h4>
+            <ul class="footer-links">
+              <li><a href="#">Inicio</a></li>
+              <li><a href="pages/evem/courses.html">Cursos</a></li>
+              <li><a href="pages/evem/tribute.html">Homenaje</a></li>
+              <li><a href="pages/evem/contact.html">Inscripción</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Servicios</h4>
+            <ul class="footer-links">
+              <li><a href="#">Aula Virtual</a></li>
+              <li><a href="#">Biblioteca Digital</a></li>
+              <li><a href="#">Sistema de Gestión</a></li>
+              <li><a href="#">Correo Institucional</a></li>
+              <li><a href="#">Soporte Técnico</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Contacto EVEM</h4>
+            <p>Email: evem@unet.edu.ve</p>
+            <p>Organiza: Universidad de Los Andes (ULA)</p>
+            <p>Sede 2026: UNET</p>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 Universidad Nacional Experimental del Táchira. Todos los
+            derechos reservados.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/data.js"></script>
@@ -457,6 +844,5 @@
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
     <script src="js/carousel.js"></script>
-
-</body>
+  </body>
 </html>
