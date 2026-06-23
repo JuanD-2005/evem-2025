@@ -244,7 +244,7 @@
                             <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
                             EVEM 2026 · UNET
                         </div>
-                        <img src="../assets/images/evem-logo.png" alt="EVEM" class="cert-logo">
+                        <img src="../../assets/logos/evem-logo.png" alt="EVEM" class="cert-logo">
 
                         <div class="course-highlight">
                             <div class="ch-label">Curso aprobado</div>
@@ -272,7 +272,7 @@
                             </div>
                             <div class="verify-status-dot"></div>
                         </div>
-                        <a href="../index.html" class="action-btn primary">
+                        <a href="../../index.html" class="action-btn primary">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                             Ir al portal de EVEM
                         </a>
@@ -303,7 +303,7 @@
                     <div class="error-body">
                         <div class="error-note">⚠️ ${mensaje || 'Código QR inválido, dañado o cédula no registrada en la base de datos oficial.'}</div>
                         <p>Si crees que es un error, contacta al comité académico de la EVEM.</p>
-                        <a href="../index.html" class="action-btn secondary" style="margin-top:8px;">
+                        <a href="../../index.html" class="action-btn secondary" style="margin-top:8px;">
                             Volver al portal de EVEM
                         </a>
                     </div>
@@ -330,7 +330,7 @@
             }
 
             try {
-                const response = await fetch(`../backend/api.php?action=check_evem_certificate&cedula=${encodeURIComponent(cedula)}`);
+                const response = await fetch(`../../backend/api.php?action=check_evem_certificate&cedula=${encodeURIComponent(cedula)}`);
                 const data = await response.json();
                 if (response.ok) {
                     wrap.innerHTML = buildSuccess(data, cedula);

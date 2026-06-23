@@ -371,7 +371,7 @@
                             <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
                             ${evento}
                         </div>
-                        <img src="../assets/images/DiaPi.png" alt="DIM" class="cert-logo">
+                        <img src="../../assets/comunes/DiaPi.png" alt="DIM" class="cert-logo">
                         <div class="data-rows">
                             <div class="data-row">
                                 <span class="data-label">Participante</span>
@@ -397,7 +397,7 @@
                             </div>
                             <div class="verify-status-dot"></div>
                         </div>
-                        <a href="../index.html" class="action-btn primary">
+                        <a href="../../index.html" class="action-btn primary">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                             Ir al portal de EVEM
                         </a>
@@ -428,7 +428,7 @@
                     <div class="error-body">
                         <div class="error-note">⚠️ ${mensaje || 'Código QR inválido, dañado o el participante no figura en la base de datos oficial.'}</div>
                         <p>Si crees que es un error, contacta al comité organizador.</p>
-                        <a href="../index.html" class="action-btn secondary" style="margin-top:8px;">
+                        <a href="../../index.html" class="action-btn secondary" style="margin-top:8px;">
                             Volver al portal de EVEM
                         </a>
                     </div>
@@ -453,7 +453,7 @@
 
             if (cedula) {
                 try {
-                    const response = await fetch(`../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
+                    const response = await fetch(`../../backend/api.php?action=check_certificate&cedula=${encodeURIComponent(cedula)}`);
                     const data = await response.json();
                     if (response.ok) {
                         wrap.innerHTML = buildSuccess(data.fullName, `C.I: ${cedula}`, 'Día Internacional de las Matemáticas · DIM 2026');
@@ -465,7 +465,7 @@
                 }
             } else if (equipo && nombre) {
                 try {
-                    const response = await fetch(`../backend/api.php?action=get_dim_team&pseudonym=${encodeURIComponent(equipo)}`);
+                    const response = await fetch(`../../backend/api.php?action=get_dim_team&pseudonym=${encodeURIComponent(equipo)}`);
                     if (response.ok) {
                         wrap.innerHTML = buildSuccess(nombre, `Equipo: ${equipo}`, 'Trivia Matemática · DIM 2026');
                     } else {

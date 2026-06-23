@@ -5,8 +5,8 @@ class EVEMApiClient {
         const isPagesFolder = window.location.pathname.includes('/pages/');
 
         // 2. Definir el prefijo
-        // Si estamos en pages, usamos "../" para salir. Si no, usamos vacio "".
-        const prefix = isPagesFolder ? '../' : '';
+        // Si estamos en pages, usamos "../../" para salir (2 niveles). Si no, usamos vacio "".
+        const prefix = isPagesFolder ? '../../' : '';
 
         // 3. Construir la ruta final
         this.baseURL = `${prefix}backend/api.php?action=`;
@@ -62,7 +62,9 @@ async function loadCourses() {
 
     try {
         // Asegúrate de que esta URL apunte a tu backend correctamente
-        const response = await fetch('../backend/api.php?action=courses'); 
+        const isPagesFolder = window.location.pathname.includes('/pages/');
+        const prefix = isPagesFolder ? '../../' : '';
+        const response = await fetch(`${prefix}backend/api.php?action=courses`); 
         const courses = await response.json();
 
         // Limpiamos el mensaje de "Cargando..."
@@ -147,7 +149,9 @@ async function loadPosters() {
     container.innerHTML = '<div class="loading-spinner"></div>';
     
     try {
-        const response = await fetch('../backend/api.php?action=get_posters');
+        const isPagesFolder = window.location.pathname.includes('/pages/');
+        const prefix = isPagesFolder ? '../../' : '';
+        const response = await fetch(`${prefix}backend/api.php?action=get_posters`);
         const posters = await response.json();
 
         if (!response.ok) throw new Error('Error al cargar la API');

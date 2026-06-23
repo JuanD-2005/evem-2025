@@ -137,7 +137,7 @@
     justify-content: center;
     text-align: center;
     background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-    background-image: url('../assets/images/hero-tachira.jpg');
+    background-image: url('../assets/comunes/hero-tachira.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

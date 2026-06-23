@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro DIM - EVEM 2026</title>
     
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/typography.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
     <style>
         /* =========================================
            HEADER RESPONSIVO (CIRUGÍA MÓVIL DIM)
@@ -153,11 +153,11 @@
         <div class="nav-container">
             <ul class="nav-links">
                 <li><a href="https://www.unet.edu.ve/" target="_blank">🏛️ Portal UNET</a></li>
-                <li><a href="../index.html">⬅️ Volver a EVEM</a></li>
+                <li><a href="../../index.html">⬅️ Volver a EVEM</a></li>
             </ul>
             <div class="central-logo-container">
                 <a href="dim.html">
-                    <img src="../assets/images/DiaPi.png" alt="DIM Logo" class="central-logo" style="border-radius: 50%;">
+                    <img src="../../assets/comunes/DiaPi.png" alt="DIM Logo" class="central-logo" style="border-radius: 50%;">
                 </a>
             </div>
             <ul class="nav-links">
@@ -339,10 +339,10 @@
                 <div class="footer-col">
                     <h4>Enlaces Rápidos</h4>
                     <ul class="footer-links">
-                        <li><a href="../index.html">Inicio</a></li>
-                        <li><a href="conferencias.html">Conferencias</a></li>
-                        <li><a href="courses.html">Cursos</a></li>
-                        <li><a href="contact.html">Inscripción EVEM</a></li>
+                        <li><a href="../../index.html">Inicio</a></li>
+                        <li><a href="../evem/conferencias.html">Conferencias</a></li>
+                        <li><a href="../evem/courses.html">Cursos</a></li>
+                        <li><a href="../evem/contact.html">Inscripción EVEM</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -377,7 +377,7 @@
             };
 
             try {
-                const response = await fetch('../backend/api.php?action=register_dim', {
+                const response = await fetch('../../backend/api.php?action=register_dim', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -417,7 +417,7 @@
             
             try {
                 // Llamamos a la API de participantes del DIM
-                const response = await fetch('../backend/api.php?action=get_dim_participants');
+                const response = await fetch('../../backend/api.php?action=get_dim_participants');
                 if(!response.ok) throw new Error('Error de red');
                 
                 const participantes = await response.json();

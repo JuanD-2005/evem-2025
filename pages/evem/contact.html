@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto e Inscripción - EVEM 2026</title>
     
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/typography.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/typography.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
 </head>
 <body>
     <header class="top-bar">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="../index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
-                <li><a href="../index.html#comite">🏠 Comité</a></li>
+                <li><a href="../../index.html#sobre-nosotros">❓ ¿Quiénes Somos?</a></li>
+                <li><a href="../../index.html#comite">🏠 Comité</a></li>
                 <li><a href="alojamiento.html">🏨 Alojamiento</a></li>
             </ul>
 
             <div class="central-logo-container">
-                <a href="../index.html">
-                    <img src="../assets/images/evem-logo.png" alt="EVEM Logo" class="central-logo">
+                <a href="../../index.html">
+                    <img src="../../assets/logos/evem-logo.png" alt="EVEM Logo" class="central-logo">
                 </a>
             </div>
 
@@ -466,7 +466,7 @@
                 <div class="footer-col">
                     <h4>Enlaces Rápidos</h4>
                     <ul class="footer-links">
-                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../../index.html">Inicio</a></li>
                         <li><a href="courses.html">Cursos</a></li>
                         <li><a href="tribute.html">Homenaje</a></li>
                         <li><a href="contact.html">Contacto</a></li>
@@ -497,11 +497,11 @@
         </div>
     </footer>
 
-    <script src="../js/data.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/animations.js"></script>
-    <script src="../js/api.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../../js/data.js"></script>
+    <script src="../../js/navigation.js"></script>
+    <script src="../../js/animations.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/main.js"></script>
 
     <script>
         // ==========================================
@@ -599,7 +599,7 @@
             formData.append('voucher', voucherFile);
 
             try {
-                const response = await fetch('../backend/api.php?action=confirm_payment', {
+                const response = await fetch('../../backend/api.php?action=confirm_payment', {
                     method: 'POST',
                     body: formData
                     // NO establecer Content-Type — el browser lo pone automáticamente con el boundary correcto
@@ -643,7 +643,7 @@
             const grid = document.getElementById('gridParticipantes');
 
             try {
-                const response = await fetch('../backend/api.php?action=get_participants');
+                const response = await fetch('../../backend/api.php?action=get_participants');
                 if(!response.ok) throw new Error('Error de red');
 
                 const participantes = await response.json();
