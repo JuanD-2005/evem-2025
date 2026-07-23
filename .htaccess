@@ -1,0 +1,44 @@
+# =====================================================================
+# .htaccess raíz — EVEM & DIM 2026
+# Blindaje: evita que archivos sensibles sean servidos directamente
+# por Apache cuando el proyecto vive en el docroot del servidor.
+# =====================================================================
+
+# ---------------------------------------------------------------
+# 1) Bloquear cualquier archivo/carpeta cuyo nombre empiece con "."
+#    Cubre: .env, .gitignore, .htaccess, .DS_Store, etc.
+# ---------------------------------------------------------------
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ---------------------------------------------------------------
+# 2) Bloquear la carpeta .git completa (incluye subrutas como
+#    /.git/config o /.git/HEAD, que la regla de arriba NO cubre
+#    porque esos nombres de archivo no empiezan con punto).
+# ---------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule "(^|/)\.git" - [F,L]
+</IfModule>
+
+# ---------------------------------------------------------------
+# 3) Bloquear archivos de configuración/infraestructura y dumps SQL
+#    Docker es solo para desarrollo local, pero si estos archivos
+#    llegan a subirse por error via FTP, no deben ser accesibles.
+# ---------------------------------------------------------------
+<FilesMatch "(^docker-compose\.ya?ml$|^Dockerfile$|\.sql$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

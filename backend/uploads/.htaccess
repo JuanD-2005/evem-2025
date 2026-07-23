@@ -1,0 +1,35 @@
+# =====================================================================
+# .htaccess — backend/uploads/
+# Esta carpeta solo debe almacenar comprobantes de pago (imágenes/PDF).
+# Aunque mediaController.php valida el MIME real del archivo, esta
+# capa es la que impide la Ejecución Remota de Código (RCE) si un
+# archivo "polyglot" (imagen válida + payload PHP) termina guardado
+# aquí con extensión .php.
+# =====================================================================
+
+# ---------------------------------------------------------------
+# 1) Si Apache corre PHP como módulo (mod_php), apaga el motor PHP
+#    para esta carpeta. Si el servidor usa PHP-FPM/CGI, este bloque
+#    se ignora sin error gracias al <IfModule>.
+# ---------------------------------------------------------------
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+
+# ---------------------------------------------------------------
+# 2) Redundancia explícita: deniega el acceso directo a cualquier
+#    archivo con extensión ejecutable por PHP, sin importar cómo
+#    esté configurado el servidor (mod_php, PHP-FPM, CGI, etc.).
+# ---------------------------------------------------------------
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|pht|phar)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
