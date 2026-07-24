@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../../js/security.js"></script>
 
     <style>
         body {
@@ -774,12 +775,12 @@
 
                 // Cédula: solo mostrar si existe, en silencio si no
                 const cedulaHtml = m.cedula
-                    ? `<span class="member-cedula">${m.cedula}${isMe ? ' <strong style="color:#059669;font-size:0.75rem"> ✓ Tú</strong>' : ''}</span>`
+                    ? `<span class="member-cedula">${escapeHTML(m.cedula)}${isMe ? ' <strong style="color:#059669;font-size:0.75rem"> ✓ Tú</strong>' : ''}</span>`
                     : '';   // Sin cédula → no se muestra nada
 
                 row.innerHTML = `
-                    <div class="member-avatar">${initials}</div>
-                    <span class="member-name">${m.name}</span>
+                    <div class="member-avatar">${escapeHTML(initials)}</div>
+                    <span class="member-name">${escapeHTML(m.name)}</span>
                     ${cedulaHtml}
                 `;
                 list.appendChild(row);
@@ -823,7 +824,7 @@
 
                 Swal.fire({
                     title: '¡Certificados Generados!',
-                    html : `Se descargaron <b>${total}</b> certificado${total !== 1 ? 's' : ''} para el equipo <b>${teamData.teamName}</b>.`,
+                    html : `Se descargaron <b>${total}</b> certificado${total !== 1 ? 's' : ''} para el equipo <b>${escapeHTML(teamData.teamName)}</b>.`,
                     icon : 'success',
                     confirmButtonColor: '#0284c7'
                 });

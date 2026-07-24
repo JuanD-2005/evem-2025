@@ -216,11 +216,15 @@
         Si crees que hay un error, contacta al comité académico de la EVEM.
     </p>
 
+    <script src="../../js/security.js"></script>
     <script>
         function hashSim(str) { return btoa(encodeURIComponent(str)).substring(0,32).toUpperCase(); }
 
         function buildSuccess(data, cedula) {
             const hash = hashSim(data.fullName + cedula);
+            const nombreSeguro = escapeHTML(data.fullName);
+            const cursoSeguro = escapeHTML(data.course);
+            const cedulaSegura = escapeHTML(cedula);
             return `
                 <div class="institution-bar">
                     <span class="org">EVEM 2026 — Verificación Oficial</span>
@@ -248,17 +252,17 @@
 
                         <div class="course-highlight">
                             <div class="ch-label">Curso aprobado</div>
-                            <div class="ch-value">"${data.course}"</div>
+                            <div class="ch-value">"${cursoSeguro}"</div>
                         </div>
 
                         <div class="data-rows">
                             <div class="data-row">
                                 <span class="data-label">Participante</span>
-                                <span class="data-value">${data.fullName}</span>
+                                <span class="data-value">${nombreSeguro}</span>
                             </div>
                             <div class="data-row">
                                 <span class="data-label">Cédula</span>
-                                <span class="data-value mono">${cedula}</span>
+                                <span class="data-value mono">${cedulaSegura}</span>
                             </div>
                             <div class="data-row">
                                 <span class="data-label">Evento</span>
@@ -282,6 +286,7 @@
         }
 
         function buildError(mensaje) {
+            const mensajeSeguro = escapeHTML(mensaje);
             return `
                 <div class="institution-bar">
                     <span class="org">EVEM 2026 — Verificación Oficial</span>
@@ -301,7 +306,7 @@
                         </div>
                     </div>
                     <div class="error-body">
-                        <div class="error-note">⚠️ ${mensaje || 'Código QR inválido, dañado o cédula no registrada en la base de datos oficial.'}</div>
+                        <div class="error-note">⚠️ ${mensajeSeguro || 'Código QR inválido, dañado o cédula no registrada en la base de datos oficial.'}</div>
                         <p>Si crees que es un error, contacta al comité académico de la EVEM.</p>
                         <a href="../../index.html" class="action-btn secondary" style="margin-top:8px;">
                             Volver al portal de EVEM
