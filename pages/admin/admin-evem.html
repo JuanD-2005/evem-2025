@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/security.js"></script>
     <style>
         :root {
             --accent: #1d4ed8;
@@ -279,10 +280,10 @@
                 const isPaid = user.has_paid == 1;
                 return `
                     <tr>
-                        <td class="td-mono">${user.cedula}</td>
-                        <td class="td-main">${user.full_name}</td>
-                        <td>${user.institution}</td>
-                        <td><span class="course-tag">${user.course_preference}</span></td>
+                        <td class="td-mono">${escapeHTML(user.cedula)}</td>
+                        <td class="td-main">${escapeHTML(user.full_name)}</td>
+                        <td>${escapeHTML(user.institution)}</td>
+                        <td><span class="course-tag">${escapeHTML(user.course_preference)}</span></td>
                         <td>
                             <span class="status-badge ${isPaid ? 'paid' : 'unpaid'}">
                                 <span class="status-dot"></span>
@@ -292,11 +293,11 @@
                         <td>
                             <div class="action-group">
                                 <button class="btn-action ${isPaid ? 'revoke' : 'approve'}"
-                                    onclick="togglePayment(${user.id}, ${isPaid ? 0 : 1}, '${user.full_name.replace(/'/g,"\\'")}')">
+                                    data-action="toggle" data-id="${user.id}" data-status="${isPaid ? 0 : 1}" data-name="${escapeHTML(user.full_name)}">
                                     ${isPaid ? 'Revocar' : 'Aprobar'}
                                 </button>
                                 <button class="btn-action delete"
-                                    onclick="deleteParticipant(${user.id}, '${user.full_name.replace(/'/g,"\\'")}')">
+                                    data-action="delete" data-id="${user.id}" data-name="${escapeHTML(user.full_name)}">
                                     Eliminar
                                 </button>
                             </div>
@@ -304,13 +305,29 @@
                     </tr>
                 `;
             }).join('');
+
+            // Los onclick inline con datos interpolados no son seguros: el navegador
+            // decodifica entidades HTML antes de interpretar el atributo como JS, así
+            // que escapeHTML() no evita que un nombre con comillas rompa el script.
+            // Se leen los datos vía data-* (donde el escape sí protege) y se conectan
+            // los manejadores por código.
+            tbody.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    togglePayment(Number(btn.dataset.id), Number(btn.dataset.status), btn.dataset.name);
+                });
+            });
+            tbody.querySelectorAll('[data-action="delete"]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    deleteParticipant(Number(btn.dataset.id), btn.dataset.name);
+                });
+            });
         }
 
         async function togglePayment(userId, newStatus, userName) {
             const isApproving = newStatus === 1;
             const { isConfirmed } = await Swal.fire({
                 title: isApproving ? '¿Aprobar pago?' : '¿Revocar pago?',
-                html: `<p style="color:#475569;font-size:0.9rem;">Participante: <strong>${userName}</strong></p>`,
+                html: `<p style="color:#475569;font-size:0.9rem;">Participante: <strong>${escapeHTML(userName)}</strong></p>`,
                 icon: 'question', showCancelButton: true,
                 confirmButtonColor: isApproving ? '#059669' : '#dc2626',
                 cancelButtonColor: '#94a3b8',
@@ -336,7 +353,7 @@
         async function deleteParticipant(userId, userName) {
             const { isConfirmed } = await Swal.fire({
                 title: '¿Eliminar participante?',
-                html: `<p style="color:#475569;font-size:0.9rem;">Esta acción es <strong>permanente</strong> y no se puede deshacer.</p><p style="margin-top:8px;color:#0f172a;font-weight:600;">${userName}</p>`,
+                html: `<p style="color:#475569;font-size:0.9rem;">Esta acción es <strong>permanente</strong> y no se puede deshacer.</p><p style="margin-top:8px;color:#0f172a;font-weight:600;">${escapeHTML(userName)}</p>`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',

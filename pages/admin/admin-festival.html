@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/security.js"></script>
     <style>
         :root {
             --accent: #0284c7;
@@ -497,7 +498,7 @@
         async function deleteTeam(teamId, teamName) {
             const { isConfirmed } = await Swal.fire({
                 title: '¿Eliminar equipo?',
-                html: `<p style="color:#475569;font-size:0.9rem;">Esta acción es <strong>permanente</strong> y no se puede deshacer.</p><p style="margin-top:8px;color:#0f172a;font-weight:600;">${teamName}</p>`,
+                html: `<p style="color:#475569;font-size:0.9rem;">Esta acción es <strong>permanente</strong> y no se puede deshacer.</p><p style="margin-top:8px;color:#0f172a;font-weight:600;">${escapeHTML(teamName)}</p>`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
@@ -567,10 +568,10 @@
                 const isPaid = team.status == 1;
                 return `
                     <tr>
-                        <td class="td-main">${team.team_name}</td>
-                        <td>${team.institution}</td>
-                        <td><span class="area-tag">${team.area}</span></td>
-                        <td><div class="members-block">${team.members}</div></td>
+                        <td class="td-main">${escapeHTML(team.team_name)}</td>
+                        <td>${escapeHTML(team.institution)}</td>
+                        <td><span class="area-tag">${escapeHTML(team.area)}</span></td>
+                        <td><div class="members-block">${escapeHTML(team.members)}</div></td>
                         <td>
                             <span class="status-badge ${isPaid ? 'paid' : 'unpaid'}">
                                 <span class="status-dot"></span>
@@ -580,11 +581,11 @@
                         <td>
                             <div class="action-group">
                                 <button class="btn-action ${isPaid ? 'revoke' : 'approve'}"
-                                    onclick="toggleStatus(${team.id}, ${isPaid ? 0 : 1}, '${team.team_name.replace(/'/g,"\\'")}')">
+                                    data-action="toggle" data-id="${team.id}" data-status="${isPaid ? 0 : 1}" data-name="${escapeHTML(team.team_name)}">
                                     ${isPaid ? 'Revocar' : 'Aprobar'}
                                 </button>
                                 <button class="btn-action delete"
-                                    onclick="deleteTeam(${team.id}, '${team.team_name.replace(/'/g,"\\'")}')">
+                                    data-action="delete" data-id="${team.id}" data-name="${escapeHTML(team.team_name)}">
                                     Eliminar
                                 </button>
                             </div>
@@ -592,13 +593,24 @@
                     </tr>
                 `;
             }).join('');
+
+            tbody.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    toggleStatus(Number(btn.dataset.id), Number(btn.dataset.status), btn.dataset.name);
+                });
+            });
+            tbody.querySelectorAll('[data-action="delete"]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    deleteTeam(Number(btn.dataset.id), btn.dataset.name);
+                });
+            });
         }
 
         async function toggleStatus(id, newStatus, teamName) {
             const isApproving = newStatus === 1;
             const { isConfirmed } = await Swal.fire({
                 title: isApproving ? '¿Aprobar equipo?' : '¿Revocar aprobación?',
-                html: `<p style="color:#475569;font-size:0.9rem;">${isApproving ? 'Aprobando' : 'Revocando'}: <strong>${teamName}</strong></p>`,
+                html: `<p style="color:#475569;font-size:0.9rem;">${isApproving ? 'Aprobando' : 'Revocando'}: <strong>${escapeHTML(teamName)}</strong></p>`,
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: isApproving ? '#059669' : '#dc2626',

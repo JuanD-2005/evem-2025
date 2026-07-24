@@ -146,6 +146,7 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/security.js"></script>
 </head>
 <body style="background-color: #f8fafc;">
     
@@ -452,8 +453,8 @@
                 participantes.forEach(p => {
                     const borderStyle = 'border-left-color: #4c1d95;';
 
-                    const nombre = p.nombre || p.fullName;
-                    const inst = p.institucion || p.institution;
+                    const nombre = escapeHTML(p.nombre || p.fullName);
+                    const inst = escapeHTML(p.institucion || p.institution);
 
                     const content = `
                         <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
