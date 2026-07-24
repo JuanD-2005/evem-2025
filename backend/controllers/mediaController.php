@@ -84,16 +84,26 @@ function confirm_payment($conn) {
         exit();
     }
 
-    // 3. Validar tipo MIME del archivo (whitelist estricta)
-    $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+    // 3. Validar tipo MIME real del archivo (whitelist estricta) y derivar de ahí
+    //    la extensión con la que se va a guardar. Nunca confiamos en la extensión
+    //    ni en el nombre que mandó el cliente: eso es lo que habilita subir un
+    //    "polyglot" (imagen válida + payload PHP) como si fuera .php.
+    $allowedMimeToExt = [
+        'image/jpeg'      => 'jpg',
+        'image/png'       => 'png',
+        'image/webp'      => 'webp',
+        'application/pdf' => 'pdf',
+    ];
     $finfo        = new finfo(FILEINFO_MIME_TYPE);
     $detectedMime = $finfo->file($_FILES['voucher']['tmp_name']);
 
-    if (!in_array($detectedMime, $allowedMimes, true)) {
+    if (!array_key_exists($detectedMime, $allowedMimeToExt)) {
+        @unlink($_FILES['voucher']['tmp_name']);
         http_response_code(400);
         echo json_encode(['error' => 'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG, PNG, WEBP) o PDF.']);
         exit();
     }
+    $safeExt = $allowedMimeToExt[$detectedMime];
 
     // 4. Crear la carpeta uploads/ si no existe (relativa al controlador, apuntando a backend/uploads/)
     $uploadsDir = __DIR__ . '/../uploads/';
@@ -105,14 +115,15 @@ function confirm_payment($conn) {
         }
     }
 
-    // 5. Generar nombre de archivo seguro y único
-    $originalExt  = pathinfo($_FILES['voucher']['name'], PATHINFO_EXTENSION);
-    $safeExt      = strtolower($originalExt);
-    $safeFilename = 'bauche_' . preg_replace('/[^a-zA-Z0-9_\-]/', '', $cedula) . '_' . time() . '.' . $safeExt;
+    // 5. Generar nombre de archivo aleatorio: nada del nombre original del
+    //    cliente entra en el filesystem, así que un path traversal (../../,
+    //    null bytes, etc.) en el nombre subido queda descartado por completo.
+    $safeFilename = bin2hex(random_bytes(16)) . '.' . $safeExt;
     $destination  = $uploadsDir . $safeFilename;
 
     // 6. Mover el archivo temporal a su destino definitivo
     if (!move_uploaded_file($_FILES['voucher']['tmp_name'], $destination)) {
+        @unlink($_FILES['voucher']['tmp_name']);
         http_response_code(500);
         echo json_encode(['error' => 'Error al guardar el archivo en el servidor. Verifica los permisos de la carpeta uploads/.']);
         exit();
