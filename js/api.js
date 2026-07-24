@@ -97,15 +97,15 @@ async function loadCourses() {
                 <article class="modern-course-card">
                     <div class="card-badge" style="background-color: ${badgeColor};">${badgeText}</div>
                     <div class="card-icon-header">${icon}</div>
-                    <h3 class="modern-course-title">${course.title}</h3>
-                    <p class="modern-course-teacher">${course.instructor}</p>
+                    <h3 class="modern-course-title">${escapeHTML(course.title)}</h3>
+                    <p class="modern-course-teacher">${escapeHTML(course.instructor)}</p>
                     <div style="display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin: 8px 0;">
-                        🎯 Público: ${course.target_audience}
+                        🎯 Público: ${escapeHTML(course.target_audience)}
                     </div>
                     <p class="modern-course-institution">Curso EVEM 2026</p>
 
                     <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin: 15px 0;">
-                        ${course.description || "Curso intensivo de 4 días de duración."}
+                        ${escapeHTML(course.description) || "Curso intensivo de 4 días de duración."}
                     </p>
 
                     <div class="course-stats">
@@ -171,16 +171,16 @@ async function loadPosters() {
                             📊
                         </div>
                         <div>
-                            <h4 style="margin: 0; font-size: 1rem; color: var(--color-text); font-weight: bold;">${poster.full_name}</h4>
-                            <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary);">${poster.institution || "Sin institución"}</p>
+                            <h4 style="margin: 0; font-size: 1rem; color: var(--color-text); font-weight: bold;">${escapeHTML(poster.full_name)}</h4>
+                            <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary);">${escapeHTML(poster.institution) || "Sin institución"}</p>
                         </div>
                     </div>
 
                     <h3 class="course-title" style="font-size: 1.15rem; margin-bottom: 12px; color: var(--color-primary-dark);">
-                        ${poster.poster_title || "Título por definir"}
+                        ${escapeHTML(poster.poster_title) || "Título por definir"}
                     </h3>
                     <p class="course-instructor" style="font-size: 0.95rem; line-height: 1.6; color: var(--color-text-secondary); font-style: normal;">
-                        ${poster.poster_abstract || "Sin resumen disponible."}
+                        ${escapeHTML(poster.poster_abstract) || "Sin resumen disponible."}
                     </p>
                 </div>
             </div>
