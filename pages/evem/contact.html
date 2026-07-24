@@ -989,11 +989,14 @@
               ? "border-left-color: #f59e0b;"
               : "border-left-color: #1e3a8a;";
 
+            const nombreSeguro = escapeHTML(p.nombre);
+            const instSeguro = escapeHTML(p.institucion);
+
             tarjetasHTML += `
                         <div class="mural-card" style="${borderStyle}">
                             <div>
-                                <div class="mural-name">${p.nombre}</div>
-                                <div class="mural-inst">🏛️ ${p.institucion}</div>
+                                <div class="mural-name">${nombreSeguro}</div>
+                                <div class="mural-inst">🏛️ ${instSeguro}</div>
                             </div>
                             <div class="mural-badge ${badgeClass}">${badgeText}</div>
                         </div>
@@ -1002,8 +1005,8 @@
             tarjetasGridHTML += `
                         <div class="mural-card grid-card" style="${borderStyle}">
                             <div>
-                                <div class="mural-name">${p.nombre}</div>
-                                <div class="mural-inst">🏛️ ${p.institucion}</div>
+                                <div class="mural-name">${nombreSeguro}</div>
+                                <div class="mural-inst">🏛️ ${instSeguro}</div>
                             </div>
                             <div class="mural-badge ${badgeClass}">${badgeText}</div>
                         </div>

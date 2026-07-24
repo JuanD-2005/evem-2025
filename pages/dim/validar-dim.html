@@ -343,11 +343,15 @@
         Consultas al comité organizador del evento.
     </p>
 
+    <script src="../../js/security.js"></script>
     <script>
         function hashSim(str) { return btoa(encodeURIComponent(str)).substring(0,32).toUpperCase(); }
 
         function buildSuccess(nombrePrincipal, subtitulo, evento, logoSrc) {
             const hash = hashSim(nombrePrincipal + subtitulo);
+            const nombreSeguro = escapeHTML(nombrePrincipal);
+            const subtituloSeguro = escapeHTML(subtitulo);
+            const eventoSeguro = escapeHTML(evento);
             return `
                 <div class="institution-bar">
                     <span class="org">DIM 2026 · EVEM — Verificación Oficial</span>
@@ -369,21 +373,21 @@
                     <div class="cert-body">
                         <div class="cert-event-label">
                             <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
-                            ${evento}
+                            ${eventoSeguro}
                         </div>
                         <img src="../../assets/comunes/DiaPi.png" alt="DIM" class="cert-logo">
                         <div class="data-rows">
                             <div class="data-row">
                                 <span class="data-label">Participante</span>
-                                <span class="data-value">${nombrePrincipal}</span>
+                                <span class="data-value">${nombreSeguro}</span>
                             </div>
                             <div class="data-row">
                                 <span class="data-label">Referencia</span>
-                                <span class="data-value mono">${subtitulo}</span>
+                                <span class="data-value mono">${subtituloSeguro}</span>
                             </div>
                             <div class="data-row">
                                 <span class="data-label">Evento</span>
-                                <span class="data-value">${evento}</span>
+                                <span class="data-value">${eventoSeguro}</span>
                             </div>
                             <div class="data-row">
                                 <span class="data-label">Institución</span>
@@ -407,6 +411,7 @@
         }
 
         function buildError(mensaje) {
+            const mensajeSeguro = escapeHTML(mensaje);
             return `
                 <div class="institution-bar">
                     <span class="org">DIM 2026 · EVEM — Verificación Oficial</span>
@@ -426,7 +431,7 @@
                         </div>
                     </div>
                     <div class="error-body">
-                        <div class="error-note">⚠️ ${mensaje || 'Código QR inválido, dañado o el participante no figura en la base de datos oficial.'}</div>
+                        <div class="error-note">⚠️ ${mensajeSeguro || 'Código QR inválido, dañado o el participante no figura en la base de datos oficial.'}</div>
                         <p>Si crees que es un error, contacta al comité organizador.</p>
                         <a href="../../index.html" class="action-btn secondary" style="margin-top:8px;">
                             Volver al portal de EVEM

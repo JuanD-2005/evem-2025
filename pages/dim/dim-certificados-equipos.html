@@ -150,6 +150,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../../js/security.js"></script>
 </head>
 <body style="background-color: #f8fafc;">
     
@@ -215,10 +216,10 @@
 
                 if (response.ok) {
                     membersContainer.innerHTML = ''; // Limpiamos la lista
-                    
+
                     // 1. Añadimos al Capitán
                     membersContainer.innerHTML += crearFilaIntegrante(result.captain_name, seudonimo, true);
-                    
+
                     // 2. Procesamos el texto de los miembros (Separamos por saltos de línea)
                     const otrosMiembros = result.members.split('\n');
                     otrosMiembros.forEach(miembro => {
@@ -227,6 +228,16 @@
                         if(nombreLimpio.length > 2) {
                             membersContainer.innerHTML += crearFilaIntegrante(nombreLimpio, seudonimo, false);
                         }
+                    });
+
+                    // El nombre/equipo no puede ir en un onclick="...('${nombre}')" inline:
+                    // el navegador decodifica entidades HTML antes de interpretar el
+                    // atributo como JS, así que escapeHTML() no protegería ahí. Se leen
+                    // los data-* (donde el escape sí es efectivo) y se conecta el evento.
+                    membersContainer.querySelectorAll('.btn-descargar-integrante').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            generarPDF(btn.dataset.nombre, btn.dataset.equipo);
+                        });
                     });
 
                     membersList.style.display = 'block';
@@ -248,8 +259,8 @@
             const badge = esCapitan ? '<span style="background: #fef08a; color: #854d0e; padding: 3px 8px; border-radius: 10px; font-size: 0.75rem; margin-left: 10px;">Capitán</span>' : '';
             return `
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="font-weight: bold; color: #1e293b;">${nombre} ${badge}</div>
-                    <button onclick="generarPDF('${nombre}', '${equipo}')" style="background: #22c55e; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9rem;">Descargar 📄</button>
+                    <div style="font-weight: bold; color: #1e293b;">${escapeHTML(nombre)} ${badge}</div>
+                    <button class="btn-descargar-integrante" data-nombre="${escapeHTML(nombre)}" data-equipo="${escapeHTML(equipo)}" style="background: #22c55e; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9rem;">Descargar 📄</button>
                 </div>
             `;
         }
