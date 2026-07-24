@@ -192,6 +192,20 @@
     <script>
         let allUsers = [];
 
+        async function attemptLogin(pin) {
+            try {
+                const response = await fetch('../../backend/api.php?action=admin_login', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pin, panel: 'evem' })
+                });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
                 title: 'Panel Administrativo',
@@ -202,8 +216,9 @@
                 allowOutsideClick: false, allowEscapeKey: false,
                 confirmButtonText: 'Ingresar al Panel →',
                 confirmButtonColor: '#1d4ed8'
-            }).then((result) => {
-                if (result.value === '2026') {
+            }).then(async (result) => {
+                const ok = await attemptLogin(result.value);
+                if (ok) {
                     document.getElementById('adminWrapper').style.display = 'block';
                     Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Acceso concedido', showConfirmButton: false, timer: 1800 });
                     loadParticipants();
@@ -228,7 +243,8 @@
 
         async function loadParticipants() {
             try {
-                const response = await fetch('../../backend/api.php?action=get_evem_participants');
+                const response = await fetch('../../backend/api.php?action=get_evem_participants', { credentials: 'include' });
+                if (!response.ok) throw new Error('No autorizado');
                 allUsers = await response.json();
 
                 // Populate course filter
@@ -306,6 +322,7 @@
                 try {
                     await fetch('../../backend/api.php?action=toggle_evem_payment', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: userId, has_paid: newStatus })
                     });
@@ -331,6 +348,7 @@
                 try {
                     await fetch('../../backend/api.php?action=delete_evem_participant', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: userId })
                     });
