@@ -33,7 +33,7 @@
 #    Docker es solo para desarrollo local, pero si estos archivos
 #    llegan a subirse por error via FTP, no deben ser accesibles.
 # ---------------------------------------------------------------
-<FilesMatch "(^docker-compose\.ya?ml$|^Dockerfile$|\.sql$)">
+<FilesMatch "(^dzocker-compose\.ya?ml$|^Dockerfile$|\.sql$)">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>

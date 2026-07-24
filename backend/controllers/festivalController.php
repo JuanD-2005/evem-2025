@@ -29,6 +29,7 @@ function register_festival($conn) {
 }
 
 function get_festival_teams($conn) {
+    require_admin_session('festival');
     try {
         $stmt = $conn->query("SELECT * FROM festival_teams ORDER BY created_at DESC");
         http_response_code(200);
@@ -40,6 +41,7 @@ function get_festival_teams($conn) {
 }
 
 function toggle_festival_status($conn) {
+    require_admin_session('festival');
     $data = json_decode(file_get_contents("php://input"));
     if (isset($data->id) && isset($data->status)) {
         try {

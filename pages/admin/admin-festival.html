@@ -442,8 +442,21 @@
     </div>
 
     <script>
-        const CLAVE_ADMIN = "cedic2025";
         let allTeams = [];
+
+        async function attemptLogin(pin) {
+            try {
+                const response = await fetch('../../backend/api.php?action=admin_login', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pin, panel: 'festival' })
+                });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
@@ -461,8 +474,9 @@
                     input: 'swal-input-custom',
                     confirmButton: 'swal-btn-custom'
                 }
-            }).then((result) => {
-                if (result.value === CLAVE_ADMIN) {
+            }).then(async (result) => {
+                const ok = await attemptLogin(result.value);
+                if (ok) {
                     document.getElementById('adminWrapper').style.display = 'block';
                     Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Acceso concedido', showConfirmButton: false, timer: 1800 });
                     loadTeams();
@@ -495,6 +509,7 @@
                 try {
                     await fetch('../../backend/api.php?action=delete_festival_team', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id: teamId })
                     });
@@ -523,7 +538,8 @@
         async function loadTeams() {
             const tbody = document.getElementById('tableBody');
             try {
-                const response = await fetch('../../backend/api.php?action=get_festival_teams');
+                const response = await fetch('../../backend/api.php?action=get_festival_teams', { credentials: 'include' });
+                if (!response.ok) throw new Error('No autorizado');
                 allTeams = await response.json();
                 updateStats(allTeams);
                 renderTable(allTeams);
@@ -595,6 +611,7 @@
                 try {
                     await fetch('../../backend/api.php?action=toggle_festival_status', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id, status: newStatus })
                     });
