@@ -203,6 +203,165 @@
         width: 45px;
         height: 45px;
     }
+
+    /* ═══════════════ NAV MÓVIL: barra simple + drawer ═══════════════ */
+    .top-bar .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 58px;
+        padding: 0 12px;
+        background: #f8fafc;
+        position: relative;
+    }
+
+    /* Logo centrado en la barra */
+    .central-logo-container {
+        inset: auto !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-md);
+        flex-shrink: 0;
+        background: #ffffff;
+        z-index: 2;
+    }
+
+    .central-logo {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+        display: block;
+        margin: 0;
+    }
+
+    /* Las pestañas de escritorio se reemplazan por el drawer */
+    .nav-tabs-wrap { display: none; }
+
+    /* Hero: título e edición (antes desbordaba la pantalla) */
+    .hero-2026 {
+        padding: 96px 15px 40px !important;
+        min-height: auto;
+    }
+
+    .hero-edition {
+        font-size: 1.5rem !important;
+        margin-bottom: 5px;
+    }
+
+    .hero-title-main {
+        font-size: clamp(1.5rem, 5vw, 2.2rem) !important;
+        line-height: 1.2 !important;
+        padding: 0 6px;
+        margin-bottom: 6px;
+    }
+
+    .hero-subtitle-blue {
+        font-size: clamp(1.8rem, 8vw, 2.2rem) !important;
+        margin: 10px 0 20px 0 !important;
+        letter-spacing: 0.5px;
+    }
+
+    /* Caja de logos — segunda vuelta: el grid de 3 columnas que envolvía
+       (versión anterior) resolvía el overflow horizontal, pero con 10
+       logos crecía a ~240px de alto (4 filas), empujando la card muy
+       cerca de los dots del carrusel de fondo. Se reemplaza por un
+       marquee horizontal infinito: altura fija sin importar cuántos
+       logos haya, todos visibles con el tiempo, sin gesto del usuario.
+
+       .logos-track contiene DOS copias de .logos-group (ver HTML) una
+       detrás de otra; animar translateX de 0 a -50% recorre exactamente
+       una copia completa, así que cuando "reinicia" a 0% en realidad ya
+       está mostrando el arranque de la segunda copia — el corte no se
+       nota porque es idéntica a la primera.
+
+       IMPORTANTE sobre el espaciado: si el espacio entre logos se hiciera
+       con `gap` en .logos-track (entre los dos grupos) y otro `gap` en
+       .logos-group (entre logos de un mismo grupo), flexbox solo mete un
+       gap EN EL MEDIO de cada par de items — el track de 2 grupos termina
+       midiendo grupo+gap+grupo, no 2×(grupo+gap). La mitad exacta (-50%)
+       cae unos px ANTES del inicio real del segundo grupo, y el loop da
+       un salto visible en cada vuelta. La solución estándar: nada de
+       `gap`, cada logo carga su propio `margin-right` (incluido el
+       último de cada grupo). Así el ancho total es exactamente el doble
+       del de un grupo, sin importar cuánto mida cada logo individual, y
+       -50% cae siempre justo en el arranque del segundo grupo. Por eso
+       .logos-group también pasa a display:contents en mobile (no solo en
+       desktop): los 20 logos (10+10) quedan como hijos flex directos de
+       .logos-track, todos con el mismo margin-right uniforme. */
+    .logos-container {
+        display: block !important;
+        position: relative;
+        height: 100px !important; /* fija: no crece sin importar los logos */
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin-bottom: 26px !important;
+        border-radius: clamp(16px, 4vw, 32px) !important;
+    }
+
+    .logos-track {
+        display: flex !important;
+        align-items: center;
+        height: 100%;
+        width: max-content;
+        animation: evem-logos-marquee 24s linear infinite;
+        will-change: transform;
+    }
+
+    /* Se resucita el display:contents de layout.css (que en desktop oculta
+       el grupo duplicado con display:none) y se muestran AMBOS grupos. */
+    .logos-group,
+    .logos-group[aria-hidden="true"] {
+        display: contents !important;
+    }
+
+    .logos-group > * {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 28px;
+    }
+
+    .logos-container .partner-logo {
+        height: 40px !important;
+        width: auto !important;
+        max-width: none !important; /* en fila horizontal no debe encogerse */
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    @keyframes evem-logos-marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+
+    /* Tocar y mantener presionado pausa el recorrido — igual que pasar el
+       mouse por encima en desktop, pero vía :active (sin JS) para touch. */
+    .logos-container:active .logos-track {
+        animation-play-state: paused;
+    }
+
+    /* El tooltip del logo CEDIC se activa solo con hover (no existe en
+       touch); con overflow:hidden en la card, además, quedaría cortado. */
+    .cedic-tooltip {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .logos-track {
+        animation: none;
+    }
 }
 
 /* Small mobile */
@@ -287,98 +446,4 @@
     .scroll-indicator span::before {
         animation: none;
     }
-}
-
-/* =========================================
-   HEADER MOVIL - PASO 3 (Aplanado Extremo)
-   ========================================= */
-@media (max-width: 900px) {
-
-    /* 1. Contenedor: UNA SOLA FILA */
-    .top-bar .nav-container {
-        display: flex;
-        flex-direction: row; /* Forzamos TODO a estar lado a lado */
-        flex-wrap: nowrap; /* PROHIBIDO hacer saltos de línea */
-        justify-content: space-between; /* El logo a la izquierda, iconos a la derecha */
-        align-items: center;
-        height: 56px; /* Altura estándar de una App móvil */
-        padding: 0 10px;
-        background: #f8fafc;
-        overflow-x: auto; /* Permite deslizar si las pantallas son MUY pequeñas */
-    }
-
-    /* 2. Logo Universal (Se adapta a cualquier imagen) */
-    .central-logo-container {
-        position: relative !important;
-        inset: auto !important;
-        transform: none !important;
-        width: 44px; /* Círculo un poquito más grande */
-        height: 44px;
-        border-radius: 50%;
-        margin: 0;
-        padding: 0; /* Quitamos el padding manual que lo empujaba abajo */
-        display: flex; /* La magia para centrar automático */
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        flex-shrink: 0;
-        background: #ffffff;
-    }
-
-    .central-logo {
-        width: 34px; /* Abarca casi todo el espacio del círculo blanco */
-        height: 34px;
-        object-fit: contain; /* Garantiza que el logo no se deforme */
-        display: block;
-        margin: 0;
-    }
-
-    /* 3. Contenedor de botones: Todos alineados */
-    .nav-links {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-end;
-        gap: 4px; /* Pegaditos para ahorrar espacio */
-        width: auto;
-        padding: 0;
-        margin: 0;
-    }
-
-    /* 4. Botones: Bolitas ultra compactas */
-    .nav-links a {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-
-        width: 34px; /* Más pequeños */
-        height: 34px;
-        padding: 0;
-        padding-left: 8px; /* Centrar emoji */
-
-        background: #ffffff;
-        border-radius: 50%;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-
-        color: #ffffff !important;
-
-        font-size: 0.85rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-decoration: none;
-        flex-shrink: 0; /* Evita que se deformen */
-    }
-
-    /* Hero Ajustes para compensar que el header ahora es pequeñito */
-    .hero-2026 {
-        padding: 80px 15px 40px !important; /* Subimos el contenido */
-        min-height: auto;
-    }
-
-    .hero-edition { font-size: 1.5rem !important; margin-bottom: 5px; }
-    .hero-title-main { font-size: 1.8rem !important; line-height: 1.3; padding: 0 10px; margin-bottom: 5px; }
-    .hero-subtitle-blue { font-size: 2.2rem !important; margin: 10px 0 20px 0 !important; letter-spacing: 1px; }
-
-    .nav-toggle { display: none !important; }
 }

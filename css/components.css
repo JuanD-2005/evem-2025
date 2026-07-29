@@ -1,5 +1,23 @@
 /* Components - Componentes reutilizables */
 
+/* Íconos SVG de trazo (reemplazan a los emojis del nav/footer/tarjetas)
+
+   OJO con `display`: reset.css aplica `display:block` a TODO svg. Sin este
+   override, cada ícono salta a su propia línea y parte en dos los enlaces
+   cuyo contenedor no es flex (footer, emails, tooltip). */
+.ico {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    min-width: 17px;
+    min-height: 17px;
+    flex-shrink: 0;
+    vertical-align: -0.16em;
+}
+
+.ico-md { width: 1.4rem; height: 1.4rem; min-width: 0; min-height: 0; }
+.ico-lg { width: 2rem; height: 2rem; min-width: 0; min-height: 0; }
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -15,25 +33,25 @@
 }
 
 .btn-primary {
-    background-color: var(--color-secondary);
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #ec8f4e 100%);
     color: var(--color-text-light);
 }
 
 .btn-primary:hover {
-    background-color: var(--color-accent);
+    background: linear-gradient(135deg, var(--color-accent) 0%, #d95f3f 100%);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
 
 .btn-hero {
-    background-color: var(--color-text-light);
+    background: linear-gradient(135deg, #ffffff 0%, #eef2f9 100%);
     color: var(--color-primary);
     font-size: var(--font-size-lg);
     padding: var(--spacing-lg) var(--spacing-2xl);
 }
 
 .btn-hero:hover {
-    background-color: var(--color-secondary);
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #ec8f4e 100%);
     color: var(--color-text-light);
     transform: translateY(-3px);
     box-shadow: var(--shadow-xl);
@@ -78,6 +96,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform var(--transition-slow);
 }
 
@@ -116,6 +135,7 @@
 .card-link {
     display: inline-flex;
     align-items: center;
+    gap: 7px;
     color: var(--color-primary);
     font-weight: var(--font-weight-semibold);
     transition: color var(--transition-fast);
@@ -123,6 +143,21 @@
 
 .card-link:hover {
     color: var(--color-primary-dark);
+}
+
+/* La flecha acompaña el gesto de "seguir" al pasar el mouse */
+.card-link-arrow {
+    transition: transform var(--transition-fast);
+}
+
+.card-link:hover .card-link-arrow,
+a:hover > .card-link-arrow {
+    transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-link-arrow { transition: none; }
+    .card-link:hover .card-link-arrow { transform: none; }
 }
 
 /* Course Cards */
@@ -211,7 +246,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-radius: var(--border-radius-full);
-    background-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
     color: var(--color-text-light);
 }
 
@@ -272,21 +307,27 @@
 }
 
 /* Back to top button */
+/* Mismo azul de marca que .footer-col h4 (#38bdf8, acento de CEDIC):
+   título de columna y botón flotante comparten un solo azul brillante. */
 .back-to-top {
     position: fixed;
     bottom: var(--spacing-2xl);
     right: var(--spacing-2xl);
     width: 50px;
     height: 50px;
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    color: #ffffff;
+    font-size: 1.2rem;
+    line-height: 1;
+    border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 22px rgba(14, 165, 233, 0.4);
     opacity: 0;
     visibility: hidden;
+    cursor: pointer;
     transition: all var(--transition-base);
     z-index: var(--z-fixed);
 }
@@ -297,8 +338,9 @@
 }
 
 .back-to-top:hover {
-    background-color: var(--color-primary-dark);
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
     transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.5);
 }
 
 /* Committee Cards */
@@ -341,6 +383,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .photo-placeholder {
@@ -376,7 +419,9 @@
 }
 
 .committee-email {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     font-size: var(--font-size-sm);
     color: var(--color-primary);
     text-decoration: none;
@@ -388,67 +433,205 @@
     text-decoration: underline;
 }
 
-
-/* --- BOTÓN ANIMADO TIPO UIVERSE (Adaptado) --- */
-.btn-animate {
-  height: 55px;
-  width: 200px; /* Un poco más ancho para que quepa el texto */
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  /* Para centrarlo si está en un div flex */
-  display: inline-block; 
+/* ═══════════════════════════════════════════════════════════════
+   DRAWER OFF-CANVAS (navegación móvil)
+   El botón y el panel viven en el DOM siempre, pero solo se
+   muestran por debajo de 768px (ver responsive.css). En escritorio
+   quedan ocultos y no afectan el layout.
+   ═══════════════════════════════════════════════════════════════ */
+.drawer-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-primary-dark);
+    cursor: pointer;
 }
 
-.btn-animate:hover {
-  box-shadow: 0 4px 25px rgba(52, 152, 219, 0.6); /* Resplandor azul al hover */
+.drawer-toggle .ico { width: 22px; height: 22px; }
+
+.drawer,
+.drawer-overlay { display: none; }
+
+@media (max-width: 768px) {
+    .drawer-toggle { display: inline-flex; }
+
+    .drawer-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 20, 45, 0.55);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 9998;
+    }
+
+    .drawer-overlay.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .drawer {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 80%;
+        max-width: 300px;
+        background: #ffffff;
+        box-shadow: 4px 0 28px rgba(8, 20, 45, 0.22);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 9999;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .drawer.open { transform: translateX(0); }
+
+    /* ─── Cabecera azul institucional ─── */
+    .drawer-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 16px;
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        color: #ffffff;
+        flex-shrink: 0;
+    }
+
+    .drawer-logo-chip {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .drawer-logo-chip img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .drawer-head-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+        min-width: 0;
+    }
+
+    .drawer-head-text strong {
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        letter-spacing: -0.01em;
+    }
+
+    .drawer-head-text small {
+        font-size: 0.75rem;
+        opacity: 0.75;
+    }
+
+    .drawer-close {
+        margin-left: auto;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--border-radius-md);
+        background: rgba(255, 255, 255, 0.16);
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .drawer-close .ico { width: 18px; height: 18px; }
+
+    /* ─── Lista de enlaces ─── */
+    .drawer-nav {
+        display: flex;
+        flex-direction: column;
+        padding: 8px 0 4px;
+        flex: 1;
+    }
+
+    .drawer-group {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        padding: 14px 20px 6px;
+    }
+
+    .drawer-link {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 12px 20px;
+        color: var(--color-text-primary);
+        font-size: 0.94rem;
+        font-weight: 500;
+        text-decoration: none;
+        border-left: 3px solid transparent;
+        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .drawer-link .ico {
+        width: 20px;
+        height: 20px;
+        color: var(--color-primary);
+        flex-shrink: 0;
+    }
+
+    .drawer-link:hover,
+    .drawer-link:active {
+        background: var(--color-bg-secondary);
+        border-left-color: var(--color-primary);
+        color: var(--color-primary-dark);
+    }
+
+    /* ─── Pie con CTA ─── */
+    .drawer-foot {
+        padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+        border-top: 1px solid #e2e8f0;
+        flex-shrink: 0;
+    }
+
+    .drawer-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 13px 16px;
+        border-radius: var(--border-radius-lg);
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        color: #ffffff;
+        font-size: 0.92rem;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: var(--shadow-md);
+    }
+
+    .drawer-cta .ico { width: 18px; height: 18px; }
 }
 
-.btn-type1::after {
-  content: "¡INSCRÍBETE!"; /* Texto al pasar el mouse */
-  height: 55px;
-  width: 100%; /* Ocupa todo el ancho del botón */
-  background-color: #2c3e50; /* Azul Oscuro de fondo */
-  color: #fff; /* Texto blanco */
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(55px); /* Escondido abajo */
-  font-size: 1.2rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-  letter-spacing: 1px;
-}
-
-.btn-type1::before {
-  content: "EVEM 2026"; /* Texto normal */
-  height: 55px;
-  width: 100%;
-  background-color: #fff; /* Fondo blanco */
-  color: #2c3e50; /* Texto Azul Oscuro */
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(0px) scale(1.1);
-  font-size: 1.3rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-
-.btn-type1:hover::after {
-  transform: translateY(0) scale(1.1); /* Sube y aparece */
-}
-
-.btn-type1:hover::before {
-  transform: translateY(-55px) scale(0) rotate(10deg); /* Se va girando hacia arriba */
+@media (prefers-reduced-motion: reduce) {
+    .drawer,
+    .drawer-overlay { transition: none; }
 }

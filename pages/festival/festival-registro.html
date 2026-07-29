@@ -740,6 +740,67 @@
         color: white !important;
       }
 
+      .footer-lead {
+        max-width: 34ch;
+      }
+
+      /* Bug preexistente: esta página no carga components.css, que es
+         donde vive el tamaño de .ico. Sin esto, cualquier <svg class="ico">
+         (incluidos los que ya estaban en Enlaces Rápidos) se renderiza sin
+         medidas — el navegador le da un alto por defecto de ~150px, y con
+         varios íconos apilados eso infla la columna entera. */
+      .ico {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        min-width: 17px;
+        min-height: 17px;
+        flex-shrink: 0;
+        vertical-align: -0.16em;
+      }
+
+      .footer-phone,
+      .footer-email {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      /* No carga components.css: mismo botón "volver arriba" azul que en
+         el resto del sitio, definido acá para esta página autocontenida. */
+      .back-to-top {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        color: #ffffff;
+        font-size: 1.2rem;
+        line-height: 1;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 22px rgba(14, 165, 233, 0.4);
+        opacity: 0;
+        visibility: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        transform: translateY(-5px);
+      }
+
       @media (max-width: 640px) {
         .footer {
           margin-top: 56px;
@@ -770,6 +831,25 @@
     </style>
   </head>
   <body>
+    <!-- Sprite de íconos de trazo (Lucide/Heroicons: 24x24, stroke 1.8, currentColor).
+         Inline igual que en index.html: sin dependencias de JS ni de red. -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <symbol id="i-help-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 5.2-1c.5 1.3-.3 2-1.1 2.6-.8.6-1.4 1.1-1.4 2.2"/><path d="M12 17.2h.01"/></symbol>
+      <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M14 10h5a1 1 0 0 1 1 1v10"/><path d="M8.5 7.5h.01M11.5 7.5h.01M8.5 11h.01M11.5 11h.01M8.5 14.5h.01M11.5 14.5h.01"/><path d="M17.5 14.5h.01M17.5 18h.01"/><path d="M2 21h20"/></symbol>
+      <symbol id="i-bed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 19v-7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/><path d="M2 16h20"/><path d="M22 19v-4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/><path d="M2 19v2M22 19v2"/></symbol>
+      <symbol id="i-book-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5.2A1.2 1.2 0 0 1 3.2 4h4.6A2.2 2.2 0 0 1 10 6.2V20a1.7 1.7 0 0 0-1.7-1.7H2Z"/><path d="M22 5.2A1.2 1.2 0 0 0 20.8 4h-4.6A2.2 2.2 0 0 0 14 6.2V20a1.7 1.7 0 0 1 1.7-1.7H22Z"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1"/><circle cx="9" cy="8" r="3.5"/><path d="M21.5 19v-1a3.5 3.5 0 0 0-2.5-3.36"/><path d="M15.5 4.24a3.5 3.5 0 0 1 0 6.77"/></symbol>
+      <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="17" rx="2"/><path d="M9 3.2A1.5 1.5 0 0 1 10.5 1.7h3A1.5 1.5 0 0 1 15 3.2V5H9Z"/><path d="M8.5 11.5h7M8.5 15h7M8.5 18.5h4"/></symbol>
+      <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3 2.3 4.8 5.8 4.8 9.6 0 1.7-.4 3.1-1 4.2H8.2c-.6-1.1-1-2.5-1-4.2 0-3.8 1.8-7.3 4.8-9.6Z"/><circle cx="12" cy="10" r="1.8"/><path d="M8.2 16.3 6 20.5l3.2-1.1M15.8 16.3 18 20.5l-3.2-1.1"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3.2 10.4 8.8-7 8.8 7v9.2a2 2 0 0 1-2 2h-3.6v-6.2H8.8v6.2H5.2a2 2 0 0 1-2-2v-9.2Z"/></symbol>
+      <symbol id="i-circle-dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/></symbol>
+      <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6.6L5.1 17.2A2 2 0 0 0 6.9 20.2h10.2a2 2 0 0 0 1.8-3L14 8.6V2"/><path d="M8.5 2h7"/><path d="M7.2 14.5h9.6"/></symbol>
+      <symbol id="i-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"/><path d="M4 22V10.5M9 22V10.5M15 22V10.5M20 22V10.5"/><path d="M2 10.5 12 4l10 6.5Z"/></symbol>
+      <symbol id="i-graduation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.3 2.7 2.5 6 2.5s6-1.2 6-2.5v-4.5"/><path d="M22 10v5"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.8 16.9v2.8a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6 19.6 19.6 0 0 1-3-8.6 2 2 0 0 1 2-2.2h2.8a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.2 9.8a15.8 15.8 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="4.5" width="19.6" height="15" rx="2.5"/><path d="m2.8 7.2 9.2 5.6 9.2-5.6"/></symbol>
+    </svg>
+
     <header class="top-bar">
       <div class="nav-inner">
         <a href="festival.html" class="nav-link">
@@ -981,37 +1061,32 @@
       </div>
     </div>
 
-    <script>
-      <footer class="footer">
+    <footer class="footer">
         <div class="footer-container">
           <div class="footer-grid">
-            <div class="footer-col brand-col">
-              <img
-                src="../../assets/logos/unet-logo.png"
-                alt="UNET Logo"
-                class="footer-logo"
-                style="max-width: 140px; height: auto; margin-bottom: 15px;"
-              />
-              <p>
-                Formando profesionales de excelencia para el desarrollo del
-                país. Universidad Nacional Experimental del Táchira.
-              </p>
+            <div class="footer-col footer-col-identity">
+              <h4>Universidad Nacional Experimental del Táchira</h4>
+              <p>Av. Universidad, Paramillo</p>
+              <p>San Cristóbal, Estado Táchira</p>
+              <p>Venezuela</p>
+              <p class="footer-phone"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> (0414) 707 7573</p>
+              <p class="footer-email"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> evem@unet.edu.ve</p>
             </div>
 
             <div class="footer-col">
               <h4>Enlaces Rápidos</h4>
               <ul class="footer-links">
                 <li>
-                  <a href="../../index.html">🏠 Inicio EVEM</a>
+                  <a href="../../index.html"><svg class="ico" aria-hidden="true"><use href="#i-home"/></svg> Inicio EVEM</a>
                 </li>
                 <li>
-                  <a href="../dim/dim.html">🟣 Evento DIM</a>
+                  <a href="../dim/dim.html"><svg class="ico" aria-hidden="true"><use href="#i-circle-dot"/></svg> Evento DIM</a>
                 </li>
                 <li>
-                  <a href="festival.html">🚀 Festival de Ciencias</a>
+                  <a href="festival.html"><svg class="ico" aria-hidden="true"><use href="#i-rocket"/></svg> Festival de Ciencias</a>
                 </li>
                 <li>
-                  <a href="../mat/mat.html">🔭 Olimpiadas MAT</a>
+                  <a href="../cedic/actividades.php"><svg class="ico" aria-hidden="true"><use href="#i-flask"/></svg> Actividades CEDIC</a>
                 </li>
                 <li>
                   <a
@@ -1019,7 +1094,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    🏛️ Portal Oficial UNET
+                    <svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg> Portal Oficial UNET
                   </a>
                 </li>
               </ul>
@@ -1034,8 +1109,8 @@
 
           <div class="footer-bottom">
             <p>
-              &copy; 2026 Universidad Nacional Experimental del Táchira. Todos
-              los derechos reservados.
+              &copy; 2026 CEDIC &middot; Universidad Nacional Experimental del
+              Táchira. Todos los derechos reservados.
             </p>
             <div style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
               <p style="font-size: 0.82rem; color: rgba(255,255,255,0.6); margin: 0; letter-spacing: 0.02em;">
@@ -1091,7 +1166,9 @@
             </div>
           </div>
         </div>
-      </footer>;
+    </footer>
+
+    <script>
       // ── Member counter ──
       const membersTA = document.getElementById("teamMembers");
       const badge = document.getElementById("memberBadge");
@@ -1200,5 +1277,6 @@
 
       updateMemberCount();
     </script>
+    <script src="../../js/animations.js"></script>
   </body>
 </html>

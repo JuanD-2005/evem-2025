@@ -15,14 +15,17 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin-bottom: var(--spacing-md);
     color: var(--color-text-primary);
+    letter-spacing: -0.01em;
 }
 
 h1 {
     font-size: var(--font-size-5xl);
+    letter-spacing: -0.02em;
 }
 
 h2 {
     font-size: var(--font-size-4xl);
+    letter-spacing: -0.02em;
 }
 
 h3 {
@@ -96,8 +99,10 @@ a:hover {
 
 /* Títulos de sección */
 .section-title {
+    font-family: var(--font-heading);
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
     color: var(--color-primary);
     margin-bottom: var(--spacing-lg);
 }

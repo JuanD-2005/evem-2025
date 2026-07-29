@@ -26,9 +26,13 @@
     --color-error: #E74C3C;
     --color-info: #3498DB;
     
-    /* Tipografía */
-    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-heading: 'Georgia', 'Times New Roman', serif;
+    /* Tipografía
+       Antes: --font-primary sin webfont (system-ui) y --font-heading en
+       Georgia serif — sin relación con la tipografía del resto del sitio
+       (festival.html y el portal CEDIC ya usan DM Sans/Outfit). Unificamos
+       aquí para que toda la marca comparta el mismo lenguaje tipográfico. */
+    --font-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'Outfit', 'DM Sans', -apple-system, sans-serif;
     
     /* Tamaños de fuente */
     --font-size-xs: 0.75rem;      /* 12px */
@@ -48,15 +52,18 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     
-    /* Espaciado (Tallas ajustadas para que no quede tan separado) */
+    /* Espaciado
+       Se había reducido para "no quedar tan separado"; el resultado es que
+       las secciones no respiran. Recuperamos aire, sin volver al extremo
+       original. */
     --spacing-xs: 0.25rem;    /* 4px */
     --spacing-sm: 0.5rem;     /* 8px */
     --spacing-md: 1rem;       /* 16px */
-    --spacing-lg: 1.25rem;    /* 20px (antes 24px) */
-    --spacing-xl: 1.5rem;     /* 24px (antes 32px) */
-    --spacing-2xl: 2rem;      /* 32px (antes 48px) */
-    --spacing-3xl: 2.5rem;    /* 40px (antes 64px) */
-    --spacing-4xl: 3.5rem;    /* 56px (antes 96px) */
+    --spacing-lg: 1.25rem;    /* 20px */
+    --spacing-xl: 1.5rem;     /* 24px */
+    --spacing-2xl: 2.25rem;   /* 36px (antes 32px) */
+    --spacing-3xl: 3rem;      /* 48px (antes 40px) */
+    --spacing-4xl: 4.5rem;    /* 72px (antes 56px) */
     
     /* Contenedor */
     --container-max-width: 1200px;
@@ -69,11 +76,13 @@
     --border-radius-xl: 16px;
     --border-radius-full: 9999px;
     
-    /* Sombras */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    /* Sombras — estilo "soft UI": amplias, muy difuminadas, baja opacidad.
+       Antes eran sombras duras y relativamente oscuras (hasta 0.15 de alfa),
+       que dan un aspecto plano/genérico en vez de elevación sutil. */
+    --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.04), 0 1px 3px -1px rgba(15, 23, 42, 0.03);
+    --shadow-md: 0 6px 16px -3px rgba(15, 23, 42, 0.06), 0 3px 6px -3px rgba(15, 23, 42, 0.03);
+    --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+    --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.10), 0 10px 15px -8px rgba(15, 23, 42, 0.03);
     
     /* Transiciones */
     --transition-fast: 150ms ease-in-out;
