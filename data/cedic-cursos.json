@@ -1,0 +1,185 @@
+{
+  "lema": "Aprender haciendo",
+  "intro": "El Centro de Ensenanza y Divulgacion de las Ciencias (CEDIC) presenta su oferta de productos formativos, centrada en tres areas principales: cursos cortos, talleres para docentes y diplomados. Nuestro objetivo es empoderar a estudiantes y profesores con una inmersion profunda, intensiva y practica en diversas areas de la ciencia, a traves de las metodologias STEAM y Feynman.",
+  "contacto_general": {
+    "formacion_permanente_unet": "0424-7235172",
+    "cedic": [
+      "0424-7077573",
+      "0416-6314095"
+    ]
+  },
+  "programas": [
+    {
+      "id": "cursos-docentes",
+      "titulo": "Cursos para docentes",
+      "objetivo": "Fortalecer las habilidades y estrategias didacticas de los docentes en el area de las ciencias, incorporando las ultimas tecnologias y tendencias.",
+      "duracion": "24 horas",
+      "costo": "60$",
+      "inicio": "Septiembre de 2025",
+      "cursos": [
+        {
+          "numero": 1,
+          "titulo": "Mas Alla del Libro: Como la Realidad Aumentada Revoluciona tu Clase",
+          "resumen": "La ensenanza tradicional de la ciencia, basada en la memorizacion y el dictado del profesor, impacta negativamente el aprendizaje, desmotivando a los estudiantes y limitando su pensamiento critico. La UNESCO (2025) ha subrayado la necesidad de un enfoque educativo mas integral que contemple el desarrollo socioemocional y reconozca los diversos estilos de aprendizaje. En contraste, el aprendizaje activo se presenta como una alternativa mas efectiva. En este sentido, la Realidad Aumentada (RA) representa una alternativa en la ensenanza al permitir a los docentes crear entornos experimentales manipulables. Con ella, los estudiantes pueden hacer visible lo invisible e incomprensible, superando las barreras de la abstraccion y convirtiendo el aprendizaje en una vivencia experiencial inmersiva.",
+          "dirigido_a": null,
+          "horarios": null,
+          "inicio": null,
+          "contenido_url": null
+        }
+      ]
+    },
+    {
+      "id": "cursos-estudiantes",
+      "titulo": "Cursos cortos para estudiantes",
+      "objetivo": "Brindar a los estudiantes la oportunidad de profundizar en temas especificos de las ciencias de manera intensiva y practica.",
+      "duracion": "12 horas",
+      "metodologias": "STEAM y Feynman",
+      "costo": "15$",
+      "inicio": "18 de agosto de 2025",
+      "cursos": [
+        {
+          "numero": 1,
+          "titulo": "Fundamentos Matematicos Basicos para robotica",
+          "resumen": "Curso disenado para introducir a los jovenes aprendices en los conceptos matematicos fundamentales indispensables para comprender y trabajar eficazmente con la robotica. Cada modulo entrelaza la teoria con actividades practicas y atractivas, garantizando la comprension profunda y una aplicacion directa a los principios de la robotica. Es una puerta de entrada al mundo de la robotica, donde cada concepto matematico cobra vida.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Lunes-Jueves. Manana: 8:00 am a 10:15 am",
+          "inicio": "18/08/25 al 27/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1lysDl054Yxs66oZaNUy4Thwf-O4fEr6z/view?usp=sharing"
+        },
+        {
+          "numero": 2,
+          "titulo": "Los conjuntos numericos: un viaje por los numeros reales",
+          "resumen": "Curso disenado para guiar a los estudiantes en un viaje exploratorio a traves de los numeros. Inicia con los numeros naturales, agrega los enteros negativos y el cero, se amplia a los racionales y suma los irracionales. Finalmente, el universo de los numeros reales se forma al unir racionales con irracionales. El enfoque metodologico integra educacion STEAM, neuroeducacion y el metodo Feynman: los estudiantes no solo aprenden definiciones y propiedades, sino que construyen su comprension mediante ejercicios progresivamente desafiantes.",
+          "dirigido_a": "Estudiantes de primaria y Secundaria. A partir de 11 anos en adelante.",
+          "horarios": "Lunes-Miercoles. Manana: 8:00 am a 10:15 am",
+          "inicio": "18/08/25 al 27/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1EuH8vvbRrXJ7_y0pyVX-pV06WfloTFjq/view?usp=sharing"
+        },
+        {
+          "numero": 3,
+          "titulo": "Introduccion al Algebra",
+          "resumen": "Curso que introduce al estudiante en el mundo algebraico. Parte del principio de que el estudiante maneja con soltura los numeros, sus propiedades y sus operaciones. Sobre esa base introduce el concepto de expresion algebraica y sus elementos, trabaja la semejanza de terminos y su aplicabilidad en la reduccion de expresiones, y culmina con la resolucion de problemas practicos usando lenguaje algebraico.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Lunes-Jueves. Manana: 8:00 am a 10:15 am",
+          "inicio": "18/08/25 al 27/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1CxOfmmNfSs41Q72P-rISKkhe10TUJu0G/view?usp=sharing"
+        },
+        {
+          "numero": 4,
+          "titulo": "Factorizacion: el lenguaje de la logica algebraica",
+          "resumen": "Curso centrado en la factorizacion, pilar fundamental del algebra y lenguaje de la logica y la resolucion de problemas con numeros y letras. Es un contenido crucial en las matematicas universitarias: desde el calculo y las matematicas avanzadas hasta los modelos fisicos en ingenieria y el analisis de datos en ciencias de la computacion, factorizar permite simplificar problemas, encontrar soluciones eficientes y ver patrones que otros no ven.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Lunes-Jueves. Manana: 8:00 am a 10:30 am",
+          "inicio": "18/08/25 al 27/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1c7uQ2qCBapCfKN6UN1dVXH4GrH0T2lQR/view?usp=sharing"
+        },
+        {
+          "numero": 5,
+          "titulo": "Dominando polinomios. Desde lo basico hasta lo avanzado",
+          "resumen": "Curso que proporciona las herramientas fundamentales para una comprension profunda de los polinomios y su aplicabilidad. El contenido avanza sistematicamente desde los monomios hasta binomios, trinomios y polinomios, con el mismo enfoque progresivo para las operaciones de suma, resta, multiplicacion y division. Culmina con ejemplos de aplicacion en la vida real. El interes se centra en polinomios de una variable, para preparar al estudiante para los cursos iniciales de calculo.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Martes-Viernes. Manana: 8:00 am a 10:15 am",
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1FoQErZexxn2B2o2mUxWKHEYdaUZW4x5Z/view?usp=sharing"
+        },
+        {
+          "numero": 6,
+          "titulo": "Logaritmos: teoria y aplicaciones",
+          "resumen": "Los logaritmos representan un tema muy importante en las matematicas, con multiples aplicaciones en diversos problemas de la ciencia y la tecnologia. Este curso proporciona una base solida sobre logaritmos, abarcando tanto la teoria como sus aplicaciones. Al finalizar, los estudiantes habran adquirido una solida base conceptual y las habilidades practicas para aplicar esta herramienta matematica en multiples contextos cientificos y tecnologicos.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Martes-Jueves. Manana: 8:00 am a 10:15 am",
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/12kDWzvWEtc1gC6OMm2qpmkoHk_XuAG9A/view?usp=sharing"
+        },
+        {
+          "numero": 7,
+          "titulo": "El arte de la medida: Geometria aplicada",
+          "resumen": "Curso de 12 horas disenado para introducir los conceptos fundamentales de la geometria, sentando las bases para estudios mas avanzados. Cubre desde los elementos basicos hasta las propiedades de figuras bidimensionales y tridimensionales, con enfoque en la comprension intuitiva y la aplicacion practica.",
+          "dirigido_a": "Estudiantes de primaria y Secundaria. A partir de 11 anos en adelante.",
+          "horarios": "Lunes-Miercoles. Tarde: 2:00 pm a 4:15 pm",
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1HPsY6QEDclE_gKpIOnfrlSOQPr7nbR3v/view?usp=sharing"
+        },
+        {
+          "numero": 8,
+          "titulo": "Trigonometria: La Herramienta Esencial para Ingenieros y Cientificos",
+          "resumen": "La trigonometria es un pilar fundamental de las matematicas. Dominar conceptos como las razones trigonometricas y los teoremas del seno y coseno es crucial, ya que se aplican ampliamente en la resolucion de problemas practicos de diversas areas, incluyendo la cinematica, la dinamica y el electromagnetismo. Curso disenado con las metodologias STEAM y Feynman.",
+          "dirigido_a": null,
+          "horarios": null,
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1CLQP_HJKBy1mnRtf7VTEEd8zPLWIyH16/view?usp=sharing"
+        },
+        {
+          "numero": 9,
+          "titulo": "Dominando Conversiones, Formulas y Despejes",
+          "resumen": "Las conversiones y los despejes son habilidades que se utilizan en la vida diaria y en muchas profesiones, desde calcular el rendimiento de gasolina hasta convertir recetas de cocina. Al finalizar, el estudiante sera capaz de analizar y resolver problemas de diversas disciplinas (fisica, quimica, ingenieria y finanzas) mediante la correcta aplicacion de formulas, el despeje de variables y la conversion de unidades. El verdadero aprendizaje ocurre cuando se ve como todas las variables de una formula se relacionan entre si.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Martes-Viernes. Manana: 8:00 am a 10:15 am",
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1TaFsJwbGjFREeYgPEqfxalI3Fh-nowb1/view?usp=sharing"
+        },
+        {
+          "numero": 10,
+          "titulo": "Magnitudes, Mediciones y el Sistema Internacional de Unidades",
+          "resumen": "La Fisica es fundamental para la comprension del mundo, clave en el desarrollo tecnologico, cientifico y social. Las magnitudes fisicas, junto con sus mediciones, proporcionan las herramientas, los metodos y el razonamiento (logico, matematico y abstracto) para entender los fenomenos naturales. En este curso se aborda el estudio de las magnitudes fundamentales y derivadas y el Sistema Internacional de Unidades.",
+          "dirigido_a": null,
+          "horarios": "Martes-Viernes. Manana: 8:00 am a 10:15 am",
+          "inicio": "19/08/25 al 28/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1Tar0Pp03xMFj2yIWxG0OyYuxICWiLanx/view?usp=sharing"
+        },
+        {
+          "numero": 11,
+          "titulo": "Vectores y cinematica unidimensional: Navegando el Mundo de las Direcciones",
+          "resumen": "En el estudio de la fisica, los vectores representan una notacion esencial para describir una amplia gama de cantidades y fenomenos. El curso aborda primero los aspectos mas importantes de los vectores, sentando las bases para su aplicacion posterior en la cinematica unidimensional, donde las principales cantidades que describen un evento (como la posicion representada como vector) se relacionan con los conceptos de velocidad y aceleracion.",
+          "dirigido_a": "Estudiantes de Secundaria. A partir de 13 anos.",
+          "horarios": "Martes-Viernes. Manana: 10:30 am a 12:45 m",
+          "inicio": "18/08/25 al 27/08/25",
+          "contenido_url": "https://drive.google.com/file/d/1FpXahO2nctqg-1EiC-BPxmwUap1DHqwe/view?usp=sharing"
+        },
+        {
+          "numero": 12,
+          "titulo": "Entiende la Electricidad: Curso Esencial de Electrostatica",
+          "resumen": "La electrostatica ofrece una base conceptual robusta para entender el mundo que nos rodea y sienta las bases para ramas mas avanzadas de la fisica y la ingenieria. Sin una comprension solida de los campos y potenciales estaticos seria imposible abordar circuitos electricos, electromagnetismo, optica o el funcionamiento de semiconductores. Las habilidades desarrolladas son transferibles y fundamentales para la electronica, las telecomunicaciones y la bioingenieria.",
+          "dirigido_a": "Estudiantes de Secundaria y universitaria. A partir de 13 anos.",
+          "horarios": null,
+          "inicio": null,
+          "contenido_url": null
+        }
+      ]
+    },
+    {
+      "id": "diplomados",
+      "titulo": "Diplomados",
+      "objetivo": "Brindar a los participantes una formacion especializada en areas especificas de la didactica de la matematica.",
+      "duracion": "96 horas",
+      "costo": "50$ por modulo",
+      "inicio": null,
+      "cursos": [
+        {
+          "numero": 1,
+          "titulo": "Estadistica aplicada",
+          "resumen": null,
+          "horarios": "Lunes-Miercoles-Viernes. Manana: 9:00 am a 11:15 am / Tarde: 2:30 pm a 4:15 pm",
+          "disponibilidad": "No disponible actualmente",
+          "contenido_url": "https://drive.google.com/file/d/1Zjl5lAFaYm6yhp5e9kvOmesHX-_YjgMH/view?usp=sharing"
+        },
+        {
+          "numero": 2,
+          "titulo": "La simulacion como estrategia para la ensenanza de la fisica",
+          "resumen": null,
+          "horarios": "Lunes-Miercoles-Viernes. Manana: 9:00 am a 11:15 am / Tarde: 2:30 pm a 4:15 pm",
+          "disponibilidad": "No disponible actualmente",
+          "contenido_url": "https://drive.google.com/file/d/1CYAEpsDYpd_VlWK4uA7ReGBMeXuB1GLX/view?usp=sharing"
+        },
+        {
+          "numero": 3,
+          "titulo": "La simulacion como estrategia para la ensenanza de la quimica",
+          "resumen": null,
+          "horarios": "Lunes-Miercoles-Viernes. Manana: 9:00 am a 11:15 am / Tarde: 2:30 pm a 4:15 pm",
+          "disponibilidad": "No disponible actualmente",
+          "contenido_url": null
+        }
+      ]
+    }
+  ]
+}

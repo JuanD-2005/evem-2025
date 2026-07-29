@@ -52,12 +52,11 @@ class Navigation {
         this.navMobileMenu.classList.toggle('active');
         this.navToggle?.classList.toggle('active');
 
+        const abierto = this.navMobileMenu.classList.contains('active');
+        this.syncAria(abierto);
+
         // Prevenir scroll cuando el menú está abierto
-        if (this.navMobileMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+        document.body.style.overflow = abierto ? 'hidden' : '';
     }
 
     closeMenu() {
@@ -65,7 +64,18 @@ class Navigation {
 
         this.navMobileMenu.classList.remove('active');
         this.navToggle?.classList.remove('active');
+        this.syncAria(false);
         document.body.style.overflow = '';
+    }
+
+    // Mantiene el estado accesible en sincronía con el visual
+    syncAria(abierto) {
+        if (!this.navToggle) return;
+        this.navToggle.setAttribute('aria-expanded', String(abierto));
+        this.navToggle.setAttribute(
+            'aria-label',
+            abierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'
+        );
     }
 
     // Scroll suave
