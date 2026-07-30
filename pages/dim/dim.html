@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Día Internacional de las Matemáticas - DIM 2026</title>
-    
+
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel="stylesheet" href="../../css/variables.css">
     <link rel="stylesheet" href="../../css/typography.css">
     <link rel="stylesheet" href="../../css/layout.css">
     <link rel="stylesheet" href="../../css/components.css">
     <link rel="stylesheet" href="../../css/responsive.css">
+
+    <!-- Tipografías de la nueva estética. Si prefieres usar las del portal,
+         borra este bloque y ajusta --dim-font-display / --dim-font-text. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="dim-page">
     <!-- Sprite de íconos de trazo (Lucide/Heroicons: 24x24, stroke 1.8, currentColor).
          Inline igual que en index.html: sin dependencias de JS ni de red. -->
     <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
@@ -31,14 +37,27 @@
       <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.8 16.9v2.8a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6 19.6 19.6 0 0 1-3-8.6 2 2 0 0 1 2-2.2h2.8a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.2 9.8a15.8 15.8 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
       <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="4.5" width="19.6" height="15" rx="2.5"/><path d="m2.8 7.2 9.2 5.6 9.2-5.6"/></symbol>
       <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12h-14"/><path d="m11 6.5-5.5 5.5L11 17.5"/></symbol>
+
+      <!-- Nuevos: sustituyen a los emojis del cronograma -->
+      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5L13 17.5"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/><path d="M7.5 14h.01M12 14h.01M16.5 14h.01M7.5 17.5h.01M12 17.5h.01"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.4 2"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10.3" r="2.6"/></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.5"/><path d="M9 21.5h6"/></symbol>
+      <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5.5a5 5 0 0 1-10 0Z"/><path d="M7 5.5H4.5v1.8A3.2 3.2 0 0 0 7.7 10.5M17 5.5h2.5v1.8a3.2 3.2 0 0 1-3.2 3.2"/><path d="M12 14.5V18"/><path d="M8.5 21h7l-.8-3h-5.4Z"/></symbol>
+      <symbol id="i-sigma" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4H6l6 8-6 8h12"/></symbol>
+
+      <!-- Menú/cierre del drawer móvil, mismo patrón que index.html -->
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
     </svg>
 
     <header class="top-bar">
         <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="https://www.unet.edu.ve/" target="_blank"><svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg> Portal UNET</a></li>
-                <li><a href="../../index.html"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Volver a EVEM</a></li>
-            </ul>
+            <!-- Solo visible <768px (responsive.css). Abre el drawer lateral. -->
+            <button class="drawer-toggle" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="siteDrawer">
+                <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+            </button>
 
             <div class="central-logo-container">
                 <a href="dim.html">
@@ -46,72 +65,198 @@
                 </a>
             </div>
 
-            <ul class="nav-links">
-                <li><a href="dim.html" style="color: #9333ea; font-weight: bold;"><svg class="ico" aria-hidden="true"><use href="#i-circle-dot"/></svg> Inicio DIM</a></li>
-                <li><a href="dim-registro.html"><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg> Pre-Inscripción</a></li>
-                <li><a href="dim-certificado.html"><svg class="ico" aria-hidden="true"><use href="#i-graduation"/></svg> Certificados</a></li>
-            </ul>
+            <div class="nav-tabs-wrap">
+                <ul class="nav-links">
+                    <li><a href="https://www.unet.edu.ve/" target="_blank"><svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg> Portal UNET</a></li>
+                    <li><a href="../../index.html"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Volver a EVEM</a></li>
+                </ul>
+
+                <ul class="nav-links">
+                    <li><a href="dim.html" class="is-active"><svg class="ico" aria-hidden="true"><use href="#i-circle-dot"/></svg> Inicio DIM</a></li>
+                    <li><a href="dim-registro.html"><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg> Pre-Inscripción</a></li>
+                    <li><a href="dim-certificado.html"><svg class="ico" aria-hidden="true"><use href="#i-graduation"/></svg> Certificados</a></li>
+                </ul>
+            </div>
         </div>
     </header>
 
-    <div style="height: 40px;"></div>
+    <!-- ═══════════ DRAWER LATERAL (off-canvas, solo móvil) ═══════════ -->
+    <div class="drawer-overlay" data-drawer-close hidden></div>
 
+    <aside class="drawer" id="siteDrawer" aria-label="Menú de navegación" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo-chip">
+                <img src="../../assets/comunes/DiaPi.png" alt="" style="border-radius: 50%;">
+            </span>
+            <span class="drawer-head-text">
+                <strong>DIM 2026</strong>
+                <small>14 de marzo</small>
+            </span>
+            <button class="drawer-close" type="button" aria-label="Cerrar menú" data-drawer-close>
+                <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg>
+            </button>
+        </div>
+
+        <nav class="drawer-nav">
+            <span class="drawer-group">DIM 2026</span>
+            <a href="dim.html" class="drawer-link"><svg class="ico" aria-hidden="true"><use href="#i-circle-dot"/></svg> Inicio DIM</a>
+            <a href="dim-registro.html" class="drawer-link"><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg> Pre-Inscripción</a>
+            <a href="dim-certificado.html" class="drawer-link"><svg class="ico" aria-hidden="true"><use href="#i-graduation"/></svg> Certificados</a>
+
+            <span class="drawer-group">Enlaces</span>
+            <a href="https://www.unet.edu.ve/" target="_blank" rel="noopener" class="drawer-link"><svg class="ico" aria-hidden="true"><use href="#i-landmark"/></svg> Portal UNET</a>
+            <a href="../../index.html" class="drawer-link"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Volver a EVEM</a>
+        </nav>
+
+        <div class="drawer-foot">
+            <a href="dim-registro.html" class="drawer-cta">
+                <svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg>
+                Pre-inscribirme al DIM
+            </a>
+        </div>
+    </aside>
+
+    <div class="dim-navspacer"></div>
+
+    <!-- ============ HERO ============ -->
     <section class="dim-hero">
-        <div class="dim-particles"></div>
+        <!-- Malla low-poly: triangulación de Delaunay, puro SVG estático -->
+        <svg class="dim-hero__mesh" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="#ffffff" stroke-width="1" opacity=".16"><path d="M-58.4 -61.2L-81.9 128.8M-58.4 -61.2L166.5 -31.4M-58.4 -61.2L355.3 -34.9M-58.4 -61.2L491.0 -43.7M-58.4 -61.2L1139.0 -66.9M-81.9 128.8L-77.5 238.5M-81.9 128.8L-71.5 516.4M-81.9 128.8L166.5 -31.4M-81.9 128.8L173.6 137.0M-77.5 238.5L-61.0 390.5M-77.5 238.5L-71.5 516.4M-77.5 238.5L173.6 137.0M-77.5 238.5L192.6 218.6M-77.5 238.5L146.9 346.7M-61.0 390.5L-71.5 516.4M-61.0 390.5L146.9 346.7M-61.0 390.5L198.5 510.2M-71.5 516.4L-60.0 661.2M-71.5 516.4L198.5 510.2M-71.5 516.4L143.3 686.9M-60.0 661.2L143.3 686.9M166.5 -31.4L173.6 137.0M166.5 -31.4L355.3 -34.9M173.6 137.0L192.6 218.6M173.6 137.0L355.3 -34.9M173.6 137.0L364.3 127.3M192.6 218.6L146.9 346.7M192.6 218.6L364.3 127.3M192.6 218.6L318.9 247.4M146.9 346.7L198.5 510.2M146.9 346.7L318.9 247.4M146.9 346.7L309.4 389.3M198.5 510.2L143.3 686.9M198.5 510.2L309.4 389.3M198.5 510.2L294.2 513.6M198.5 510.2L349.5 661.3M143.3 686.9L349.5 661.3M143.3 686.9L495.9 657.7M143.3 686.9L928.6 685.8M143.3 686.9L1094.1 687.0M355.3 -34.9L364.3 127.3M355.3 -34.9L491.0 -43.7M355.3 -34.9L480.3 133.4M364.3 127.3L318.9 247.4M364.3 127.3L480.3 133.4M364.3 127.3L459.4 227.4M318.9 247.4L309.4 389.3M318.9 247.4L459.4 227.4M318.9 247.4L494.9 380.6M309.4 389.3L294.2 513.6M309.4 389.3L494.9 380.6M309.4 389.3L500.6 480.0M294.2 513.6L349.5 661.3M294.2 513.6L500.6 480.0M349.5 661.3L500.6 480.0M349.5 661.3L495.9 657.7M491.0 -43.7L480.3 133.4M491.0 -43.7L660.3 -34.9M491.0 -43.7L649.8 143.8M491.0 -43.7L833.0 -48.1M491.0 -43.7L1139.0 -66.9M480.3 133.4L459.4 227.4M480.3 133.4L649.8 143.8M459.4 227.4L494.9 380.6M459.4 227.4L649.8 143.8M459.4 227.4L666.6 215.7M459.4 227.4L641.8 338.3M494.9 380.6L500.6 480.0M494.9 380.6L641.8 338.3M500.6 480.0L495.9 657.7M500.6 480.0L641.8 338.3M500.6 480.0L666.7 519.9M495.9 657.7L666.7 519.9M495.9 657.7L682.0 655.3M495.9 657.7L928.6 685.8M660.3 -34.9L649.8 143.8M660.3 -34.9L833.0 -48.1M660.3 -34.9L760.9 93.8M649.8 143.8L666.6 215.7M649.8 143.8L760.9 93.8M666.6 215.7L641.8 338.3M666.6 215.7L760.9 93.8M666.6 215.7L811.4 228.6M641.8 338.3L666.7 519.9M641.8 338.3L811.4 228.6M641.8 338.3L831.6 369.2M666.7 519.9L682.0 655.3M666.7 519.9L831.6 369.2M666.7 519.9L804.8 519.9M666.7 519.9L767.3 658.0M682.0 655.3L767.3 658.0M682.0 655.3L928.6 685.8M833.0 -48.1L760.9 93.8M833.0 -48.1L1005.2 -44.4M833.0 -48.1L948.2 137.4M833.0 -48.1L1139.0 -66.9M760.9 93.8L811.4 228.6M760.9 93.8L948.2 137.4M811.4 228.6L831.6 369.2M811.4 228.6L948.2 137.4M811.4 228.6L988.5 243.2M831.6 369.2L804.8 519.9M831.6 369.2L988.5 243.2M831.6 369.2L944.7 401.7M804.8 519.9L767.3 658.0M804.8 519.9L944.7 401.7M804.8 519.9L999.4 506.0M804.8 519.9L928.6 685.8M767.3 658.0L928.6 685.8M1005.2 -44.4L948.2 137.4M1005.2 -44.4L1139.0 -66.9M1005.2 -44.4L1130.5 109.6M948.2 137.4L988.5 243.2M948.2 137.4L1130.5 109.6M988.5 243.2L944.7 401.7M988.5 243.2L1130.5 109.6M988.5 243.2L1150.1 261.0M988.5 243.2L1159.8 400.6M944.7 401.7L999.4 506.0M944.7 401.7L1159.8 400.6M999.4 506.0L928.6 685.8M999.4 506.0L1159.8 400.6M999.4 506.0L1135.5 508.8M999.4 506.0L1094.1 687.0M928.6 685.8L1094.1 687.0M1139.0 -66.9L1130.5 109.6M1139.0 -66.9L1298.2 -60.7M1139.0 -66.9L1273.0 116.0M1139.0 -66.9L1496.3 -59.2M1130.5 109.6L1150.1 261.0M1130.5 109.6L1273.0 116.0M1150.1 261.0L1159.8 400.6M1150.1 261.0L1273.0 116.0M1150.1 261.0L1322.0 231.9M1150.1 261.0L1303.0 401.0M1159.8 400.6L1135.5 508.8M1159.8 400.6L1303.0 401.0M1159.8 400.6L1263.2 521.2M1135.5 508.8L1094.1 687.0M1135.5 508.8L1263.2 521.2M1135.5 508.8L1252.7 671.6M1094.1 687.0L1252.7 671.6M1094.1 687.0L1524.1 681.1M1298.2 -60.7L1273.0 116.0M1298.2 -60.7L1496.3 -59.2M1273.0 116.0L1322.0 231.9M1273.0 116.0L1496.3 -59.2M1273.0 116.0L1486.7 156.6M1322.0 231.9L1303.0 401.0M1322.0 231.9L1486.7 156.6M1322.0 231.9L1521.4 214.4M1322.0 231.9L1487.5 347.7M1303.0 401.0L1263.2 521.2M1303.0 401.0L1487.5 347.7M1303.0 401.0L1512.6 487.7M1263.2 521.2L1252.7 671.6M1263.2 521.2L1512.6 487.7M1263.2 521.2L1524.1 681.1M1252.7 671.6L1524.1 681.1M1496.3 -59.2L1486.7 156.6M1496.3 -59.2L1521.4 214.4M1486.7 156.6L1521.4 214.4M1521.4 214.4L1487.5 347.7M1521.4 214.4L1512.6 487.7M1521.4 214.4L1524.1 681.1M1487.5 347.7L1512.6 487.7M1512.6 487.7L1524.1 681.1"/></g>
+            <g fill="#ffffff" opacity=".38"><circle cx="811.4" cy="228.6" r="1.8"/><circle cx="1005.2" cy="-44.4" r="1.9"/><circle cx="1496.3" cy="-59.2" r="2.3"/><circle cx="192.6" cy="218.6" r="1.9"/><circle cx="1139.0" cy="-66.9" r="2.7"/><circle cx="1298.2" cy="-60.7" r="1.9"/><circle cx="1159.8" cy="400.6" r="2.1"/><circle cx="-81.9" cy="128.8" r="2.5"/><circle cx="349.5" cy="661.3" r="2.1"/><circle cx="1130.5" cy="109.6" r="3.1"/><circle cx="480.3" cy="133.4" r="1.7"/><circle cx="309.4" cy="389.3" r="1.9"/><circle cx="364.3" cy="127.3" r="2.7"/><circle cx="1252.7" cy="671.6" r="3.3"/><circle cx="1512.6" cy="487.7" r="2.7"/><circle cx="804.8" cy="519.9" r="2.6"/><circle cx="666.6" cy="215.7" r="3.2"/><circle cx="1486.7" cy="156.6" r="3.0"/><circle cx="494.9" cy="380.6" r="1.7"/><circle cx="495.9" cy="657.7" r="2.7"/></g>
+        </svg>
+
+        <span class="dim-hero__pi" aria-hidden="true">&#960;</span>
+
         <div class="container">
-            <div class="dim-header-content">
-                <div class="dim-badge">14 DE MARZO</div>
-                <h1 class="dim-title">Día Internacional de las Matemáticas</h1>
+            <div class="dim-hero__content">
+                <p class="dim-badge"><span class="dim-badge__dot"></span>14 de marzo</p>
+                <h1 class="dim-title">Día Internacional<br>de las <em>Matemáticas</em></h1>
                 <p class="dim-subtitle">Celebrando la belleza, la utilidad y el poder transformador de los números en la UNET</p>
+                <div class="dim-cta">
+                    <a class="dim-btn dim-btn--gold" href="dim-registro.html">
+                        <svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg>
+                        Pre-inscribirme
+                        <svg class="ico dim-btn__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                    </a>
+                    <a class="dim-btn dim-btn--ghost" href="dim-certificado.html">
+                        <svg class="ico" aria-hidden="true"><use href="#i-graduation"/></svg>
+                        Consultar certificado
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="dim-schedule-section" style="padding: 60px 0; background: #f8fafc; position: relative; z-index: 10; margin-top: -40px; border-radius: 40px 40px 0 0;">
+    <!-- ============ CRONOGRAMA ============ -->
+    <section class="dim-schedule">
+        <!-- Espiral áurea: cuadrados de Fibonacci 1,1,2,3,5,8,13,21,34,55 -->
+        <svg class="dim-decor dim-decor--spiral" viewBox="0 0 55 89" aria-hidden="true" focusable="false">
+            <g transform="translate(39,25) scale(1,-1)" fill="none" stroke="currentColor" stroke-linecap="round">
+                <g opacity=".5" stroke-width=".22">
+                    <rect x="0" y="0" width="1" height="1"/><rect x="0" y="-1" width="1" height="1"/>
+                    <rect x="1" y="-1" width="2" height="2"/><rect x="0" y="1" width="3" height="3"/>
+                    <rect x="-5" y="-1" width="5" height="5"/><rect x="-5" y="-9" width="8" height="8"/>
+                    <rect x="3" y="-9" width="13" height="13"/><rect x="-5" y="4" width="21" height="21"/>
+                    <rect x="-39" y="-9" width="34" height="34"/><rect x="-39" y="-64" width="55" height="55"/>
+                </g>
+                <path stroke-width=".5" d="M 0 1 A 1 1 0 0 0 1 0 A 1 1 0 0 0 0 -1 A 2 2 0 0 0 3 1 A 3 3 0 0 0 3 4 A 5 5 0 0 0 -5 4 A 8 8 0 0 0 -5 -9 A 13 13 0 0 0 16 4 A 21 21 0 0 0 16 25 A 34 34 0 0 0 -39 25 A 55 55 0 0 0 -39 -64"/>
+            </g>
+        </svg>
+
+        <svg class="dim-decor dim-decor--ring" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <circle cx="100" cy="100" r="76" fill="none" stroke="url(#dimRing)" stroke-width="34"/>
+            <defs>
+                <linearGradient id="dimRing" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2e1065"/>
+                </linearGradient>
+            </defs>
+        </svg>
+        <svg class="dim-decor dim-decor--tri" viewBox="0 0 100 88" aria-hidden="true" focusable="false">
+            <path d="M50 0 100 88H0Z" fill="#c4b5fd" opacity=".55"/>
+        </svg>
+
         <div class="container">
-            <div class="section-header text-center" style="margin-bottom: 50px;">
-                <h2 style="color: #4c1d95; font-size: 2.5rem; font-weight: 900;">Cronograma de Actividades</h2>
-                <p style="color: #64748b;">Acompáñanos en nuestras jornadas especiales de celebración.</p>
-            </div>
+            <header class="dim-sectionhead">
+                <p class="dim-eyebrow"><svg class="ico" aria-hidden="true"><use href="#i-sigma"/></svg> Programación 2026</p>
+                <h2>Cronograma de Actividades</h2>
+                <p class="dim-lede">Acompáñanos en nuestras jornadas especiales de celebración.</p>
+            </header>
 
-            <div class="schedule-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                
-                <div class="schedule-card" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border-top: 5px solid #d8b4fe;">
-                    <h3 style="color: #4c1d95; font-size: 1.8rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">📅 Día 11</h3>
-                    
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 20px;">
-                            <strong style="color: #1e293b; display: block; font-size: 1.1rem;">⏰ 9:00 am</strong>
-                            <span style="color: #475569;">Inauguración del Día Internacional de las Matemáticas (Auditorio A).</span>
-                        </li>
-                        <li style="margin-bottom: 20px;">
-                            <strong style="color: #1e293b; display: block; font-size: 1.1rem;">⏰ 9:45 am</strong>
-                            <span style="color: #475569;">Presentación de la prueba del V Encuentro de las Matemáticas.</span>
-                        </li>
-                        <li>
-                            <strong style="color: #1e293b; display: block; font-size: 1.1rem;">⏰ 10:00 am</strong>
-                            <span style="color: #475569;"><strong>Taller (Auditorio B):</strong> NotebookLM: Tu Asistente IA para Planificar y Enseñar en el Aula.</span>
-                            <span style="display: block; margin-top: 5px; font-size: 0.9rem; color: #9333ea;">🎙️ Facilitadora: Dra. Blanca Guillen (UNET)</span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="dim-grid">
 
-                <div class="schedule-card" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border-top: 5px solid #f59e0b;">
-                    <h3 style="color: #d97706; font-size: 1.8rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">📅 Día 27</h3>
-                    
-                    <ul style="list-style: none; padding: 0; margin-bottom: 30px;">
-                        <li>
-                            <strong style="color: #1e293b; display: block; font-size: 1.1rem;">⏰ 9:00 am</strong>
-                            <span style="color: #475569;"><strong>Trivia Matemática (Auditorio A)</strong></span>
-                        </li>
-                    </ul>
-
-                    <div style="background: #fffbeb; padding: 20px; border-radius: 15px; border: 1px dashed #fcd34d;">
-                        <h4 style="color: #b45309; margin-bottom: 10px;">🏆 Inscripción por Equipos</h4>
-                        <p style="font-size: 0.9rem; color: #92400e; margin-bottom: 15px;">Los equipos se registran bajo un seudónimo histórico:<br><em>Tales, Pitágoras, Euclides, Descartes, Newton, Arquímedes.</em></p>
-                        <a href="dim-registro-equipos.html" style="display: block; text-align: center; background: #f59e0b; color: white; padding: 10px; border-radius: 10px; font-weight: bold; text-decoration: none;">Inscribir a mi equipo →</a>
+                <!-- ---- DÍA 11 ---- -->
+                <article class="dim-card dim-card--violet">
+                    <div class="dim-card__head">
+                        <span class="dim-daytag">
+                            <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>
+                            Día 11
+                        </span>
+                        <span class="dim-card__count">3 actividades</span>
                     </div>
-                </div>
+
+                    <ol class="dim-timeline">
+                        <li class="dim-slot">
+                            <time class="dim-slot__time">9:00 <span>am</span></time>
+                            <div class="dim-slot__body">
+                                <h3>Inauguración del Día Internacional de las Matemáticas</h3>
+                                <p class="dim-meta"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Auditorio A</p>
+                            </div>
+                        </li>
+                        <li class="dim-slot">
+                            <time class="dim-slot__time">9:45 <span>am</span></time>
+                            <div class="dim-slot__body">
+                                <h3>Presentación de la prueba del V Encuentro de las Matemáticas</h3>
+                            </div>
+                        </li>
+                        <li class="dim-slot">
+                            <time class="dim-slot__time">10:00 <span>am</span></time>
+                            <div class="dim-slot__body">
+                                <p class="dim-kicker">Taller</p>
+                                <h3>NotebookLM: Tu Asistente IA para Planificar y Enseñar en el Aula</h3>
+                                <p class="dim-meta"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Auditorio B</p>
+                                <p class="dim-meta dim-meta--host"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg> Facilitadora: Dra. Blanca Guillen &middot; UNET</p>
+                            </div>
+                        </li>
+                    </ol>
+                </article>
+
+                <!-- ---- DÍA 27 ---- -->
+                <article class="dim-card dim-card--gold">
+                    <div class="dim-card__head">
+                        <span class="dim-daytag">
+                            <svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>
+                            Día 27
+                        </span>
+                        <span class="dim-card__count">1 actividad</span>
+                    </div>
+
+                    <ol class="dim-timeline">
+                        <li class="dim-slot">
+                            <time class="dim-slot__time">9:00 <span>am</span></time>
+                            <div class="dim-slot__body">
+                                <h3>Trivia Matemática</h3>
+                                <p class="dim-meta"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Auditorio A</p>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <div class="dim-panel">
+                        <h4 class="dim-panel__title">
+                            <svg class="ico" aria-hidden="true"><use href="#i-trophy"/></svg>
+                            Inscripción por equipos
+                        </h4>
+                        <p class="dim-panel__text">Los equipos se registran bajo un seudónimo histórico:</p>
+                        <ul class="dim-chips">
+                            <li>Tales</li><li>Pitágoras</li><li>Euclides</li>
+                            <li>Descartes</li><li>Newton</li><li>Arquímedes</li>
+                        </ul>
+                        <a class="dim-btn dim-btn--solidgold" href="dim-registro-equipos.html">
+                            Inscribir a mi equipo
+                            <svg class="ico dim-btn__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                        </a>
+                    </div>
+                </article>
 
             </div>
         </div>
@@ -170,145 +315,477 @@
         </div>
     </footer>
 
-    <style>
-        /* ESTILOS EXCLUSIVOS DEL DIM */
-        .dim-hero {
-            background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
-            padding: 100px 0 140px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 -20px 30px rgba(0,0,0,0.1);
-        }
+<style>
+/* =======================================================================
+   DIM 2026 · Estética "Geometría Áurea"
+   Todo va scopeado a .dim-page / .dim-* para no tocar el resto del portal.
+   ======================================================================= */
 
-        /* Partículas de fondo matemáticas (CSS puro) */
-        .dim-particles {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px),
-                              radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 60px 60px, 30px 30px;
-            background-position: 0 0, 15px 15px;
-            opacity: 0.6;
-        }
+.dim-page {
+    /* Violetas */
+    --dim-void:    #16062c;
+    --dim-plum:    #2e1065;
+    --dim-violet:  #4c1d95;
+    --dim-grape:   #6d28d9;
+    --dim-orchid:  #a855f7;
+    --dim-lilac:   #ddd6fe;
+    /* Oro */
+    --dim-gold:      #f59e0b;
+    --dim-gold-soft: #fcd34d;
+    --dim-gold-deep: #b45309;
+    /* Neutros cálidos */
+    --dim-paper: #faf7f2;
+    --dim-card:  #ffffff;
+    --dim-ink:   #1c1424;
+    --dim-slate: #6b6076;
+    --dim-line:  #ece6f5;
 
-        .dim-header-content {
-            position: relative; z-index: 2;
-        }
+    --dim-font-display: "Archivo", "Segoe UI", system-ui, sans-serif;
+    --dim-font-text:    "Karla", "Segoe UI", system-ui, sans-serif;
+    --dim-font-mono:    "IBM Plex Mono", ui-monospace, monospace;
 
-        .dim-badge {
-            display: inline-block; padding: 8px 20px; border-radius: 30px;
-            background: #d8b4fe; color: #4c1d95; font-weight: 900;
-            letter-spacing: 2px; margin-bottom: 20px; font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(216, 180, 254, 0.4);
-        }
+    --dim-r-lg: 26px;
+    --dim-r-md: 16px;
+    --dim-r-sm: 10px;
+    --dim-shadow: 0 1px 2px rgba(28,20,36,.05), 0 18px 40px -18px rgba(46,16,101,.22);
 
-        .dim-title {
-            font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 15px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+    font-family: var(--dim-font-text);
+    background: var(--dim-paper);
+}
 
-        .dim-subtitle {
-            font-size: 1.2rem; color: #e9d5ff; max-width: 700px; margin: 0 auto;
-            line-height: 1.6;
-        }
+.dim-page .ico { width: 1em; height: 1em; flex: none; }
+.dim-navspacer { height: 40px; }
 
-        /* EL PORTAL DE ACCIONES */
-        .dim-portal {
-            margin-top: -80px;
-            position: relative;
-            z-index: 10;
-            padding-bottom: 80px;
-        }
+/* ---------------------------------------------------------- HERO ---- */
+.dim-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(72px, 9vw, 128px) 0 clamp(120px, 13vw, 180px);
+    text-align: center;
+    color: #fff;
+    background:
+        radial-gradient(120% 90% at 78% 8%,  rgba(124,58,237,.55) 0%, transparent 58%),
+        radial-gradient(90%  80% at 12% 92%, rgba(168,85,247,.30) 0%, transparent 60%),
+        linear-gradient(160deg, var(--dim-violet) 0%, var(--dim-plum) 52%, var(--dim-void) 100%);
+}
 
-        .portal-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;
-        }
+.dim-hero__mesh {
+    position: absolute; inset: -2% -2% auto -2%;
+    width: 104%; height: 104%;
+    z-index: -1;
+    -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 78%);
+            mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 78%);
+}
 
-        .portal-card {
-            background: white; border-radius: 24px; padding: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column;
-            border-top: 6px solid;
-            transition: transform 0.3s ease;
-        }
+/* π gigante como marca de agua */
+.dim-hero__pi {
+    position: absolute; z-index: -1;
+    right: -.12em; bottom: -.42em;
+    font-family: var(--dim-font-display);
+    font-size: clamp(280px, 34vw, 560px);
+    font-weight: 700;
+    line-height: .8;
+    color: rgba(255,255,255,.05);
+    pointer-events: none;
+    user-select: none;
+}
 
-        .portal-card:hover { transform: translateY(-10px); }
+.dim-hero__content { position: relative; max-width: 820px; margin: 0 auto; }
 
-        .action-register { border-color: #9333ea; }
-        .action-certificate { border-color: #f59e0b; }
+.dim-badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 7px 18px 7px 14px;
+    border: 1px solid rgba(252,211,77,.42);
+    border-radius: 999px;
+    background: rgba(245,158,11,.10);
+    color: var(--dim-gold-soft);
+    font-family: var(--dim-font-mono);
+    font-size: .78rem; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    margin-bottom: 26px;
+    backdrop-filter: blur(6px);
+}
+.dim-badge__dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--dim-gold);
+    box-shadow: 0 0 0 0 rgba(245,158,11,.65);
+    animation: dim-ping 2.6s ease-out infinite;
+}
+@keyframes dim-ping {
+    0%   { box-shadow: 0 0 0 0   rgba(245,158,11,.6); }
+    70%  { box-shadow: 0 0 0 9px rgba(245,158,11,0); }
+    100% { box-shadow: 0 0 0 0   rgba(245,158,11,0); }
+}
 
-        .portal-icon {
-            font-size: 3.5rem; margin-bottom: 20px;
-            background: #f3f4f6; width: 80px; height: 80px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 20px;
-        }
+.dim-title {
+    font-family: var(--dim-font-display);
+    font-weight: 800;
+    font-stretch: 112%;
+    font-size: clamp(2.3rem, 5.6vw, 4.15rem);
+    line-height: 1.02;
+    letter-spacing: -.025em;
+    color: #fff;
+    margin: 0 0 20px;
+    text-wrap: balance;
+}
+.dim-title em {
+    font-style: normal;
+    background: linear-gradient(96deg, var(--dim-gold-soft), var(--dim-gold) 55%, #fde68a);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+}
 
-        .portal-card h2 {
-            font-size: 1.8rem; color: #1e293b; margin-bottom: 15px; font-weight: 800;
-        }
+.dim-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.17rem);
+    line-height: 1.65;
+    color: rgba(237,233,254,.82);
+    max-width: 620px; margin: 0 auto;
+    text-wrap: pretty;
+}
 
-        .portal-card p {
-            color: #64748b; line-height: 1.7; margin-bottom: 25px; flex-grow: 1;
-        }
+.dim-cta {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    justify-content: center; margin-top: 38px;
+}
 
-        .portal-list {
-            list-style: none; padding: 0; margin-bottom: 30px;
-        }
+/* --------------------------------------------------------- BOTONES -- */
+.dim-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-family: var(--dim-font-text);
+    font-size: .98rem; font-weight: 700;
+    letter-spacing: .01em;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s, background .25s, border-color .25s, color .25s;
+}
+.dim-btn .ico { width: 1.15em; height: 1.15em; }
+.dim-btn__arrow { transition: transform .25s cubic-bezier(.22,1,.36,1); }
+.dim-btn:hover .dim-btn__arrow { transform: translateX(4px); }
 
-        .portal-list li {
-            margin-bottom: 10px; color: #475569; font-weight: 600; font-size: 0.95rem;
-        }
+.dim-btn--gold {
+    background: linear-gradient(135deg, var(--dim-gold-soft), var(--dim-gold));
+    color: #40230a;
+    box-shadow: 0 10px 26px -10px rgba(245,158,11,.85);
+}
+.dim-btn--gold:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -12px rgba(245,158,11,.95); color: #40230a; }
 
-        .certificate-status {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: #f0fdf4; color: #166534; padding: 8px 15px;
-            border-radius: 10px; font-weight: 700; font-size: 0.9rem;
-            margin-bottom: 30px; width: fit-content;
-        }
+.dim-btn--ghost {
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.24);
+    color: #fff;
+    backdrop-filter: blur(6px);
+}
+.dim-btn--ghost:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.45); transform: translateY(-2px); color: #fff; }
 
-        .status-dot {
-            width: 10px; height: 10px; background: #22c55e; border-radius: 50%;
-            animation: pulse-green 2s infinite;
-        }
+.dim-btn--solidgold {
+    justify-content: center; width: 100%;
+    background: var(--dim-gold-deep);
+    color: #fff;
+    box-shadow: 0 10px 24px -12px rgba(180,83,9,.9);
+}
+.dim-btn--solidgold:hover { background: #92400e; transform: translateY(-2px); color: #fff; }
 
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
+/* ---------------------------------------------------- CRONOGRAMA ---- */
+.dim-schedule {
+    position: relative;
+    isolation: isolate;
+    z-index: 10;
+    margin-top: -56px;
+    padding: clamp(56px, 7vw, 88px) 0 clamp(72px, 9vw, 110px);
+    background:
+        repeating-linear-gradient(0deg,   rgba(109,40,217,.045) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(90deg,  rgba(109,40,217,.045) 0 1px, transparent 1px 34px),
+        var(--dim-paper);
+    border-radius: 44px 44px 0 0;
+    overflow: hidden;
+}
 
-        /* BOTONES DEL DIM */
-        .btn-dim {
-            padding: 15px 30px; border-radius: 12px; font-weight: 700;
-            text-align: center; text-decoration: none; font-size: 1.1rem;
-            transition: all 0.3s ease; display: block;
-        }
+/* Decoración geométrica de fondo */
+.dim-decor { position: absolute; z-index: -1; pointer-events: none; }
+.dim-decor--spiral {
+    left: -80px; top: 60px;
+    width: 340px; height: 550px;
+    color: var(--dim-gold);
+    opacity: .30;
+}
+.dim-decor--ring {
+    right: -150px; top: 170px;
+    width: 460px; height: 460px;
+    opacity: .2;
+}
+.dim-decor--tri {
+    right: 78px; top: 74px;
+    width: 108px; height: 95px;
+    opacity: .75;
+    transform: rotate(14deg);
+}
 
-        .btn-primary-dim {
-            background: linear-gradient(135deg, #9333ea, #7e22ce); color: white;
-            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.3);
-        }
+.dim-sectionhead { text-align: center; max-width: 640px; margin: 0 auto clamp(38px, 5vw, 56px); }
 
-        .btn-primary-dim:hover {
-            background: linear-gradient(135deg, #7e22ce, #581c87); transform: translateY(-3px); color: white;
-        }
+.dim-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--dim-font-mono);
+    font-size: .74rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--dim-gold-deep);
+    margin: 0 0 14px;
+}
+.dim-eyebrow .ico { width: 1.15em; height: 1.15em; }
 
-        .btn-outline-dim {
-            background: white; color: #1e293b; border: 2px solid #e2e8f0;
-        }
+.dim-sectionhead h2 {
+    font-family: var(--dim-font-display);
+    font-weight: 800; font-stretch: 108%;
+    font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+    line-height: 1.1; letter-spacing: -.02em;
+    color: var(--dim-plum);
+    margin: 0 0 12px;
+}
+.dim-lede { color: var(--dim-slate); font-size: 1.03rem; line-height: 1.6; margin: 0; }
 
-        .btn-outline-dim:hover {
-            border-color: #f59e0b; color: #f59e0b; background: #fffbeb;
-        }
+.dim-grid {
+    display: grid;
+    grid-template-columns: 1.32fr 1fr;
+    gap: 26px;
+    align-items: start;
+}
 
-        /* RESPONSIVE */
-        @media (max-width: 968px) {
-            .portal-grid { grid-template-columns: 1fr; }
-            .dim-title { font-size: 2.5rem; }
-            .dim-portal { margin-top: -40px; }
-        }
-    </style>
+/* -------------------------------------------------------- TARJETAS -- */
+.dim-card {
+    position: relative;
+    background: var(--dim-card);
+    border: 1px solid var(--dim-line);
+    border-radius: var(--dim-r-lg);
+    padding: clamp(24px, 3vw, 34px);
+    box-shadow: var(--dim-shadow);
+    transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+}
+.dim-card::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 5px;
+    border-radius: var(--dim-r-lg) var(--dim-r-lg) 0 0;
+    background: var(--dim-accent);
+}
+.dim-card:hover { transform: translateY(-6px); box-shadow: 0 1px 2px rgba(28,20,36,.05), 0 32px 60px -24px rgba(46,16,101,.34); }
+
+.dim-card--violet { --dim-accent: linear-gradient(90deg, var(--dim-grape), var(--dim-orchid)); --dim-tone: var(--dim-violet); --dim-tone-soft: #f5f0ff; }
+.dim-card--gold   { --dim-accent: linear-gradient(90deg, var(--dim-gold-deep), var(--dim-gold-soft)); --dim-tone: var(--dim-gold-deep); --dim-tone-soft: #fdf6e7; }
+
+.dim-card__head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    padding-bottom: 22px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--dim-line);
+}
+
+.dim-daytag {
+    display: inline-flex; align-items: center; gap: 11px;
+    padding: 11px 22px 11px 18px;
+    border-radius: 14px;
+    background: var(--dim-accent);
+    color: #fff;
+    font-family: var(--dim-font-display);
+    font-weight: 800; font-stretch: 105%;
+    font-size: 1.28rem; letter-spacing: -.01em;
+    box-shadow: 0 10px 22px -12px rgba(46,16,101,.75);
+}
+.dim-daytag .ico { width: 1.05em; height: 1.05em; opacity: .92; }
+
+.dim-card__count {
+    font-family: var(--dim-font-mono);
+    font-size: .74rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--dim-slate);
+}
+
+/* -------------------------------------------------------- TIMELINE -- */
+.dim-timeline { list-style: none; margin: 0; padding: 26px 0 0; }
+
+.dim-slot {
+    position: relative;
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 20px;
+    padding: 0 0 26px 0;
+}
+/* línea vertical que une los horarios */
+.dim-slot::before {
+    content: ""; position: absolute;
+    left: 87px; top: 22px; bottom: -4px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--dim-line), transparent);
+}
+.dim-slot:last-child { padding-bottom: 0; }
+.dim-slot:last-child::before { display: none; }
+
+/* punto sobre la línea */
+.dim-slot::after {
+    content: ""; position: absolute;
+    left: 84px; top: 8px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--dim-card);
+    border: 2px solid var(--dim-tone);
+}
+
+.dim-slot__time {
+    font-family: var(--dim-font-mono);
+    font-size: 1.02rem; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--dim-ink);
+    text-align: right;
+    padding-right: 18px;
+    line-height: 1.35;
+}
+.dim-slot__time span {
+    display: block;
+    font-size: .68rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--dim-slate);
+}
+
+.dim-slot__body { padding-top: 1px; }
+.dim-slot__body h3 {
+    font-family: var(--dim-font-text);
+    font-size: 1.03rem; font-weight: 700; line-height: 1.42;
+    color: var(--dim-ink);
+    margin: 0;
+    text-wrap: pretty;
+}
+
+.dim-kicker {
+    display: inline-block;
+    font-family: var(--dim-font-mono);
+    font-size: .68rem; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--dim-tone);
+    background: var(--dim-tone-soft);
+    padding: 3px 9px; border-radius: 6px;
+    margin: 0 0 8px;
+}
+
+.dim-meta {
+    display: flex; align-items: center; gap: 7px;
+    font-size: .86rem; color: var(--dim-slate);
+    margin: 7px 0 0;
+}
+.dim-meta .ico { width: 1.05em; height: 1.05em; opacity: .75; }
+.dim-meta--host { color: var(--dim-grape); font-weight: 600; }
+.dim-card--gold .dim-meta--host { color: var(--dim-gold-deep); }
+
+/* ------------------------------------------- PANEL DE EQUIPOS ------- */
+.dim-panel {
+    margin-top: 26px;
+    padding: 22px;
+    border-radius: var(--dim-r-md);
+    background:
+        linear-gradient(135deg, #fffdf7, #fdf3e0);
+    border: 1px solid #f7dfae;
+}
+.dim-panel__title {
+    display: flex; align-items: center; gap: 9px;
+    font-family: var(--dim-font-display);
+    font-weight: 800; font-size: 1.05rem;
+    color: var(--dim-gold-deep);
+    margin: 0 0 8px;
+}
+.dim-panel__title .ico { width: 1.2em; height: 1.2em; }
+.dim-panel__text { font-size: .89rem; color: #7c5314; margin: 0 0 12px; line-height: 1.5; }
+
+.dim-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; padding: 0; }
+.dim-chips li {
+    font-family: var(--dim-font-mono);
+    font-size: .73rem; font-weight: 500;
+    color: var(--dim-gold-deep);
+    background: rgba(255,255,255,.75);
+    border: 1px solid #f3ddb2;
+    padding: 4px 10px; border-radius: 999px;
+}
+
+/* ------------------------------------------------- ENTRADA / MOTION - */
+@media (prefers-reduced-motion: no-preference) {
+    .dim-hero__content > *,
+    .dim-sectionhead,
+    .dim-card {
+        animation: dim-rise .8s cubic-bezier(.22,1,.36,1) backwards;
+    }
+    .dim-badge     { animation-delay: .05s; }
+    .dim-title     { animation-delay: .13s; }
+    .dim-subtitle  { animation-delay: .21s; }
+    .dim-cta       { animation-delay: .29s; }
+    .dim-sectionhead { animation-delay: .1s; }
+    .dim-card:nth-of-type(1) { animation-delay: .18s; }
+    .dim-card:nth-of-type(2) { animation-delay: .28s; }
+}
+@keyframes dim-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------ RESPONSIVE -- */
+@media (max-width: 980px) {
+    .dim-grid { grid-template-columns: 1fr; }
+    .dim-decor--ring { right: -180px; }
+    .dim-decor--tri  { display: none; }
+}
+@media (max-width: 640px) {
+    .dim-schedule { border-radius: 30px 30px 0 0; margin-top: -40px; }
+    .dim-decor--spiral { left: -140px; opacity: .18; }
+    .dim-slot { grid-template-columns: 66px 1fr; gap: 14px; }
+    .dim-slot::before { left: 65px; }
+    .dim-slot::after  { left: 62px; }
+    .dim-slot__time { font-size: .92rem; padding-right: 12px; }
+    .dim-cta .dim-btn { width: 100%; justify-content: center; }
+}
+
+/* ------------------------------------------------- DRAWER (morado DIM) - */
+.dim-page .drawer-toggle {
+    color: var(--dim-violet);
+}
+
+@media (max-width: 768px) {
+    .dim-page .drawer {
+        background: var(--dim-paper);
+    }
+
+    .dim-page .drawer-head {
+        background: linear-gradient(135deg, var(--dim-grape) 0%, var(--dim-plum) 100%);
+    }
+
+    .dim-page .drawer-close {
+        background: rgba(255, 255, 255, 0.16);
+    }
+
+    .dim-page .drawer-group {
+        color: var(--dim-slate);
+    }
+
+    .dim-page .drawer-link {
+        color: var(--dim-ink);
+    }
+
+    .dim-page .drawer-link .ico {
+        color: var(--dim-grape);
+    }
+
+    .dim-page .drawer-link:hover,
+    .dim-page .drawer-link:active {
+        background: var(--dim-tone-soft, #f5f0ff);
+        border-left-color: var(--dim-grape);
+        color: var(--dim-plum);
+    }
+
+    .dim-page .drawer-foot {
+        border-top-color: var(--dim-line);
+    }
+
+    .dim-page .drawer-cta {
+        background: linear-gradient(135deg, var(--dim-grape) 0%, var(--dim-plum) 100%);
+    }
+}
+
+</style>
+    <script src="../../js/drawer.js"></script>
     <script src="../../js/animations.js"></script>
 </body>
 </html>

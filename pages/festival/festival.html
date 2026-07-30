@@ -30,38 +30,67 @@
             overflow-x: hidden;
         }
 
-        /* ─── NAV ─── */
+        /* ═══════════════════════════════════════════════════════════
+           NAV — barra flotante de cristal con la gota institucional
+           colgando como pendente.
+           ═══════════════════════════════════════════════════════════ */
         .top-bar {
             position: fixed;
             top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(7,89,133,0.9);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 24px 0;
+            transition: padding 0.45s cubic-bezier(.16,1,.3,1);
         }
 
         .nav-inner {
-            max-width: 1200px;
+            max-width: 1180px;
             margin: 0 auto;
-            padding: 0 24px;
-            height: 64px;
+            padding: 0 10px 0 20px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: relative;
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(226,242,255,0.10), rgba(8,32,60,0.16));
+            border: 1px solid rgba(190,225,255,0.16);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.18),
+                0 18px 40px -22px rgba(0,0,0,0.85);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            transition:
+                background 0.45s ease,
+                border-color 0.45s ease,
+                box-shadow 0.45s ease,
+                border-radius 0.45s cubic-bezier(.16,1,.3,1);
+        }
+
+        .top-bar.scrolled { padding-top: 8px; }
+
+        .top-bar.scrolled .nav-inner {
+            background: linear-gradient(180deg, rgba(9,38,68,0.86), rgba(5,22,42,0.88));
+            border-color: rgba(190,225,255,0.13);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.10),
+                0 20px 44px -26px rgba(0,0,0,0.9);
         }
 
         .nav-link {
-            color: rgba(255,255,255,0.8);
+            color: rgba(226,242,255,0.72);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 500;
-            display: flex;
+            letter-spacing: 0.01em;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
+            gap: 7px;
+            padding: 8px 4px;
+            transition: color 0.25s ease, transform 0.25s ease;
         }
-        .nav-link:hover { color: white; }
+        .nav-link:hover { color: #fff; transform: translateX(-2px); }
+        .nav-link svg { opacity: 0.7; transition: opacity 0.25s, transform 0.25s; }
+        .nav-link:hover svg { opacity: 1; transform: translateX(-2px); }
 
         /* ─── GOTA CENTRAL ─── */
         .central-logo-container {
@@ -69,38 +98,55 @@
             left: 50%;
             transform: translateX(-50%);
             top: 0;
-            width: 112px;
-            height: 108px;
-            border-radius: 0 0 56px 56px;
-            background: linear-gradient(180deg, #075985 0%, #0c4a6e 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 104px;
+            height: 100px;
+            border-radius: 0 0 52px 52px;
+            background: linear-gradient(180deg, #0a3a63 0%, #072742 55%, #041a30 100%);
+            border: 1px solid rgba(190,225,255,0.18);
             border-top: none;
             box-shadow:
-                0 10px 28px rgba(0, 0, 0, 0.35),
-                inset 0 -3px 10px rgba(56, 189, 248, 0.10);
+                0 22px 40px -20px rgba(0,0,0,0.9),
+                inset 0 -14px 26px -12px rgba(56,189,248,0.30),
+                inset 0 1px 0 rgba(255,255,255,0.06);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 12px;
+            padding-top: 10px;
             z-index: 101;
-            transition: box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, padding-top 0.3s ease;
             text-decoration: none;
+            transition:
+                width 0.45s cubic-bezier(.16,1,.3,1),
+                height 0.45s cubic-bezier(.16,1,.3,1),
+                border-radius 0.45s cubic-bezier(.16,1,.3,1),
+                padding-top 0.45s cubic-bezier(.16,1,.3,1),
+                box-shadow 0.35s ease;
+        }
+
+        /* filo de luz inferior: hace que la gota "cuelgue" con volumen */
+        .central-logo-container::after {
+            content: '';
+            position: absolute;
+            left: 22%; right: 22%; bottom: -1px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(125,211,252,0.75), transparent);
+            border-radius: 2px;
         }
 
         .central-logo-container:hover {
             box-shadow:
-                0 14px 36px rgba(0, 0, 0, 0.4),
-                inset 0 -3px 14px rgba(56, 189, 248, 0.18);
+                0 26px 48px -20px rgba(0,0,0,0.95),
+                inset 0 -16px 30px -12px rgba(56,189,248,0.48),
+                inset 0 1px 0 rgba(255,255,255,0.10);
         }
 
         .central-logo {
             width: auto;
-            max-height: 55px;
-            margin-top: 5px;
+            max-height: 50px;
+            margin-top: 4px;
             object-fit: contain;
             filter: brightness(0) invert(1);
-            opacity: 0.92;
-            transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, margin-top 0.3s ease;
+            opacity: 0.9;
+            transition: transform 0.35s cubic-bezier(.16,1,.3,1), opacity 0.3s ease, max-height 0.45s ease, margin-top 0.45s ease;
         }
 
         .central-logo-container:hover .central-logo {
@@ -108,21 +154,15 @@
             opacity: 1;
         }
 
-        /* Al hacer scroll, la gota se contrae para caber dentro de los 64px
-           del navbar y deja de sobresalir sobre el contenido. En reposo (tope
-           de página) se ve completa, tal como fue diseñada. */
         .top-bar.scrolled .central-logo-container {
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             padding-top: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            border-top: 1px solid rgba(190,225,255,0.18);
         }
-
-        .top-bar.scrolled .central-logo {
-            max-height: 32px;
-            margin-top: 0;
-        }
+        .top-bar.scrolled .central-logo-container::after { opacity: 0; }
+        .top-bar.scrolled .central-logo { max-height: 30px; margin-top: 0; }
 
         .nav-brand {
             font-family: 'Syne', sans-serif;
@@ -133,125 +173,269 @@
         }
 
         .nav-cta {
-            background: white;
-            color: var(--blue-dark);
-            padding: 8px 18px;
-            border-radius: 999px;
-            font-size: 0.82rem;
+            position: relative;
+            background: linear-gradient(180deg, #ffffff, #d7e9fb);
+            color: #06304f;
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-size: 0.78rem;
             font-weight: 700;
+            letter-spacing: 0.01em;
             text-decoration: none;
-            transition: all 0.2s;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.9),
+                0 6px 18px -8px rgba(56,189,248,0.7);
+            transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s ease;
         }
-        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,255,255,0.2); }
+        .nav-cta:hover {
+            transform: translateY(-1.5px);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.9),
+                0 12px 26px -10px rgba(56,189,248,0.9);
+        }
 
-        /* ─── HERO ─── */
+        /* ═══════════════════════════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════════════════════════ */
         .hero {
             position: relative;
             min-height: 100vh;
+            min-height: 100svh;
             display: grid;
             place-items: center;
             overflow: hidden;
+            isolation: isolate;
+            background: #030a18;
         }
 
+        /* — capa 1: profundidad cromática — */
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(160deg, #0369a1 0%, #0c4a6e 40%, #082f49 100%);
+            background:
+                radial-gradient(120% 90% at 78% -12%, rgba(56,189,248,0.30) 0%, transparent 55%),
+                radial-gradient(90% 70% at 8% 105%, rgba(37,99,235,0.28) 0%, transparent 60%),
+                radial-gradient(70% 55% at 50% 40%, rgba(12,74,110,0.55) 0%, transparent 70%),
+                linear-gradient(178deg, #061a33 0%, #05142a 45%, #030b1b 100%);
         }
 
-        /* Animated orbs */
-        .orb {
+        /* — capa 2: haces de luz — */
+        .hero-rays {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: float 8s ease-in-out infinite;
+            inset: 0;
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(.16,1,.3,1);
         }
 
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: rgba(14,165,233,0.18);
-            top: -100px; left: -100px;
-            animation-delay: 0s;
+        .ray {
+            position: absolute;
+            width: 1500px;
+            height: 1500px;
+            -webkit-mask-image: radial-gradient(closest-side, #000 4%, rgba(0,0,0,0.45) 32%, transparent 72%);
+                    mask-image: radial-gradient(closest-side, #000 4%, rgba(0,0,0,0.45) 32%, transparent 72%);
+            filter: blur(7px);
+            will-change: transform;
         }
 
-        .orb-2 {
-            width: 400px; height: 400px;
-            background: rgba(30,58,138,0.35);
-            bottom: -80px; right: -80px;
-            animation-delay: -3s;
+        .ray-a {
+            top: -720px; right: -520px;
+            background: conic-gradient(from 168deg at 50% 50%,
+                transparent 0deg, rgba(186,230,253,0.26) 3deg, transparent 8deg,
+                transparent 13deg, rgba(56,189,248,0.20) 16deg, transparent 22deg,
+                transparent 31deg, rgba(224,242,254,0.22) 34deg, transparent 41deg,
+                transparent 52deg, rgba(56,189,248,0.14) 55deg, transparent 62deg,
+                transparent 360deg);
+            animation: raySpin 120s linear infinite;
         }
 
-        .orb-3 {
-            width: 250px; height: 250px;
-            background: rgba(56,189,248,0.15);
-            top: 40%; right: 15%;
-            animation-delay: -5s;
+        .ray-b {
+            bottom: -880px; left: -600px;
+            background: conic-gradient(from 340deg at 50% 50%,
+                transparent 0deg, rgba(125,211,252,0.18) 4deg, transparent 10deg,
+                transparent 20deg, rgba(59,130,246,0.16) 24deg, transparent 31deg,
+                transparent 44deg, rgba(186,230,253,0.13) 47deg, transparent 55deg,
+                transparent 360deg);
+            animation: raySpin 165s linear infinite reverse;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(20px, -20px) scale(1.04); }
-            66% { transform: translate(-15px, 15px) scale(0.97); }
-        }
+        @keyframes raySpin { to { transform: rotate(360deg); } }
 
-        /* Quantum pattern overlay */
+        /* — capa 3: constelación — */
+        .hero-constellation {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+        }
+        .hero-constellation svg { width: 100%; height: 100%; display: block; }
+        .hero-constellation .edges { stroke: #7dd3fc; stroke-width: 1.1; fill: none; vector-effect: non-scaling-stroke; }
+        .hero-constellation .cn { fill: #bae6fd; animation: twinkle 5.5s var(--d, 0s) ease-in-out infinite alternate; }
+        .hero-constellation .cn-halo { fill: #38bdf8; opacity: 0.16; animation: halo 7s var(--d, 0s) ease-in-out infinite alternate; }
+
+        @keyframes twinkle { from { opacity: 0.32; } to { opacity: 1; } }
+        @keyframes halo   { from { opacity: 0.06; transform: scale(0.85); } to { opacity: 0.22; transform: scale(1.15); } }
+
+        /* — capa 4: retícula que se desvanece hacia los bordes — */
         .hero-pattern {
             position: absolute;
             inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 32px 32px;
+            background-image: radial-gradient(rgba(186,230,253,0.16) 1px, transparent 1.2px);
+            background-size: 44px 44px;
+            -webkit-mask-image: radial-gradient(75% 60% at 50% 42%, #000 0%, transparent 78%);
+                    mask-image: radial-gradient(75% 60% at 50% 42%, #000 0%, transparent 78%);
+            opacity: 0.55;
         }
 
+        /* — capa 5: grano. Rompe el degradado plástico. — */
+        .hero-grain {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.055;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* — capa 6: viñeta — */
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(120% 85% at 50% 35%, transparent 40%, rgba(2,8,20,0.55) 100%);
+        }
+
+        /* ─── CONTENIDO ─── */
         .hero-content {
             position: relative;
+            z-index: 5;
             text-align: center;
-            padding: 100px 24px 80px;
-            max-width: 860px;
+            padding: 132px 24px 210px;
+            max-width: 940px;
+            will-change: transform, opacity;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
+            gap: 9px;
+            background: linear-gradient(180deg, rgba(226,242,255,0.13), rgba(226,242,255,0.04));
+            border: 1px solid rgba(190,225,255,0.18);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #bae6fd;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            padding: 7px 16px;
+            padding: 8px 18px;
             border-radius: 999px;
-            margin-bottom: 28px;
-            animation: fadeDown 0.8s ease both;
+            margin-bottom: 34px;
+            --d: 0.05s;
+            animation: riseIn 1s var(--d) cubic-bezier(.16,1,.3,1) both;
         }
 
+        .hero-badge .pulse { color: #38bdf8; animation: pulse 2.6s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+        /* Antetítulo con filetes: se lee pegado al título, no como
+           un segundo subtítulo compitiendo por atención. */
         .hero-kicker {
-            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 0.7rem;
             color: #7dd3fc;
             font-weight: 500;
-            letter-spacing: 0.04em;
-            margin-bottom: 16px;
-            animation: fadeDown 0.8s 0.1s ease both;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            --d: 0.15s;
+            animation: riseIn 1s var(--d) cubic-bezier(.16,1,.3,1) both;
         }
+        .hero-kicker::before,
+        .hero-kicker::after {
+            content: '';
+            height: 1px;
+            width: clamp(20px, 7vw, 92px);
+            background: linear-gradient(90deg, transparent, rgba(125,211,252,0.55));
+        }
+        .hero-kicker::after { background: linear-gradient(90deg, rgba(125,211,252,0.55), transparent); }
 
+        /* ─── TÍTULO CROMADO ─── */
         .hero-title {
             font-family: 'Syne', sans-serif;
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-size: clamp(2.7rem, 8vw, 6.2rem);
             font-weight: 800;
-            color: white;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
-            animation: fadeDown 0.8s 0.2s ease both;
+            line-height: 0.94;
+            letter-spacing: -0.025em;
+            margin-bottom: 26px;
+            --d: 0.25s;
+            animation: riseIn 1.15s var(--d) cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .chrome {
+            position: relative;
+            display: block;
+            color: transparent;
+            background-image: linear-gradient(178deg,
+                #ffffff 0%,
+                #e6f2ff 12%,
+                #9dbcdb 30%,
+                #47688b 45%,
+                #f4faff 50.5%,
+                #ffffff 54%,
+                #c2d8ee 66%,
+                #5f80a4 82%,
+                #eef7ff 96%,
+                #ffffff 100%);
+            -webkit-background-clip: text;
+                    background-clip: text;
+            /* El relieve se construye apilando drop-shadows: cada una sigue
+               la silueta real del glifo, así que el bisel se ve tallado y
+               no como un text-shadow plano. */
+            filter:
+                drop-shadow(0 -1px 0 rgba(255,255,255,0.45))
+                drop-shadow(0 1px 0 rgba(9,28,52,0.95))
+                drop-shadow(0 2px 0 rgba(7,23,44,0.8))
+                drop-shadow(0 3px 0 rgba(5,18,36,0.62))
+                drop-shadow(0 4px 1px rgba(4,14,30,0.45))
+                drop-shadow(0 16px 28px rgba(2,10,24,0.6));
+        }
+
+        /* Destello especular: cruza rápido y descansa largo. */
+        .chrome::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            color: transparent;
+            background-image: linear-gradient(104deg,
+                transparent 42%,
+                rgba(255,255,255,0.9) 50%,
+                transparent 58%);
+            background-size: 320% 100%;
+            background-position: -60% 0;
+            -webkit-background-clip: text;
+                    background-clip: text;
+            animation: sheen 13s 1.6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sheen {
+            0%   { background-position: -60% 0; }
+            22%  { background-position: 190% 0; }
+            100% { background-position: 190% 0; }
         }
 
         .hero-subtitle {
-            font-size: 1.15rem;
-            color: rgba(255,255,255,0.65);
-            font-style: italic;
+            font-size: clamp(1rem, 1.6vw, 1.2rem);
+            color: rgba(219,236,255,0.62);
+            font-weight: 300;
+            letter-spacing: 0.005em;
             margin-bottom: 40px;
-            animation: fadeDown 0.8s 0.3s ease both;
+            --d: 0.35s;
+            animation: riseIn 1s var(--d) cubic-bezier(.16,1,.3,1) both;
         }
 
         .hero-meta {
@@ -259,74 +443,160 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 48px;
-            animation: fadeDown 0.8s 0.4s ease both;
+            margin-bottom: 44px;
+            --d: 0.45s;
+            animation: riseIn 1s var(--d) cubic-bezier(.16,1,.3,1) both;
         }
 
         .meta-pill {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: white;
-            padding: 10px 20px;
+            gap: 10px;
+            background: linear-gradient(180deg, rgba(226,242,255,0.12), rgba(226,242,255,0.035));
+            border: 1px solid rgba(190,225,255,0.16);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: rgba(240,249,255,0.92);
+            padding: 11px 20px;
             border-radius: 999px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.875rem;
+            font-weight: 400;
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(.16,1,.3,1);
         }
+        .meta-pill:hover { border-color: rgba(125,211,252,0.42); transform: translateY(-2px); }
+        .meta-pill .ico { width: 15px; height: 15px; color: #7dd3fc; flex-shrink: 0; }
 
         .hero-actions {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
-            animation: fadeDown 0.8s 0.5s ease both;
+            --d: 0.55s;
+            animation: riseIn 1s var(--d) cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 15px 30px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
 
         .btn-primary {
-            background: white;
-            color: var(--blue-dark);
-            padding: 14px 32px;
-            border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+            color: #06304f;
             font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 14px 34px -14px rgba(56,189,248,0.75),
+                0 4px 14px -6px rgba(0,0,0,0.5);
         }
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+            transform: translateY(-2.5px);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 22px 44px -14px rgba(56,189,248,0.95),
+                0 6px 18px -6px rgba(0,0,0,0.55);
         }
 
         .btn-ghost {
-            border: 1.5px solid rgba(255,255,255,0.35);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s;
+            background: linear-gradient(180deg, rgba(226,242,255,0.13), rgba(226,242,255,0.035));
+            border: 1px solid rgba(190,225,255,0.2);
+            color: #eaf4ff;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
         }
         .btn-ghost:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2.5px);
+            border-color: rgba(125,211,252,0.5);
+            background: linear-gradient(180deg, rgba(226,242,255,0.2), rgba(226,242,255,0.07));
         }
 
-        /* Wave divider */
+        .btn-ghost--accent { color: #7dd3fc; border-color: rgba(56,189,248,0.35); }
+        .btn-ghost--accent:hover { color: #bae6fd; }
+
+        .btn-ghost .ico,
+        .btn-primary .ico { width: 16px; height: 16px; }
+        .btn-arrow { transition: transform 0.3s cubic-bezier(.16,1,.3,1); }
+        .btn-ghost:hover .btn-arrow { transform: translateX(4px); }
+
+        /* ═══════════════════════════════════════════════════════════
+           ONDAS — 4 planos + curvas de nivel. La profundidad viene de
+           que cada plano tiene su propio desenfoque, opacidad y
+           velocidad de deriva; el ojo lee eso como distancia.
+           ═══════════════════════════════════════════════════════════ */
         .hero-wave {
             position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
+            bottom: -1px; left: 0; right: 0;
+            height: 260px;
+            z-index: 4;
+            pointer-events: none;
             line-height: 0;
         }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .wave-layer {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translate3d(0, var(--py, 0px), 0);
+        }
+
+        /* La pista mide el doble y se desplaza exactamente medio ancho:
+           el patrón vuelve a coincidir consigo mismo, sin salto. */
+        .wave-track {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200%;
+            height: 100%;
+            animation: drift var(--speed, 40s) linear infinite;
+            will-change: transform;
+        }
+        .wave-track svg { display: block; width: 100%; height: 100%; }
+
+        @keyframes drift {
+            from { transform: translate3d(0, 0, 0); }
+            to   { transform: translate3d(-50%, 0, 0); }
+        }
+
+        .wave-back  { filter: blur(6px); opacity: 0.55; }
+        .wave-mid   { filter: blur(2px); opacity: 0.8; }
+
+        .wave-contours .edge-line { vector-effect: non-scaling-stroke; fill: none; }
+
+        /* halo justo sobre la cresta frontal: separa la masa clara
+           del fondo oscuro sin un borde duro */
+        .wave-glow {
+            position: absolute;
+            left: 0; right: 0; bottom: 70px;
+            height: 130px;
+            background: radial-gradient(62% 100% at 50% 100%, rgba(125,211,252,0.2), transparent 72%);
+            filter: blur(18px);
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(22px); filter: blur(7px); }
+            to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wave-track, .ray-a, .ray-b, .chrome::after,
+            .hero-constellation .cn, .hero-constellation .cn-halo,
+            .hero-badge .pulse { animation: none !important; }
+            .hero-badge, .hero-kicker, .hero-title,
+            .hero-subtitle, .hero-meta, .hero-actions { animation: none !important; }
         }
 
         /* ─── SECTIONS ─── */
@@ -795,11 +1065,6 @@
             text-decoration: underline;
         }
 
-        /* ─── CAMPO DE FUERZA (DESKTOP) ─── */
-        /* Evita que el texto del Hero suba demasiado y choque con el logo */
-        .hero {
-            padding-top: 100px;
-        }
 
         /* ─── RESPONSIVE (CIRUGÍA MÓVIL) ─── */
         @media (max-width: 900px) {
@@ -851,40 +1116,60 @@
 
             /* 2. HERO SECTION */
             .hero {
-                min-height: auto;
-                padding: 120px 15px 50px;
+                min-height: 92svh;
             }
             .hero-content {
-                padding: 0;
+                padding: 108px 18px 150px;
             }
             .hero-badge {
-                font-size: 0.6rem;
-                padding: 6px 12px;
-                margin-bottom: 20px;
-                white-space: normal; /* Permite que el texto largo baje de línea */
+                font-size: 0.56rem;
+                letter-spacing: 0.12em;
+                padding: 7px 14px;
+                margin-bottom: 22px;
+                white-space: normal; /* el texto largo puede bajar de línea */
+                line-height: 1.5;
             }
-            .hero-title {
-                font-size: 2.5rem;
+            .hero-kicker {
+                font-size: 0.58rem;
+                letter-spacing: 0.18em;
+                gap: 10px;
                 margin-bottom: 16px;
             }
+            .hero-title {
+                letter-spacing: -0.015em;
+                margin-bottom: 18px;
+            }
+            /* menos capas de relieve: en pantallas pequeñas el bisel
+               grueso ensucia el trazo en vez de darle volumen */
+            .chrome {
+                filter:
+                    drop-shadow(0 1px 0 rgba(9,28,52,0.95))
+                    drop-shadow(0 2px 0 rgba(6,20,40,0.6))
+                    drop-shadow(0 10px 20px rgba(2,10,24,0.55));
+            }
             .hero-subtitle {
-                font-size: 1rem;
-                margin-bottom: 24px;
+                margin-bottom: 26px;
             }
             .hero-meta {
-                flex-direction: column; /* Apila las fechas y lugares */
+                flex-direction: column;
+                align-items: stretch;
                 gap: 8px;
                 margin-bottom: 30px;
             }
             .meta-pill {
-                font-size: 0.85rem;
-                padding: 8px 16px;
+                font-size: 0.82rem;
+                padding: 10px 16px;
                 justify-content: center;
             }
             .hero-actions {
                 flex-direction: column;
-                gap: 12px;
+                gap: 10px;
             }
+            .btn-primary, .btn-ghost { padding: 14px 22px; }
+            .hero-wave { height: 182px; }
+            .wave-glow { bottom: 48px; height: 92px; }
+            .hero-constellation { opacity: 0.65; }
+            .ray { filter: blur(10px); }
 
             /* 3. LAYOUT GENERAL Y SECCIONES */
             .section {
@@ -1159,6 +1444,11 @@
       <symbol id="i-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"/><path d="M4 22V10.5M9 22V10.5M15 22V10.5M20 22V10.5"/><path d="M2 10.5 12 4l10 6.5Z"/></symbol>
       <symbol id="i-graduation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.3 2.7 2.5 6 2.5s6-1.2 6-2.5v-4.5"/><path d="M22 10v5"/></symbol>
       <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.8 16.9v2.8a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6 19.6 19.6 0 0 1-3-8.6 2 2 0 0 1 2-2.2h2.8a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.2 9.8a15.8 15.8 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="5" width="17.6" height="16" rx="2.4"/><path d="M3.2 10h17.6"/><path d="M8 2.8v4.4M16 2.8v4.4"/><path d="M7.6 14h2M11 14h2M14.4 14h2M7.6 17.4h2M11 17.4h2"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-5.6 7-11.1A7 7 0 0 0 5 10.4c0 5.5 7 11.1 7 11.1Z"/><circle cx="12" cy="10.2" r="2.6"/></symbol>
+      <symbol id="i-nodes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6.5" r="2.6"/><circle cx="18" cy="6.5" r="2.6"/><circle cx="12" cy="18" r="2.6"/><path d="M8.6 6.5h6.8M7.4 8.8l3.3 6.9M16.6 8.8l-3.3 6.9"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.4"/><circle cx="8.6" cy="10" r="1.7"/><path d="m3.6 17.4 4.9-4.6a2 2 0 0 1 2.7 0l4 3.8M15 14.2l1.6-1.4a2 2 0 0 1 2.6 0l1.2 1"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14"/><path d="m13 6.5 5.5 5.5L13 17.5"/></symbol>
       <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="4.5" width="19.6" height="15" rx="2.5"/><path d="m2.8 7.2 9.2 5.6 9.2-5.6"/></symbol>
     </svg>
 
@@ -1179,36 +1469,102 @@
 
     <!-- ─── HERO ─── -->
     <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="hero-pattern"></div>
+        <!-- Fondo por planos: color, luz, constelación, retícula, grano, viñeta -->
+        <div class="hero-bg" aria-hidden="true"></div>
+
+        <div class="hero-rays" aria-hidden="true" data-parallax="0.014">
+            <div class="ray ray-a"></div>
+            <div class="ray ray-b"></div>
+        </div>
+
+        <div class="hero-constellation" aria-hidden="true" data-parallax="0.028">
+            <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+                <g class="edges"><line x1="83.8" y1="124.6" x2="196.8" y2="265.1" opacity="0.229"/><line x1="83.8" y1="124.6" x2="153.9" y2="107.5" opacity="0.404"/><line x1="83.8" y1="124.6" x2="106.3" y2="136.6" opacity="0.479"/><line x1="83.8" y1="124.6" x2="268.9" y2="119.6" opacity="0.221"/><line x1="83.8" y1="124.6" x2="31.1" y2="158.8" opacity="0.419"/><line x1="191.2" y1="315.2" x2="196.8" y2="265.1" opacity="0.439"/><line x1="191.2" y1="315.2" x2="302.1" y2="254.2" opacity="0.316"/><line x1="191.2" y1="315.2" x2="265.5" y2="374.0" opacity="0.367"/><line x1="191.2" y1="315.2" x2="106.3" y2="136.6" opacity="0.201"/><line x1="191.2" y1="315.2" x2="281.1" y2="323.7" opacity="0.374"/><line x1="191.2" y1="315.2" x2="296.2" y2="284.2" opacity="0.343"/><line x1="191.2" y1="315.2" x2="104.1" y2="361.1" opacity="0.361"/><line x1="196.8" y1="265.1" x2="302.1" y2="254.2" opacity="0.349"/><line x1="196.8" y1="265.1" x2="153.9" y2="107.5" opacity="0.257"/><line x1="196.8" y1="265.1" x2="265.5" y2="374.0" opacity="0.312"/><line x1="196.8" y1="265.1" x2="106.3" y2="136.6" opacity="0.266"/><line x1="196.8" y1="265.1" x2="281.1" y2="323.7" opacity="0.354"/><line x1="196.8" y1="265.1" x2="268.9" y2="119.6" opacity="0.258"/><line x1="196.8" y1="265.1" x2="296.2" y2="284.2" opacity="0.357"/><line x1="196.8" y1="265.1" x2="104.1" y2="361.1" opacity="0.305"/><line x1="196.8" y1="265.1" x2="31.1" y2="158.8" opacity="0.202"/><line x1="302.1" y1="254.2" x2="153.9" y2="107.5" opacity="0.184"/><line x1="302.1" y1="254.2" x2="265.5" y2="374.0" opacity="0.318"/><line x1="302.1" y1="254.2" x2="281.1" y2="323.7" opacity="0.403"/><line x1="302.1" y1="254.2" x2="268.9" y2="119.6" opacity="0.296"/><line x1="302.1" y1="254.2" x2="296.2" y2="284.2" opacity="0.471"/><line x1="153.9" y1="107.5" x2="106.3" y2="136.6" opacity="0.43"/><line x1="153.9" y1="107.5" x2="268.9" y2="119.6" opacity="0.333"/><line x1="153.9" y1="107.5" x2="31.1" y2="158.8" opacity="0.305"/><line x1="265.5" y1="374.0" x2="281.1" y2="323.7" opacity="0.435"/><line x1="265.5" y1="374.0" x2="296.2" y2="284.2" opacity="0.367"/><line x1="265.5" y1="374.0" x2="104.1" y2="361.1" opacity="0.259"/><line x1="106.3" y1="136.6" x2="268.9" y2="119.6" opacity="0.256"/><line x1="106.3" y1="136.6" x2="31.1" y2="158.8" opacity="0.394"/><line x1="281.1" y1="323.7" x2="268.9" y2="119.6" opacity="0.19"/><line x1="281.1" y1="323.7" x2="296.2" y2="284.2" opacity="0.452"/><line x1="281.1" y1="323.7" x2="104.1" y2="361.1" opacity="0.228"/><line x1="268.9" y1="119.6" x2="296.2" y2="284.2" opacity="0.251"/><line x1="296.2" y1="284.2" x2="104.1" y2="361.1" opacity="0.186"/><line x1="1094.1" y1="282.5" x2="1049.3" y2="337.7" opacity="0.405"/><line x1="1094.1" y1="282.5" x2="1243.5" y2="252.8" opacity="0.274"/><line x1="1094.1" y1="282.5" x2="1300.5" y2="275.0" opacity="0.187"/><line x1="1094.1" y1="282.5" x2="1094.9" y2="297.5" opacity="0.496"/><line x1="1094.1" y1="282.5" x2="1073.9" y2="297.0" opacity="0.48"/><line x1="1094.1" y1="282.5" x2="1259.1" y2="299.0" opacity="0.253"/><line x1="1094.1" y1="282.5" x2="1089.1" y2="201.8" opacity="0.39"/><line x1="1094.1" y1="282.5" x2="1071.7" y2="329.0" opacity="0.437"/><line x1="1049.3" y1="337.7" x2="1094.9" y2="297.5" opacity="0.422"/><line x1="1049.3" y1="337.7" x2="1073.9" y2="297.0" opacity="0.443"/><line x1="1049.3" y1="337.7" x2="1089.1" y2="201.8" opacity="0.292"/><line x1="1049.3" y1="337.7" x2="1071.7" y2="329.0" opacity="0.481"/><line x1="1380.1" y1="276.4" x2="1243.5" y2="252.8" opacity="0.296"/><line x1="1380.1" y1="276.4" x2="1300.5" y2="275.0" opacity="0.392"/><line x1="1380.1" y1="276.4" x2="1259.1" y2="299.0" opacity="0.321"/><line x1="1380.1" y1="276.4" x2="1317.2" y2="101.7" opacity="0.221"/><line x1="1243.5" y1="252.8" x2="1300.5" y2="275.0" opacity="0.421"/><line x1="1243.5" y1="252.8" x2="1094.9" y2="297.5" opacity="0.27"/><line x1="1243.5" y1="252.8" x2="1073.9" y2="297.0" opacity="0.237"/><line x1="1243.5" y1="252.8" x2="1259.1" y2="299.0" opacity="0.441"/><line x1="1243.5" y1="252.8" x2="1089.1" y2="201.8" opacity="0.258"/><line x1="1243.5" y1="252.8" x2="1317.2" y2="101.7" opacity="0.249"/><line x1="1243.5" y1="252.8" x2="1071.7" y2="329.0" opacity="0.217"/><line x1="1300.5" y1="275.0" x2="1094.9" y2="297.5" opacity="0.186"/><line x1="1300.5" y1="275.0" x2="1259.1" y2="299.0" opacity="0.443"/><line x1="1300.5" y1="275.0" x2="1317.2" y2="101.7" opacity="0.239"/><line x1="1094.9" y1="297.5" x2="1073.9" y2="297.0" opacity="0.486"/><line x1="1094.9" y1="297.5" x2="1259.1" y2="299.0" opacity="0.255"/><line x1="1094.9" y1="297.5" x2="1089.1" y2="201.8" opacity="0.365"/><line x1="1094.9" y1="297.5" x2="1071.7" y2="329.0" opacity="0.457"/><line x1="1073.9" y1="297.0" x2="1259.1" y2="299.0" opacity="0.221"/><line x1="1073.9" y1="297.0" x2="1089.1" y2="201.8" opacity="0.365"/><line x1="1073.9" y1="297.0" x2="1071.7" y2="329.0" opacity="0.468"/><line x1="1259.1" y1="299.0" x2="1089.1" y2="201.8" opacity="0.204"/><line x1="1259.1" y1="299.0" x2="1317.2" y2="101.7" opacity="0.188"/><line x1="1259.1" y1="299.0" x2="1071.7" y2="329.0" opacity="0.214"/><line x1="1089.1" y1="201.8" x2="1071.7" y2="329.0" opacity="0.313"/><line x1="1364.6" y1="769.9" x2="1424.9" y2="583.7" opacity="0.204"/><line x1="1364.6" y1="769.9" x2="1261.4" y2="716.4" opacity="0.333"/><line x1="1364.6" y1="769.9" x2="1216.4" y2="659.1" opacity="0.222"/><line x1="1370.4" y1="513.3" x2="1205.7" y2="519.3" opacity="0.254"/><line x1="1370.4" y1="513.3" x2="1424.9" y2="583.7" opacity="0.376"/><line x1="1205.7" y1="519.3" x2="1261.4" y2="716.4" opacity="0.19"/><line x1="1205.7" y1="519.3" x2="1216.4" y2="659.1" opacity="0.294"/><line x1="1205.7" y1="519.3" x2="1109.4" y2="657.5" opacity="0.248"/><line x1="1205.7" y1="519.3" x2="1156.4" y2="635.6" opacity="0.316"/><line x1="1261.4" y1="716.4" x2="1216.4" y2="659.1" opacity="0.402"/><line x1="1261.4" y1="716.4" x2="1109.4" y2="657.5" opacity="0.257"/><line x1="1261.4" y1="716.4" x2="1156.4" y2="635.6" opacity="0.306"/><line x1="1216.4" y1="659.1" x2="1109.4" y2="657.5" opacity="0.347"/><line x1="1216.4" y1="659.1" x2="1156.4" y2="635.6" opacity="0.416"/><line x1="1109.4" y1="657.5" x2="1156.4" y2="635.6" opacity="0.436"/><line x1="191.2" y1="725.5" x2="181.4" y2="811.9" opacity="0.38"/><line x1="191.2" y1="725.5" x2="125.8" y2="761.8" opacity="0.399"/><line x1="191.2" y1="725.5" x2="174.7" y2="819.6" opacity="0.366"/><line x1="191.2" y1="725.5" x2="319.5" y2="625.0" opacity="0.257"/><line x1="191.2" y1="725.5" x2="174.6" y2="565.4" opacity="0.26"/><line x1="191.2" y1="725.5" x2="294.3" y2="746.6" opacity="0.35"/><line x1="181.4" y1="811.9" x2="125.8" y2="761.8" opacity="0.399"/><line x1="181.4" y1="811.9" x2="174.7" y2="819.6" opacity="0.504"/><line x1="181.4" y1="811.9" x2="294.3" y2="746.6" opacity="0.31"/><line x1="125.8" y1="761.8" x2="174.7" y2="819.6" opacity="0.398"/><line x1="125.8" y1="761.8" x2="174.6" y2="565.4" opacity="0.194"/><line x1="125.8" y1="761.8" x2="294.3" y2="746.6" opacity="0.247"/><line x1="174.7" y1="819.6" x2="294.3" y2="746.6" opacity="0.294"/><line x1="319.5" y1="625.0" x2="174.6" y2="565.4" opacity="0.267"/><line x1="319.5" y1="625.0" x2="294.3" y2="746.6" opacity="0.32"/></g>
+                <g class="halos"><circle class="cn-halo" cx="319.5" cy="625.0" r="6.1" style="--d:0.53s"/><circle class="cn-halo" cx="265.5" cy="374.0" r="6.0" style="--d:3.54s"/><circle class="cn-halo" cx="294.3" cy="746.6" r="5.4" style="--d:2.76s"/><circle class="cn-halo" cx="1094.1" cy="282.5" r="9.2" style="--d:4.5s"/><circle class="cn-halo" cx="1156.4" cy="635.6" r="5.7" style="--d:0.36s"/></g>
+                <g class="nodes"><circle class="cn" cx="83.8" cy="124.6" r="2.65" style="--d:1.49s"/><circle class="cn" cx="191.2" cy="315.2" r="2.34" style="--d:1.96s"/><circle class="cn" cx="196.8" cy="265.1" r="3.19" style="--d:1.64s"/><circle class="cn" cx="302.1" cy="254.2" r="2.5" style="--d:0.4s"/><circle class="cn" cx="153.9" cy="107.5" r="2.79" style="--d:4.9s"/><circle class="cn" cx="265.5" cy="374.0" r="1.77" style="--d:0.56s"/><circle class="cn" cx="106.3" cy="136.6" r="3.08" style="--d:1.7s"/><circle class="cn" cx="281.1" cy="323.7" r="2.93" style="--d:3.82s"/><circle class="cn" cx="268.9" cy="119.6" r="1.41" style="--d:1.18s"/><circle class="cn" cx="296.2" cy="284.2" r="1.67" style="--d:1.21s"/><circle class="cn" cx="104.1" cy="361.1" r="2.7" style="--d:2.02s"/><circle class="cn" cx="31.1" cy="158.8" r="2.55" style="--d:2.84s"/><circle class="cn" cx="1094.1" cy="282.5" r="2.7" style="--d:0.36s"/><circle class="cn" cx="1049.3" cy="337.7" r="2.96" style="--d:1.7s"/><circle class="cn" cx="1380.1" cy="276.4" r="2.01" style="--d:5.41s"/><circle class="cn" cx="1243.5" cy="252.8" r="1.69" style="--d:4.42s"/><circle class="cn" cx="1300.5" cy="275.0" r="1.97" style="--d:1.26s"/><circle class="cn" cx="1094.9" cy="297.5" r="3.07" style="--d:0.99s"/><circle class="cn" cx="1073.9" cy="297.0" r="1.69" style="--d:4.98s"/><circle class="cn" cx="1259.1" cy="299.0" r="2.09" style="--d:4.74s"/><circle class="cn" cx="1089.1" cy="201.8" r="2.82" style="--d:0.81s"/><circle class="cn" cx="1317.2" cy="101.7" r="2.67" style="--d:3.24s"/><circle class="cn" cx="1071.7" cy="329.0" r="1.61" style="--d:1.22s"/><circle class="cn" cx="1364.6" cy="769.9" r="1.75" style="--d:3.47s"/><circle class="cn" cx="1370.4" cy="513.3" r="2.24" style="--d:2.89s"/><circle class="cn" cx="1205.7" cy="519.3" r="2.77" style="--d:2.11s"/><circle class="cn" cx="1424.9" cy="583.7" r="3.03" style="--d:0.6s"/><circle class="cn" cx="1261.4" cy="716.4" r="2.15" style="--d:5.41s"/><circle class="cn" cx="1216.4" cy="659.1" r="2.8" style="--d:0.31s"/><circle class="cn" cx="1109.4" cy="657.5" r="1.41" style="--d:2.14s"/><circle class="cn" cx="1156.4" cy="635.6" r="1.67" style="--d:1.95s"/><circle class="cn" cx="191.2" cy="725.5" r="2.83" style="--d:0.92s"/><circle class="cn" cx="181.4" cy="811.9" r="2.53" style="--d:4.68s"/><circle class="cn" cx="125.8" cy="761.8" r="2.97" style="--d:2.64s"/><circle class="cn" cx="174.7" cy="819.6" r="1.69" style="--d:5.38s"/><circle class="cn" cx="319.5" cy="625.0" r="1.78" style="--d:3.59s"/><circle class="cn" cx="174.6" cy="565.4" r="1.44" style="--d:4.26s"/><circle class="cn" cx="294.3" cy="746.6" r="1.6" style="--d:3.43s"/></g>
+            </svg>
+        </div>
+
+        <div class="hero-pattern" aria-hidden="true"></div>
+        <div class="hero-grain" aria-hidden="true"></div>
+        <div class="hero-vignette" aria-hidden="true"></div>
 
         <div class="hero-content">
             <div class="hero-badge">
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                <svg class="pulse" width="7" height="7" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
                 Centro de Enseñanza y Divulgación de las Ciencias · CEDIC
             </div>
-            <p class="hero-kicker">Celebrando el centenario de la mecánica cuántica</p>
-            <h1 class="hero-title">Festival de<br>las Ciencias</h1>
+
+            <p class="hero-kicker"><span>Centenario de la mecánica cuántica</span></p>
+
+            <h1 class="hero-title">
+                <span class="chrome" data-text="Festival de">Festival de</span>
+                <span class="chrome" data-text="las Ciencias">las Ciencias</span>
+            </h1>
+
             <p class="hero-subtitle">Una experiencia que transforma la forma de ver el universo</p>
+
             <div class="hero-meta">
-                <span class="meta-pill">📅 28 y 29 de mayo, 2026</span>
-                <span class="meta-pill">📍 UNET, San Cristóbal</span>
-                <span class="meta-pill">🎓 Edición Especial Aleph Subcero</span>
+                <span class="meta-pill"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg> 28 y 29 de mayo, 2026</span>
+                <span class="meta-pill"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> UNET, San Cristóbal</span>
+                <span class="meta-pill"><svg class="ico" aria-hidden="true"><use href="#i-nodes"/></svg> Edición Especial Aleph Subcero</span>
             </div>
+
             <div class="hero-actions">
                 <a href="#inscripcion" class="btn-primary">Registrar mi equipo</a>
-                <a href="#programa" class="btn-ghost">Ver programa →</a>
-                <button onclick="abrirAfiche()" class="btn-ghost" style="border-color: #38bdf8; color: #38bdf8; cursor: pointer;">🖼️ Ver Afiche</button>
+                <a href="#programa" class="btn-ghost">Ver programa <svg class="ico btn-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+                <button type="button" onclick="abrirAfiche()" class="btn-ghost btn-ghost--accent"><svg class="ico" aria-hidden="true"><use href="#i-image"/></svg> Ver afiche</button>
             </div>
         </div>
 
-        <div class="hero-wave">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
-                <path fill="#f1f5f9" d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"/>
+        <!-- ─── ONDAS ─── -->
+        <div class="hero-wave" aria-hidden="true">
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+                <defs>
+                    <path id="cA" d="M0,-7.9 Q48,-8.1 72,-8.5 Q96,-9.0 120,-9.7 Q144,-10.4 168,-11.4 Q192,-12.4 216,-13.5 Q240,-14.6 264,-15.5 Q288,-16.4 312,-17.0 Q336,-17.5 360,-17.4 Q384,-17.3 408,-16.4 Q432,-15.6 456,-13.8 Q480,-12.1 504,-9.6 Q528,-7.2 552,-4.1 Q576,-1.0 600,2.4 Q624,5.7 648,9.1 Q672,12.4 696,15.3 Q720,18.2 744,20.3 Q768,22.5 792,23.7 Q816,24.9 840,25.1 Q864,25.3 888,24.4 Q912,23.5 936,21.7 Q960,20.0 984,17.6 Q1008,15.3 1032,12.6 Q1056,10.0 1080,7.3 Q1104,4.7 1128,2.4 Q1152,0.0 1176,-1.8 Q1200,-3.6 1224,-4.9 Q1248,-6.1 1272,-6.8 Q1296,-7.5 1320,-7.7 Q1344,-7.9 1368,-7.9 Q1392,-7.9 1416,-7.9 Q1440,-7.9 1464,-8.0 Q1488,-8.1 1512,-8.5 Q1536,-9.0 1560,-9.7 Q1584,-10.4 1608,-11.4 Q1632,-12.4 1656,-13.5 Q1680,-14.6 1704,-15.5 Q1728,-16.4 1752,-17.0 Q1776,-17.5 1800,-17.4 Q1824,-17.3 1848,-16.4 Q1872,-15.6 1896,-13.8 Q1920,-12.1 1944,-9.6 Q1968,-7.2 1992,-4.1 Q2016,-1.0 2040,2.4 Q2064,5.7 2088,9.1 Q2112,12.4 2136,15.3 Q2160,18.2 2184,20.3 Q2208,22.5 2232,23.7 Q2256,24.9 2280,25.1 Q2304,25.3 2328,24.4 Q2352,23.5 2376,21.7 Q2400,20.0 2424,17.6 Q2448,15.3 2472,12.6 Q2496,10.0 2520,7.3 Q2544,4.7 2568,2.4 Q2592,0.0 2616,-1.8 Q2640,-3.6 2664,-4.9 Q2688,-6.1 2712,-6.8 Q2736,-7.5 2760,-7.7 Q2784,-7.9 2808,-7.9 Q2832,-7.9 2856,-7.9 T2880,-7.9"/>
+                    <path id="cB" d="M0,-5.7 Q48,-9.7 72,-11.8 Q96,-14.0 120,-15.9 Q144,-17.9 168,-19.4 Q192,-20.8 216,-21.4 Q240,-22.0 264,-21.6 Q288,-21.2 312,-19.6 Q336,-18.1 360,-15.5 Q384,-13.0 408,-9.7 Q432,-6.4 456,-2.7 Q480,1.0 504,4.7 Q528,8.4 552,11.6 Q576,14.9 600,17.3 Q624,19.7 648,21.1 Q672,22.5 696,22.7 Q720,23.0 744,22.1 Q768,21.3 792,19.7 Q816,18.0 840,15.8 Q864,13.6 888,11.3 Q912,9.0 936,6.8 Q960,4.7 984,3.0 Q1008,1.3 1032,0.2 Q1056,-0.9 1080,-1.3 Q1104,-1.8 1128,-1.7 Q1152,-1.7 1176,-1.3 Q1200,-0.9 1224,-0.5 Q1248,-0.2 1272,-0.0 Q1296,0.1 1320,-0.3 Q1344,-0.7 1368,-1.6 Q1392,-2.6 1416,-4.1 Q1440,-5.7 1464,-7.7 Q1488,-9.7 1512,-11.8 Q1536,-14.0 1560,-15.9 Q1584,-17.9 1608,-19.4 Q1632,-20.8 1656,-21.4 Q1680,-22.0 1704,-21.6 Q1728,-21.2 1752,-19.6 Q1776,-18.1 1800,-15.5 Q1824,-13.0 1848,-9.7 Q1872,-6.4 1896,-2.7 Q1920,1.0 1944,4.7 Q1968,8.4 1992,11.6 Q2016,14.9 2040,17.3 Q2064,19.7 2088,21.1 Q2112,22.5 2136,22.7 Q2160,23.0 2184,22.1 Q2208,21.3 2232,19.7 Q2256,18.0 2280,15.8 Q2304,13.6 2328,11.3 Q2352,9.0 2376,6.8 Q2400,4.7 2424,3.0 Q2448,1.3 2472,0.2 Q2496,-0.9 2520,-1.3 Q2544,-1.8 2568,-1.7 Q2592,-1.7 2616,-1.3 Q2640,-0.9 2664,-0.5 Q2688,-0.2 2712,-0.0 Q2736,0.1 2760,-0.3 Q2784,-0.7 2808,-1.6 Q2832,-2.6 2856,-4.1 T2880,-5.7"/>
+                    <linearGradient id="wgFront" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#e3f0fb"/>
+                        <stop offset="55%" stop-color="#edf4fa"/>
+                        <stop offset="100%" stop-color="#f1f5f9"/>
+                    </linearGradient>
+                </defs>
             </svg>
+
+            <div class="wave-glow"></div>
+
+            <div class="wave-layer wave-back" data-depth="-0.06">
+                <div class="wave-track" style="--speed: 46s">
+                    <svg viewBox="0 0 2880 260" preserveAspectRatio="none">
+                        <path d="M0,122.1 Q48,124.7 72,124.9 Q96,125.0 120,124.3 Q144,123.6 168,122.2 Q192,120.9 216,119.3 Q240,117.7 264,116.2 Q288,114.7 312,113.4 Q336,112.2 360,111.3 Q384,110.4 408,109.8 Q432,109.1 456,108.7 Q480,108.2 504,107.6 Q528,107.0 552,106.0 Q576,104.9 600,103.3 Q624,101.7 648,99.3 Q672,96.9 696,93.8 Q720,90.7 744,87.1 Q768,83.4 792,79.5 Q816,75.6 840,71.9 Q864,68.1 888,65.0 Q912,61.9 936,59.8 Q960,57.7 984,57.0 Q1008,56.3 1032,57.2 Q1056,58.0 1080,60.4 Q1104,62.8 1128,66.5 Q1152,70.2 1176,74.9 Q1200,79.6 1224,84.8 Q1248,89.9 1272,95.1 Q1296,100.3 1320,104.9 Q1344,109.5 1368,113.3 Q1392,117.0 1416,119.5 Q1440,122.1 1464,123.4 Q1488,124.7 1512,124.9 Q1536,125.0 1560,124.3 Q1584,123.6 1608,122.2 Q1632,120.9 1656,119.3 Q1680,117.7 1704,116.2 Q1728,114.7 1752,113.4 Q1776,112.2 1800,111.3 Q1824,110.4 1848,109.8 Q1872,109.1 1896,108.7 Q1920,108.2 1944,107.6 Q1968,107.0 1992,106.0 Q2016,104.9 2040,103.3 Q2064,101.7 2088,99.3 Q2112,96.9 2136,93.8 Q2160,90.7 2184,87.1 Q2208,83.4 2232,79.5 Q2256,75.6 2280,71.9 Q2304,68.1 2328,65.0 Q2352,61.9 2376,59.8 Q2400,57.7 2424,57.0 Q2448,56.3 2472,57.2 Q2496,58.0 2520,60.4 Q2544,62.8 2568,66.5 Q2592,70.2 2616,74.9 Q2640,79.6 2664,84.8 Q2688,89.9 2712,95.1 Q2736,100.3 2760,104.9 Q2784,109.5 2808,113.3 Q2832,117.0 2856,119.5 T2880,122.1 L2880,260 L0,260 Z" fill="#2a7fc4" fill-opacity="0.30"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="wave-layer wave-mid" data-depth="-0.03">
+                <div class="wave-track" style="--speed: 32s; animation-direction: reverse">
+                    <svg viewBox="0 0 2880 260" preserveAspectRatio="none">
+                        <path d="M0,126.7 Q48,122.3 72,120.9 Q96,119.5 120,118.9 Q144,118.3 168,118.2 Q192,118.2 216,118.4 Q240,118.7 264,118.8 Q288,118.9 312,118.6 Q336,118.3 360,117.3 Q384,116.4 408,114.7 Q432,113.0 456,110.8 Q480,108.5 504,105.9 Q528,103.3 552,100.8 Q576,98.2 600,96.2 Q624,94.2 648,93.2 Q672,92.1 696,92.3 Q720,92.6 744,94.2 Q768,95.9 792,98.9 Q816,102.0 840,106.2 Q864,110.5 888,115.5 Q912,120.4 936,125.6 Q960,130.8 984,135.6 Q1008,140.4 1032,144.3 Q1056,148.3 1080,150.9 Q1104,153.5 1128,154.6 Q1152,155.7 1176,155.2 Q1200,154.8 1224,153.0 Q1248,151.2 1272,148.5 Q1296,145.7 1320,142.4 Q1344,139.2 1368,135.8 Q1392,132.5 1416,129.6 Q1440,126.7 1464,124.5 Q1488,122.3 1512,120.9 Q1536,119.5 1560,118.9 Q1584,118.3 1608,118.2 Q1632,118.2 1656,118.4 Q1680,118.7 1704,118.8 Q1728,118.9 1752,118.6 Q1776,118.3 1800,117.3 Q1824,116.4 1848,114.7 Q1872,113.0 1896,110.8 Q1920,108.5 1944,105.9 Q1968,103.3 1992,100.8 Q2016,98.2 2040,96.2 Q2064,94.2 2088,93.2 Q2112,92.1 2136,92.3 Q2160,92.6 2184,94.2 Q2208,95.9 2232,98.9 Q2256,102.0 2280,106.2 Q2304,110.5 2328,115.5 Q2352,120.4 2376,125.6 Q2400,130.8 2424,135.6 Q2448,140.4 2472,144.3 Q2496,148.3 2520,150.9 Q2544,153.5 2568,154.6 Q2592,155.7 2616,155.2 Q2640,154.8 2664,153.0 Q2688,151.2 2712,148.5 Q2736,145.7 2760,142.4 Q2784,139.2 2808,135.8 Q2832,132.5 2856,129.6 T2880,126.7 L2880,260 L0,260 Z" fill="#8fc4ea" fill-opacity="0.35"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="wave-layer wave-front">
+                <div class="wave-track" style="--speed: 62s">
+                    <svg viewBox="0 0 2880 260" preserveAspectRatio="none">
+                        <path d="M0,150.1 Q48,149.9 72,149.5 Q96,149.0 120,148.3 Q144,147.6 168,146.6 Q192,145.6 216,144.5 Q240,143.4 264,142.5 Q288,141.6 312,141.0 Q336,140.5 360,140.6 Q384,140.7 408,141.6 Q432,142.4 456,144.2 Q480,145.9 504,148.4 Q528,150.8 552,153.9 Q576,157.0 600,160.4 Q624,163.7 648,167.1 Q672,170.4 696,173.3 Q720,176.2 744,178.3 Q768,180.5 792,181.7 Q816,182.9 840,183.1 Q864,183.3 888,182.4 Q912,181.5 936,179.7 Q960,178.0 984,175.6 Q1008,173.3 1032,170.6 Q1056,168.0 1080,165.3 Q1104,162.7 1128,160.4 Q1152,158.0 1176,156.2 Q1200,154.4 1224,153.1 Q1248,151.9 1272,151.2 Q1296,150.5 1320,150.3 Q1344,150.1 1368,150.1 Q1392,150.1 1416,150.1 Q1440,150.1 1464,150.0 Q1488,149.9 1512,149.5 Q1536,149.0 1560,148.3 Q1584,147.6 1608,146.6 Q1632,145.6 1656,144.5 Q1680,143.4 1704,142.5 Q1728,141.6 1752,141.0 Q1776,140.5 1800,140.6 Q1824,140.7 1848,141.6 Q1872,142.4 1896,144.2 Q1920,145.9 1944,148.4 Q1968,150.8 1992,153.9 Q2016,157.0 2040,160.4 Q2064,163.7 2088,167.1 Q2112,170.4 2136,173.3 Q2160,176.2 2184,178.3 Q2208,180.5 2232,181.7 Q2256,182.9 2280,183.1 Q2304,183.3 2328,182.4 Q2352,181.5 2376,179.7 Q2400,178.0 2424,175.6 Q2448,173.3 2472,170.6 Q2496,168.0 2520,165.3 Q2544,162.7 2568,160.4 Q2592,158.0 2616,156.2 Q2640,154.4 2664,153.1 Q2688,151.9 2712,151.2 Q2736,150.5 2760,150.3 Q2784,150.1 2808,150.1 Q2832,150.1 2856,150.1 T2880,150.1 L2880,260 L0,260 Z" fill="url(#wgFront)"/>
+                        <g class="wave-contours"><use href="#cB" class="edge-line" transform="translate(70 169)" stroke="#5b9bd5" stroke-width="1" opacity="0.5"/><use href="#cA" class="edge-line" transform="translate(0 180)" stroke="#5b9bd5" stroke-width="1" opacity="0.43"/><use href="#cB" class="edge-line" transform="translate(70 192)" stroke="#5b9bd5" stroke-width="1" opacity="0.36"/><use href="#cA" class="edge-line" transform="translate(0 205)" stroke="#5b9bd5" stroke-width="1" opacity="0.29"/><use href="#cB" class="edge-line" transform="translate(70 219)" stroke="#5b9bd5" stroke-width="1" opacity="0.23"/><use href="#cA" class="edge-line" transform="translate(0 234)" stroke="#5b9bd5" stroke-width="1" opacity="0.17"/><use href="#cB" class="edge-line" transform="translate(70 250)" stroke="#5b9bd5" stroke-width="1" opacity="0.12"/></g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="wave-layer wave-air">
+                <div class="wave-track" style="--speed: 54s">
+                    <svg viewBox="0 0 2880 260" preserveAspectRatio="none">
+                        <g class="wave-contours"><use href="#cA" class="edge-line" transform="translate(0 160)" stroke="#bae6fd" stroke-width="1.25" opacity="0.52"/><use href="#cB" class="edge-line" transform="translate(46 151)" stroke="#bae6fd" stroke-width="1.25" opacity="0.47"/><use href="#cA" class="edge-line" transform="translate(0 141)" stroke="#bae6fd" stroke-width="1.25" opacity="0.42"/><use href="#cB" class="edge-line" transform="translate(46 130)" stroke="#bae6fd" stroke-width="1.25" opacity="0.37"/><use href="#cA" class="edge-line" transform="translate(0 118)" stroke="#bae6fd" stroke-width="1.05" opacity="0.315"/><use href="#cB" class="edge-line" transform="translate(46 105)" stroke="#bae6fd" stroke-width="1.05" opacity="0.26"/><use href="#cA" class="edge-line" transform="translate(0 90)" stroke="#bae6fd" stroke-width="1.05" opacity="0.21"/><use href="#cB" class="edge-line" transform="translate(46 73)" stroke="#bae6fd" stroke-width="1.05" opacity="0.165"/><use href="#cA" class="edge-line" transform="translate(0 54)" stroke="#bae6fd" stroke-width="1.05" opacity="0.12"/><use href="#cB" class="edge-line" transform="translate(46 33)" stroke="#bae6fd" stroke-width="1.05" opacity="0.082"/><use href="#cA" class="edge-line" transform="translate(0 10)" stroke="#bae6fd" stroke-width="1.05" opacity="0.05"/></g>
+                    </svg>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1529,6 +1885,58 @@
                 }, 1000); // 1000ms = 1 segundo de retraso
             }
         });
+
+        // ─── Profundidad del hero ───────────────────────────────────
+        // El scroll separa los planos (contenido, ondas, constelación) y
+        // el puntero inclina levemente el fondo. Todo con rAF y solo
+        // mientras el hero está en pantalla.
+        (function heroDepth() {
+            const hero = document.querySelector('.hero');
+            if (!hero) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const content = hero.querySelector('.hero-content');
+            const waves = hero.querySelectorAll('.wave-layer[data-depth]');
+            const drifters = hero.querySelectorAll('[data-parallax]');
+            let ticking = false;
+
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const y = window.scrollY;
+                    const vh = window.innerHeight;
+                    if (y < vh * 1.25) {
+                        content.style.transform = 'translate3d(0,' + (y * 0.22).toFixed(1) + 'px,0)';
+                        content.style.opacity = Math.max(0, 1 - y / (vh * 0.62)).toFixed(3);
+                        waves.forEach(w => {
+                            const d = parseFloat(w.dataset.depth) || 0;
+                            w.style.setProperty('--py', (y * d).toFixed(1) + 'px');
+                        });
+                    }
+                    ticking = false;
+                });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                hero.addEventListener('pointermove', e => {
+                    const r = hero.getBoundingClientRect();
+                    const dx = (e.clientX - r.width / 2);
+                    const dy = (e.clientY - r.height / 2);
+                    drifters.forEach(el => {
+                        const f = parseFloat(el.dataset.parallax) || 0;
+                        el.style.transform = 'translate3d(' + (dx * f).toFixed(1) + 'px,' + (dy * f).toFixed(1) + 'px,0)';
+                    });
+                }, { passive: true });
+
+                hero.addEventListener('pointerleave', () => {
+                    drifters.forEach(el => { el.style.transform = 'translate3d(0,0,0)'; });
+                });
+            }
+        })();
 
         // Navbar: encoge la "gota" del logo central al hacer scroll para que
         // no sobresalga sobre el contenido (ver .top-bar.scrolled en el CSS).
