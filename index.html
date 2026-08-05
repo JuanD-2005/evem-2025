@@ -191,7 +191,23 @@
       <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/>
       </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="16" rx="2.5"/>
+        <path d="M3 10h18"/>
+        <path d="M8 3v4M16 3v4"/>
+        <path d="M7.5 14h.01M12 14h.01M16.5 14h.01M7.5 17.5h.01M12 17.5h.01"/>
+      </symbol>
     </svg>
+
+    <!-- Barra de anuncio de fecha — SOLO móvil (<768px, responsive.css).
+         Va antes del header y ambos son position:sticky, así que ocupan
+         espacio en el flujo normal: no hace falta padding-top en el body.
+         El .top-bar se desplaza a top:34px en móvil para apilarse debajo
+         de esta barra en lugar de encimarse (los dos son sticky top:0). -->
+    <div class="date-announce-bar">
+      <svg class="ico" aria-hidden="true"><use href="#i-calendar" /></svg>
+      <span>8 al 11 de diciembre de 2026</span>
+    </div>
 
     <header class="top-bar">
       <div class="nav-container">
@@ -314,6 +330,13 @@
         </h1>
 
         <div class="hero-subtitle-blue">EVEM 2026</div>
+
+        <!-- Píldora de fecha — SOLO escritorio (se oculta <768px, donde en
+             su lugar aparece .date-announce-bar arriba del header). -->
+        <div class="hero-date-badge">
+          <svg class="ico" aria-hidden="true"><use href="#i-calendar" /></svg>
+          <span>8 al 11 de diciembre de 2026</span>
+        </div>
 
         <div
           class="logos-container"
@@ -1022,7 +1045,7 @@
               <use href="#i-arrow-right" />
             </svg>
           </a>
-          <p class="cta-note">Cupos limitados · Del 08 al 11 de septiembre</p>
+          <p class="cta-note">Cupos limitados · Del 08 al 11 de diciembre</p>
         </div>
       </div>
     </section>

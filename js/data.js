@@ -2,13 +2,13 @@
 
 const EVEM_DATA = {
     event: {
-        name: "XXVII Escuela Venezolana para la Enseñanza de la Matemática",
-        year: 2025,
-        edition: "XXVII",
+        name: "XXVIII Escuela Venezolana para la Enseñanza de la Matemática",
+        year: 2026,
+        edition: "XXVIII",
         dates: {
-            start: "2025-09-08",
-            end: "2025-09-11",
-            display: "del 08 al 11 de Septiembre 2025"
+            start: "2026-12-08",
+            end: "2026-12-11",
+            display: "del 08 al 11 de Diciembre 2026"
         },
         location: {
             university: "Universidad Nacional Experimental del Táchira",
