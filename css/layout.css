@@ -675,6 +675,68 @@ html {
     -webkit-text-fill-color: transparent;
 }
 
+/* --- PÍLDORA DE FECHA DEL EVENTO (solo escritorio) ---
+   Vidrio translúcido + blur en vez de fondo sólido: así se adapta a
+   cualquier foto del carousel en lugar de competir con una en particular.
+   Lo que la hace "aparecer" es el glow + el ícono en acento, no el fondo.
+   El acento usado es #38bdf8 (turquesa/cian real del proyecto, el mismo
+   del footer compartido EVEM/CEDIC) — no existe una variable --accent ni
+   ese verde-turquesa en este proyecto, así que se sustituyó por el
+   turquesa que sí está establecido en la paleta.
+   Es inline-flex para que el text-align:center heredado de .hero-2026 la
+   centre sola, sin tocar el flujo del .logos-container que va debajo.
+   En <768px se oculta (responsive.css) y la reemplaza .date-announce-bar. */
+.hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0 2px;
+    padding: 11px 26px;
+    border-radius: var(--border-radius-full);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    cursor: default;
+    transition: transform var(--transition-fast);
+    animation: pulse-glow 2s infinite;
+}
+
+.hero-date-badge:hover {
+    transform: scale(1.05);
+}
+
+.hero-date-badge .ico {
+    width: 20px;
+    height: 20px;
+    color: #38bdf8;
+    flex-shrink: 0;
+}
+
+/* Glow que respira: nunca llega a 0 (a diferencia de la versión anterior,
+   que sí tocaba box-shadow transparente en 0%/100% y podía verse "apagada"
+   en una captura tomada en ese instante del ciclo). */
+@keyframes pulse-glow {
+    0%   { box-shadow: 0 0 16px 2px rgba(56, 189, 248, 0.45); }
+    50%  { box-shadow: 0 0 28px 8px rgba(56, 189, 248, 0.2); }
+    100% { box-shadow: 0 0 16px 2px rgba(56, 189, 248, 0.45); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-date-badge { animation: none; }
+    .hero-date-badge:hover { transform: none; }
+}
+
+/* La barra de anuncio es exclusiva de móvil: en escritorio no existe. */
+.date-announce-bar {
+    display: none;
+}
+
 /* Logos Grid */
 .logos-container {
     display: flex;

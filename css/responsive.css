@@ -204,7 +204,60 @@
         height: 45px;
     }
 
+    /* ═══════════ BARRA DE ANUNCIO DE FECHA (solo móvil) ═══════════
+       Reemplaza a la píldora .hero-date-badge del hero, que aquí se oculta.
+
+       Apilado con el header: .top-bar también es sticky top:0, así que si
+       esta barra se quedara en top:0 con el mismo anclaje, al hacer scroll
+       las dos pelearían por el mismo punto y se encimarían sobre el botón
+       de menú. Se resuelve anclando el header 34px más abajo (justo la
+       altura de esta barra): quedan apilados, nunca superpuestos, y el
+       hamburguesa conserva su área de toque completa.
+
+       z-index 1001 = 1 por encima del .top-bar (1000) pero muy por debajo
+       del drawer (9999) y su overlay (9998), que deben taparla al abrirse.
+
+       Ambos son sticky (no fixed), así que ocupan lugar en el flujo normal
+       y no hace falta compensar con padding-top en el body. */
+    .date-announce-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        height: 34px;
+        position: sticky;
+        top: 0;
+        z-index: 1001;
+        /* Fondo sólido del propio proyecto. No se usa el acento #8ecae6 de
+           fondo porque el texto blanco encima daría ~1.8:1 de contraste
+           (ilegible); el acento entra por el ícono, y el blanco sobre este
+           azul queda ~8:1. */
+        background: var(--color-primary-dark);
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        line-height: 1;
+    }
+
+    .date-announce-bar .ico {
+        width: 15px;
+        height: 15px;
+        color: #8ecae6;
+        flex-shrink: 0;
+    }
+
+    /* La píldora del hero es exclusiva de escritorio. */
+    .hero-date-badge {
+        display: none !important;
+    }
+
     /* ═══════════════ NAV MÓVIL: barra simple + drawer ═══════════════ */
+    /* Se ancla bajo .date-announce-bar (34px) para que no se encimen. */
+    .top-bar {
+        top: 34px;
+    }
+
     .top-bar .nav-container {
         display: flex;
         align-items: center;
