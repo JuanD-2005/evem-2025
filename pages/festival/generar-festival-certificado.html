@@ -133,9 +133,19 @@ body{
   padding-bottom:4mm;
 }
 
-/* Membrete institucional */
+/* Membrete institucional — cajas IDÉNTICAS (40mm×16mm) para ambos
+   escudos vía object-fit:contain, así el peso visual queda parejo sin
+   importar la relación de aspecto propia de cada logo. El UNET es una
+   marca densa que llena su lienzo (contain la deja en 16mm alto); el de
+   Fundacite es un wordmark ancho y bajo (contain la deja en ~11mm alto,
+   limitado por el ancho) — a igual altura literal se veía enano porque
+   el PNG original trae ~78% de relleno transparente alrededor del
+   texto. object-position empuja cada logo hacia el lado del texto para
+   que el hueco entre logo y membrete sea parejo en ambos costados. */
 .letterhead{width:100%;display:flex;align-items:center;justify-content:center;gap:9mm}
-.crest{height:16mm;width:auto;object-fit:contain;flex-shrink:0}
+.crest{flex:0 0 40mm;height:16mm;object-fit:contain;display:block}
+.crest.unet{object-position:right center}
+.crest.fundacite{object-position:left center}
 .crest.cedic{filter:none}
 .letterhead-text{line-height:1.5}
 .letterhead-text .l1{
@@ -163,9 +173,8 @@ body{
 
 .fest-title{
   margin-top:3.5mm;
-  white-space:nowrap;
   font-family:'Syne',sans-serif;font-weight:800;
-  font-size:23pt;line-height:1.06;letter-spacing:-.025em;
+  font-size:22pt;line-height:1.18;letter-spacing:-.015em;
   color:var(--ink);
   max-width:100%;
 }
@@ -182,11 +191,11 @@ body{
 }
 
 .laureate{
-  margin-top:1.5mm;
+  margin-top:2mm;
   white-space:nowrap;
   font-family:'Fraunces',Georgia,serif;font-weight:600;
-  font-size:31pt;line-height:1.1;letter-spacing:-.015em;
-  color:var(--ink);
+  font-size:36pt;line-height:1.1;letter-spacing:-.015em;
+  color:#0b2545;
   max-width:100%;
 }
 .laureate-rule{
@@ -199,10 +208,10 @@ body{
 }
 
 .citation{
-  margin-top:5.5mm;max-width:196mm;
-  font-size:10pt;font-weight:300;line-height:1.72;color:var(--ink-soft);
+  margin-top:5.5mm;max-width:220mm;
+  font-size:10pt;font-weight:400;line-height:1.72;color:#2c4a6e;
 }
-.citation strong{font-weight:500;color:var(--ink)}
+.citation strong{font-weight:600;color:var(--ink)}
 
 .place-date{
   margin-top:4.5mm;
@@ -232,7 +241,7 @@ body{
 .seal svg{width:100%;height:100%;display:block}
 .seal-logo{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  height:10mm;width:auto;object-fit:contain;opacity:.9;
+  height:10mm;width:auto;object-fit:contain;opacity:1;
 }
 
 
@@ -453,13 +462,13 @@ body{
     <div class="content">
 
       <div class="letterhead">
-        <img class="crest" src="../../assets/logos/unet-logo.png" alt="" onerror="this.style.display='none'">
+        <img class="crest unet" src="../../assets/logos/unet-logo.png" alt="" onerror="this.style.display='none'">
         <div class="letterhead-text">
           <div class="l1">República Bolivariana de Venezuela</div>
           <div class="l2">Universidad Nacional Experimental del Táchira</div>
           <div class="l3">Centro de Enseñanza y Divulgación de las Ciencias · CEDIC</div>
         </div>
-        <img class="crest fundacite" src="../../assets/logos/logo_Fundacite.png" alt="" onerror="this.style.display='none'">
+        <img class="crest fundacite" src="../../assets/logos/logo_Fundacite-certificado.png" alt="" onerror="this.style.display='none'">
       </div>
 
       <div class="core">
@@ -631,8 +640,7 @@ function paint(list){
   stage.innerHTML='';
   list.forEach(d => stage.appendChild(renderSheet(d)));
   document.querySelectorAll('.sheet').forEach(sh=>{
-    autofit(sh.querySelector('.fest-title'),23,13);
-    autofit(sh.querySelector('.laureate'),31,17);
+    autofit(sh.querySelector('.laureate'),36,20);
   });
   fit();
 }
