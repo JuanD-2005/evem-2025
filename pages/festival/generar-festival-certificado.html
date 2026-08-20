@@ -333,8 +333,9 @@ body{
       </div>
 
       <div class="field">
-        <label for="f-folio">Folio inicial</label>
-        <input id="f-folio" type="text" value="FCM-2026-0147">
+        <label for="f-folio">Prefijo de folio</label>
+        <input id="f-folio" type="text" value="FCM-2026">
+        <span class="hint">Cada hoja recibe un sufijo aleatorio propio (crypto.getRandomValues) — no correlativo, no adivinable.</span>
       </div>
 
       <div class="field">
@@ -368,7 +369,7 @@ body{
           Array de objetos <code>{nombre, cedula, tipo, equipo}</code>. <code>tipo</code> acepta
           <code>participacion</code> · <code>ponente</code> · <code>expositor</code> · <code>ganador</code> ·
           <code>organizador</code> · <code>asistente</code> — si falta o no coincide con ninguno, se usa
-          <code>participacion</code>. El folio se numera solo a partir del inicial.
+          <code>participacion</code>. El folio de cada fila es aleatorio, no depende del orden del JSON.
         </span>
         <input type="file" id="f-json-file" accept="application/json,.json" style="margin-top:8px">
         <span id="jsonError" class="hint" style="display:none;color:#dc2626;font-weight:600"></span>
@@ -549,20 +550,22 @@ function readForm(){
     edicion:$('#f-edicion').value,
     fecha:$('#f-fecha').value,
     lugar:$('#f-lugar').value,
-    folio:$('#f-folio').value,
+    folioPrefix:$('#f-folio').value,
     f1n:$('#f-f1n').value, f1c:$('#f-f1c').value,
     f2n:$('#f-f2n').value, f2c:$('#f-f2c').value
   };
 }
 
-/* El folio incrementa respetando el ancho del sufijo numérico:
-   FCM-2026-0147 -> FCM-2026-0148. Si no termina en dígitos, se deja igual. */
-function bumpFolio(folio,i){
-  if(!i) return folio;
-  const m = folio.match(/^(.*?)(\d+)$/);
-  if(!m) return folio;
-  const width = m[2].length;
-  return m[1] + String(parseInt(m[2],10)+i).padStart(width,'0');
+/* Folio no adivinable: sufijo aleatorio de crypto.getRandomValues, no
+   un correlativo. Alfabeto sin 0/O/1/I/L — son los caracteres que más
+   se confunden al transcribir un folio a mano en la mesa de verificación. */
+const FOLIO_ALPHABET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+function randomFolio(prefix){
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  let suffix = '';
+  for(let i=0;i<bytes.length;i++) suffix += FOLIO_ALPHABET[bytes[i] % FOLIO_ALPHABET.length];
+  return `${prefix}-${suffix}`;
 }
 
 /* Escapa antes de inyectar en innerHTML (única celda que lo usa: 'cita').
@@ -610,7 +613,15 @@ function paint(list){
   fit();
 }
 
-function single(){ paint([readForm()]); }
+/* Se genera una vez y se cachea: si regenerara el folio en cada
+   repintado (cada tecla en el panel dispara paint()), la hoja de
+   vista previa mostraría un folio distinto todo el tiempo. */
+let singleFolio = null;
+function single(){
+  const base = readForm();
+  if(!singleFolio) singleFolio = randomFolio(base.folioPrefix);
+  paint([Object.assign({},base,{folio:singleFolio})]);
+}
 
 /* Único punto de traducción tipo→categoría: si el backend algún día manda
    otro vocabulario, se ajusta acá y no en cada llamada. Desconocido o
@@ -627,10 +638,11 @@ function mostrarErrorJSON(msg){
   el.style.display = msg ? '' : 'none';
 }
 
+let batchFolios = null, batchFoliosKey = null;
 function batch(){
   const base = readForm();
   const raw = $('#f-json').value.trim();
-  if(!raw){ mostrarErrorJSON(''); single(); return; }
+  if(!raw){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; single(); return; }
 
   let lista;
   try{
@@ -643,15 +655,27 @@ function batch(){
     mostrarErrorJSON('El JSON debe ser un array de participantes.');
     return;
   }
-  if(!lista.length){ mostrarErrorJSON(''); single(); return; }
+  if(!lista.length){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; single(); return; }
 
   mostrarErrorJSON('');
+
+  // Los folios se asignan una sola vez por lote y se cachean por el
+  // contenido exacto del JSON + prefijo: si el admin solo retoca el
+  // título o una firma, paint() se vuelve a llamar pero NO se barajan
+  // folios nuevos — importa porque estos son los que se sincronizan al
+  // backend, no querés que cambien bajo el pie entre un tecleo y otro.
+  const cacheKey = base.folioPrefix + ' ' + raw;
+  if(cacheKey !== batchFoliosKey || !batchFolios || batchFolios.length !== lista.length){
+    batchFolios = lista.map(() => randomFolio(base.folioPrefix));
+    batchFoliosKey = cacheKey;
+  }
+
   paint(lista.map((p,i) => Object.assign({},base,{
     nombre : p.nombre  ?? '',
     cedula : p.cedula  ?? '',
     tipo   : normalizarTipo(p.tipo),
     equipo : p.equipo || null,
-    folio  : bumpFolio(base.folio,i)
+    folio  : batchFolios[i]
   })));
 }
 
