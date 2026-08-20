@@ -130,6 +130,66 @@ function sync_festival_certificados($conn) {
     ]);
 }
 
+// Límite: 20 intentos por IP cada 5 minutos. "Básico" a propósito — el
+// objetivo es frenar un barrido automatizado del espacio de folios, no
+// molestar a alguien que se equivoca tipeando un par de veces.
+const FOLIO_RATE_LIMIT_MAX = 20;
+const FOLIO_RATE_LIMIT_MINUTOS = 5;
+
+function verify_festival_certificado($conn) {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'desconocida';
+
+    try {
+        // Housekeeping: se borran los intentos fuera de la ventana en
+        // cada request en vez de tener un cron aparte para esto.
+        $conn->prepare("DELETE FROM festival_folio_intentos WHERE creado_en < (NOW() - INTERVAL ? MINUTE)")
+             ->execute([FOLIO_RATE_LIMIT_MINUTOS]);
+
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM festival_folio_intentos WHERE ip = ? AND creado_en >= (NOW() - INTERVAL ? MINUTE)");
+        $stmt->execute([$ip, FOLIO_RATE_LIMIT_MINUTOS]);
+        $intentos = (int) $stmt->fetchColumn();
+
+        if ($intentos >= FOLIO_RATE_LIMIT_MAX) {
+            http_response_code(429);
+            echo json_encode(["error" => "Demasiados intentos. Esperá unos minutos y volvé a intentar."]);
+            exit();
+        }
+
+        $conn->prepare("INSERT INTO festival_folio_intentos (ip) VALUES (?)")->execute([$ip]);
+    } catch (Exception $e) {
+        // Si el limitador falla, seguimos: es una protección extra, no
+        // el motivo de ser del endpoint. No tumbamos la verificación
+        // por esto.
+    }
+
+    $folio = isset($_GET['folio']) ? trim($_GET['folio']) : '';
+    if ($folio === '') {
+        http_response_code(400);
+        echo json_encode(["error" => "Falta el folio a verificar."]);
+        exit();
+    }
+
+    try {
+        // SELECT explícito de solo nombre y proyecto: la tabla no tiene
+        // cédula, pero además nunca pedimos tipo ni fecha acá — lo que
+        // esta consulta no trae, esta página no lo puede mostrar.
+        $stmt = $conn->prepare("SELECT nombre, proyecto FROM festival_certificados WHERE UPPER(folio) = UPPER(?)");
+        $stmt->execute([$folio]);
+        $cert = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($cert) {
+            http_response_code(200);
+            echo json_encode(["success" => true, "nombre" => $cert['nombre'], "proyecto" => $cert['proyecto']]);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Folio no encontrado. Verificá que esté bien escrito."]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error interno al verificar."]);
+    }
+}
+
 function check_festival_certificate($conn) {
     $team_name = isset($_GET['team']) ? trim($_GET['team']) : '';
     try {

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Certificado por Folio — Festival de las Ciencias CEDIC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #0284c7;
+            --accent-light: #0ea5e9;
+            --accent-pale: #e0f2fe;
+            --accent-dark: #075985;
+            --success: #059669;
+            --success-pale: #d1fae5;
+            --error: #dc2626;
+            --error-pale: #fee2e2;
+            --navy: #0f172a;
+            --slate: #475569;
+            --muted: #94a3b8;
+            --border: #e2e8f0;
+            --bg: #f8fafc;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .verify-wrap {
+            width: 100%;
+            max-width: 560px;
+            animation: riseIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .institution-bar {
+            background: var(--navy);
+            border-radius: 16px 16px 0 0;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .institution-bar .org {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .institution-bar .ref {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.28);
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 0 0 20px 20px;
+            border: 1px solid var(--border);
+            border-top: none;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        /* ─── FORM DE BÚSQUEDA ─── */
+        .search-body { padding: 32px 40px; }
+        .search-body h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .search-body > p {
+            font-size: 0.875rem;
+            color: var(--slate);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .folio-form { display: flex; gap: 10px; }
+        .folio-form input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--navy);
+            background: var(--bg);
+            transition: all 0.2s;
+        }
+        .folio-form input:focus { outline: none; border-color: var(--accent); background: white; }
+        .folio-form button {
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            color: white;
+            border: none;
+            padding: 0 22px;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .folio-form button:hover { transform: translateY(-1px); }
+        .folio-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ─── STATUS BAND ─── */
+        .status-band {
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-band.success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-bottom: 1px solid #a7f3d0; }
+        .status-band.error   { background: linear-gradient(135deg, #fff5f5, #fee2e2); border-bottom: 1px solid #fecaca; }
+
+        .status-icon {
+            width: 56px; height: 56px; flex-shrink: 0;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            animation: popIn 0.4s 0.1s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        .status-icon.success { background: var(--success); box-shadow: 0 0 0 6px rgba(5,150,105,0.15); }
+        .status-icon.error   { background: var(--error);   box-shadow: 0 0 0 6px rgba(220,38,38,0.15); }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        .status-icon svg { width: 26px; height: 26px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+        .status-text h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 3px;
+        }
+        .status-text p { font-size: 0.85rem; color: var(--slate); line-height: 1.5; }
+
+        /* ─── DATA ROWS ─── */
+        .cert-body { padding: 28px 40px 32px; }
+        .data-rows {
+            display: flex; flex-direction: column;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-row {
+            display: flex; align-items: flex-start;
+            padding: 14px 18px; gap: 16px;
+        }
+        .data-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+        .data-row:nth-child(even) { background: #fafbfd; }
+        .data-label {
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--muted); min-width: 90px; padding-top: 2px; flex-shrink: 0;
+        }
+        .data-value { font-size: 0.925rem; font-weight: 600; color: var(--navy); line-height: 1.45; }
+
+        .again-link {
+            display: block; text-align: center; margin-top: 18px;
+            font-size: 0.82rem; color: var(--accent-dark); text-decoration: none; font-weight: 600;
+        }
+        .again-link:hover { text-decoration: underline; }
+
+        .verify-footer {
+            margin-top: 20px; text-align: center;
+            font-size: 0.75rem; color: var(--muted); line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .search-body, .status-band, .cert-body { padding-left: 20px; padding-right: 20px; }
+            .status-band { flex-direction: column; text-align: center; }
+            .data-row { flex-direction: column; gap: 4px; }
+            .data-label { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-wrap">
+        <div class="institution-bar">
+            <span class="org">CEDIC · UNET — Verificación Oficial</span>
+            <span class="ref">Festival de las Ciencias</span>
+        </div>
+        <div class="doc-card" id="docCard">
+            <div class="search-body">
+                <h1>Verificar certificado por folio</h1>
+                <p>Escribí el folio impreso en el certificado (ej. <code>FCM-2026-XXXXXXXX</code>) para confirmar que es auténtico.</p>
+                <form id="folioForm" class="folio-form">
+                    <input type="text" id="folioInput" placeholder="FCM-2026-XXXXXXXX" autocomplete="off" required>
+                    <button type="submit" id="btnVerificar">Verificar</button>
+                </form>
+            </div>
+        </div>
+        <p class="verify-footer">
+            Portal de verificación oficial — CEDIC · Universidad Nacional Experimental del Táchira<br>
+            Si creés que hay un error, contactá a <strong>cedicunet@gmail.com</strong>
+        </p>
+    </div>
+
+    <script src="../../js/security.js"></script>
+    <script>
+        const form   = document.getElementById('folioForm');
+        const input  = document.getElementById('folioInput');
+        const btn    = document.getElementById('btnVerificar');
+        const card   = document.getElementById('docCard');
+
+        function renderResultado(html) {
+            card.innerHTML = html;
+        }
+
+        function bandExito(nombre, proyecto) {
+            const nombreSeguro   = escapeHTML(nombre);
+            const proyectoSeguro = proyecto ? escapeHTML(proyecto) : null;
+            return `
+                <div class="status-band success">
+                    <div class="status-icon success">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="status-text">
+                        <h2>Certificado Auténtico</h2>
+                        <p>Este folio está registrado en la base de datos oficial del Festival.</p>
+                    </div>
+                </div>
+                <div class="cert-body">
+                    <div class="data-rows">
+                        <div class="data-row">
+                            <span class="data-label">Nombre</span>
+                            <span class="data-value">${nombreSeguro}</span>
+                        </div>
+                        ${proyectoSeguro ? `
+                        <div class="data-row">
+                            <span class="data-label">Proyecto</span>
+                            <span class="data-value">${proyectoSeguro}</span>
+                        </div>` : ''}
+                    </div>
+                    <a href="validar-folio.html" class="again-link">Verificar otro folio</a>
+                </div>
+            `;
+        }
+
+        function bandError(mensaje) {
+            const mensajeSeguro = escapeHTML(mensaje);
+            return `
+                <div class="status-band error">
+                    <div class="status-icon error">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="status-text">
+                        <h2>No se pudo verificar</h2>
+                        <p>${mensajeSeguro}</p>
+                    </div>
+                </div>
+                <div class="cert-body">
+                    <a href="validar-folio.html" class="again-link">Intentar de nuevo</a>
+                </div>
+            `;
+        }
+
+        async function verificar(folio) {
+            btn.disabled = true;
+            btn.textContent = 'Verificando…';
+            try {
+                const res = await fetch(`../../backend/api.php?action=verify_festival_certificado&folio=${encodeURIComponent(folio)}`);
+                const data = await res.json();
+                if (res.ok) {
+                    renderResultado(bandExito(data.nombre, data.proyecto));
+                } else {
+                    renderResultado(bandError(data.error || 'Folio no encontrado.'));
+                }
+            } catch (err) {
+                renderResultado(bandError('No se pudo conectar con el servidor. Intentá de nuevo en unos segundos.'));
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Verificar';
+            }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const folio = input.value.trim();
+            if (folio.length < 5) return;
+            verificar(folio);
+        });
+
+        // Si llega con ?folio=... en la URL (pensado para cuando el
+        // certificado tenga QR), se verifica automático al cargar.
+        const folioURL = new URLSearchParams(window.location.search).get('folio');
+        if (folioURL) {
+            input.value = folioURL;
+            verificar(folioURL);
+        }
+    </script>
+</body>
+</html>
