@@ -73,6 +73,7 @@ $routes = [
     'get_festival_teams' => ['method' => 'GET', 'controller' => 'festivalController.php', 'function' => 'get_festival_teams'],
     'toggle_festival_status' => ['method' => 'POST', 'controller' => 'festivalController.php', 'function' => 'toggle_festival_status'],
     'check_festival_certificate' => ['method' => 'GET', 'controller' => 'festivalController.php', 'function' => 'check_festival_certificate'],
+    'sync_festival_certificados' => ['method' => 'POST', 'controller' => 'festivalController.php', 'function' => 'sync_festival_certificados'],
     
     // Admin
     'get_evem_participants' => ['method' => 'GET', 'controller' => 'adminController.php', 'function' => 'get_evem_participants'],

@@ -380,7 +380,9 @@ body{
       <button class="btn btn-solid" id="btn-print">Imprimir / Guardar PDF</button>
       <button class="btn btn-line" id="btn-batch">Modo lote</button>
       <button class="btn btn-line" id="btn-gen" style="display:none">Generar lote</button>
+      <button class="btn btn-line" id="btn-sync" style="display:none">Sincronizar folios</button>
       <p class="panel-note">Al imprimir, elegí <strong>A4 horizontal</strong>, márgenes <strong>ninguno</strong> y activá <strong>gráficos de fondo</strong> si tu navegador lo ofrece.</p>
+      <p id="syncStatus" class="hint" style="width:100%;display:none"></p>
     </div>
   </div>
 </div>
@@ -638,11 +640,11 @@ function mostrarErrorJSON(msg){
   el.style.display = msg ? '' : 'none';
 }
 
-let batchFolios = null, batchFoliosKey = null;
+let batchFolios = null, batchFoliosKey = null, lastBatchRows = null;
 function batch(){
   const base = readForm();
   const raw = $('#f-json').value.trim();
-  if(!raw){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; single(); return; }
+  if(!raw){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; lastBatchRows=null; single(); return; }
 
   let lista;
   try{
@@ -655,7 +657,7 @@ function batch(){
     mostrarErrorJSON('El JSON debe ser un array de participantes.');
     return;
   }
-  if(!lista.length){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; single(); return; }
+  if(!lista.length){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; lastBatchRows=null; single(); return; }
 
   mostrarErrorJSON('');
 
@@ -664,19 +666,20 @@ function batch(){
   // título o una firma, paint() se vuelve a llamar pero NO se barajan
   // folios nuevos — importa porque estos son los que se sincronizan al
   // backend, no querés que cambien bajo el pie entre un tecleo y otro.
-  const cacheKey = base.folioPrefix + ' ' + raw;
+  const cacheKey = base.folioPrefix + ' ' + raw;
   if(cacheKey !== batchFoliosKey || !batchFolios || batchFolios.length !== lista.length){
     batchFolios = lista.map(() => randomFolio(base.folioPrefix));
     batchFoliosKey = cacheKey;
   }
 
-  paint(lista.map((p,i) => Object.assign({},base,{
+  lastBatchRows = lista.map((p,i) => Object.assign({},base,{
     nombre : p.nombre  ?? '',
     cedula : p.cedula  ?? '',
     tipo   : normalizarTipo(p.tipo),
     equipo : p.equipo || null,
     folio  : batchFolios[i]
-  })));
+  }));
+  paint(lastBatchRows);
 }
 
 /* Nombres y títulos largos: se reduce el cuerpo hasta que la línea
@@ -709,6 +712,7 @@ $('#btn-batch').addEventListener('click',()=>{
   batchOn=!batchOn;
   $('#batch').classList.toggle('on',batchOn);
   $('#btn-gen').style.display = batchOn?'inline-flex':'none';
+  $('#btn-sync').style.display = batchOn?'inline-flex':'none';
   $('#btn-batch').textContent = batchOn?'Volver a hoja única':'Modo lote';
   batchOn?batch():single();
 });
@@ -722,8 +726,49 @@ $('#f-json-file').addEventListener('change', async (e)=>{
   batchOn = true;
   $('#batch').classList.add('on');
   $('#btn-gen').style.display = 'inline-flex';
+  $('#btn-sync').style.display = 'inline-flex';
   $('#btn-batch').textContent = 'Volver a hoja única';
   batch();
+});
+
+// Manda el lote ya renderizado (folios ya asignados) al backend. Requiere
+// sesión de admin del panel Festival activa en el mismo navegador — el
+// endpoint responde 401 si no. El upsert por folio en el servidor hace
+// que reintentar tras un error de red sea seguro: no duplica filas.
+$('#btn-sync').addEventListener('click', async () => {
+  if(!lastBatchRows || !lastBatchRows.length) return;
+  const btn = $('#btn-sync');
+  const status = $('#syncStatus');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sincronizando…';
+  status.style.display = 'none';
+
+  try{
+    const payload = lastBatchRows.map(d => ({
+      folio: d.folio, nombre: d.nombre, proyecto: d.equipo || null, tipo: d.tipo, fecha: d.fecha
+    }));
+    const res = await fetch('../../backend/api.php?action=sync_festival_certificados', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const out = await res.json();
+    if(!res.ok) throw new Error(out.error || `Error ${res.status} al sincronizar.`);
+
+    status.style.color = out.errores.length ? '#b45309' : '#059669';
+    status.textContent = `Sincronizados ${out.guardados}/${out.total}.` +
+      (out.errores.length ? ` ${out.errores.length} con error — revisá la consola.` : '');
+    if(out.errores.length) console.warn('[sync_festival_certificados] errores:', out.errores);
+  }catch(err){
+    status.style.color = '#dc2626';
+    status.textContent = 'Error al sincronizar: ' + err.message;
+  }finally{
+    status.style.display = '';
+    btn.disabled = false;
+    btn.textContent = original;
+  }
 });
 
 document.querySelectorAll('.panel input,.panel select').forEach(el=>{
