@@ -30,7 +30,9 @@
      píxel — no pasan por estas variables, así que no cambian. */
   --ink:#3a3428;          /* tinta principal */
   --ink-soft:#6b6353;     /* texto secundario */
-  --ink-faint:#9c9384;    /* metadatos */
+  --ink-faint:#726a58;    /* metadatos — oscurecido: sobre la foto de
+                              fondo (con textura, no un blanco liso)
+                              el tono claro original se perdía */
   --accent:#b0894a;
   --accent-deep:#8a6d3a;
   --rule:#d8c9a3;
@@ -137,7 +139,11 @@ body{
 /* ─── contenido ─── */
 .content{
   position:absolute;inset:0;z-index:1;
-  padding:16mm 26mm 19mm;
+  /* La cuerda decorativa del fondo mide ~16mm arriba y ~18.5mm abajo
+     (medido sobre fondo-festival.jpg): con el padding anterior
+     (16mm/19mm) el membrete y el pie quedaban pegados a la cuerda,
+     casi sin margen. Se separan del centro hacia los bordes. */
+  padding:24mm 26mm 27mm;
   display:flex;flex-direction:column;align-items:center;text-align:center;
 }
 /* El cuerpo se centra ópticamente en el hueco entre membrete y firmas:
