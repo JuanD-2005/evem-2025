@@ -7,7 +7,20 @@
    El año del copyright se calcula solo.
    ══════════════════════════════════════════════════════════════════ */
 
-$a = fn(string $id): string => cedic_ancla($id, $pagina, $LANDING);
+/* function normal en vez de arrow fn(): el hosting de producción corre
+   PHP 7.0.33 (confirmado con _phpcheck.php), y las arrow functions son
+   sintaxis de PHP 7.4+ — con fn() acá, este archivo ni compilaba. Como
+   footer.php se incluye al final de cedic.php/actividades.php/
+   formacion.php/contenidos.php, un error de parseo acá se comía todo
+   lo que venía después del include: el <footer> entero y los
+   <script src="cedic.js"/animations.js">. Sin cedic.js, el
+   IntersectionObserver que le agrega .visible a las secciones
+   .reveal nunca corre, así que todo lo que no fuera el hero (que no
+   usa .reveal) se quedaba en opacity:0 para siempre — de ahí el "solo
+   carga el primer bloque y el resto queda en blanco". */
+$a = function (string $id) use ($pagina, $LANDING): string {
+    return cedic_ancla($id, $pagina, $LANDING);
+};
 
 /* Estos tres respetan el interruptor $PAGINAS_SEPARADAS de config.php */
 $h_act = cedic_href(['label'=>''] + $DESTINOS['actividades'], $pagina, $LANDING);
