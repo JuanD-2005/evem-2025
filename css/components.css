@@ -635,3 +635,74 @@ a:hover > .card-link-arrow {
     .drawer,
     .drawer-overlay { transition: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   FORMULARIO OSCURO (identidad "Aleph Subcero")
+
+   Centralizado acá para no repetir la misma hoja de estilos en cada
+   página de registro que necesite este tema: cualquier página con la
+   estructura .form-panel > .form-card > .field (input/select/
+   textarea) + .submit-btn hereda el tema oscuro con solo enlazar
+   este archivo — no hace falta renombrar un solo elemento.
+
+   Colores fijos en rgba, no var(--color-*): esta es la paleta del
+   Festival/"Aleph Subcero" (navy casi negro + cian institucional),
+   no el tema claro sitewide que usa variables.css.
+   ═══════════════════════════════════════════════════════════════ */
+.form-panel .form-header h2 { color: #ffffff; }
+.form-panel .form-header p  { color: rgba(226, 232, 240, 0.75); }
+
+.form-panel .form-card {
+    background: rgba(10, 37, 64, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 30px 60px -30px rgba(0, 0, 0, 0.75);
+}
+
+.form-panel .field label { color: rgba(255, 255, 255, 0.92); }
+.form-panel .field label .req { color: #38bdf8; }
+.form-panel .field-hint { color: rgba(226, 232, 240, 0.55); }
+
+.form-panel .field input,
+.form-panel .field select,
+.form-panel .field textarea {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    color: #ffffff;
+}
+
+.form-panel .field input::placeholder,
+.form-panel .field textarea::placeholder {
+    color: rgba(226, 232, 240, 0.5);
+}
+
+.form-panel .field input:focus,
+.form-panel .field select:focus,
+.form-panel .field textarea:focus {
+    border-bottom-color: #38bdf8;
+    background: rgba(0, 0, 0, 0.32);
+    box-shadow: 0 4px 14px -6px rgba(56, 189, 248, 0.4);
+}
+
+.form-panel .field select option { background: #0c1e33; color: #ffffff; }
+
+.form-panel .form-divider { background: rgba(255, 255, 255, 0.12); }
+.form-panel .form-footer { color: rgba(226, 232, 240, 0.6); }
+.form-panel .form-footer strong,
+.form-panel .form-footer a { color: #7dd3fc; }
+
+/* Botón primario: el cian brillante del evento, no el degradé navy
+   que usa .submit-btn por defecto sobre fondo claro. */
+.form-panel .submit-btn {
+    background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+    box-shadow: 0 10px 26px -10px rgba(56, 189, 248, 0.6);
+}
+.form-panel .submit-btn:hover:not(:disabled) {
+    box-shadow: 0 16px 34px -12px rgba(56, 189, 248, 0.75);
+}

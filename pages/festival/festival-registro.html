@@ -10,6 +10,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../../css/reset.css" />
+    <!-- components.css trae el tema oscuro reutilizable de .form-panel
+         (ver css/components.css) — el resto de esta página sigue
+         siendo autocontenida, esta es la única dependencia externa
+         nueva. -->
+    <link rel="stylesheet" href="../../css/components.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       :root {
@@ -24,6 +29,13 @@
         --white: #ffffff;
         --success: #10b981;
         --border: #e2e8f0;
+
+        /* Identidad "Aleph Subcero": mismo ink/cian que festival.html,
+           validar-folio.html y festival-certificado.html. */
+        --ink: #030a18;
+        --navy-deep: #05142a;
+        --cyan: #38bdf8;
+        --cyan-light: #7dd3fc;
       }
 
       *,
@@ -144,12 +156,14 @@
       /* ─── LEFT PANEL (INFO) ─── */
       .info-panel {
         width: 50%; /* Mitad exacta de la pantalla */
-        background: linear-gradient(
-          160deg,
-          #0c4a6e 0%,
-          #0369a1 50%,
-          #075985 100%
-        );
+        /* Fondo oscuro inmersivo "Aleph Subcero" en vez del azul
+           plano: mismo ink que festival.html/validar-folio.html, con
+           un par de washes de color que insinúan el hero sin repetir
+           el gradiente celeste anterior. */
+        background:
+          radial-gradient(120% 90% at 15% -10%, rgba(56,189,248,0.2) 0%, transparent 55%),
+          radial-gradient(90% 70% at 90% 108%, rgba(37,99,235,0.22) 0%, transparent 60%),
+          linear-gradient(178deg, var(--navy-deep) 0%, var(--ink) 100%);
         padding: 60px 40px;
 
         /* El truco mágico: Lo pegamos a la pared izquierda */
@@ -164,11 +178,15 @@
         align-items: center; /* Centra todo el bloque */
         justify-content: center;
         overflow-y: auto;
+        overflow-x: hidden;
+        isolation: isolate;
       }
 
       .info-panel > div:last-child {
         max-width: 480px; /* Evita que los textos se estiren al infinito */
         width: 100%;
+        position: relative;
+        z-index: 1;
       }
 
       .info-panel-bg {
@@ -180,6 +198,38 @@
         );
         background-size: 24px 24px;
         pointer-events: none;
+      }
+
+      /* nodos/redes: mismo generador que festival.html/validar-folio.html,
+         escalado al tamaño del panel en vez de a toda la ventana. */
+      .info-constellation {
+        position: absolute;
+        inset: 0;
+        opacity: 0.8;
+        pointer-events: none;
+      }
+      .info-constellation svg { width: 100%; height: 100%; display: block; }
+      .info-constellation .edges {
+        stroke: #7dd3fc; stroke-width: 1; fill: none;
+        vector-effect: non-scaling-stroke;
+      }
+      .info-constellation .cn {
+        fill: #bae6fd;
+        animation: infoTwinkle 5.5s var(--d, 0s) ease-in-out infinite alternate;
+      }
+      @keyframes infoTwinkle { from { opacity: 0.25; } to { opacity: 0.9; } }
+
+      .info-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .info-constellation .cn { animation: none; }
       }
 
       .info-eyebrow {
@@ -276,6 +326,12 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 14px;
         padding: 20px 24px;
+        /* Glassmorphism de verdad: el fondo translúcido ya estaba,
+           faltaba el desenfoque para que se note la constelación
+           detrás en vez de leerse como un gris plano. */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
       /* 3. También hacemos más legible el texto de la caja de contacto */
@@ -302,7 +358,12 @@
       .form-panel {
         width: 50%; /* La otra mitad */
         margin-left: 50%; /* Empuja este panel hacia la derecha */
-        background: var(--bg);
+        /* Azul casi negro en vez de blanco plano: mantiene la
+           inmersión de pantalla completa junto con el panel
+           izquierdo. Sin constelación acá — esa queda reservada al
+           panel informativo para no competir con la tarjeta de
+           cristal del formulario. */
+        background: linear-gradient(160deg, var(--navy-deep) 0%, var(--ink) 100%);
         padding: 60px 40px;
         min-height: calc(100vh - 64px);
 
@@ -888,7 +949,9 @@
     <div class="page-layout">
       <!-- ─── PANEL INFORMATIVO ─── -->
       <aside class="info-panel" style="position: relative">
+        <div class="info-constellation" id="infoConstellation" aria-hidden="true"></div>
         <div class="info-panel-bg"></div>
+        <div class="info-grain" aria-hidden="true"></div>
         <div style="position: relative">
           <span class="info-eyebrow">Festival de las Ciencias 2025</span>
           <h1>Portal de<br />Inscripción</h1>
@@ -1169,6 +1232,61 @@
     </footer>
 
     <script>
+      /* ── Constelación del panel informativo (mismo generador que
+         festival.html/validar-folio.html, escalado a la mitad de la
+         pantalla en vez de a la ventana completa) ── */
+      (function buildInfoConstellation() {
+        const host = document.getElementById("infoConstellation");
+        if (!host) return;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 720 900");
+        svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+
+        const NUM = 28;
+        const pts = Array.from({ length: NUM }, () => ({
+          x: Math.random() * 720,
+          y: Math.random() * 900,
+        }));
+
+        const edgesG = document.createElementNS(svg.namespaceURI, "g");
+        edgesG.setAttribute("class", "edges");
+        const MAXD = 130;
+        for (let i = 0; i < pts.length; i++) {
+          let links = 0;
+          for (let j = 0; j < pts.length && links < 3; j++) {
+            if (i === j) continue;
+            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < MAXD) {
+              const line = document.createElementNS(svg.namespaceURI, "line");
+              line.setAttribute("x1", pts[i].x.toFixed(1));
+              line.setAttribute("y1", pts[i].y.toFixed(1));
+              line.setAttribute("x2", pts[j].x.toFixed(1));
+              line.setAttribute("y2", pts[j].y.toFixed(1));
+              line.setAttribute("opacity", (0.12 + Math.random() * 0.28).toFixed(2));
+              edgesG.appendChild(line);
+              links++;
+            }
+          }
+        }
+        svg.appendChild(edgesG);
+
+        const nodesG = document.createElementNS(svg.namespaceURI, "g");
+        pts.forEach((p) => {
+          const c = document.createElementNS(svg.namespaceURI, "circle");
+          c.setAttribute("class", "cn");
+          c.setAttribute("cx", p.x.toFixed(1));
+          c.setAttribute("cy", p.y.toFixed(1));
+          c.setAttribute("r", (1.3 + Math.random() * 1.9).toFixed(2));
+          if (!reduce) c.style.setProperty("--d", (Math.random() * 5).toFixed(2) + "s");
+          nodesG.appendChild(c);
+        });
+        svg.appendChild(nodesG);
+
+        host.appendChild(svg);
+      })();
+
       // ── Member counter ──
       const membersTA = document.getElementById("teamMembers");
       const badge = document.getElementById("memberBadge");
