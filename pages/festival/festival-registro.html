@@ -147,9 +147,15 @@
 
       /* ─── PAGE LAYOUT (DESKTOP) ─── */
       .page-layout {
-        display: flex; /* Cambiamos a Flexbox para control total */
+        display: flex;
         width: 100%;
-        min-height: 100vh;
+        align-items: flex-start; /* imprescindible para que el sticky del panel izquierdo funcione bien dentro del flex */
+        /* El navbar es fixed (no ocupa espacio propio): sin este
+           padding, el contenido de ambos paneles arrancaría tapado
+           detrás de él. Con .info-panel en sticky top:0, el panel
+           empieza en su posición natural (acá abajo, 64px) y recién
+           se pega al techo del viewport cuando el scroll lo empuja
+           hasta ahí — no antes. */
         padding-top: 64px;
       }
 
@@ -166,19 +172,21 @@
           linear-gradient(178deg, var(--navy-deep) 0%, var(--ink) 100%);
         padding: 60px 40px;
 
-        /* El truco mágico: Lo pegamos a la pared izquierda */
-        position: fixed !important; /* El !important anula tu style en línea del HTML */
-        top: 64px;
-        bottom: 0;
-        left: 0;
-        height: calc(100vh - 64px) !important;
+        /* Pegado con sticky (no fixed): sigue siendo parte del flujo
+           normal del documento, así que el scroll vuelve a ser el del
+           body — un solo scrollbar, no dos peleando entre sí. Se queda
+           fijo en pantalla mientras el usuario baja por el formulario,
+           y se despega solo cuando termina su propio contenedor
+           (.page-layout), sin necesitar overflow-y propio. */
+        position: sticky;
+        top: 0;
+        height: 100vh;
 
         display: flex;
         flex-direction: column;
         align-items: center; /* Centra todo el bloque */
         justify-content: center;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden; /* si el contenido no entra en 100vh, recorta en vez de sacar scrollbar propio */
         isolation: isolate;
       }
 
@@ -357,15 +365,17 @@
       /* ─── RIGHT PANEL (FORM) ─── */
       .form-panel {
         width: 50%; /* La otra mitad */
-        margin-left: 50%; /* Empuja este panel hacia la derecha */
-        /* Azul casi negro en vez de blanco plano: mantiene la
-           inmersión de pantalla completa junto con el panel
-           izquierdo. Sin constelación acá — esa queda reservada al
-           panel informativo para no competir con la tarjeta de
-           cristal del formulario. */
-        background: linear-gradient(160deg, var(--navy-deep) 0%, var(--ink) 100%);
+        /* Sin margin-left:50% — esa muleta era para compensar que el
+           panel izquierdo estaba en position:fixed (fuera del flujo).
+           Ahora que .info-panel es sticky (sigue en flujo normal),
+           flexbox ya los pone lado a lado solo. */
+
+        /* Blanco/gris súper claro para máximo contraste con el panel
+           oscuro de al lado — el formulario vuelve a ser la mitad
+           "clara" de la pantalla. */
+        background: #f8f9fa;
         padding: 60px 40px;
-        min-height: calc(100vh - 64px);
+        min-height: 100vh; /* que nunca quede más corto que el panel oscuro de al lado (mismo alto, 100vh, misma fila) */
 
         display: flex;
         flex-direction: column;
@@ -592,7 +602,7 @@
       }
 
       /* ─── RESPONSIVE (CIRUGÍA MÓVIL DEFINITIVA) ─── */
-      @media (max-width: 900px) {
+      @media (max-width: 992px) {
         /* 1. HEADER MÓVIL (Logo Centrado) */
         .nav-inner {
           padding: 0 15px;
@@ -647,22 +657,35 @@
 
         .info-panel {
           width: 100%;
-          position: relative !important; /* Destruye el 'fixed' del PC */
+          /* Pierde el sticky del desktop: en la pila móvil no queremos
+             que se quede pegado arriba tapando el formulario. Sigue
+             en position:relative (no static) porque .info-panel-bg/
+             .info-constellation/.info-grain son absolute y necesitan
+             que este siga siendo su contenedor de posicionamiento. */
+          position: relative !important;
           top: auto !important;
           left: auto !important;
-          height: auto !important; /* Crece según el texto */
+          height: auto !important; /* Altura automática, ya no 100vh */
           min-height: auto;
-          padding: 50px 24px;
-          overflow: visible; /* Elimina el doble scroll molesto */
+          padding: 50px 24px 36px; /* menos aire abajo que arriba: la tarjeta de contacto ya trae su propio margen */
+          overflow: visible;
         }
         .info-panel h1 {
           font-size: 2.2rem;
         }
 
+        /* La tarjeta de contacto es lo último del bloque oscuro antes
+           del corte al formulario claro — de 60px a 24px de margen
+           inferior para que no quede un colchón de espacio vacío
+           justo antes de la costura entre los dos paneles. */
+        .info-contact {
+          margin-bottom: 24px;
+        }
+
         .form-panel {
           width: 100%;
-          margin-left: 0 !important; /* Destruye el empuje del PC */
-          padding: 40px 15px;
+          min-height: auto; /* ya no tiene que igualar los 100vh del panel de al lado: apilados, cada uno mide lo que su contenido pida */
+          padding: 44px 15px 40px; /* un poco más de aire arriba que el resto, para que la costura no se sienta abrupta */
         }
         .form-card {
           padding: 30px 20px;
@@ -948,7 +971,7 @@
 
     <div class="page-layout">
       <!-- ─── PANEL INFORMATIVO ─── -->
-      <aside class="info-panel" style="position: relative">
+      <aside class="info-panel">
         <div class="info-constellation" id="infoConstellation" aria-hidden="true"></div>
         <div class="info-panel-bg"></div>
         <div class="info-grain" aria-hidden="true"></div>
