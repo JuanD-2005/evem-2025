@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificados — Festival de las Ciencias CEDIC</title>
+    <title>Buscador de Certificados — Festival de las Ciencias CEDIC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/reset.css">
-    <link rel="stylesheet" href="../../css/variables.css">
-    <link rel="stylesheet" href="../../css/typography.css">
-    <link rel="stylesheet" href="../../css/layout.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -17,82 +15,203 @@
     <script src="../../js/security.js"></script>
 
     <style>
+        /* ═══════════════════════════════════════════════════════════
+           TOKENS — mismo sistema cromático que festival.html y
+           validar-folio.html: navy profundo + cian institucional.
+           Antes esta página tenía su propio fondo azul plano y tarjeta
+           blanca; ahora es de la misma familia visual que el resto del
+           "flujo de certificados" (buscar → verificar).
+           ═══════════════════════════════════════════════════════════ */
+        :root {
+            --ink: #030a18;
+            --navy-deep: #05142a;
+            --navy: #0f172a;
+            --blue-dark: #075985;
+            --blue-mid: #0284c7;
+            --blue: #0ea5e9;
+            --cyan: #38bdf8;
+            --cyan-light: #7dd3fc;
+            --cyan-pale: #bae6fd;
+            --ice: #e0f2fe;
+            --rose: #fb7185;
+            --rose-mid: #f43f5e;
+
+            --glass-line: rgba(190, 225, 255, 0.16);
+            --glass-line-2: rgba(190, 225, 255, 0.26);
+            --text-1: #f3f9ff;
+            --text-2: rgba(226, 242, 255, 0.72);
+            --text-3: rgba(226, 242, 255, 0.46);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(160deg, #0369a1 0%, #0c4a6e 40%, #082f49 100%);
-            color: white;
+            background: var(--ink);
+            color: var(--text-1);
             min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            position: relative;
+            isolation: isolate;
         }
 
-        .hero-pattern {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 32px 32px;
+        /* ═══════════════════════════════════════════════════════════
+           FONDO — mismos planos que festival.html / validar-folio.html:
+           color, halo de cursor, constelación (nodos/redes), grano,
+           viñeta. Capas fijas detrás de todo, generadas una sola vez.
+           ═══════════════════════════════════════════════════════════ */
+        .bg-color {
+            position: fixed; inset: 0; z-index: -6;
+            background:
+                radial-gradient(120% 90% at 78% -8%, rgba(56,189,248,0.24) 0%, transparent 55%),
+                radial-gradient(90% 70% at 6% 108%, rgba(37,99,235,0.24) 0%, transparent 60%),
+                radial-gradient(70% 55% at 50% 38%, rgba(12,74,110,0.5) 0%, transparent 70%),
+                linear-gradient(178deg, var(--navy-deep) 0%, #05142a 45%, var(--ink) 100%);
+        }
+        .bg-spotlight {
+            position: fixed; inset: 0; z-index: -5;
+            background: radial-gradient(560px 560px at var(--mx,50%) var(--my,32%), rgba(125,211,252,0.1), transparent 62%);
+            transition: background-position 0.2s linear;
             pointer-events: none;
         }
+        .bg-constellation { position: fixed; inset: 0; z-index: -4; opacity: 0.85; pointer-events: none; }
+        .bg-constellation svg { width: 100%; height: 100%; display: block; }
+        .bg-constellation .edges { stroke: #7dd3fc; stroke-width: 1; fill: none; vector-effect: non-scaling-stroke; }
+        .bg-constellation .cn { fill: #bae6fd; animation: twinkle 5.5s var(--d,0s) ease-in-out infinite alternate; }
+        @keyframes twinkle { from { opacity: 0.25; } to { opacity: 0.95; } }
+
+        .bg-pattern {
+            position: fixed; inset: 0; z-index: -3;
+            background-image: radial-gradient(rgba(186,230,253,0.14) 1px, transparent 1.2px);
+            background-size: 42px 42px;
+            -webkit-mask-image: radial-gradient(70% 55% at 50% 38%, #000 0%, transparent 78%);
+            mask-image: radial-gradient(70% 55% at 50% 38%, #000 0%, transparent 78%);
+            opacity: 0.5;
+        }
+        .bg-grain {
+            position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            opacity: 0.05; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .bg-vignette {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(120% 85% at 50% 32%, transparent 40%, rgba(2,8,20,0.6) 100%);
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(20px); filter: blur(6px); }
+            to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           BARRA SUPERIOR — misma franja reducida de cristal que usa
+           validar-folio.html: identifica la institución, no navega.
+           ═══════════════════════════════════════════════════════════ */
+        .top-strip {
+            max-width: 620px;
+            margin: 22px auto 0;
+            padding: 0 24px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 5;
+            animation: riseIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        .brand-link {
+            display: inline-flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--text-2);
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            transition: color 0.25s ease;
+        }
+        .brand-link:hover { color: #fff; }
+        .brand-link img { height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            text-decoration: none; color: var(--text-3);
+            font-size: 0.75rem; font-weight: 500;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+        .back-link:hover { color: var(--cyan-light); transform: translateX(-2px); }
+        .back-link .ico { width: 13px; height: 13px; min-width: 13px; min-height: 13px; }
 
         .cert-container {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 20px 60px;
+            padding: 40px 20px 56px;
             position: relative;
             z-index: 1;
         }
 
+        /* ─── TARJETA DE CRISTAL ─── */
         .cert-card {
-            background: white;
+            position: relative;
+            background: rgba(10, 37, 64, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 50px 40px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 44px 40px;
             max-width: 620px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            position: relative;
-            color: #0f172a;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                0 30px 70px -30px rgba(0,0,0,0.85),
+                0 0 46px -18px rgba(56,189,248,0.24);
+            color: var(--text-1);
+            --d: 0.1s;
+            animation: riseIn 0.85s var(--d) cubic-bezier(0.16,1,0.3,1) both;
         }
 
+        /* Isotipo del CEDIC en vez del birrete: mismo trato que el
+           sello de validar-folio.html — círculo de cristal con el logo
+           invertido a blanco, ni tan grande que domine la tarjeta ni
+           tan chico que se pierda. */
         .cert-icon {
-            font-size: 4rem;
-            margin-top: -85px;
-            margin-bottom: 20px;
-            background: white;
-            width: 110px; height: 110px;
-            line-height: 110px;
-            margin-left: auto; margin-right: auto;
+            width: 96px; height: 96px;
+            margin: 0 auto 18px;
             border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 6px solid #f1f5f9;
+            background: linear-gradient(180deg, rgba(226,242,255,0.14), rgba(226,242,255,0.03));
+            border: 1px solid var(--glass-line-2);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 10px 26px -12px rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cert-icon img {
+            width: 68px; height: auto; max-width: 100%; object-fit: contain;
+            filter: brightness(0) invert(1); opacity: 0.92;
         }
 
         .cert-card h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 2.2rem;
+            font-size: 1.9rem;
             font-weight: 800;
-            color: #0284c7;
+            color: var(--text-1);
             margin-bottom: 10px;
             letter-spacing: -0.02em;
         }
 
         .cert-card > p {
-            color: #64748b;
+            color: var(--text-2);
             margin-bottom: 22px;
             font-size: 1rem;
             line-height: 1.6;
         }
 
-        /* ─── TABS ─── */
+        /* ─── TABS — control segmentado tipo píldora ─── */
         .search-tabs {
             display: flex;
-            gap: 8px;
-            background: #f1f5f9;
-            border-radius: 12px;
+            gap: 6px;
+            background: rgba(3, 10, 24, 0.45);
+            border: 1px solid var(--glass-line);
+            border-radius: 999px;
             padding: 5px;
             margin-bottom: 16px;
         }
@@ -101,27 +220,28 @@
             flex: 1;
             padding: 10px;
             border: none;
-            border-radius: 9px;
+            border-radius: 999px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 600;
+            font-size: 0.86rem;
+            font-weight: 700;
             cursor: pointer;
             background: transparent;
-            color: #64748b;
-            transition: all 0.2s;
+            color: var(--text-2);
+            transition: all 0.25s ease;
         }
+        .search-tab:hover:not(.active) { color: var(--text-1); background: rgba(255,255,255,0.06); }
 
         .search-tab.active {
-            background: white;
-            color: #0284c7;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--blue-mid), var(--cyan));
+            color: #06304f;
+            box-shadow: 0 8px 20px -8px rgba(56,189,248,0.65);
         }
 
         /* ─── HINTS ─── */
         .search-hint {
-            background: #f0f9ff;
-            border: 1px solid #bae6fd;
-            color: #0369a1;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            color: var(--text-2);
             border-radius: 10px;
             padding: 12px 16px;
             font-size: 0.875rem;
@@ -129,6 +249,7 @@
             text-align: left;
             margin-bottom: 16px;
         }
+        .search-hint strong, .search-hint em { color: var(--cyan-light); font-style: normal; }
 
         /* ─── FORM ─── */
         .cert-form {
@@ -140,49 +261,59 @@
 
         .cert-form input {
             padding: 16px 18px;
-            border: 2px solid #e2e8f0;
+            border: 1px solid var(--glass-line);
             border-radius: 12px;
             font-size: 1.1rem;
             text-align: center;
             font-weight: 600;
-            color: #0f172a;
-            background: #f8fafc;
+            color: var(--text-1);
+            background: rgba(3, 10, 24, 0.45);
             transition: all 0.3s;
             font-family: 'DM Sans', sans-serif;
         }
+        .cert-form input::placeholder { color: var(--text-3); }
 
         .cert-form input:focus {
             outline: none;
-            border-color: #0ea5e9;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(14,165,233,0.15);
+            border-color: rgba(125, 211, 252, 0.55);
+            background: rgba(3, 10, 24, 0.65);
+            box-shadow: 0 0 0 4px rgba(56,189,248,0.14);
         }
 
         .cert-form button {
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
-            color: white;
-            border: none;
+            font-family: inherit;
+            display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+            background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+            color: #06304f;
+            border: 1px solid rgba(255,255,255,0.7);
             padding: 16px;
             border-radius: 12px;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(14,165,233,0.3);
-            font-family: 'DM Sans', sans-serif;
-            border-bottom: 4px solid #075985;
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 14px 30px -14px rgba(56,189,248,0.7),
+                0 4px 14px -6px rgba(0,0,0,0.45);
         }
 
-        .cert-form button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(14,165,233,0.4); }
-        .cert-form button:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
+        .cert-form button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 20px 40px -14px rgba(56,189,248,0.9),
+                0 6px 16px -6px rgba(0,0,0,0.5);
+        }
+        .cert-form button:disabled { background: #64748b; color: #e2e8f0; cursor: not-allowed; transform: none; box-shadow: none; }
 
         .info-box {
-            background: #f8fafc;
-            color: #475569;
+            background: rgba(3, 10, 24, 0.35);
+            color: var(--text-2);
             padding: 12px 16px;
             border-radius: 10px;
             font-size: 0.85rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--glass-line);
             line-height: 1.5;
             text-align: left;
         }
@@ -191,7 +322,7 @@
         .team-preview {
             display: none;
             margin-top: 28px;
-            border-top: 2px solid #e2e8f0;
+            border-top: 1px solid var(--glass-line);
             padding-top: 24px;
             text-align: left;
         }
@@ -202,7 +333,7 @@
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #94a3b8;
+            color: var(--text-3);
             margin-bottom: 10px;
         }
 
@@ -210,13 +341,13 @@
             font-family: 'Syne', sans-serif;
             font-size: 1.15rem;
             font-weight: 800;
-            color: #0284c7;
+            color: var(--cyan-light);
             margin-bottom: 3px;
         }
 
         .team-inst {
             font-size: 0.88rem;
-            color: #64748b;
+            color: var(--text-2);
             margin-bottom: 16px;
         }
 
@@ -232,41 +363,42 @@
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            background: #f8fafc;
+            background: rgba(3, 10, 24, 0.35);
             border-radius: 10px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--glass-line);
             font-size: 0.9rem;
         }
 
         .member-avatar {
             width: 32px; height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            background: linear-gradient(135deg, var(--blue-mid), var(--cyan));
             display: flex; align-items: center; justify-content: center;
             font-size: 0.72rem;
             font-weight: 700;
-            color: white;
+            color: #06304f;
             flex-shrink: 0;
         }
 
         .member-name {
             font-weight: 600;
-            color: #0f172a;
+            color: var(--text-1);
             flex: 1;
         }
 
         .member-cedula {
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: var(--text-3);
         }
 
         /* el integrante que buscó */
         .member-row.is-me {
-            border-color: #0ea5e9;
-            background: #f0f9ff;
+            border-color: rgba(125, 211, 252, 0.5);
+            background: rgba(56, 189, 248, 0.1);
         }
         .member-row.is-me .member-avatar {
             background: linear-gradient(135deg, #059669, #10b981);
+            color: #fff;
         }
 
         /* ─── PROGRESS ─── */
@@ -274,7 +406,8 @@
         .progress-wrap.visible { display: block; }
 
         .progress-bar-bg {
-            background: #e2e8f0;
+            background: rgba(3, 10, 24, 0.5);
+            border: 1px solid var(--glass-line);
             border-radius: 999px;
             height: 8px;
             overflow: hidden;
@@ -283,7 +416,7 @@
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #0284c7, #0ea5e9);
+            background: linear-gradient(90deg, var(--blue-mid), var(--cyan));
             border-radius: 999px;
             width: 0%;
             transition: width 0.3s ease;
@@ -291,7 +424,7 @@
 
         .progress-label {
             font-size: 0.82rem;
-            color: #64748b;
+            color: var(--text-2);
             text-align: center;
         }
 
@@ -308,17 +441,18 @@
             cursor: pointer;
             font-family: 'DM Sans', sans-serif;
             transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(5,150,105,0.3);
+            box-shadow: 0 8px 20px rgba(5,150,105,0.35);
             border-bottom: 4px solid #047857;
         }
-        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(5,150,105,0.4); }
-        .download-btn:disabled { background: #94a3b8; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(5,150,105,0.45); }
+        .download-btn:disabled { background: #64748b; cursor: not-allowed; border-bottom: none; transform: none; box-shadow: none; }
 
         @media (max-width: 640px) {
-            .cert-card { padding: 40px 20px; }
-            .cert-card h1 { font-size: 1.8rem; }
+            .cert-card { padding: 36px 22px; }
+            .cert-card h1 { font-size: 1.6rem; }
         }
-        /* ─── FOOTER RESTAURADO ─── */
+
+        /* ─── FOOTER INSTITUCIONAL (sin cambios de fondo, ya es oscuro) ─── */
         .footer {
             position: relative;
             margin-top: 72px;
@@ -330,6 +464,7 @@
             color: rgba(255,255,255,0.82);
             border-top: 1px solid rgba(255,255,255,0.08);
             overflow: hidden;
+            z-index: 1;
         }
 
         .footer::before {
@@ -378,15 +513,6 @@
             line-height: 1.7;
             color: rgba(255,255,255,0.68);
             margin-bottom: 10px;
-        }
-
-        .footer-logo {
-            display: block;
-            width: 128px;
-            max-width: 100%;
-            margin-bottom: 18px;
-            filter: brightness(0) invert(1);
-            opacity: 0.95;
         }
 
         .footer-links {
@@ -448,11 +574,8 @@
             gap: 9px;
         }
 
-        /* Bug preexistente: esta página no carga components.css, que es
-           donde vive el tamaño de .ico. Sin esto, cualquier <svg class="ico">
-           (incluidos los que ya estaban en Enlaces Rápidos) se renderiza sin
-           medidas — el navegador le da un alto por defecto de ~150px, y con
-           varios íconos apilados eso infla la columna entera. */
+        /* Sin components.css: .ico y el botón "volver arriba" quedan
+           definidos acá, autocontenidos como el resto de la página. */
         .ico {
             display: inline-block;
             width: 1em;
@@ -463,8 +586,6 @@
             vertical-align: -0.16em;
         }
 
-        /* No carga components.css: mismo botón "volver arriba" azul que en
-           el resto del sitio, definido acá para esta página autocontenida. */
         .back-to-top {
             position: fixed;
             bottom: 32px;
@@ -498,6 +619,10 @@
             transform: translateY(-5px);
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .bg-constellation .cn, .top-strip, .cert-card { animation: none !important; }
+        }
+
         @media (max-width: 640px) {
             .footer {
                 margin-top: 56px;
@@ -517,10 +642,6 @@
                 margin-bottom: 12px;
             }
 
-            .footer-logo {
-                width: 110px;
-            }
-
             .footer-bottom {
                 padding-top: 18px;
             }
@@ -528,6 +649,13 @@
     </style>
 </head>
 <body>
+    <div class="bg-color" aria-hidden="true"></div>
+    <div class="bg-spotlight" id="bgSpotlight" aria-hidden="true"></div>
+    <div class="bg-constellation" id="bgConstellation" aria-hidden="true"></div>
+    <div class="bg-pattern" aria-hidden="true"></div>
+    <div class="bg-grain" aria-hidden="true"></div>
+    <div class="bg-vignette" aria-hidden="true"></div>
+
     <!-- Sprite de íconos de trazo (Lucide/Heroicons: 24x24, stroke 1.8, currentColor).
          Inline igual que en index.html: sin dependencias de JS ni de red. -->
     <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
@@ -548,30 +676,23 @@
       <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12h-14"/><path d="m11 6.5-5.5 5.5L11 17.5"/></symbol>
     </svg>
 
-
-    <header class="top-bar">
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="festival.html"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Volver al Festival</a></li>
-            </ul>
-            <div class="central-logo-container">
-                <a href="festival.html">
-                    <img src="../../assets/logos/cedic-Sinfondo.png" alt="CEDIC Logo" class="central-logo"
-                         style="max-height: 55px; width: auto; object-fit: contain; margin-top: 5px;">
-                </a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="festival-registro.html" style="color: rgba(255,255,255,0.8); font-weight: 500;">Inscripción</a></li>
-            </ul>
-        </div>
+    <header class="top-strip">
+        <a href="festival.html" class="brand-link">
+            <img src="../../assets/logos/cedic-Sinfondo.png" alt="">
+            CEDIC · UNET
+        </a>
+        <a href="festival.html" class="back-link">
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+            Volver al Festival
+        </a>
     </header>
-
-    <div class="hero-pattern"></div>
 
     <div class="cert-container">
         <div class="cert-card">
-            <div class="cert-icon">🎓</div>
-            <h1>Certificados del Festival</h1>
+            <div class="cert-icon">
+                <img src="../../assets/logos/cedic-Sinfondo.png" alt="CEDIC">
+            </div>
+            <h1>Buscador de Certificados</h1>
             <p>Busca tu equipo para descargar los certificados de todos los integrantes.</p>
 
             <!-- Tabs de modo -->
@@ -600,7 +721,7 @@
                     inputmode="numeric"
                 >
                 <button type="submit" id="btnBuscar">
-                    <span id="btnText">Buscar Equipo 🔍</span>
+                    <span id="btnText">Buscar Certificados</span>
                 </button>
             </form>
 
@@ -688,6 +809,70 @@
     </footer>
 
     <script>
+        /* ═══════════════════════════════════════════════════════════
+           CONSTELACIÓN DE FONDO — generada en tiempo de carga en vez
+           de embebida estática (idéntico a validar-folio.html).
+           ═══════════════════════════════════════════════════════════ */
+        (function buildConstellation() {
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 1440 900');
+            svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+
+            const NUM = 42;
+            const pts = Array.from({ length: NUM }, () => ({ x: Math.random() * 1440, y: Math.random() * 900 }));
+
+            const edgesG = document.createElementNS(svg.namespaceURI, 'g');
+            edgesG.setAttribute('class', 'edges');
+            const MAXD = 150;
+            for (let i = 0; i < pts.length; i++) {
+                let links = 0;
+                for (let j = 0; j < pts.length && links < 3; j++) {
+                    if (i === j) continue;
+                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d < MAXD) {
+                        const line = document.createElementNS(svg.namespaceURI, 'line');
+                        line.setAttribute('x1', pts[i].x.toFixed(1));
+                        line.setAttribute('y1', pts[i].y.toFixed(1));
+                        line.setAttribute('x2', pts[j].x.toFixed(1));
+                        line.setAttribute('y2', pts[j].y.toFixed(1));
+                        line.setAttribute('opacity', (0.12 + Math.random() * 0.28).toFixed(2));
+                        edgesG.appendChild(line);
+                        links++;
+                    }
+                }
+            }
+            svg.appendChild(edgesG);
+
+            const nodesG = document.createElementNS(svg.namespaceURI, 'g');
+            pts.forEach(p => {
+                const c = document.createElementNS(svg.namespaceURI, 'circle');
+                c.setAttribute('class', 'cn');
+                c.setAttribute('cx', p.x.toFixed(1));
+                c.setAttribute('cy', p.y.toFixed(1));
+                c.setAttribute('r', (1.3 + Math.random() * 1.9).toFixed(2));
+                if (!reduce) c.style.setProperty('--d', (Math.random() * 5).toFixed(2) + 's');
+                nodesG.appendChild(c);
+            });
+            svg.appendChild(nodesG);
+
+            document.getElementById('bgConstellation').appendChild(svg);
+        })();
+
+        /* halo suave que sigue el cursor */
+        (function spotlight() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (!window.matchMedia('(pointer: fine)').matches) return;
+            const el = document.getElementById('bgSpotlight');
+            window.addEventListener('pointermove', (e) => {
+                const mx = ((e.clientX / window.innerWidth) * 100).toFixed(1) + '%';
+                const my = ((e.clientY / window.innerHeight) * 100).toFixed(1) + '%';
+                el.style.setProperty('--mx', mx);
+                el.style.setProperty('--my', my);
+            }, { passive: true });
+        })();
+
         // ─────────────────────────────────────────────
         // ESTADO
         // ─────────────────────────────────────────────
@@ -789,7 +974,7 @@
             }
 
             btn.disabled = true;
-            btnText.textContent = 'Buscando... ⏳';
+            btnText.textContent = 'Buscando...';
             document.getElementById('teamPreview').classList.remove('visible');
             teamData = null;
 
@@ -833,7 +1018,7 @@
                 Swal.fire({ title: 'Aviso', text: err.message, icon: 'warning', confirmButtonColor: '#0284c7' });
             } finally {
                 btn.disabled = false;
-                btnText.textContent = 'Buscar Equipo 🔍';
+                btnText.textContent = 'Buscar Certificados';
             }
         });
 
@@ -857,7 +1042,7 @@
 
                 // Cédula: solo mostrar si existe, en silencio si no
                 const cedulaHtml = m.cedula
-                    ? `<span class="member-cedula">${escapeHTML(m.cedula)}${isMe ? ' <strong style="color:#059669;font-size:0.75rem"> ✓ Tú</strong>' : ''}</span>`
+                    ? `<span class="member-cedula">${escapeHTML(m.cedula)}${isMe ? ' <strong style="color:#5eead4;font-size:0.75rem"> ✓ Tú</strong>' : ''}</span>`
                     : '';   // Sin cédula → no se muestra nada
 
                 row.innerHTML = `
