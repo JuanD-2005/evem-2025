@@ -44,34 +44,7 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ══════════════════ NAVEGACIÓN ══════════════════
-// Panel móvil
-const navToggle = document.getElementById('navToggle');
-const navPanel  = document.getElementById('navPanel');
-
-if (navToggle && navPanel) {
-    navToggle.addEventListener('click', () => {
-        const abierto = navPanel.classList.toggle('open');
-        navToggle.setAttribute('aria-expanded', String(abierto));
-        navToggle.setAttribute('aria-label', abierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
-    });
-
-    // Al elegir un destino, el panel se cierra solo
-    navPanel.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-            navPanel.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', 'false');
-        });
-    });
-
-    // Escape cierra el panel
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && navPanel.classList.contains('open')) {
-            navPanel.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', 'false');
-            navToggle.focus();
-        }
-    });
-}
+// El menú móvil es el drawer lateral compartido (ver js/drawer.js).
 
 // Scrollspy: resalta el enlace de la sección que se está viendo.
 // Se observa una franja delgada bajo el header para evitar que dos

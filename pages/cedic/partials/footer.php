@@ -93,6 +93,7 @@ $h_con = cedic_href(['label'=>''] + $DESTINOS['contenidos'],  $pagina, $LANDING)
         </div>
     </footer>
 
+    <script src="../../js/drawer.js"></script>
     <script src="../../js/cedic.js"></script>
     <script src="../../js/animations.js"></script>
 </body>

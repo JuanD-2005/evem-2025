@@ -1,0 +1,186 @@
+/* ══════════════════════════════════════════════════════════════════
+   MURAL DE PROYECTOS — Festival de las Ciencias y Matemáticas
+   Componente compartido entre festival.html y festival-certificado.html
+   (ver js/festival-mural.js): un solo diseño, dos anfitriones. Mismo
+   lenguaje visual que .cert-card de festival-certificado.html — vidrio
+   oscuro + acento cian — para que .project-card se vea idéntica sin
+   importar si la página anfitriona es clara (festival.html) o ya
+   oscura de punta a punta (festival-certificado.html).
+
+   Dos envoltorios, uno por anfitrión, ambos SOLO aportan fondo/padding
+   exterior — nunca tocan .project-card ni .projects-grid:
+     .festival-mural-band        → festival.html (cuerpo claro): banda
+                                    propia con el mismo fondo oscuro +
+                                    radiales cian/azul del hero.
+     .festival-mural-standalone  → festival-certificado.html: ya está
+                                    sobre fondo oscuro, solo aporta
+                                    aire vertical, sin fondo propio.
+   ══════════════════════════════════════════════════════════════════ */
+
+.festival-mural-band {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 72px 0;
+  background:
+    radial-gradient(120% 90% at 78% -12%, rgba(56, 189, 248, 0.3) 0%, transparent 55%),
+    radial-gradient(90% 70% at 8% 105%, rgba(37, 99, 235, 0.28) 0%, transparent 60%),
+    #030a18;
+}
+
+.festival-mural-standalone {
+  padding: 8px 0 64px;
+}
+
+.festival-mural-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.festival-mural-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+  margin-bottom: 12px;
+}
+.festival-mural-label::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #38bdf8;
+}
+
+.festival-mural-title {
+  font-family: "Syne", "DM Sans", sans-serif;
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  font-weight: 800;
+  color: #f3f9ff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.festival-mural-intro {
+  color: rgba(226, 242, 255, 0.68);
+  font-size: 0.95rem;
+  max-width: 60ch;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* ─── grid + tarjeta: la parte 100% compartida, idéntica en ambas páginas ─── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  background: rgba(10, 37, 64, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 22px 20px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 14px 30px -18px rgba(0, 0, 0, 0.7);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(125, 211, 252, 0.4);
+}
+
+.project-card .name {
+  font-family: "Syne", "DM Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #7dd3fc;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.project-card .inst {
+  font-size: 0.82rem;
+  color: rgba(226, 242, 255, 0.62);
+  line-height: 1.5;
+}
+
+.festival-mural-empty,
+.festival-mural-error {
+  color: rgba(226, 242, 255, 0.6);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* ─── modo carrusel — alternativa al grid, mismo .project-card ───
+   Solo lo usa festival.html (data-festival-mural="carousel");
+   festival-certificado.html sigue con el grid de siempre, esta regla
+   no lo toca porque nunca aparece la clase .festival-mural-carousel
+   en su markup. */
+.festival-mural-carousel {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.festival-mural-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: festivalMuralScroll var(--marquee-duration, 30s) linear infinite;
+}
+
+/* Pausa al pasar el mouse o al enfocar cualquier tarjeta con teclado —
+   sin esto, alguien navegando con Tab pierde de vista la tarjeta que
+   tiene foco mientras la pista sigue moviéndose debajo. */
+.festival-mural-carousel:hover .festival-mural-track,
+.festival-mural-carousel:focus-within .festival-mural-track {
+  animation-play-state: paused;
+}
+
+/* display:contents: el envoltorio de cada mitad no genera caja propia,
+   así las tarjetas quedan como hijos flex directos de .festival-mural-track
+   y el gap es uniforme en toda la pista, incluida la costura entre las
+   dos mitades — evita un salto visible ahí. El segundo set solo existe
+   para el efecto de loop continuo (ver aria-hidden en el HTML que
+   genera festival-mural.js). */
+.festival-mural-set {
+  display: contents;
+}
+
+.festival-mural-track .project-card {
+  flex: 0 0 260px;
+  width: 260px;
+}
+
+@keyframes festivalMuralScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Respaldo además del control en JS (que ya evita duplicar el DOM y
+   arma el grid en su lugar cuando hay reduced-motion): si por lo que
+   sea la pista llegara a existir, esto la inmoviliza igual. */
+@media (prefers-reduced-motion: reduce) {
+  .festival-mural-track {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .festival-mural-band { padding: 52px 0; }
+  .projects-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+@media (max-width: 420px) {
+  .projects-grid { grid-template-columns: 1fr; }
+}

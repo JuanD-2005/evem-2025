@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certificado — Festival de las Ciencias y Matemáticas · CEDIC UNET</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<?php
+/* ══════════════════════════════════════════════════════════════════
+   partials/certificado-render.php — bloque visual del certificado
+   (hoja + firma/sello + motor de render), compartido entre:
+
+     - generar-festival-certificado.php (admin, editable, con panel
+       de control y modo lote — ese panel NO vive acá, sigue siendo
+       propio de esa página)
+     - ver-certificado.php (público, solo lectura, una hoja por folio)
+
+   Contrato con el host antes de este include:
+     1) Debe haber cargado js/security.js (este parcial usa el
+        escapeHTML() global, no define uno propio, para no duplicar
+        la misma función en dos archivos).
+     2) Opcionalmente puede declarar `window.CERT_READONLY = true;`
+        en un <script> ANTES de este include, para que renderSheet()
+        quite los contenteditable de la hoja clonada — el generador
+        admin no lo declara (o lo declara false) y conserva la edición
+        en vivo que ya tenía.
+
+   Expone a quien lo incluya: paint(list) — la única función que un
+   host necesita llamar. El admin arma `list` desde su panel/lote; la
+   vista pública arma un `list` de un solo elemento con los datos de
+   festival_certificados.
+   ══════════════════════════════════════════════════════════════════ */
+?>
 <style>
 /* ══════════════════════════════════════════════════════════════════
    CERTIFICADO — Festival de las Ciencias y Matemáticas
@@ -50,67 +67,6 @@ body{
   color:var(--ink);
   -webkit-font-smoothing:antialiased;
 }
-
-/* ─────────────────────────  PANEL DE CONTROL  ───────────────────── */
-.panel{
-  position:sticky; top:0; z-index:50;
-  background:linear-gradient(180deg,#0d2b52,#081b34);
-  color:#e7f1fb;
-  border-bottom:1px solid rgba(148,196,240,.22);
-  box-shadow:0 14px 34px -22px rgba(0,0,0,.9);
-}
-.panel-inner{max-width:1240px;margin:0 auto;padding:18px 22px}
-
-.panel-head{
-  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
-  margin-bottom:16px;
-}
-.panel-head h1{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:1.02rem;letter-spacing:-.01em;
-}
-.panel-head p{font-size:.78rem;color:#9fc2e4;font-weight:300}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 16px}
-
-.field{display:flex;flex-direction:column;gap:5px}
-.field label{
-  font-size:.63rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
-  color:#8fb6dc;
-}
-.field input,.field select,.field textarea{
-  font-family:inherit;font-size:.85rem;color:#f2f8ff;
-  background:rgba(226,242,255,.09);
-  border:1px solid rgba(148,196,240,.24);
-  border-radius:9px;padding:9px 11px;
-  transition:border-color .2s,background .2s;
-}
-.field input:focus,.field select:focus,.field textarea:focus{
-  outline:none;border-color:var(--accent);background:rgba(226,242,255,.15);
-}
-.field select option{background:#0d2b52;color:#f2f8ff}
-.field textarea{resize:vertical;min-height:88px;line-height:1.55;font-size:.82rem}
-.field .hint{font-size:.68rem;color:#7ba3cc;font-weight:300;line-height:1.45}
-
-.panel-actions{
-  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-  margin-top:16px;padding-top:16px;border-top:1px solid rgba(148,196,240,.16);
-}
-
-.btn{
-  font-family:inherit;font-size:.82rem;font-weight:600;
-  padding:10px 20px;border-radius:10px;border:1px solid transparent;
-  cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s,background .2s;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.btn:hover{transform:translateY(-1.5px)}
-.btn-solid{background:linear-gradient(180deg,#fff,#dbeafe);color:#06304f;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 24px -12px rgba(56,189,248,.9)}
-.btn-line{background:rgba(226,242,255,.08);border-color:rgba(148,196,240,.3);color:#e7f1fb}
-.btn-line:hover{border-color:var(--accent)}
-.panel-note{font-size:.72rem;color:#8fb6dc;font-weight:300;margin-left:auto;max-width:340px;line-height:1.5}
-
-.batch-wrap{display:none;margin-top:14px}
-.batch-wrap.on{display:block}
 
 /* ─────────────────────────  ÁREA DE HOJAS  ──────────────────────── */
 .stage{padding:34px 20px 60px}
@@ -269,9 +225,38 @@ body{
 .seal{width:46mm;height:46mm;margin:0 auto}
 .seal-logo{width:100%;height:100%;object-fit:contain;opacity:.9;display:block}
 
+/* ─── firmas escaneadas + sello de Fundacite ───
+   .sign-slot/.sign-firma son genéricos: los usan ambas firmas (Gilberto
+   Paredes y Óscar Forero) para que "se apoyen" sobre su .sign-line con
+   el mismo tratamiento. height fija en .sign-firma (no width): cada
+   imagen tiene su propia proporción natural (la de Forero es más
+   grande en px que la de Gilberto), así que fijar el ancho haría que
+   una se vea más grande que la otra en el papel — con height fija y
+   width:auto ambas firmas terminan con la misma altura impresa aunque
+   partan de resoluciones distintas.
+   El sello sigue siendo exclusivo de Forero: .sign-signed (modificador,
+   no toca .sign a secas) crea el positioning context para anclar
+   .sign-sello fuera del flujo y superponerlo sobre línea+nombre sin
+   empujar el layout del resto del pie; rotado para leer como un timbre
+   estampado a mano, no un logo pegado prolijo. */
+.sign-signed{position:relative}
+.sign-slot{width:62mm;height:16mm;position:relative}
+.sign-firma{
+  position:absolute;left:50%;bottom:-2mm;transform:translateX(-50%);
+  height:15mm;width:auto;object-fit:contain;
+  pointer-events:none;
+}
+.sign-sello{
+  position:absolute;right:-3mm;bottom:5mm;z-index:2;
+  width:26mm;height:auto;object-fit:contain;
+  transform:rotate(-11deg);
+  opacity:.82;
+  pointer-events:none;
+}
 
-
-/* campos retocables directamente sobre la hoja */
+/* campos retocables directamente sobre la hoja — solo tiene efecto
+   donde el host no haya quitado contenteditable (ver CERT_READONLY
+   en el script de más abajo) */
 [contenteditable]{outline:none;border-radius:1mm}
 [contenteditable]:focus{
   box-shadow:0 0 0 .6mm rgba(14,165,233,.22);
@@ -284,6 +269,8 @@ body{
 @media print{
   :root{--z:1 !important}
   body{background:#fff}
+  /* .panel/.stage-hint son del panel de control del generador admin,
+     no de este parcial — la regla no rompe nada si no existen. */
   .panel,.stage-hint{display:none !important}
   .stage{padding:0}
   .sheet-wrap{
@@ -298,133 +285,10 @@ body{
   [contenteditable]:focus{box-shadow:none;background:none}
 }
 
-.stage-hint{
-  max-width:1240px;margin:0 auto 22px;padding:0 22px;
-  font-size:.78rem;color:#4f7095;font-weight:300;line-height:1.6;
-}
-.stage-hint code{
-  background:#dce8f4;padding:1px 6px;border-radius:5px;font-size:.74rem;color:#0b2545;
-}
-
 @media (max-width:760px){
-  .panel-inner{padding:14px}
-  .panel-note{margin-left:0}
   .stage{padding:20px 10px 40px}
 }
 </style>
-</head>
-<body>
-
-<!-- ══════════════════ PANEL (no se imprime) ══════════════════ -->
-<div class="panel">
-  <div class="panel-inner">
-    <div class="panel-head">
-      <h1>Generador de certificados</h1>
-      <p>Festival de las Ciencias y Matemáticas · CEDIC UNET</p>
-    </div>
-
-    <div class="grid">
-      <div class="field">
-        <label for="f-tipo">Tipo de reconocimiento</label>
-        <select id="f-tipo">
-          <option value="participacion">Participación</option>
-          <option value="ponente">Ponente</option>
-          <option value="expositor">Expositor de proyecto</option>
-          <option value="ganador">Mención honorífica</option>
-          <option value="organizador">Comité organizador</option>
-          <option value="asistente">Asistencia</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="f-nombre">Nombre del laureado</label>
-        <input id="f-nombre" type="text" value="María Alejandra Contreras Rangel" autocomplete="off">
-      </div>
-
-      <div class="field">
-        <label for="f-cedula">Cédula (opcional)</label>
-        <input id="f-cedula" type="text" value="V-28.412.905" autocomplete="off">
-      </div>
-
-      <div class="field">
-        <label for="f-titulo">Título del festival</label>
-        <input id="f-titulo" type="text" value="Festival de las Ciencias. UNET 2026">
-      </div>
-
-      <div class="field">
-        <label for="f-edicion">Edición</label>
-        <input id="f-edicion" type="text" value="">
-      </div>
-
-      <div class="field">
-        <label for="f-fecha">Fecha del evento</label>
-        <input id="f-fecha" type="text" value="28 y 29 de mayo de 2026">
-      </div>
-
-      <div class="field">
-        <label for="f-lugar">Lugar y fecha de emisión</label>
-        <input id="f-lugar" type="text" value="San Cristóbal, 29 de mayo de 2026">
-      </div>
-
-      <div class="field">
-        <label for="f-folio">Prefijo de folio</label>
-        <input id="f-folio" type="text" value="FCM-2026">
-        <span class="hint">Cada hoja recibe un sufijo aleatorio propio (crypto.getRandomValues) — no correlativo, no adivinable.</span>
-      </div>
-
-      <div class="field">
-        <label for="f-f1n">Firma 1 · nombre</label>
-        <input id="f-f1n" type="text" value="Dr. Gilberto Paredes">
-      </div>
-      <div class="field">
-        <label for="f-f1c">Firma 1 · cargo</label>
-        <input id="f-f1c" type="text" value="Comité Organizador del Festival · UNET">
-      </div>
-      <div class="field">
-        <label for="f-f2n">Firma 2 · nombre</label>
-        <input id="f-f2n" type="text" value="Econ. Óscar Forero">
-      </div>
-      <div class="field">
-        <label for="f-f2c">Firma 2 · cargo</label>
-        <input id="f-f2c" type="text" value="Presidente · Fundacite Táchira">
-      </div>
-    </div>
-
-    <div class="batch-wrap" id="batch">
-      <div class="field" style="margin-top:6px">
-        <label for="f-json">JSON de participantes</label>
-        <textarea id="f-json" spellcheck="false">[
-  { "nombre": "María Alejandra Contreras Rangel", "cedula": "V-28.412.905", "tipo": "participacion", "equipo": null },
-  { "nombre": "Jesús Eduardo Moncada Peña", "cedula": "V-27.980.114", "tipo": "expositor", "equipo": "Sistema de purificación solar" },
-  { "nombre": "Andreína Sofía Villamizar", "cedula": "V-29.104.663", "tipo": "ponente", "equipo": null },
-  { "nombre": "Carlos Enrique Duque Ramírez", "cedula": "V-26.771.508", "tipo": "asistente", "equipo": null }
-]</textarea>
-        <span class="hint">
-          Array de objetos <code>{nombre, cedula, tipo, equipo}</code>. <code>tipo</code> acepta
-          <code>participacion</code> · <code>ponente</code> · <code>expositor</code> · <code>ganador</code> ·
-          <code>organizador</code> · <code>asistente</code> — si falta o no coincide con ninguno, se usa
-          <code>participacion</code>. El folio de cada fila es aleatorio, no depende del orden del JSON.
-        </span>
-        <input type="file" id="f-json-file" accept="application/json,.json" style="margin-top:8px">
-        <span id="jsonError" class="hint" style="display:none;color:#dc2626;font-weight:600"></span>
-      </div>
-    </div>
-
-    <div class="panel-actions">
-      <button class="btn btn-solid" id="btn-print">Imprimir / Guardar PDF</button>
-      <button class="btn btn-line" id="btn-batch">Modo lote</button>
-      <button class="btn btn-line" id="btn-gen" style="display:none">Generar lote</button>
-      <button class="btn btn-line" id="btn-sync" style="display:none">Sincronizar folios</button>
-      <p class="panel-note">Al imprimir, elegí <strong>A4 horizontal</strong>, márgenes <strong>ninguno</strong> y activá <strong>gráficos de fondo</strong> si tu navegador lo ofrece.</p>
-      <p id="syncStatus" class="hint" style="width:100%;display:none"></p>
-    </div>
-  </div>
-</div>
-
-<p class="stage-hint">
-  Cualquier texto de la hoja se puede corregir haciendo clic directamente sobre él antes de imprimir.
-  Para producir toda la tanda de una vez, usá <code>Modo lote</code>, pegá la lista y generá: sale un PDF con una página por participante.
-</p>
 
 <div class="stage" id="stage"></div>
 
@@ -451,7 +315,7 @@ body{
       <div class="eyebrow" data-f="eyebrow" contenteditable="true">Certificado de participación</div>
 
       <h2 class="fest-title" data-f="titulo" contenteditable="true">Festival de las Ciencias y Matemáticas</h2>
-      <div class="fest-edition" data-f="edicion" contenteditable="true">Edición Especial Aleph Subcero</div>
+      <div class="fest-edition" data-f="edicion" contenteditable="true"></div>
 
       <p class="grants" data-f="grants">Otorgado a</p>
       <p class="laureate" data-f="nombre" contenteditable="true">María Alejandra Contreras Rangel</p>
@@ -466,6 +330,9 @@ body{
       <div class="footer">
         <div class="signatures">
         <div class="sign">
+          <div class="sign-slot">
+            <img class="sign-firma" src="../../assets/certificados/firma-gilberto-paredes.png" alt="" onerror="this.style.display='none'">
+          </div>
           <div class="sign-line"></div>
           <div class="sign-name" data-f="f1n" contenteditable="true">Dr. Gilberto Paredes</div>
           <div class="sign-role" data-f="f1c" contenteditable="true">Comité Organizador del Festival · UNET</div>
@@ -475,8 +342,12 @@ body{
           <img class="seal-logo" src="../../assets/logos/cedic-Sinfondo.png" alt="" onerror="this.style.display='none'">
         </div>
 
-        <div class="sign">
+        <div class="sign sign-signed">
+          <div class="sign-slot">
+            <img class="sign-firma" src="../../assets/certificados/firma-oscar-forero.png" alt="" onerror="this.style.display='none'">
+          </div>
           <div class="sign-line"></div>
+          <img class="sign-sello" src="../../assets/certificados/sello-fundacite.png" alt="" onerror="this.style.display='none'">
           <div class="sign-name" data-f="f2n" contenteditable="true">Econ. Óscar Forero</div>
           <div class="sign-role" data-f="f2c" contenteditable="true">Presidente · Fundacite Táchira</div>
         </div>
@@ -494,9 +365,11 @@ body{
 
 <script>
 /* ══════════════════════════════════════════════════════════════════
-   Lógica: una sola función pinta una hoja a partir de un objeto de
-   datos. El modo simple pinta una; el modo lote pinta N y numera los
-   folios. Nada más.
+   Motor de render compartido: una sola función pinta una hoja a
+   partir de un objeto de datos. paint(list) es lo único que un host
+   necesita llamar — el admin arma `list` desde su panel/lote propio,
+   ver-certificado.php arma un `list` de un solo elemento con los
+   datos de festival_certificados.
    ══════════════════════════════════════════════════════════════════ */
 
 const TIPOS = {
@@ -529,47 +402,16 @@ const TIPOS = {
     eyebrow:'Constancia de asistencia',
     grants:'Se hace constar que',
     cita:d=>`Asistió al <strong>${d.titulo}</strong>${d.edicionClause}celebrado en la Universidad Nacional Experimental del Táchira los días ${d.fecha}, cumpliendo con la totalidad de las actividades del programa.`
+  },
+  tutor:{
+    eyebrow:'Certificado de participación',
+    grants:'Otorgado a',
+    cita:d=>`Por su participación como Tutora del proyecto <strong>${d.equipo}</strong> en el <strong>${d.titulo}</strong>, celebrado en las instalaciones de la Universidad Nacional Experimental del Táchira los días ${d.fecha}. Su participación y compromiso para guiar a sus estudiantes contribuyen al fortalecimiento de la ciencia y la tecnología.`
   }
 };
 
 const $ = s => document.querySelector(s);
 const stage = $('#stage'), tpl = $('#tpl');
-
-function readForm(){
-  return {
-    tipo:$('#f-tipo').value,
-    nombre:$('#f-nombre').value,
-    cedula:$('#f-cedula').value,
-    titulo:$('#f-titulo').value,
-    edicion:$('#f-edicion').value,
-    fecha:$('#f-fecha').value,
-    lugar:$('#f-lugar').value,
-    folioPrefix:$('#f-folio').value,
-    f1n:$('#f-f1n').value, f1c:$('#f-f1c').value,
-    f2n:$('#f-f2n').value, f2c:$('#f-f2c').value
-  };
-}
-
-/* Folio no adivinable: sufijo aleatorio de crypto.getRandomValues, no
-   un correlativo. Alfabeto sin 0/O/1/I/L — son los caracteres que más
-   se confunden al transcribir un folio a mano en la mesa de verificación. */
-const FOLIO_ALPHABET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
-function randomFolio(prefix){
-  const bytes = new Uint8Array(8);
-  crypto.getRandomValues(bytes);
-  let suffix = '';
-  for(let i=0;i<bytes.length;i++) suffix += FOLIO_ALPHABET[bytes[i] % FOLIO_ALPHABET.length];
-  return `${prefix}-${suffix}`;
-}
-
-/* Escapa antes de inyectar en innerHTML (única celda que lo usa: 'cita').
-   nombre/cedula/equipo llegan del JSON de participantes — no son texto
-   que el admin tipeó a mano, así que se tratan como no confiables. */
-function escapeHTML(str){
-  return String(str ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
 
 function renderSheet(d){
   const node = tpl.content.cloneNode(true);
@@ -598,6 +440,15 @@ function renderSheet(d){
   set('folio',d.folio ? 'Folio '+d.folio : '');
   set('f1n',d.f1n); set('f1c',d.f1c);
   set('f2n',d.f2n); set('f2c',d.f2c);
+
+  // Vista pública de solo lectura: el host declara esto ANTES de este
+  // include. Sin esto, la hoja quedaría "editable" en el navegador de
+  // cualquier visitante aunque nada de eso se guarde en ningún lado —
+  // confuso igual, así que se desactiva del todo.
+  if (window.CERT_READONLY) {
+    node.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  }
+
   return node;
 }
 
@@ -608,73 +459,6 @@ function paint(list){
     autofit(sh.querySelector('.laureate'),36,20);
   });
   fit();
-}
-
-/* Se genera una vez y se cachea: si regenerara el folio en cada
-   repintado (cada tecla en el panel dispara paint()), la hoja de
-   vista previa mostraría un folio distinto todo el tiempo. */
-let singleFolio = null;
-function single(){
-  const base = readForm();
-  if(!singleFolio) singleFolio = randomFolio(base.folioPrefix);
-  paint([Object.assign({},base,{folio:singleFolio})]);
-}
-
-/* Único punto de traducción tipo→categoría: si el backend algún día manda
-   otro vocabulario, se ajusta acá y no en cada llamada. Desconocido o
-   ausente cae en 'participacion'. */
-const TIPOS_VALIDOS = Object.keys(TIPOS);
-function normalizarTipo(raw){
-  const t = String(raw ?? '').trim().toLowerCase();
-  return TIPOS_VALIDOS.includes(t) ? t : 'participacion';
-}
-
-function mostrarErrorJSON(msg){
-  const el = $('#jsonError');
-  el.textContent = msg;
-  el.style.display = msg ? '' : 'none';
-}
-
-let batchFolios = null, batchFoliosKey = null, lastBatchRows = null;
-function batch(){
-  const base = readForm();
-  const raw = $('#f-json').value.trim();
-  if(!raw){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; lastBatchRows=null; single(); return; }
-
-  let lista;
-  try{
-    lista = JSON.parse(raw);
-  }catch(e){
-    mostrarErrorJSON('JSON inválido: ' + e.message);
-    return;
-  }
-  if(!Array.isArray(lista)){
-    mostrarErrorJSON('El JSON debe ser un array de participantes.');
-    return;
-  }
-  if(!lista.length){ mostrarErrorJSON(''); batchFolios=null; batchFoliosKey=null; lastBatchRows=null; single(); return; }
-
-  mostrarErrorJSON('');
-
-  // Los folios se asignan una sola vez por lote y se cachean por el
-  // contenido exacto del JSON + prefijo: si el admin solo retoca el
-  // título o una firma, paint() se vuelve a llamar pero NO se barajan
-  // folios nuevos — importa porque estos son los que se sincronizan al
-  // backend, no querés que cambien bajo el pie entre un tecleo y otro.
-  const cacheKey = base.folioPrefix + ' ' + raw;
-  if(cacheKey !== batchFoliosKey || !batchFolios || batchFolios.length !== lista.length){
-    batchFolios = lista.map(() => randomFolio(base.folioPrefix));
-    batchFoliosKey = cacheKey;
-  }
-
-  lastBatchRows = lista.map((p,i) => Object.assign({},base,{
-    nombre : p.nombre  ?? '',
-    cedula : p.cedula  ?? '',
-    tipo   : normalizarTipo(p.tipo),
-    equipo : p.equipo || null,
-    folio  : batchFolios[i]
-  }));
-  paint(lastBatchRows);
 }
 
 /* Nombres y títulos largos: se reduce el cuerpo hasta que la línea
@@ -701,77 +485,4 @@ function fit(){
   document.querySelectorAll('.sheet-wrap').forEach(w=>w.style.setProperty('--z',z));
 }
 window.addEventListener('resize',fit);
-
-let batchOn=false;
-$('#btn-batch').addEventListener('click',()=>{
-  batchOn=!batchOn;
-  $('#batch').classList.toggle('on',batchOn);
-  $('#btn-gen').style.display = batchOn?'inline-flex':'none';
-  $('#btn-sync').style.display = batchOn?'inline-flex':'none';
-  $('#btn-batch').textContent = batchOn?'Volver a hoja única':'Modo lote';
-  batchOn?batch():single();
-});
-$('#btn-gen').addEventListener('click',batch);
-$('#btn-print').addEventListener('click',()=>window.print());
-
-$('#f-json-file').addEventListener('change', async (e)=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  $('#f-json').value = await file.text();
-  batchOn = true;
-  $('#batch').classList.add('on');
-  $('#btn-gen').style.display = 'inline-flex';
-  $('#btn-sync').style.display = 'inline-flex';
-  $('#btn-batch').textContent = 'Volver a hoja única';
-  batch();
-});
-
-// Manda el lote ya renderizado (folios ya asignados) al backend. Requiere
-// sesión de admin del panel Festival activa en el mismo navegador — el
-// endpoint responde 401 si no. El upsert por folio en el servidor hace
-// que reintentar tras un error de red sea seguro: no duplica filas.
-$('#btn-sync').addEventListener('click', async () => {
-  if(!lastBatchRows || !lastBatchRows.length) return;
-  const btn = $('#btn-sync');
-  const status = $('#syncStatus');
-  const original = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Sincronizando…';
-  status.style.display = 'none';
-
-  try{
-    const payload = lastBatchRows.map(d => ({
-      folio: d.folio, nombre: d.nombre, proyecto: d.equipo || null, tipo: d.tipo, fecha: d.fecha
-    }));
-    const res = await fetch('../../backend/api.php?action=sync_festival_certificados', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    const out = await res.json();
-    if(!res.ok) throw new Error(out.error || `Error ${res.status} al sincronizar.`);
-
-    status.style.color = out.errores.length ? '#b45309' : '#059669';
-    status.textContent = `Sincronizados ${out.guardados}/${out.total}.` +
-      (out.errores.length ? ` ${out.errores.length} con error — revisá la consola.` : '');
-    if(out.errores.length) console.warn('[sync_festival_certificados] errores:', out.errores);
-  }catch(err){
-    status.style.color = '#dc2626';
-    status.textContent = 'Error al sincronizar: ' + err.message;
-  }finally{
-    status.style.display = '';
-    btn.disabled = false;
-    btn.textContent = original;
-  }
-});
-
-document.querySelectorAll('.panel input,.panel select').forEach(el=>{
-  el.addEventListener('input',()=>{ batchOn?batch():single(); });
-});
-$('#f-json').addEventListener('input',()=>{ if(batchOn) batch(); });
-
-single();
 </script>
-</body>
-</html>

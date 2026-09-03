@@ -44,15 +44,17 @@ $NAV_BARRA = [
     ['label' => 'Equipo',    'tipo' => 'ancla', 'destino' => 'equipo'],
 ];
 
-/* Panel desplegable (móvil): navegación completa. */
+/* Panel desplegable (móvil): navegación completa.
+   'icono' referencia un símbolo de partials/sprite.php y alimenta el
+   drawer lateral (ver partials/nav.php). */
 $NAV_PANEL = [
-    ['label' => 'El Centro',       'tipo' => 'ancla', 'destino' => 'nosotros'],
-    ['label' => 'Iniciativas',     'tipo' => 'ancla', 'destino' => 'iniciativas'],
-    ['label' => 'Actividades'] + $DESTINOS['actividades'],
-    ['label' => 'Formación']   + $DESTINOS['formacion'],
-    ['label' => 'Contenidos']  + $DESTINOS['contenidos'],
-    ['label' => 'Equipo',          'tipo' => 'ancla', 'destino' => 'equipo'],
-    ['label' => 'Sede y contacto', 'tipo' => 'ancla', 'destino' => 'contacto'],
+    ['label' => 'El Centro',       'tipo' => 'ancla', 'destino' => 'nosotros',    'icono' => 'i-home'],
+    ['label' => 'Iniciativas',     'tipo' => 'ancla', 'destino' => 'iniciativas', 'icono' => 'i-sparkles'],
+    ['label' => 'Actividades', 'icono' => 'i-graduation'] + $DESTINOS['actividades'],
+    ['label' => 'Formación',   'icono' => 'i-book']       + $DESTINOS['formacion'],
+    ['label' => 'Contenidos',  'icono' => 'i-image']      + $DESTINOS['contenidos'],
+    ['label' => 'Equipo',          'tipo' => 'ancla', 'destino' => 'equipo',    'icono' => 'i-users'],
+    ['label' => 'Sede y contacto', 'tipo' => 'ancla', 'destino' => 'contacto', 'icono' => 'i-pin'],
 ];
 
 /**

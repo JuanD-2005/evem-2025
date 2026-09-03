@@ -913,6 +913,7 @@
         }
       }
     </style>
+    <link rel="icon" type="image/png" href="../../assets/logos/evem-icon.png">
   </head>
   <body>
     <!-- Sprite de íconos de trazo (Lucide/Heroicons: 24x24, stroke 1.8, currentColor).
@@ -1053,7 +1054,7 @@
           </p>
         </div>
 
-        <div class="form-card">
+        <div class="form-card" id="formCard">
           <form id="festivalForm" novalidate>
             <div class="field-group two-col">
               <div class="field">
@@ -1255,6 +1256,44 @@
     </footer>
 
     <script>
+      /* ── Cierre de inscripciones ──
+         Consulta festival_inscripciones_estado (misma variable de entorno
+         que ya usa register_festival para rechazar en el backend) antes de
+         dejar operable el formulario. Corre primero que cualquier otra
+         inicialización de la página para minimizar el parpadeo del
+         formulario si el estado es "cerrado". Si el fetch falla (red
+         caída), se deja el formulario tal cual: el bloqueo real vive en el
+         backend, esto es solo la UX — nunca al revés. */
+      (async function gateInscripciones() {
+        try {
+          const res = await fetch(
+            "../../backend/api.php?action=festival_inscripciones_estado",
+          );
+          const data = await res.json();
+          if (data.abiertas === false) {
+            document.getElementById("formCard").innerHTML = `
+              <div style="text-align:center; padding: 12px 4px;">
+                <h3 style="font-family:'Syne',sans-serif; font-size:1.25rem; font-weight:800; color: var(--navy); margin-bottom: 12px;">
+                  Inscripciones cerradas — el evento ya concluyó
+                </h3>
+                <p style="color: var(--slate); font-size: 0.95rem; line-height: 1.6;">
+                  El Festival de las Ciencias y Matemáticas UNET 2026 se realizó el 28 y 29 de mayo.
+                  Ya no se aceptan nuevos registros de equipos.
+                </p>
+                <p style="color: var(--slate); font-size: 0.9rem; line-height: 1.6; margin-top: 14px;">
+                  ¿Tu equipo ya se inscribió y necesitás tu certificado?
+                  Escribinos a
+                  <strong><a href="mailto:cedicunet@gmail.com" style="color: var(--blue-dark)">cedicunet@gmail.com</a></strong>.
+                </p>
+              </div>
+            `;
+          }
+        } catch (e) {
+          // Sin estado disponible: se deja el formulario visible, el
+          // backend igual rechaza el POST si en verdad está cerrado.
+        }
+      })();
+
       /* ── Constelación del panel informativo (mismo generador que
          festival.html/validar-folio.html, escalado a la mitad de la
          pantalla en vez de a la ventana completa) ── */

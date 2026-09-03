@@ -457,6 +457,7 @@ a:hover > .card-link-arrow {
 .drawer-toggle .ico { width: 22px; height: 22px; }
 
 .drawer,
+.drawer-menu,
 .drawer-overlay { display: none; }
 
 @media (max-width: 768px) {
@@ -478,7 +479,13 @@ a:hover > .card-link-arrow {
         visibility: visible;
     }
 
-    .drawer {
+    /* ─── Base compartida del panel (estructura + animación) ───
+       .drawer es el nombre histórico (EVEM/DIM); .drawer-menu es el
+       mismo componente para sitios que necesitan un tema propio vía
+       modificador (ver .drawer-dark, usado por CEDIC). Ambos comparten
+       exactamente esta base para que el comportamiento sea idéntico. */
+    .drawer,
+    .drawer-menu {
         display: flex;
         flex-direction: column;
         position: fixed;
@@ -496,7 +503,8 @@ a:hover > .card-link-arrow {
         overscroll-behavior: contain;
     }
 
-    .drawer.open { transform: translateX(0); }
+    .drawer.open,
+    .drawer-menu.open { transform: translateX(0); }
 
     /* ─── Cabecera azul institucional ─── */
     .drawer-head {
@@ -629,10 +637,68 @@ a:hover > .card-link-arrow {
     }
 
     .drawer-cta .ico { width: 18px; height: 18px; }
+
+    /* ─── Tema oscuro (CEDIC): mismo componente, paleta propia ───
+       Mismo --blue-dark que .top-bar (rgba(7, 89, 133, .9) en
+       css/cedic.css, mismo RGB acá con más transparencia + blur porque
+       var() no admite inyectarle alpha sin color-mix()) para que el
+       drawer sea una continuación visual del navbar. Semi-transparente
+       con backdrop-filter en vez de sólido: efecto vidrio esmerilado
+       que deja intuir el fractal del hero detrás, sin sacrificar el
+       tono institucional ni el contraste con el texto blanco. Un solo
+       tono en todo el panel (cabecera incluida, sin overlay propio)
+       más líneas separadoras translúcidas entre items y el celeste de
+       acento del portal en los íconos para que resalten sobre el azul. */
+    .drawer-dark {
+        background: rgba(7, 89, 133, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .drawer-dark .drawer-head {
+        background: transparent;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .drawer-dark .drawer-logo-chip { background: #ffffff; }
+
+    .drawer-dark .drawer-head-text small { color: rgba(255, 255, 255, 0.65); }
+
+    .drawer-dark .drawer-close {
+        background: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+    }
+
+    .drawer-dark .drawer-group { color: rgba(255, 255, 255, 0.5); }
+
+    .drawer-dark .drawer-link {
+        color: rgba(255, 255, 255, 0.88);
+        border-left-color: transparent;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-dark .drawer-link:last-child { border-bottom: none; }
+
+    .drawer-dark .drawer-link .ico { color: #7dd3fc; }
+
+    .drawer-dark .drawer-link:hover,
+    .drawer-dark .drawer-link:active,
+    .drawer-dark .drawer-link.active {
+        background: rgba(255, 255, 255, 0.07);
+        border-left-color: #7dd3fc;
+        color: #ffffff;
+    }
+
+    .drawer-dark .drawer-foot { border-top-color: rgba(255, 255, 255, 0.12); }
+
+    .drawer-dark .drawer-cta {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .drawer,
+    .drawer-menu,
     .drawer-overlay { transition: none; }
 }
 

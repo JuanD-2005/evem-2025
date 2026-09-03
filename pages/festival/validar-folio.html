@@ -1,319 +1,1233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificación de Certificado por Folio — Festival de las Ciencias CEDIC</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Verificación de Certificado por Folio — Festival de las Ciencias CEDIC
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/reset.css" />
     <style>
-        :root {
-            --accent: #0284c7;
-            --accent-light: #0ea5e9;
-            --accent-pale: #e0f2fe;
-            --accent-dark: #075985;
-            --success: #059669;
-            --success-pale: #d1fae5;
-            --error: #dc2626;
-            --error-pale: #fee2e2;
-            --navy: #0f172a;
-            --slate: #475569;
-            --muted: #94a3b8;
-            --border: #e2e8f0;
-            --bg: #f8fafc;
-        }
+      /* ═══════════════════════════════════════════════════════════
+           TOKENS — mismo sistema cromático que festival.html: navy
+           profundo + cian institucional. El "verificado" usa el azul
+           de marca en vez del verde genérico de UI: es un sello CEDIC,
+           no una notificación de sistema.
+           ═══════════════════════════════════════════════════════════ */
+      :root {
+        --ink: #030a18;
+        --navy-deep: #05142a;
+        --navy: #0f172a;
+        --blue-dark: #075985;
+        --blue-mid: #0284c7;
+        --blue: #0ea5e9;
+        --cyan: #38bdf8;
+        --cyan-light: #7dd3fc;
+        --cyan-pale: #bae6fd;
+        --ice: #e0f2fe;
+        --rose: #fb7185;
+        --rose-mid: #f43f5e;
+        --rose-dark: #be123c;
+        --rose-pale: #fecdd3;
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        --glass-line: rgba(190, 225, 255, 0.16);
+        --glass-line-2: rgba(190, 225, 255, 0.26);
+        --text-1: #f3f9ff;
+        --text-2: rgba(226, 242, 255, 0.72);
+        --text-3: rgba(226, 242, 255, 0.46);
+      }
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
 
-        .verify-wrap {
-            width: 100%;
-            max-width: 560px;
-            animation: riseIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
-        }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--ink);
+        color: var(--text-1);
+        min-height: 100vh;
+        min-height: 100svh;
+        overflow-x: hidden;
+        position: relative;
+        isolation: isolate;
+      }
 
-        @keyframes riseIn {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+      /* ═══════════════════════════════════════════════════════════
+           FONDO — mismos planos que el hero del festival: color,
+           halo de cursor, constelación generada, grano, viñeta.
+           ═══════════════════════════════════════════════════════════ */
+      .bg-color {
+        position: fixed;
+        inset: 0;
+        z-index: -6;
+        background:
+          radial-gradient(
+            120% 90% at 78% -8%,
+            rgba(56, 189, 248, 0.24) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            90% 70% at 6% 108%,
+            rgba(37, 99, 235, 0.24) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            70% 55% at 50% 38%,
+            rgba(12, 74, 110, 0.5) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            178deg,
+            var(--navy-deep) 0%,
+            #05142a 45%,
+            var(--ink) 100%
+          );
+      }
 
-        .institution-bar {
-            background: var(--navy);
-            border-radius: 16px 16px 0 0;
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+      .bg-spotlight {
+        position: fixed;
+        inset: 0;
+        z-index: -5;
+        background: radial-gradient(
+          560px 560px at var(--mx, 50%) var(--my, 32%),
+          rgba(125, 211, 252, 0.1),
+          transparent 62%
+        );
+        transition: background-position 0.2s linear;
+        pointer-events: none;
+      }
 
-        .institution-bar .org {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-        }
+      .bg-constellation {
+        position: fixed;
+        inset: 0;
+        z-index: -4;
+        opacity: 0.85;
+        pointer-events: none;
+      }
+      .bg-constellation svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .bg-constellation .edges {
+        stroke: #7dd3fc;
+        stroke-width: 1;
+        fill: none;
+        vector-effect: non-scaling-stroke;
+      }
+      .bg-constellation .cn {
+        fill: #bae6fd;
+        animation: twinkle 5.5s var(--d, 0s) ease-in-out infinite alternate;
+      }
 
-        .institution-bar .ref {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.72rem;
-            color: rgba(255,255,255,0.28);
+      @keyframes twinkle {
+        from {
+          opacity: 0.25;
         }
+        to {
+          opacity: 0.95;
+        }
+      }
 
-        .doc-card {
-            background: white;
-            border-radius: 0 0 20px 20px;
-            border: 1px solid var(--border);
-            border-top: none;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-        }
+      .bg-pattern {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        background-image: radial-gradient(
+          rgba(186, 230, 253, 0.14) 1px,
+          transparent 1.2px
+        );
+        background-size: 42px 42px;
+        -webkit-mask-image: radial-gradient(
+          70% 55% at 50% 38%,
+          #000 0%,
+          transparent 78%
+        );
+        mask-image: radial-gradient(
+          70% 55% at 50% 38%,
+          #000 0%,
+          transparent 78%
+        );
+        opacity: 0.5;
+      }
 
-        /* ─── FORM DE BÚSQUEDA ─── */
-        .search-body { padding: 32px 40px; }
-        .search-body h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 6px;
-        }
-        .search-body > p {
-            font-size: 0.875rem;
-            color: var(--slate);
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .folio-form { display: flex; gap: 10px; }
-        .folio-form input {
-            flex: 1;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.95rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--navy);
-            background: var(--bg);
-            transition: all 0.2s;
-        }
-        .folio-form input:focus { outline: none; border-color: var(--accent); background: white; }
-        .folio-form button {
-            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-            color: white;
-            border: none;
-            padding: 0 22px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .folio-form button:hover { transform: translateY(-1px); }
-        .folio-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      .bg-grain {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        opacity: 0.05;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
 
-        /* ─── STATUS BAND ─── */
-        .status-band {
-            padding: 32px 40px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
+      .bg-vignette {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: radial-gradient(
+          120% 85% at 50% 32%,
+          transparent 40%,
+          rgba(2, 8, 20, 0.6) 100%
+        );
+      }
+
+      @keyframes riseIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+          filter: blur(6px);
         }
-
-        .status-band.success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-bottom: 1px solid #a7f3d0; }
-        .status-band.error   { background: linear-gradient(135deg, #fff5f5, #fee2e2); border-bottom: 1px solid #fecaca; }
-
-        .status-icon {
-            width: 56px; height: 56px; flex-shrink: 0;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            animation: popIn 0.4s 0.1s cubic-bezier(0.22,1,0.36,1) both;
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
         }
-        .status-icon.success { background: var(--success); box-shadow: 0 0 0 6px rgba(5,150,105,0.15); }
-        .status-icon.error   { background: var(--error);   box-shadow: 0 0 0 6px rgba(220,38,38,0.15); }
+      }
 
-        @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to   { transform: scale(1);   opacity: 1; }
+      /* ═══════════════════════════════════════════════════════════
+           BARRA SUPERIOR — versión reducida del nav-inner de cristal
+           del festival: identifica la institución, no navega.
+           ═══════════════════════════════════════════════════════════ */
+      .top-strip {
+        max-width: 560px;
+        margin: 22px auto 0;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        --d: 0s;
+        animation: riseIn 0.7s var(--d) cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      .brand-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        text-decoration: none;
+        color: var(--text-2);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.25s ease;
+      }
+      .brand-link:hover {
+        color: #fff;
+      }
+      .brand-link img {
+        height: 20px;
+        width: auto;
+        filter: brightness(0) invert(1);
+        opacity: 0.85;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: var(--text-3);
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition:
+          color 0.25s ease,
+          transform 0.25s ease;
+      }
+      .back-link:hover {
+        color: var(--cyan-light);
+        transform: translateX(-2px);
+      }
+      .back-link svg {
+        width: 13px;
+        height: 13px;
+        transition: transform 0.25s ease;
+      }
+      .back-link:hover svg {
+        transform: translateX(-2px);
+      }
+
+      /* ═══════════════════════════════════════════════════════════
+           ESCENARIO
+           ═══════════════════════════════════════════════════════════ */
+      .verify-stage {
+        position: relative;
+        z-index: 5;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px 56px;
+      }
+
+      .verify-wrap {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      /* ─── TARJETA DE CRISTAL ─── */
+      .verify-card {
+        position: relative;
+        background: linear-gradient(
+          165deg,
+          rgba(20, 52, 88, 0.55),
+          rgba(6, 20, 40, 0.68)
+        );
+        border: 1px solid var(--glass-line);
+        border-radius: 24px;
+        backdrop-filter: blur(20px) saturate(140%);
+        -webkit-backdrop-filter: blur(20px) saturate(140%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 30px 70px -30px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(2, 8, 20, 0.4),
+          0 0 46px -18px rgba(56, 189, 248, 0.28);
+        overflow: hidden;
+        --d: 0.1s;
+        animation: riseIn 0.85s var(--d) cubic-bezier(0.16, 1, 0.3, 1) both;
+        transition:
+          box-shadow 0.6s ease,
+          border-color 0.6s ease;
+      }
+
+      .verify-card.is-scanning {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 30px 70px -30px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(2, 8, 20, 0.4),
+          0 0 60px -12px rgba(56, 189, 248, 0.5);
+      }
+      .verify-card.state-success {
+        border-color: rgba(125, 211, 252, 0.4);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 30px 70px -30px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(2, 8, 20, 0.4),
+          0 0 60px -10px rgba(56, 189, 248, 0.55);
+      }
+      .verify-card.state-error {
+        border-color: rgba(251, 113, 133, 0.35);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 30px 70px -30px rgba(0, 0, 0, 0.85),
+          0 0 0 1px rgba(2, 8, 20, 0.4),
+          0 0 60px -14px rgba(244, 63, 94, 0.4);
+        animation:
+          riseIn 0.85s var(--d) cubic-bezier(0.16, 1, 0.3, 1) both,
+          shake 0.5s 0.05s ease;
+      }
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translateX(-1px);
         }
-
-        .status-icon svg { width: 26px; height: 26px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-
-        .status-text h2 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 3px;
+        20%,
+        80% {
+          transform: translateX(2px);
         }
-        .status-text p { font-size: 0.85rem; color: var(--slate); line-height: 1.5; }
+        30%,
+        50%,
+        70% {
+          transform: translateX(-4px);
+        }
+        40%,
+        60% {
+          transform: translateX(4px);
+        }
+      }
 
-        /* ─── DATA ROWS ─── */
-        .cert-body { padding: 28px 40px 32px; }
-        .data-rows {
-            display: flex; flex-direction: column;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
+      /* haz de escaneo: barre la tarjeta mientras se consulta el registro */
+      .scan-beam {
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        top: -8%;
+        height: 46%;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(125, 211, 252, 0.16) 45%,
+          rgba(186, 230, 253, 0.28) 50%,
+          rgba(125, 211, 252, 0.16) 55%,
+          transparent
+        );
+        opacity: 0;
+        pointer-events: none;
+        filter: blur(1px);
+      }
+      .verify-card.is-scanning .scan-beam {
+        opacity: 1;
+        animation: sweep 1.4s ease-in-out infinite;
+      }
+      @keyframes sweep {
+        0% {
+          transform: translateY(-10%);
+        }
+        100% {
+          transform: translateY(310%);
+        }
+      }
+
+      .card-inner {
+        padding: 40px 38px 34px;
+        position: relative;
+      }
+
+      /* ─── ENCABEZADO ─── */
+      .card-head {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .seal-slot {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 18px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cedic-badge {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: linear-gradient(
+          180deg,
+          rgba(226, 242, 255, 0.14),
+          rgba(226, 242, 255, 0.03)
+        );
+        border: 1px solid var(--glass-line-2);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.14),
+          0 10px 26px -12px rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cedic-badge img {
+        width: 90px;
+        height: auto;
+        max-width: 100%;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+        opacity: 0.92;
+      }
+
+      .card-head h1 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.28rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: var(--text-1);
+        margin-bottom: 6px;
+      }
+      .card-head .lede {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--cyan-light);
+      }
+
+      /* ─── FORM ─── */
+      .field-label {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 8px;
+      }
+
+      .input-wrap {
+        position: relative;
+        margin-bottom: 16px;
+      }
+      .input-wrap svg.ico {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 17px;
+        height: 17px;
+        color: var(--text-3);
+        pointer-events: none;
+        transition: color 0.25s ease;
+      }
+
+      .folio-form input {
+        width: 100%;
+        padding: 15px 16px 15px 44px;
+        background: rgba(3, 10, 24, 0.45);
+        border: 1px solid var(--glass-line);
+        border-radius: 12px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.92rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-1);
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+      .folio-form input::placeholder {
+        color: var(--text-3);
+        text-transform: none;
+        letter-spacing: 0.01em;
+        font-family: "DM Sans", sans-serif;
+      }
+      .folio-form input:focus {
+        outline: none;
+        background: rgba(3, 10, 24, 0.65);
+        border-color: rgba(125, 211, 252, 0.55);
+        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.14);
+      }
+      .folio-form input:focus ~ svg.ico,
+      .input-wrap:focus-within svg.ico {
+        color: var(--cyan-light);
+      }
+
+      .btn-verify {
+        width: 100%;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 15px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+        color: #06304f;
+        font-weight: 700;
+        font-size: 0.92rem;
+        cursor: pointer;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.95),
+          0 14px 30px -14px rgba(56, 189, 248, 0.7),
+          0 4px 14px -6px rgba(0, 0, 0, 0.45);
+        transition:
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.25s ease,
+          opacity 0.25s ease;
+      }
+      .btn-verify:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.95),
+          0 20px 40px -14px rgba(56, 189, 248, 0.9),
+          0 6px 16px -6px rgba(0, 0, 0, 0.5);
+      }
+      .btn-verify:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      .btn-verify:disabled {
+        opacity: 0.85;
+        cursor: default;
+        transform: none;
+      }
+      .btn-verify:focus-visible {
+        outline: 2px solid var(--cyan-light);
+        outline-offset: 3px;
+      }
+
+      .btn-spinner {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 2px solid rgba(6, 48, 79, 0.25);
+        border-top-color: #06304f;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hint {
+        margin-top: 12px;
+        font-size: 0.76rem;
+        line-height: 1.55;
+        color: var(--text-3);
+        text-align: center;
+      }
+      .hint code {
+        font-family: "DM Mono", monospace;
+        color: var(--cyan-light);
+        background: rgba(56, 189, 248, 0.08);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+
+      /* ═══════════════════════════════════════════════════════════
+           RESULTADO
+           ═══════════════════════════════════════════════════════════ */
+      .result-panel {
+        text-align: center;
+      }
+
+      /* ─── SELLO ─── */
+      .seal-stage {
+        width: 128px;
+        height: 128px;
+        margin: 4px auto 22px;
+        position: relative;
+      }
+
+      .ping-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1.5px solid var(--cyan);
+        opacity: 0;
+      }
+      .state-success .ping-ring {
+        animation: ping 1.8s cubic-bezier(0, 0.5, 0.5, 1) 1;
+      }
+      .state-error .ping-ring {
+        border-color: var(--rose-mid);
+      }
+      .ping-ring:nth-child(2) {
+        animation-delay: 0.22s !important;
+      }
+      @keyframes ping {
+        0% {
+          transform: scale(0.7);
+          opacity: 0.65;
+        }
+        100% {
+          transform: scale(1.7);
+          opacity: 0;
+        }
+      }
+
+      .seal-ring-outer {
+        position: absolute;
+        inset: 6px;
+        border-radius: 50%;
+        border: 1px dashed rgba(125, 211, 252, 0.4);
+        animation: spinSlow 22s linear infinite;
+      }
+      .state-error .seal-ring-outer {
+        border-color: rgba(251, 113, 133, 0.35);
+        animation: none;
+      }
+      @keyframes spinSlow {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .seal-disc {
+        position: absolute;
+        inset: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(
+            70% 70% at 32% 26%,
+            rgba(255, 255, 255, 0.16),
+            transparent 60%
+          ),
+          linear-gradient(160deg, #0c3559, #061a30 70%);
+        border: 1px solid var(--glass-line-2);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 12px 26px -10px rgba(0, 0, 0, 0.6);
+      }
+      .state-error .seal-disc {
+        background:
+          radial-gradient(
+            70% 70% at 32% 26%,
+            rgba(255, 255, 255, 0.1),
+            transparent 60%
+          ),
+          linear-gradient(160deg, #4c1424, #2a0a12 70%);
+      }
+
+      .seal-disc svg {
+        width: 46px;
+        height: 46px;
+        overflow: visible;
+      }
+      .seal-check {
+        fill: none;
+        stroke: #eafaff;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 40;
+        stroke-dashoffset: 40;
+      }
+      .state-success .seal-check {
+        animation: draw 0.5s 0.35s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .seal-x line {
+        stroke: #ffe4e8;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 20;
+        stroke-dashoffset: 20;
+      }
+      .state-error .seal-x line:nth-child(1) {
+        animation: draw2 0.32s 0.28s ease forwards;
+      }
+      .state-error .seal-x line:nth-child(2) {
+        animation: draw2 0.32s 0.46s ease forwards;
+      }
+      @keyframes draw2 {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* ─── TITULAR CROMADO (mismo recurso que el hero-title) ─── */
+      .verdict {
+        font-family: "Syne", sans-serif;
+        font-size: 1.55rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        margin-bottom: 6px;
+      }
+      .verdict.chrome-cyan {
+        color: transparent;
+        background-image: linear-gradient(
+          178deg,
+          #ffffff 0%,
+          #dff5ff 14%,
+          #8fd8fb 34%,
+          #2f7ea8 48%,
+          #f4faff 52%,
+          #ffffff 56%,
+          #a9e2fb 70%,
+          #4c8cad 86%,
+          #eef7ff 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.4))
+          drop-shadow(0 1px 1px rgba(6, 25, 46, 0.9));
+      }
+      .verdict.tone-rose {
+        color: #ffd7dd;
+      }
+
+      .verdict-sub {
+        font-size: 0.85rem;
+        color: var(--text-2);
+        line-height: 1.55;
+        max-width: 340px;
+        margin: 0 auto 22px;
+      }
+
+      /* ─── FICHA DE DATOS ─── */
+      .data-plate {
+        border: 1px solid var(--glass-line);
+        border-radius: 14px;
+        overflow: hidden;
+        background: rgba(3, 10, 24, 0.35);
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .data-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 13px 18px;
+      }
+      .data-row:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .data-label {
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        min-width: 78px;
+        padding-top: 2px;
+        flex-shrink: 0;
+      }
+      .data-value {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-1);
+        line-height: 1.4;
+      }
+      .data-value.folio-tag {
+        font-family: "DM Mono", monospace;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        color: var(--cyan-light);
+        background: rgba(56, 189, 248, 0.09);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        border-radius: 6px;
+        padding: 3px 8px;
+        display: inline-block;
+      }
+
+      .again-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: linear-gradient(
+          180deg,
+          rgba(226, 242, 255, 0.13),
+          rgba(226, 242, 255, 0.035)
+        );
+        border: 1px solid var(--glass-line-2);
+        color: var(--text-1);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 11px 20px;
+        border-radius: 11px;
+        backdrop-filter: blur(8px);
+        transition:
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.25s ease,
+          background 0.25s ease;
+      }
+      .again-link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(125, 211, 252, 0.5);
+        background: linear-gradient(
+          180deg,
+          rgba(226, 242, 255, 0.2),
+          rgba(226, 242, 255, 0.07)
+        );
+      }
+
+      .verify-footer {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 0.74rem;
+        color: var(--text-3);
+        line-height: 1.7;
+        --d: 0.3s;
+        animation: riseIn 0.9s var(--d) cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .verify-footer strong {
+        color: var(--text-2);
+        font-weight: 600;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .bg-constellation .cn,
+        .seal-ring-outer,
+        .btn-spinner,
+        .ping-ring,
+        .scan-beam,
+        .verify-card,
+        .top-strip,
+        .verify-footer,
+        .verdict,
+        .seal-check,
+        .seal-x line {
+          animation: none !important;
+        }
+        .seal-check {
+          stroke-dashoffset: 0;
+        }
+        .seal-x line {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .card-inner {
+          padding: 32px 22px 28px;
+        }
+        .top-strip {
+          margin-top: 16px;
         }
         .data-row {
-            display: flex; align-items: flex-start;
-            padding: 14px 18px; gap: 16px;
+          flex-direction: column;
+          gap: 3px;
         }
-        .data-row:not(:last-child) { border-bottom: 1px solid var(--border); }
-        .data-row:nth-child(even) { background: #fafbfd; }
         .data-label {
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--muted); min-width: 90px; padding-top: 2px; flex-shrink: 0;
+          min-width: auto;
         }
-        .data-value { font-size: 0.925rem; font-weight: 600; color: var(--navy); line-height: 1.45; }
-
-        .again-link {
-            display: block; text-align: center; margin-top: 18px;
-            font-size: 0.82rem; color: var(--accent-dark); text-decoration: none; font-weight: 600;
-        }
-        .again-link:hover { text-decoration: underline; }
-
-        .verify-footer {
-            margin-top: 20px; text-align: center;
-            font-size: 0.75rem; color: var(--muted); line-height: 1.6;
-        }
-
-        @media (max-width: 600px) {
-            .search-body, .status-band, .cert-body { padding-left: 20px; padding-right: 20px; }
-            .status-band { flex-direction: column; text-align: center; }
-            .data-row { flex-direction: column; gap: 4px; }
-            .data-label { min-width: auto; }
-        }
+      }
     </style>
-</head>
-<body>
-    <div class="verify-wrap">
-        <div class="institution-bar">
-            <span class="org">CEDIC · UNET — Verificación Oficial</span>
-            <span class="ref">Festival de las Ciencias</span>
-        </div>
-        <div class="doc-card" id="docCard">
-            <div class="search-body">
-                <h1>Verificar certificado por folio</h1>
-                <p>Escribí el folio impreso en el certificado (ej. <code>FCM-2026-XXXXXXXX</code>) para confirmar que es auténtico.</p>
-                <form id="folioForm" class="folio-form">
-                    <input type="text" id="folioInput" placeholder="FCM-2026-XXXXXXXX" autocomplete="off" required>
-                    <button type="submit" id="btnVerificar">Verificar</button>
-                </form>
+    <link rel="icon" type="image/png" href="../../assets/logos/evem-icon.png">
+  </head>
+  <body>
+    <div class="bg-color" aria-hidden="true"></div>
+    <div class="bg-spotlight" id="bgSpotlight" aria-hidden="true"></div>
+    <div class="bg-constellation" id="bgConstellation" aria-hidden="true"></div>
+    <div class="bg-pattern" aria-hidden="true"></div>
+    <div class="bg-grain" aria-hidden="true"></div>
+    <div class="bg-vignette" aria-hidden="true"></div>
+
+    <header class="top-strip">
+      <a href="festival.html" class="brand-link">
+        <img src="../../assets/logos/cedic-Sinfondo.png" alt="" />
+        CEDIC · UNET
+      </a>
+      <a href="festival.html" class="back-link">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Volver al Festival
+      </a>
+    </header>
+
+    <main class="verify-stage">
+      <div class="verify-wrap">
+        <div class="verify-card" id="verifyCard">
+          <div class="scan-beam" aria-hidden="true"></div>
+          <div class="card-inner">
+            <div class="card-head">
+              <div class="seal-slot">
+                <div class="cedic-badge">
+                  <img
+                    src="../../assets/logos/cedic-Sinfondo.png"
+                    alt="CEDIC"
+                  />
+                </div>
+              </div>
+              <h1>Verificación de Certificados</h1>
+              <p class="lede">Registro oficial · Festival de las Ciencias</p>
             </div>
+
+            <form id="folioForm" class="folio-form" novalidate>
+              <label for="folioInput" class="field-label"
+                >Folio del certificado</label
+              >
+              <div class="input-wrap">
+                <svg
+                  class="ico"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0-2 3.46v5.08A4 4 0 0 0 8 19h.5"
+                  />
+                  <path
+                    d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1 2 3.46v5.08A4 4 0 0 1 16 19h-.5"
+                  />
+                  <path d="M9 10a3 3 0 0 1 6 0v6a3 3 0 0 1-6 0" />
+                  <path d="M6 12v3M18 12v3M12 21v-2M9 21h6" />
+                </svg>
+                <input
+                  type="text"
+                  id="folioInput"
+                  placeholder="FCM-2026-XXXXXXXX"
+                  autocomplete="off"
+                  spellcheck="false"
+                  required
+                  aria-describedby="folioHint"
+                />
+              </div>
+              <button type="submit" id="btnVerificar" class="btn-verify">
+                <span class="btn-spinner" id="btnSpinner" hidden></span>
+                <span id="btnLabel">Verificar autenticidad</span>
+              </button>
+              <p class="hint" id="folioHint">
+                El folio está impreso en el certificado, ej.
+                <code>FCM-2026-XXXXXXXX</code>
+              </p>
+            </form>
+
+            <div
+              class="result-panel"
+              id="resultPanel"
+              hidden
+              aria-live="polite"
+            ></div>
+          </div>
         </div>
+
         <p class="verify-footer">
-            Portal de verificación oficial — CEDIC · Universidad Nacional Experimental del Táchira<br>
-            Si creés que hay un error, contactá a <strong>cedicunet@gmail.com</strong>
+          Portal de verificación oficial — <strong>CEDIC</strong> · Universidad
+          Nacional Experimental del Táchira<br />
+          Si creés que hay un error, contactá a
+          <strong>cedicunet@gmail.com</strong>
         </p>
-    </div>
+      </div>
+    </main>
 
     <script src="../../js/security.js"></script>
     <script>
-        const form   = document.getElementById('folioForm');
-        const input  = document.getElementById('folioInput');
-        const btn    = document.getElementById('btnVerificar');
-        const card   = document.getElementById('docCard');
+      /* ═══════════════════════════════════════════════════════════
+           CONSTELACIÓN DE FONDO — generada en tiempo de carga en vez
+           de embebida estática, para mantener el archivo liviano.
+           ═══════════════════════════════════════════════════════════ */
+      (function buildConstellation() {
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const svg = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "svg",
+        );
+        svg.setAttribute("viewBox", "0 0 1440 900");
+        svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-        function renderResultado(html) {
-            card.innerHTML = html;
-        }
+        const NUM = 42;
+        const pts = Array.from({ length: NUM }, () => ({
+          x: Math.random() * 1440,
+          y: Math.random() * 900,
+        }));
 
-        function bandExito(nombre, proyecto) {
-            const nombreSeguro   = escapeHTML(nombre);
-            const proyectoSeguro = proyecto ? escapeHTML(proyecto) : null;
-            return `
-                <div class="status-band success">
-                    <div class="status-icon success">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
-                    <div class="status-text">
-                        <h2>Certificado Auténtico</h2>
-                        <p>Este folio está registrado en la base de datos oficial del Festival.</p>
-                    </div>
-                </div>
-                <div class="cert-body">
-                    <div class="data-rows">
-                        <div class="data-row">
-                            <span class="data-label">Nombre</span>
-                            <span class="data-value">${nombreSeguro}</span>
-                        </div>
-                        ${proyectoSeguro ? `
-                        <div class="data-row">
-                            <span class="data-label">Proyecto</span>
-                            <span class="data-value">${proyectoSeguro}</span>
-                        </div>` : ''}
-                    </div>
-                    <a href="validar-folio.html" class="again-link">Verificar otro folio</a>
-                </div>
-            `;
-        }
-
-        function bandError(mensaje) {
-            const mensajeSeguro = escapeHTML(mensaje);
-            return `
-                <div class="status-band error">
-                    <div class="status-icon error">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    </div>
-                    <div class="status-text">
-                        <h2>No se pudo verificar</h2>
-                        <p>${mensajeSeguro}</p>
-                    </div>
-                </div>
-                <div class="cert-body">
-                    <a href="validar-folio.html" class="again-link">Intentar de nuevo</a>
-                </div>
-            `;
-        }
-
-        async function verificar(folio) {
-            btn.disabled = true;
-            btn.textContent = 'Verificando…';
-            try {
-                const res = await fetch(`../../backend/api.php?action=verify_festival_certificado&folio=${encodeURIComponent(folio)}`);
-                const data = await res.json();
-                if (res.ok) {
-                    renderResultado(bandExito(data.nombre, data.proyecto));
-                } else {
-                    renderResultado(bandError(data.error || 'Folio no encontrado.'));
-                }
-            } catch (err) {
-                renderResultado(bandError('No se pudo conectar con el servidor. Intentá de nuevo en unos segundos.'));
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Verificar';
+        const edgesG = document.createElementNS(svg.namespaceURI, "g");
+        edgesG.setAttribute("class", "edges");
+        const MAXD = 150;
+        for (let i = 0; i < pts.length; i++) {
+          let links = 0;
+          for (let j = 0; j < pts.length && links < 3; j++) {
+            if (i === j) continue;
+            const dx = pts[i].x - pts[j].x,
+              dy = pts[i].y - pts[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < MAXD) {
+              const line = document.createElementNS(svg.namespaceURI, "line");
+              line.setAttribute("x1", pts[i].x.toFixed(1));
+              line.setAttribute("y1", pts[i].y.toFixed(1));
+              line.setAttribute("x2", pts[j].x.toFixed(1));
+              line.setAttribute("y2", pts[j].y.toFixed(1));
+              line.setAttribute(
+                "opacity",
+                (0.12 + Math.random() * 0.28).toFixed(2),
+              );
+              edgesG.appendChild(line);
+              links++;
             }
+          }
         }
+        svg.appendChild(edgesG);
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const folio = input.value.trim();
-            if (folio.length < 5) return;
-            verificar(folio);
+        const nodesG = document.createElementNS(svg.namespaceURI, "g");
+        pts.forEach((p) => {
+          const c = document.createElementNS(svg.namespaceURI, "circle");
+          c.setAttribute("class", "cn");
+          c.setAttribute("cx", p.x.toFixed(1));
+          c.setAttribute("cy", p.y.toFixed(1));
+          c.setAttribute("r", (1.3 + Math.random() * 1.9).toFixed(2));
+          if (!reduce)
+            c.style.setProperty("--d", (Math.random() * 5).toFixed(2) + "s");
+          nodesG.appendChild(c);
         });
+        svg.appendChild(nodesG);
 
-        // Si llega con ?folio=... en la URL (pensado para cuando el
-        // certificado tenga QR), se verifica automático al cargar.
-        const folioURL = new URLSearchParams(window.location.search).get('folio');
-        if (folioURL) {
-            input.value = folioURL;
-            verificar(folioURL);
+        document.getElementById("bgConstellation").appendChild(svg);
+      })();
+
+      /* halo suave que sigue el cursor, como el hero-rays del festival */
+      (function spotlight() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        if (!window.matchMedia("(pointer: fine)").matches) return;
+        const el = document.getElementById("bgSpotlight");
+        window.addEventListener(
+          "pointermove",
+          (e) => {
+            const mx = ((e.clientX / window.innerWidth) * 100).toFixed(1) + "%";
+            const my =
+              ((e.clientY / window.innerHeight) * 100).toFixed(1) + "%";
+            el.style.setProperty("--mx", mx);
+            el.style.setProperty("--my", my);
+          },
+          { passive: true },
+        );
+      })();
+
+      /* ═══════════════════════════════════════════════════════════
+           VERIFICACIÓN
+           ═══════════════════════════════════════════════════════════ */
+      const card = document.getElementById("verifyCard");
+      const form = document.getElementById("folioForm");
+      const input = document.getElementById("folioInput");
+      const btn = document.getElementById("btnVerificar");
+      const btnLabel = document.getElementById("btnLabel");
+      const btnSpinner = document.getElementById("btnSpinner");
+      const resultPanel = document.getElementById("resultPanel");
+
+      function sealSuccess() {
+        return `
+                <div class="seal-stage" aria-hidden="true">
+                    <span class="ping-ring"></span>
+                    <span class="ping-ring"></span>
+                    <div class="seal-ring-outer"></div>
+                    <div class="seal-disc">
+                        <svg viewBox="0 0 24 24"><path class="seal-check" d="M5 12.5 10 17.5 19 7"/></svg>
+                    </div>
+                </div>`;
+      }
+      function sealError() {
+        return `
+                <div class="seal-stage" aria-hidden="true">
+                    <span class="ping-ring"></span>
+                    <div class="seal-ring-outer"></div>
+                    <div class="seal-disc">
+                        <svg viewBox="0 0 24 24" class="seal-x"><line x1="7" y1="7" x2="17" y2="17"/><line x1="17" y1="7" x2="7" y2="17"/></svg>
+                    </div>
+                </div>`;
+      }
+
+      function panelExito(nombre, proyecto, folio) {
+        const nombreSeguro = escapeHTML(nombre);
+        const proyectoSeguro = proyecto ? escapeHTML(proyecto) : null;
+        const folioSeguro = escapeHTML(folio);
+        return `
+                ${sealSuccess()}
+                <h2 class="verdict chrome-cyan">Certificado auténtico</h2>
+                <p class="verdict-sub">Este folio está registrado en el archivo oficial del Festival de las Ciencias.</p>
+                <div class="data-plate">
+                    <div class="data-row">
+                        <span class="data-label">Folio</span>
+                        <span class="data-value"><span class="folio-tag">${folioSeguro}</span></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Nombre</span>
+                        <span class="data-value">${nombreSeguro}</span>
+                    </div>
+                    ${
+                      proyectoSeguro
+                        ? `
+                    <div class="data-row">
+                        <span class="data-label">Proyecto</span>
+                        <span class="data-value">${proyectoSeguro}</span>
+                    </div>`
+                        : ""
+                    }
+                </div>
+                <button type="button" class="again-link" id="btnOtro">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                    Verificar otro folio
+                </button>`;
+      }
+
+      function panelError(mensaje) {
+        const mensajeSeguro = escapeHTML(mensaje);
+        return `
+                ${sealError()}
+                <h2 class="verdict tone-rose">No se pudo verificar</h2>
+                <p class="verdict-sub">${mensajeSeguro}</p>
+                <button type="button" class="again-link" id="btnOtro">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-6h6"/></svg>
+                    Intentar de nuevo
+                </button>`;
+      }
+
+      function volverABuscar() {
+        card.classList.remove("state-success", "state-error");
+        resultPanel.hidden = true;
+        resultPanel.innerHTML = "";
+        form.hidden = false;
+        input.value = "";
+        input.focus();
+      }
+
+      function mostrarResultado(html, ok) {
+        card.classList.remove("state-success", "state-error");
+        form.hidden = true;
+        resultPanel.innerHTML = html;
+        resultPanel.hidden = false;
+        // reflow antes de añadir la clase de estado, para que las
+        // animaciones (ping, draw del check/x) arranquen desde cero
+        void resultPanel.offsetWidth;
+        card.classList.add(ok ? "state-success" : "state-error");
+        document
+          .getElementById("btnOtro")
+          .addEventListener("click", volverABuscar);
+      }
+
+      async function verificar(folio) {
+        btn.disabled = true;
+        btnSpinner.hidden = false;
+        btnLabel.textContent = "Consultando registro…";
+        card.classList.add("is-scanning");
+        try {
+          const res = await fetch(
+            `../../backend/api.php?action=verify_festival_certificado&folio=${encodeURIComponent(folio)}`,
+          );
+          const data = await res.json();
+          if (res.ok) {
+            mostrarResultado(
+              panelExito(data.nombre, data.proyecto, folio),
+              true,
+            );
+          } else {
+            mostrarResultado(
+              panelError(data.error || "Folio no encontrado."),
+              false,
+            );
+          }
+        } catch (err) {
+          mostrarResultado(
+            panelError(
+              "No se pudo conectar con el servidor. Intentá de nuevo en unos segundos.",
+            ),
+            false,
+          );
+        } finally {
+          card.classList.remove("is-scanning");
+          btn.disabled = false;
+          btnSpinner.hidden = true;
+          btnLabel.textContent = "Verificar autenticidad";
         }
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const folio = input.value.trim();
+        if (folio.length < 5) {
+          input.focus();
+          return;
+        }
+        verificar(folio);
+      });
+
+      // Si llega con ?folio=... en la URL (pensado para cuando el
+      // certificado tenga QR), se verifica automático al cargar.
+      const folioURL = new URLSearchParams(window.location.search).get("folio");
+      if (folioURL) {
+        input.value = folioURL;
+        verificar(folioURL);
+      }
     </script>
-</body>
+  </body>
 </html>

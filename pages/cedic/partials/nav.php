@@ -14,6 +14,11 @@ $href_cta    = cedic_ancla('contacto', $pagina, $LANDING);
         <div class="nav-inner">
 
             <div class="nav-left">
+                <button class="drawer-toggle" type="button"
+                        aria-expanded="false" aria-controls="siteDrawer" aria-label="Abrir menú de navegación">
+                    <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+                </button>
+
                 <a href="../../index.html" class="nav-back">
                     <svg class="ico" aria-hidden="true"><use href="#i-chevron-left"/></svg>
                     <span class="nav-back-label">EVEM</span>
@@ -34,20 +39,42 @@ $href_cta    = cedic_ancla('contacto', $pagina, $LANDING);
 
             <div class="nav-right">
                 <a href="<?= $href_cta ?>" class="nav-cta">Contáctanos</a>
-                <button class="nav-toggle" type="button" id="navToggle"
-                        aria-expanded="false" aria-controls="navPanel" aria-label="Abrir menú de navegación">
-                    <svg class="ico ico-open" aria-hidden="true"><use href="#i-menu"/></svg>
-                    <svg class="ico ico-close" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
             </div>
         </div>
-
-        <!-- Menú desplegable para móvil -->
-        <div class="nav-panel" id="navPanel">
-            <ul>
-<?php foreach ($NAV_PANEL as $item): ?>
-                <li><a href="<?= cedic_href($item, $pagina, $LANDING) ?>"<?= cedic_activo($item, $pagina) ?>><?= $item['label'] ?> <svg class="ico" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
-<?php endforeach; ?>
-            </ul>
-        </div>
     </header>
+
+    <!-- ═══════════════════ DRAWER LATERAL (off-canvas, solo móvil) ═══════════════════ -->
+    <div class="drawer-overlay" data-drawer-close hidden></div>
+
+    <aside class="drawer-menu drawer-dark" id="siteDrawer" aria-label="Menú de navegación" aria-hidden="true">
+        <div class="drawer-head">
+            <span class="drawer-logo-chip">
+                <img src="../../assets/logos/cedic-Sinfondo.png" alt="">
+            </span>
+            <span class="drawer-head-text">
+                <strong>CEDIC</strong>
+                <small>Centro de Ciencias · UNET</small>
+            </span>
+            <button class="drawer-close" type="button" aria-label="Cerrar menú" data-drawer-close>
+                <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg>
+            </button>
+        </div>
+
+        <nav class="drawer-nav" aria-label="Secciones del portal CEDIC">
+<?php foreach ($NAV_PANEL as $item):
+    $activo = ($item['clave'] ?? null) === $pagina;
+?>
+            <a href="<?= cedic_href($item, $pagina, $LANDING) ?>" class="drawer-link<?= $activo ? ' active' : '' ?>">
+                <svg class="ico" aria-hidden="true"><use href="#<?= $item['icono'] ?? 'i-arrow-right' ?>"/></svg>
+                <?= $item['label'] ?>
+            </a>
+<?php endforeach; ?>
+        </nav>
+
+        <div class="drawer-foot">
+            <a href="<?= $href_cta ?>" class="drawer-cta">
+                <svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>
+                Contáctanos
+            </a>
+        </div>
+    </aside>
