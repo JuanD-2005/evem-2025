@@ -317,7 +317,7 @@ body{
       <h2 class="fest-title" data-f="titulo" contenteditable="true">Festival de las Ciencias y Matemáticas</h2>
       <div class="fest-edition" data-f="edicion" contenteditable="true"></div>
 
-      <p class="grants" data-f="grants">Otorgado a</p>
+      <p class="grants" data-f="grants">Certificado otorgado a:</p>
       <p class="laureate" data-f="nombre" contenteditable="true">María Alejandra Contreras Rangel</p>
       <div class="laureate-rule"></div>
       <div class="laureate-id" data-f="cedula" contenteditable="true">V-28.412.905</div>
@@ -375,17 +375,17 @@ body{
 const TIPOS = {
   participacion:{
     eyebrow:'Certificado de participación',
-    grants:'Otorgado a',
+    grants:'Certificado otorgado a:',
     cita:d=>`Por su valiosa participación en el <strong>${d.titulo}</strong>${d.edicionClause}celebrado en las instalaciones de la Universidad Nacional Experimental del Táchira los días ${d.fecha}. Su curiosidad y compromiso sostienen el espíritu de esta celebración de la ciencia.`
   },
   ponente:{
     eyebrow:'Certificado de ponencia',
-    grants:'Otorgado a',
+    grants:'Certificado otorgado a:',
     cita:d=>`Por su destacada intervención como <strong>ponente</strong> en el ${d.titulo}${d.edicionClause}celebrado en la Universidad Nacional Experimental del Táchira los días ${d.fecha}. Su aporte enriqueció el programa académico del festival.`
   },
   expositor:{
     eyebrow:'Certificado de exposición',
-    grants:'Otorgado a',
+    grants:'Certificado otorgado a:',
     cita:d=>`Por la presentación de su proyecto en el Expo-Festival del <strong>${d.titulo}</strong>${d.edicionClause}realizado en la Universidad Nacional Experimental del Táchira los días ${d.fecha}. El trabajo expuesto cumplió con los criterios de rigor y divulgación establecidos por el comité.`
   },
   ganador:{
@@ -395,7 +395,7 @@ const TIPOS = {
   },
   organizador:{
     eyebrow:'Certificado de servicio',
-    grants:'Otorgado a',
+    grants:'Certificado otorgado a:',
     cita:d=>`Por su dedicación como integrante del <strong>comité organizador</strong> del ${d.titulo}${d.edicionClause}celebrado en la Universidad Nacional Experimental del Táchira los días ${d.fecha}. Este festival existió gracias a su trabajo.`
   },
   asistente:{
@@ -405,7 +405,7 @@ const TIPOS = {
   },
   tutor:{
     eyebrow:'Certificado de participación',
-    grants:'Otorgado a',
+    grants:'Certificado otorgado a:',
     cita:d=>`Por su participación como Tutora del proyecto <strong>${d.equipo}</strong> en el <strong>${d.titulo}</strong>, celebrado en las instalaciones de la Universidad Nacional Experimental del Táchira los días ${d.fecha}. Su participación y compromiso para guiar a sus estudiantes contribuyen al fortalecimiento de la ciencia y la tecnología.`
   }
 };
@@ -426,9 +426,9 @@ function renderSheet(d){
   // debe quedar con una coma suelta ("...UNET 2026, , celebrado...").
   d.edicionClause = d.edicion ? `, ${d.edicion}, ` : ', ';
   // El proyecto/equipo no tiene celda propia en el diseño: se suma como
-  // una línea más dentro de la cita, igual para cualquier tipo.
+  // una línea más dentro de la cita, igual para cualquier tipo (excepto 'tutor').
   let cita = t.cita(d);
-  if(d.equipo) cita += ` <strong>Proyecto presentado</strong>: &ldquo;${escapeHTML(d.equipo)}&rdquo;.`;
+  if(d.equipo && d.tipo !== 'tutor') cita += ` <strong>Proyecto presentado</strong>: &ldquo;${escapeHTML(d.equipo)}&rdquo;.`;
   set('eyebrow',t.eyebrow);
   set('grants',t.grants);
   set('titulo',d.titulo);

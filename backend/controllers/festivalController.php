@@ -92,7 +92,7 @@ function sync_festival_certificados($conn) {
         exit();
     }
 
-    $tiposValidos = ['participacion', 'ponente', 'expositor', 'ganador', 'organizador', 'asistente'];
+    $tiposValidos = ['participacion', 'ponente', 'expositor', 'ganador', 'organizador', 'asistente', 'tutor'];
 
     $sql = "INSERT INTO festival_certificados (folio, nombre, proyecto, tipo, fecha)
             VALUES (?, ?, ?, ?, ?)
